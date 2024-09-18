@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
+        "kreyu/data-table-bundle": "^0.21.4",
         "sensiolabs/typescript-bundle": "^0.2.0",
         "symfony/asset": "7.1.*",
         "symfony/asset-mapper": "7.1.*",
@@ -80,6 +81,8 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.61"
+        "symfony/maker-bundle": "^1.61",
+        "symfony/stopwatch": "7.1.*",
+        "symfony/web-profiler-bundle": "7.1.*"
     }
 }

@@ -1,6 +1,7 @@
 #titles
 title.base.index: Test manager
 title.auth.login: Auth log in
+title.module.create: Create module
 
 #header
 header.title: Test manager
@@ -11,3 +12,16 @@ header.item.modules: Modules
 form.login.email.label: Email
 form.login.password.label: Password
 form.login.submit.label: Log in
+
+#module form
+module.type.name.label: Name
+module.type.language.label: Language
+module.type.submit.label: Create module
+
+#module.data.table
+module.data.table.create.label: Create new module
+module.data.table.actions.label: Actions
+module.data.table.details.label: Details
+module.data.table.id.label: Id
+module.data.table.name.label: Name
+module.data.table.language.label: Language

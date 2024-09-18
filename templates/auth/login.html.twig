@@ -3,22 +3,16 @@
 {% block title %}{{ 'title.auth.login'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="mt-5">
-        {# {{ form(form) }} #}
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
 
-        {{ form_start(form) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.password) }}
+        {% if error %}
+            <div class="mt-2 mb-2 text-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-            {% if error %}
-                <div class="mt-2 mb-2 text-danger">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
-            {% endif %}
-
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
-    </div>
-
-    
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
 {% endblock %}

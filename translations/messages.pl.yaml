@@ -1,6 +1,7 @@
 #titles
 title.base.index: Menedże testów
 title.auth.login: Strona logowania
+title.module.create: Stwórz moduł
 
 #header
 header.title: Menedże testów
@@ -11,3 +12,16 @@ header.item.modules: Moduły
 form.login.email.label: Email
 form.login.password.label: Hasło
 form.login.submit.label: Zaloguj się
+
+#module form
+module.type.name.label: Nazwa
+module.type.language.label: Język
+module.type.submit.label: Stwórz moduł
+
+#module.data.table
+module.data.table.create.label: Stwórz nowy moduł
+module.data.table.actions.label: Akcje
+module.data.table.details.label: Szczegóły
+module.data.table.id.label: Id
+module.data.table.name.label: Nazwa
+module.data.table.language.label: Język

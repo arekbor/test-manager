@@ -16,17 +16,20 @@ return [
         'path' => './assets/app.ts',
         'entrypoint' => true,
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
+    'sortablejs' => [
+        'version' => '1.15.3',
+    ],
     'bootstrap' => [
-        'version' => '4.6.2',
+        'version' => '5.3.3',
     ],
-    'jquery' => [
-        'version' => '3.7.1',
-    ],
-    'popper.js' => [
-        'version' => '1.16.1',
+    '@popperjs/core' => [
+        'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '4.6.2',
+        'version' => '5.3.3',
         'type' => 'css',
     ],
 ];
