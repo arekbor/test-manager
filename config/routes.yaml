@@ -1,5 +1,14 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  prefix: /{_locale}
+  requirements:
+    _locale: "%app.allowed_locales%"
+  type: attribute
+
+home:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: app_home_index

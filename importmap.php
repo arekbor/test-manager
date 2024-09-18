@@ -16,4 +16,17 @@ return [
         'path' => './assets/app.ts',
         'entrypoint' => true,
     ],
+    'bootstrap' => [
+        'version' => '4.6.2',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'popper.js' => [
+        'version' => '1.16.1',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '4.6.2',
+        'type' => 'css',
+    ],
 ];
