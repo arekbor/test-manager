@@ -1,0 +1,13 @@
+#titles
+title.base.index: Test manager
+title.auth.login: Auth log in
+
+#header
+header.title: Test manager
+header.item.logout: Log out
+header.item.modules: Modules
+
+#login form
+form.login.email.label: Email
+form.login.password.label: Password
+form.login.submit.label: Log in

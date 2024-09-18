@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %}Hello AuthController!{% endblock %} #}
+{% block title %}{{ 'title.auth.login'|trans }}{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div>
-            {{ error.messageKey|trans(error.messageData, 'security') }}
-        </div>
-    {% endif %}
+    <div class="mt-5">
+        {# {{ form(form) }} #}
 
-    {{ form(form) }}
+        {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+
+            {% if error %}
+                <div class="mt-2 mb-2 text-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </div>
+
+    
 {% endblock %}

@@ -1,0 +1,13 @@
+#titles
+title.base.index: Menedże testów
+title.auth.login: Strona logowania
+
+#header
+header.title: Menedże testów
+header.item.logout: Wyloguj się
+header.item.modules: Moduły
+
+#login form
+form.login.email.label: Email
+form.login.password.label: Hasło
+form.login.submit.label: Zaloguj się
