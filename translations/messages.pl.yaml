@@ -2,6 +2,7 @@
 title.base.index: Menedże testów
 title.auth.login: Strona logowania
 title.module.create: Stwórz moduł
+title.module.details: Szczegóły modułu
 
 #header
 header.title: Menedże testów

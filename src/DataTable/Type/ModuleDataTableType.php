@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
+use App\Entity\Module;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
@@ -36,7 +37,12 @@ class ModuleDataTableType extends AbstractDataTableType
                     'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'module.data.table.details.label'
+                            'label' => 'module.data.table.details.label',
+                            'href' => function(Module $module): string {
+                                return $this->urlGenerator->generate('app_module_details', [
+                                    'id' => $module->getId(),
+                                ]);
+                            }
                         ]
                     ]
                 ]

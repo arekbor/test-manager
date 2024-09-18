@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
 use App\Form\ModuleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,14 @@ class ModuleController extends AbstractController
 
         return $this->render('module/create.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    #[Route('/details/{id}')]
+    public function details(Module $module): Response
+    {
+        return $this->render('module/details.html.twig', [
+            'module' => $module
         ]);
     }
 }

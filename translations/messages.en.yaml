@@ -2,6 +2,7 @@
 title.base.index: Test manager
 title.auth.login: Auth log in
 title.module.create: Create module
+title.module.details: Details module
 
 #header
 header.title: Test manager
