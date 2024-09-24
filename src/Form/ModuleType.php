@@ -30,7 +30,7 @@ class ModuleType extends AbstractType
                 }
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'module.type.submit.label',
+                'label' => 'submit.label',
             ])
         ;
     }

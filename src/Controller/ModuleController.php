@@ -6,6 +6,7 @@ use App\DataTable\Type\QuestionDataTableType;
 use App\Entity\Module;
 use App\Form\ModuleType;
 use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,20 +32,27 @@ class ModuleController extends AbstractController
     public function details(
         Module $module, 
         Request $request,
-        QuestionRepository $questionRepository
+        QuestionRepository $questionRepository,
+        EntityManagerInterface $em
     ): Response
     {
-
-        //TODO: zrob component z tworzeniem pytania
-        //TODO: przerób data table na live component aby nie towryzc co chwile forma
-        //TODO: zrób usuwanie pytań z modułu
         $form = $this->createForm(ModuleType::class, $module);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $updatedModule = $form->getData();
+
+            $em->persist($updatedModule);
+            $em->flush();
+
+            return $this->redirectToRoute('app_home_index');
+        }
 
         $query = $questionRepository->findByModuleId($module->getId());
 
         $dataTable = $this->createDataTable(QuestionDataTableType::class, $query, [
             'module_id' => $module->getId()
         ]);
+
         $dataTable->handleRequest($request);
 
         return $this->render('module/details.html.twig', [

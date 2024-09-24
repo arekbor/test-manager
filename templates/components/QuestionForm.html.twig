@@ -4,30 +4,38 @@
         {{ form_row(form.content) }}
         {{ form_widget(form.answers.vars.button_add) }}
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Content</th>
-                    <th scope="col">Is correct</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for answer in form.answers %}
+        {% if form.answers|length > 0 %}
+            <table class="table">
+                <thead>
                     <tr>
-                        <th>
-                            {{ form_row(answer.content) }}
+                        <th scope="col">
+                            {{ 'answer.form.content.header'|trans }}
                         </th>
-                        <th>
-                            {{ form_row(answer.correct) }}
+                        <th scope="col">
+                            {{ 'answer.form.correct.header'|trans }}
                         </th>
-                        <th>
-                            {{ form_row(answer.vars.button_delete) }}
+                        <th scope="col">
+                            {{ 'answer.form.actions.header'|trans }}
                         </th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for answer in form.answers %}
+                        <tr>
+                            <th>
+                                {{ form_row(answer.content) }}
+                            </th>
+                            <th>
+                                {{ form_row(answer.correct) }}
+                            </th>
+                            <th>
+                                {{ form_row(answer.vars.button_delete) }}
+                            </th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
     {{ form_widget(form.submit) }}
 

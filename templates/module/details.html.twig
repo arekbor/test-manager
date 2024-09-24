@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ 'title.module.details'|trans }} {% endblock %}
+{% block title %} 
+    {{ 'title.module.details'|trans }} 
+{% endblock %}
 
 {% block body %}
-    <div class="mt-5">
+    <div class="mt-2">
         {{ data_table(questions) }}
     </div>
     

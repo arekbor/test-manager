@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello QuestionController!{% endblock %}
-
-{% set formOptions = { 'submit_label': 'question.edit.form.submit.label'|trans } %}
+{% block title %} 
+    {{ 'title.edit.question'|trans }} 
+{% endblock %}
 
 {% block body %}
     <twig:QuestionForm 
         initialFormData='{{ question }}' 
         module='{{ module }}'
-        formOptions="{{ formOptions }}"
         defer 
     />
 {% endblock %}
