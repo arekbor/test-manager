@@ -3,9 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Question;
-use Doctrine\DBAL\Types\SimpleArrayType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,10 +35,16 @@ class QuestionType extends AbstractType
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'button_add_options' => [
-                    'label' => 'question.type.button_add_options.label'
+                    'label' => 'question.type.button_add_options.label',
+                    'attr' => [
+                        'class' => 'btn btn-primary',
+                    ]
                 ],
                 'button_delete_options' => [
-                    'label' => 'question.type.button_delete_options.label'
+                    'label' => 'question.type.button_delete_options.label',
+                    'attr' => [
+                        'class' => 'btn btn-danger',
+                    ]
                 ],
                 'constraints' => [
                     new Count(min: 1)
@@ -50,7 +54,8 @@ class QuestionType extends AbstractType
                 'label' => 'submit.label',
                 'attr' => [
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'save'
+                    'data-live-action-param' => 'save',
+                    'class' => 'btn btn-success'
                 ]
             ])
         ;

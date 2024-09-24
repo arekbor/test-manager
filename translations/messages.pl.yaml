@@ -29,6 +29,7 @@ question.type.button_add_options.label: Dodaj odpowiedź
 question.type.button_delete_options.label: Usuń odpowiedź
 question.edit.form.submit.label: Edytuj pytanie
 question.create.form.submit.label: Stwórz pytanie
+question.form.no.result: Nie znaleziono odpowiedzi. Wciśnij 'Dodaj odpowiedź' aby dodać
 
 #answer form
 answer.form.content.header: Treść odpowiedzi
