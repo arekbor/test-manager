@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataTable\Type;
 
 use App\Entity\Module;
+use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
@@ -17,7 +18,7 @@ use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ModuleDataTableType extends AbstractDataTableType
+class QuestionDataTableType extends AbstractDataTableType
 {
     public function __construct(private UrlGeneratorInterface $urlGenerator) {
     }
@@ -26,56 +27,55 @@ class ModuleDataTableType extends AbstractDataTableType
     {
         $builder
             ->addAction('create', ButtonActionType::class, [
-                'label' => 'module.data.table.create.label',
-                'href' => $this->urlGenerator->generate('app_module_create'),
+                'label' => 'question.data.table.create.label',
+                'href' => $this->urlGenerator->generate('app_question_create', [ 
+                    'id' => $options['module_id'] 
+                ])
             ]);
-
+            
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
-                'label' => 'module.data.table.actions.label',
+                'label' => 'question.data.table.actions.label',
                 'actions' => [
                     'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'module.data.table.details.label',
-                            'href' => function(Module $module): string {
-                                return $this->urlGenerator->generate('app_module_details', [
-                                    'id' => $module->getId()
+                            'label' => 'question.data.table.details.label',
+                            'href' => function(Question $question) use($options): string {
+                                return $this->urlGenerator->generate('app_question_edit', [
+                                    'module_id' => $options['module_id'],
+                                    'question_id' => $question->getId()
                                 ]);
                             }
                         ]
                     ]
                 ]
             ]);
-
+        
         $builder
             ->addColumn('id', NumberColumnType::class, [
-                'label' => 'module.data.table.id.label'
+                'label' => 'question.data.table.id.label'
             ])
-            ->addColumn('name', TextColumnType::class, [
-                'label' => 'module.data.table.name.label'
-            ])
-            ->addColumn('language', TextColumnType::class, [
-                'label' => 'module.data.table.language.label'
+            ->addColumn('content', TextColumnType::class, [
+                'label' => 'question.data.table.content.label'
             ]);
 
         $builder
             ->addFilter('id', NumericFilterType::class, [
-                'label' => 'module.data.table.id.label'
+                'label' => 'question.data.table.id.label'
             ])
-            ->addFilter('name', StringFilterType::class, [
-                'label' => 'module.data.table.name.label'
-            ])
-            ->addFilter('language', StringFilterType::class, [
-                'label' => 'module.data.table.language.label'
+            ->addFilter('content', StringFilterType::class, [
+                'label' => 'question.data.table.content.label'
             ]);
-
+        
         $builder
             ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5));
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        
+        $resolver
+            ->setRequired('module_id');
     }
 }

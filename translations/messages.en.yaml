@@ -17,7 +17,17 @@ form.login.submit.label: Log in
 #module form
 module.type.name.label: Name
 module.type.language.label: Language
-module.type.submit.label: Create module
+module.type.submit.label: Submit
+
+#question form
+question.type.content.placeholder: "Question content"
+question.type.button_add_options.label: "Add answer"
+question.type.button_delete_options.label: "Remove answer"
+question.edit.form.submit.label: "Edit question"
+question.create.form.submit.label: "Create question"
+
+#answer form
+answer.type.content.placeholder: "Answer content"
 
 #module.data.table
 module.data.table.create.label: Create new module
@@ -26,3 +36,10 @@ module.data.table.details.label: Details
 module.data.table.id.label: Id
 module.data.table.name.label: Name
 module.data.table.language.label: Language
+
+#question.data.table
+question.data.table.id.label: Id
+question.data.table.content.label: Content
+question.data.table.create.label: Create question
+question.data.table.details.label: Question details
+question.data.table.actions.label: Actions

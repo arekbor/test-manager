@@ -3,5 +3,11 @@
 {% block title %} {{ 'title.module.details'|trans }} {% endblock %}
 
 {% block body %}
-    <h2>{{ module.id }}</h2>
+    <div class="mt-5">
+        {{ data_table(questions) }}
+    </div>
+    
+    <div class="mt-5">
+        {{ form(form) }}
+    </div>
 {% endblock %}

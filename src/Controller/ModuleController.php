@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\DataTable\Type\QuestionDataTableType;
 use App\Entity\Module;
 use App\Form\ModuleType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\QuestionRepository;
+use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,20 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/module')]
 class ModuleController extends AbstractController
 {
+    use DataTableFactoryAwareTrait;
+
     #[Route('/create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(): Response
     {
         $form = $this->createForm(ModuleType::class);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $module = $form->getData();
-            $em->persist($module);
-            $em->flush();
-
-            return $this->redirectToRoute('app_home_index');
-        }
 
         return $this->render('module/create.html.twig', [
             'form' => $form
@@ -34,10 +28,28 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/{id}')]
-    public function details(Module $module): Response
+    public function details(
+        Module $module, 
+        Request $request,
+        QuestionRepository $questionRepository
+    ): Response
     {
+
+        //TODO: zrob component z tworzeniem pytania
+        //TODO: przerób data table na live component aby nie towryzc co chwile forma
+        //TODO: zrób usuwanie pytań z modułu
+        $form = $this->createForm(ModuleType::class, $module);
+
+        $query = $questionRepository->findByModuleId($module->getId());
+
+        $dataTable = $this->createDataTable(QuestionDataTableType::class, $query, [
+            'module_id' => $module->getId()
+        ]);
+        $dataTable->handleRequest($request);
+
         return $this->render('module/details.html.twig', [
-            'module' => $module
+            'form' => $form,
+            'questions' => $dataTable->createView()
         ]);
     }
 }

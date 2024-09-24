@@ -1,0 +1,35 @@
+<div {{ attributes }}>
+    {{ form_start(form) }}
+
+        {{ form_row(form.content) }}
+        {{ form_widget(form.answers.vars.button_add) }}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Content</th>
+                    <th scope="col">Is correct</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for answer in form.answers %}
+                    <tr>
+                        <th>
+                            {{ form_row(answer.content) }}
+                        </th>
+                        <th>
+                            {{ form_row(answer.correct) }}
+                        </th>
+                        <th>
+                            {{ form_row(answer.vars.button_delete) }}
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {{ form_widget(form.submit) }}
+
+    {{ form_end(form) }}
+</div>

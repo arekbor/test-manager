@@ -17,7 +17,15 @@ form.login.submit.label: Zaloguj się
 #module form
 module.type.name.label: Nazwa
 module.type.language.label: Język
-module.type.submit.label: Stwórz moduł
+module.type.submit.label: Zapisz
+
+#question form
+question.type.content.placeholder: "Treść pytania"
+question.type.button_add_options.label: "Dodaj odpowiedź"
+question.type.button_delete_options.label: "Usuń odpowiedź"
+
+#answer form
+answer.type.content.placeholder: "Treść odpowiedzi"
 
 #module.data.table
 module.data.table.create.label: Stwórz nowy moduł
@@ -26,3 +34,10 @@ module.data.table.details.label: Szczegóły
 module.data.table.id.label: Id
 module.data.table.name.label: Nazwa
 module.data.table.language.label: Język
+
+#question.data.table
+question.data.table.id.label: Id
+question.data.table.content.label: Treść
+question.data.table.create.label: Stwórz pytanie
+question.data.table.details.label: Szczegóły pytania
+question.data.table.actions.label: Akcje
