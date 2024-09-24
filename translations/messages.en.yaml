@@ -3,6 +3,8 @@ title.base.index: Test manager
 title.auth.login: Auth log in
 title.module.create: Create module
 title.module.details: Details module
+title.edit.question: Edit question
+title.create.question: Create question
 
 #header
 header.title: Test manager
@@ -14,20 +16,27 @@ form.login.email.label: Email
 form.login.password.label: Password
 form.login.submit.label: Log in
 
+#form submit
+submit.label: Submit
+
 #module form
 module.type.name.label: Name
 module.type.language.label: Language
-module.type.submit.label: Submit
 
 #question form
-question.type.content.placeholder: "Question content"
-question.type.button_add_options.label: "Add answer"
-question.type.button_delete_options.label: "Remove answer"
-question.edit.form.submit.label: "Edit question"
-question.create.form.submit.label: "Create question"
+question.type.content.placeholder: Question content
+question.type.button_add_options.label: Add answer
+question.type.button_delete_options.label: Remove answer
+question.edit.form.submit.label: Edit question
+question.create.form.submit.label: Create question
 
 #answer form
-answer.type.content.placeholder: "Answer content"
+answer.form.content.header: Content
+answer.form.correct.header: Is correct
+answer.form.actions.header: Actions
+
+#answer form
+answer.type.content.placeholder: Answer content
 
 #module.data.table
 module.data.table.create.label: Create new module

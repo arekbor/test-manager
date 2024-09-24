@@ -24,9 +24,6 @@ final class QuestionForm extends AbstractController
     public ?Question $initialFormData;
 
     #[LiveProp]
-    public array $formOptions;
-
-    #[LiveProp]
     public Module $module;
 
     #[LiveAction]
@@ -50,6 +47,6 @@ final class QuestionForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(QuestionType::class, $this->initialFormData, $this->formOptions);
+        return $this->createForm(QuestionType::class, $this->initialFormData);
     }
 }

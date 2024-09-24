@@ -17,6 +17,7 @@ class AnswerType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
                 'label' => false,
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'answer.type.content.placeholder',
                     'rows' => 5

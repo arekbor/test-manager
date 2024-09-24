@@ -47,7 +47,7 @@ class QuestionType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => $options['submit_label'],
+                'label' => 'submit.label',
                 'attr' => [
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'save'
