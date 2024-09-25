@@ -5,9 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <twig:QuestionForm 
-        initialFormData='{{ null }}' 
-        module='{{ module }}'
-        defer 
-    />
+    <div class="mt-2">
+        {{ component('QuestionForm', { moduleId: moduleId, defer: true }) }}
+    </div>
 {% endblock %}

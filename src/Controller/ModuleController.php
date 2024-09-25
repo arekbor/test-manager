@@ -21,42 +21,27 @@ class ModuleController extends AbstractController
     #[Route('/create')]
     public function create(): Response
     {
-        $form = $this->createForm(ModuleType::class);
-
-        return $this->render('module/create.html.twig', [
-            'form' => $form
-        ]);
+        return $this->render('module/create.html.twig');
     }
 
     #[Route('/details/{id}')]
     public function details(
         Module $module, 
         Request $request,
-        QuestionRepository $questionRepository,
-        EntityManagerInterface $em
+        QuestionRepository $questionRepository
     ): Response
     {
-        $form = $this->createForm(ModuleType::class, $module);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $updatedModule = $form->getData();
+        $moduleId = $module->getId();
 
-            $em->persist($updatedModule);
-            $em->flush();
-
-            return $this->redirectToRoute('app_home_index');
-        }
-
-        $query = $questionRepository->findByModuleId($module->getId());
-
+        $query = $questionRepository->findByModuleId($moduleId);
         $dataTable = $this->createDataTable(QuestionDataTableType::class, $query, [
-            'module_id' => $module->getId()
+            'module_id' => $moduleId
         ]);
 
         $dataTable->handleRequest($request);
 
         return $this->render('module/details.html.twig', [
-            'form' => $form,
+            'moduleId' => $moduleId,
             'questions' => $dataTable->createView()
         ]);
     }

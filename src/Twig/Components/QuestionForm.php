@@ -5,9 +5,12 @@ namespace App\Twig\Components;
 use App\Entity\Module;
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Repository\ModuleRepository;
+use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -21,32 +24,51 @@ final class QuestionForm extends AbstractController
     use LiveCollectionTrait;
 
     #[LiveProp]
-    public ?Question $initialFormData;
+    public int $moduleId;
 
     #[LiveProp]
-    public Module $module;
+    public ?int $questionId = null;
+
+    public function __construct(
+        private QuestionRepository $questionRepository, 
+        private ModuleRepository $moduleRepository
+    ) {
+    }
 
     #[LiveAction]
-    public function save(EntityManagerInterface $em) 
+    public function save(EntityManagerInterface $em): Response
     {
         $this->submitForm();
+        $questionForm = $this->getForm()->getData();
+        $module = $this->getModule();
 
-        $question = $this->getForm()->getData();
-
-        if ($this->module) {
-            $question->addModule($this->module);
+        if ($module) {
+            $questionForm->addModule($module);
         }
 
-        $em->persist($question);
+        $em->persist($questionForm);
         $em->flush();
 
         return $this->redirectToRoute('app_module_details', [
-            'id' => $this->module->getId()
+            'id' => $this->moduleId
         ]);
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(QuestionType::class, $this->initialFormData);
+        return $this->createForm(QuestionType::class, $this->getQuestion());
+    }
+
+    private function getQuestion(): ?Question 
+    {
+        if ($this->questionId) {
+            return $this->questionRepository->find($this->questionId);
+        }
+        return null;
+    }
+
+    private function getModule(): Module 
+    {
+        return $this->moduleRepository->find($this->moduleId);
     }
 }
