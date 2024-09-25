@@ -29,7 +29,7 @@ class QuestionDataTableType extends AbstractDataTableType
             ->addAction('create', ButtonActionType::class, [
                 'label' => 'question.data.table.create.label',
                 'href' => $this->urlGenerator->generate('app_question_create', [ 
-                    'id' => $options['module_id'] 
+                    'moduleId' => $options['module_id'] 
                 ])
             ]);
             
@@ -43,8 +43,8 @@ class QuestionDataTableType extends AbstractDataTableType
                             'label' => 'question.data.table.details.label',
                             'href' => function(Question $question) use($options): string {
                                 return $this->urlGenerator->generate('app_question_edit', [
-                                    'module_id' => $options['module_id'],
-                                    'question_id' => $question->getId()
+                                    'moduleId' => $options['module_id'],
+                                    'questionId' => $question->getId()
                                 ]);
                             }
                         ]

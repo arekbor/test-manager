@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Answer;
 use App\Entity\Question;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,7 +20,9 @@ class QuestionType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
                 'label' => false,
+                'empty_data' => '',
                 'attr' => [
+                    'data-loading' => 'addAttribute(disabled)',
                     'placeholder' => 'question.type.content.placeholder',
                     'rows' => 5,
                 ],
@@ -37,12 +40,14 @@ class QuestionType extends AbstractType
                 'button_add_options' => [
                     'label' => 'question.type.button_add_options.label',
                     'attr' => [
+                        'data-loading' => 'addAttribute(disabled)',
                         'class' => 'btn btn-primary',
                     ]
                 ],
                 'button_delete_options' => [
                     'label' => 'question.type.button_delete_options.label',
                     'attr' => [
+                        'data-loading' => 'addAttribute(disabled)',
                         'class' => 'btn btn-danger',
                     ]
                 ],
@@ -53,9 +58,10 @@ class QuestionType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'submit.label',
                 'attr' => [
+                    'class' => 'btn btn-success',
+                    'data-loading' => 'addAttribute(disabled)',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'save',
-                    'class' => 'btn btn-success'
                 ]
             ])
         ;
