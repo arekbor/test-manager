@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\DataTable\Type\QuestionDataTableType;
 use App\Entity\Module;
-use App\Form\ModuleType;
 use App\Repository\QuestionRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

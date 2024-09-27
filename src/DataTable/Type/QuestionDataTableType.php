@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
-use App\Entity\Module;
 use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;

@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    //TODO: naprawd niewidoczne ERROR w spanach przy bledach
+    //TODO: popraw strone z logowaniem, daj jakis obrazek na boku czy cos
     use DataTableFactoryAwareTrait;
 
     #[Route('/home')]

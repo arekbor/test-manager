@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Answer;
 use App\Entity\Question;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
