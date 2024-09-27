@@ -46,6 +46,7 @@ module.data.table.details.label: Details
 module.data.table.id.label: Id
 module.data.table.name.label: Name
 module.data.table.language.label: Language
+module.data.table.questionsCount.label: Count of questions
 
 #question.data.table
 question.data.table.id.label: Id
@@ -53,3 +54,4 @@ question.data.table.content.label: Content
 question.data.table.create.label: Create question
 question.data.table.details.label: Question details
 question.data.table.actions.label: Actions
+question.data.table.home.label: List of modules

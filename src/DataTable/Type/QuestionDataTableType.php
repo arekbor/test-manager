@@ -25,6 +25,10 @@ class QuestionDataTableType extends AbstractDataTableType
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
+            ->addAction('home', ButtonActionType::class, [
+                'label' => 'question.data.table.home.label',
+                'href' => $this->urlGenerator->generate('app_home_index')
+            ])
             ->addAction('create', ButtonActionType::class, [
                 'label' => 'question.data.table.create.label',
                 'href' => $this->urlGenerator->generate('app_question_create', [ 

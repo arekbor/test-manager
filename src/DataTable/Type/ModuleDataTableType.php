@@ -57,6 +57,10 @@ class ModuleDataTableType extends AbstractDataTableType
             ])
             ->addColumn('language', TextColumnType::class, [
                 'label' => 'module.data.table.language.label'
+            ])
+            ->addColumn('questionsCount', TextColumnType::class, [
+                'label' => 'module.data.table.questionsCount.label',
+                'getter' => fn (Module $module) => count($module->getQuestions())
             ]);
 
         $builder
