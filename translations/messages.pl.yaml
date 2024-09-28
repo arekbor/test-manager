@@ -47,7 +47,8 @@ module.data.table.id.label: Id
 module.data.table.name.label: Nazwa
 module.data.table.language.label: Język
 module.data.table.questionsCount.label: Liczba pytań
-modules.data.table.title: Moduły
+module.data.table.title: Moduły
+module.data.table.addQuestion.label: Dodaj pytanie
 
 #question.data.table
 question.data.table.id.label: Id
