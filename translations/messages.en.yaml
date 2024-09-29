@@ -15,6 +15,8 @@ header.item.modules: Modules
 form.login.email.label: Email
 form.login.password.label: Password
 form.login.submit.label: Log in
+form.login.password.hidden.password.label: Hide
+form.login.password.visible.password.label: Show
 
 #form submit
 submit.label: Submit
@@ -58,3 +60,4 @@ question.data.table.details.label: Question details
 question.data.table.actions.label: Actions
 question.data.table.home.label: List of modules
 question.data.table.title: Questions
+question.data.table.answersCount.label: Count of answers

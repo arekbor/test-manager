@@ -92,7 +92,7 @@ class ModuleDataTableType extends AbstractDataTableType
             ]);
 
         $builder
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5));
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

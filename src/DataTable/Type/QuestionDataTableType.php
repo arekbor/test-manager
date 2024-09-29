@@ -61,6 +61,10 @@ class QuestionDataTableType extends AbstractDataTableType
             ])
             ->addColumn('content', TextColumnType::class, [
                 'label' => 'question.data.table.content.label'
+            ])
+            ->addColumn('answersCount', TextColumnType::class, [
+                'label' => 'question.data.table.answersCount.label',
+                'getter' => fn (Question $question) => count($question->getAnswers())
             ]);
 
         $builder
