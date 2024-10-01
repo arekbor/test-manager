@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - TZ=UTC
+      - POSTGRES_DB=test-manager
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 6000:5432
+
+  web:
+    build: .
+    ports:
+      - 8080:80
+    environment:
+      - APP_ENV=prod
+      - APP_SECRET=452e656b84c35e8672e82bc414adc5e5
+      - DATABASE_URL=postgresql://postgres:postgres@db/test-manager
+    depends_on:
+      - db
+
+volumes:
+  db:
+    driver: local
