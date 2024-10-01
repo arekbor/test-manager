@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\SecurityUser;
 use App\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ class AuthController extends AbstractController
     public function login(AuthenticationUtils $utils): Response
     {
         $error = $utils->getLastAuthenticationError();
-        $form = $this->createForm(LoginType::class, new User());
+        $form = $this->createForm(LoginType::class, new SecurityUser());
 
         return $this->render('auth/login.html.twig', [
             'form' => $form,
