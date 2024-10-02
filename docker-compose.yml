@@ -12,7 +12,7 @@ services:
   web:
     build: .
     ports:
-      - ${MAP_PORT}:80
+      - 8084:80
     depends_on:
       - db
     env_file:
