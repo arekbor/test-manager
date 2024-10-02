@@ -1,6 +1,0 @@
-workers:
-  sass:
-    cmd: ["symfony", "console", "sass:build", "--watch"]
-
-  typescript:
-    cmd: ["symfony", "console", "typescript:build", "--watch"]

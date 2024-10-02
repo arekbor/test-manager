@@ -29,9 +29,6 @@
     "kreyu/data-table-bundle": {
         "version": "v0.21.4"
     },
-    "sensiolabs/typescript-bundle": {
-        "version": "v0.2.0"
-    },
     "symfony/asset-mapper": {
         "version": "7.1",
         "recipe": {
@@ -216,9 +213,6 @@
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
         ]
-    },
-    "symfonycasts/sass-bundle": {
-        "version": "v0.7.0"
     },
     "twig/extra-bundle": {
         "version": "v3.13.0"
