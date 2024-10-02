@@ -9,6 +9,8 @@ RUN apt-get update \
 
 RUN docker-php-ext-install pdo pdo_pgsql zip
 
+COPY docker/security.conf /etc/apache2/conf-enabled/security.conf
+
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 
