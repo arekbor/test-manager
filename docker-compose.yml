@@ -8,6 +8,14 @@ services:
       - db:/var/lib/postgresql/data
     env_file:
       - .env.prod
+    networks:
+      - test_manager_network
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "200M"
+          pids: 50
 
   web:
     build: .
@@ -17,7 +25,19 @@ services:
       - db
     env_file:
       - .env.prod
+    networks:
+      - test_manager_network
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "300M"
+          pids: 100
 
 volumes:
   db:
     driver: local
+
+networks:
+  test_manager_network:
+    driver: bridge
