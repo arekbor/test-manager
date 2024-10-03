@@ -28,7 +28,7 @@ module.type.language.label: Language
 #question form
 question.type.content.placeholder: Question content
 question.type.button_add_options.label: Add answer
-question.type.button_delete_options.label: Remove answer
+question.type.button_delete_options.label: Delete answer
 question.edit.form.submit.label: Edit question
 question.create.form.submit.label: Create question
 question.form.no.result: No answers found. Press 'Add answer' to add.
