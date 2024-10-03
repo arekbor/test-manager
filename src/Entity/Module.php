@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Module
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -60,7 +60,7 @@ class Module
 
         return $this;
     }
-
+        
     /**
      * @return Collection<int, Question>
      */

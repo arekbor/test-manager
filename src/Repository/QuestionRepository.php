@@ -16,9 +16,9 @@ class QuestionRepository extends ServiceEntityRepository
     public function findByModuleId(int $moduleId)
     {
         return $this
-            ->createQueryBuilder('q') // alias dla encji Question
-            ->innerJoin('q.modules', 'm') // dołączamy relację many-to-many między Question a Module
-            ->where('m.id = :module_id') // filtrujemy po moduleId
+            ->createQueryBuilder('q')
+            ->innerJoin('q.modules', 'm')
+            ->where('m.id = :module_id')
             ->setParameter('module_id', $moduleId);
     }
 }
