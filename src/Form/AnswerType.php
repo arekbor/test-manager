@@ -19,7 +19,6 @@ class AnswerType extends AbstractType
                 'label' => false,
                 'empty_data' => '',
                 'attr' => [
-                    'data-loading' => 'addAttribute(disabled)',
                     'placeholder' => 'answer.type.content.placeholder',
                     'rows' => 5
                 ],
@@ -29,10 +28,7 @@ class AnswerType extends AbstractType
             ])
             ->add('correct', CheckboxType::class, [
                 'required' => false,
-                'label' => false,
-                'attr' => [
-                    'data-loading' => 'addAttribute(disabled)',
-                ]
+                'label' => false
             ])
         ;
     }

@@ -23,9 +23,6 @@ class ModuleType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'module.type.name.label',
                 'empty_data' => '',
-                'attr' => [
-                    'data-loading' => 'addAttribute(disabled)',
-                ],
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -37,9 +34,6 @@ class ModuleType extends AbstractType
                 'choice_label' => function($value) {
                     return $value;
                 },
-                'attr' => [
-                    'data-loading' => 'addAttribute(disabled)',
-                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'submit.label',
