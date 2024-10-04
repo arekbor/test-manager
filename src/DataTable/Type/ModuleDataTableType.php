@@ -73,7 +73,8 @@ class ModuleDataTableType extends AbstractDataTableType
                 'label' => 'module.data.table.name.label'
             ])
             ->addColumn('language', TextColumnType::class, [
-                'label' => 'module.data.table.language.label'
+                'label' => 'module.data.table.language.label',
+                'getter' => fn (Module $module) => strtoupper($module->getLanguage())
             ])
             ->addColumn('questionsCount', TextColumnType::class, [
                 'label' => 'module.data.table.questionsCount.label',
@@ -88,7 +89,8 @@ class ModuleDataTableType extends AbstractDataTableType
                 'label' => 'module.data.table.name.label'
             ])
             ->addFilter('language', StringFilterType::class, [
-                'label' => 'module.data.table.language.label'
+                'label' => 'module.data.table.language.label',
+                'lower' => true
             ]);
 
         $builder

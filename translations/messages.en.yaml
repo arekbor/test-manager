@@ -8,6 +8,7 @@ title.create.question: Create question
 
 #header
 header.title: Test manager
+header.item.home: Home
 header.item.logout: Log out
 header.item.modules: Modules
 

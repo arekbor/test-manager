@@ -32,7 +32,7 @@ class ModuleType extends AbstractType
                 'choices' => $this->localeService->getAllowedLocales(),
                 'empty_data' => $this->localeService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
-                    return $value;
+                    return strtoupper($value);
                 },
             ])
             ->add('submit', SubmitType::class, [
