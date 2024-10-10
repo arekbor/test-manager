@@ -9,6 +9,7 @@
         <twig:TableTitle>
             {{ 'question.data.table.title'|trans }}
         </twig:TableTitle>
+        
         {{ data_table_action_bar(questions) }}
         {{ data_table_table(questions) }}
         <div class="mt-3">
@@ -16,5 +17,5 @@
         </div>
     </div>
     
-    {{ component('ModuleForm', { moduleId: moduleId ,defer: true }) }}
+    {{ component('ModuleForm', { moduleId: moduleId, defer: true }) }}
 {% endblock %}
