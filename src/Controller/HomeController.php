@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    //TODO: naprawd niewidoczne ERROR w spanach przy bledach
     use DataTableFactoryAwareTrait;
 
     #[Route('/home')]

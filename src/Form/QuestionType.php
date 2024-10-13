@@ -57,7 +57,7 @@ class QuestionType extends AbstractType
                     'class' => 'btn btn-success',
                     'data-loading' => 'addAttribute(disabled)',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'save',
+                    'data-live-action-param' => 'submit',
                 ]
             ])
         ;

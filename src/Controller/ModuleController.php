@@ -30,7 +30,6 @@ class ModuleController extends AbstractController
     ): Response
     {
         $moduleId = $module->getId();
-
         $query = $questionRepository->findByModuleId($moduleId);
         $dataTable = $this->createDataTable(QuestionDataTableType::class, $query, [
             'module_id' => $moduleId
@@ -39,7 +38,7 @@ class ModuleController extends AbstractController
         $dataTable->handleRequest($request);
 
         return $this->render('module/details.html.twig', [
-            'moduleId' => $moduleId,
+            'module' => $module,
             'questions' => $dataTable->createView()
         ]);
     }
