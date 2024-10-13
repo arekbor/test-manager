@@ -22,7 +22,7 @@ final class ModuleForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public ?int $moduleId = null;
+    public ?Module $moduleProp = null;
 
     public function __construct(
         private ModuleRepository $moduleRepository
@@ -30,7 +30,7 @@ final class ModuleForm extends AbstractController
     }
 
     #[LiveAction]
-    public function save(EntityManagerInterface $em): Response
+    public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
         $moduleForm = $this->getForm()->getData();
@@ -43,14 +43,6 @@ final class ModuleForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(ModuleType::class, $this->getModule());
-    }
-
-    private function getModule(): ?Module
-    {
-        if ($this->moduleId) {
-            return $this->moduleRepository->find($this->moduleId);
-        }
-        return null;
+        return $this->createForm(ModuleType::class, $this->moduleProp);
     }
 }

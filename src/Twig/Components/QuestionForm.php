@@ -24,10 +24,10 @@ final class QuestionForm extends AbstractController
     use LiveCollectionTrait;
 
     #[LiveProp]
-    public int $moduleId;
+    public ?Question $questionProp = null;
 
     #[LiveProp]
-    public ?int $questionId = null;
+    public Module $moduleProp;
 
     public function __construct(
         private QuestionRepository $questionRepository, 
@@ -36,39 +36,25 @@ final class QuestionForm extends AbstractController
     }
 
     #[LiveAction]
-    public function save(EntityManagerInterface $em): Response
+    public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
         $questionForm = $this->getForm()->getData();
-        $module = $this->getModule();
 
-        if ($module) {
-            $questionForm->addModule($module);
+        if ($this->moduleProp) {
+            $questionForm->addModule($this->moduleProp);
         }
 
         $em->persist($questionForm);
         $em->flush();
 
         return $this->redirectToRoute('app_module_details', [
-            'id' => $this->moduleId
+            'id' => $this->moduleProp->getId()
         ]);
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(QuestionType::class, $this->getQuestion());
-    }
-
-    private function getQuestion(): ?Question 
-    {
-        if ($this->questionId) {
-            return $this->questionRepository->find($this->questionId);
-        }
-        return null;
-    }
-
-    private function getModule(): Module 
-    {
-        return $this->moduleRepository->find($this->moduleId);
+        return $this->createForm(QuestionType::class, $this->questionProp);
     }
 }

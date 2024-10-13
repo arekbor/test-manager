@@ -6,6 +6,6 @@
 
 {% block body %}
     <div class="mt-2">
-        {{ component('QuestionForm', { moduleId: moduleId, questionId: questionId, defer: true }) }}
+        {{ component('QuestionForm', { moduleProp: module, questionProp: question, defer: true }) }}
     </div>
 {% endblock %}
