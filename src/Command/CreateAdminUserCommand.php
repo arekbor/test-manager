@@ -36,7 +36,7 @@ class CreateAdminUserCommand extends Command
         $adminEmail = $this->params->get('app.admin_email');
         $adminPassword = $this->params->get('app.admin_password');
 
-        if (empty($adminEmail) || !$adminEmail || empty($adminPassword) || !$adminPassword) {
+        if (empty($adminEmail) || empty($adminPassword)) {
             $io->error('Missing required environment variables: ADMIN_EMAIL or ADMIN_PASSWORD.');
             $io->info('Please ensure both ADMIN_EMAIL and ADMIN_PASSWORD are set in your .env configuration file.');
             return Command::FAILURE;
