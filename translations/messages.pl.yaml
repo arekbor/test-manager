@@ -5,6 +5,7 @@ title.module.create: Stwórz moduł
 title.module.details: Szczegóły modułu
 title.edit.question: Edytuj pytanie
 title.create.question: Stwórz pytanie
+title.upload.video: Wrzuć wideo
 
 #header
 header.title: Menedże testów
@@ -52,13 +53,18 @@ module.data.table.language.label: Język
 module.data.table.questionsCount.label: Liczba pytań
 module.data.table.title: Moduły
 module.data.table.addQuestion.label: Dodaj pytanie
+module.data.table.uploadVideo.label: Wrzuć wideo
 
 #question.data.table
 question.data.table.id.label: Id
 question.data.table.content.label: Treść
 question.data.table.create.label: Stwórz pytanie
+question.data.table.uploadVideo.label: Wrzuć wideo
 question.data.table.details.label: Szczegóły pytania
 question.data.table.actions.label: Akcje
 question.data.table.home.label: Lista modułów
 question.data.table.title: Pytania
 question.data.table.answersCount.label: Liczba pytań
+
+video.type.file.placeholder: Przeciągnij i upuść lub przeglądaj
+video.type.submit.label: Wrzuć

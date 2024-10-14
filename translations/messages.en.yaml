@@ -5,6 +5,7 @@ title.module.create: Create module
 title.module.details: Details module
 title.edit.question: Edit question
 title.create.question: Create question
+title.upload.video: Upload video
 
 #header
 header.title: Test manager
@@ -52,13 +53,18 @@ module.data.table.language.label: Language
 module.data.table.questionsCount.label: Count of questions
 module.data.table.title: Modules
 module.data.table.addQuestion.label: Add question
+module.data.table.uploadVideo.label: Upload video
 
 #question.data.table
 question.data.table.id.label: Id
 question.data.table.content.label: Content
 question.data.table.create.label: Create question
+question.data.table.uploadVideo.label: Upload video
 question.data.table.details.label: Question details
 question.data.table.actions.label: Actions
 question.data.table.home.label: List of modules
 question.data.table.title: Questions
 question.data.table.answersCount.label: Count of answers
+
+video.type.file.placeholder: Drag and drop or browse
+video.type.submit.label: Upload
