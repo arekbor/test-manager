@@ -10,6 +10,8 @@ parameters:
   app.video_upload_directory: "%env(VIDEO_UPLOAD_DIRECTORY)%"
   app.admin_email: "%env(ADMIN_EMAIL)%"
   app.admin_password: "%env(ADMIN_PASSWORD)%"
+  app.video_upload_max_size: "%env(VIDEO_UPLOAD_MAX_SIZE)%"
+  app.video_upload_extensions: "%env(json:VIDEO_UPLOAD_EXTENSIONS)%"
 
 services:
   # default configuration for services in *this* file
