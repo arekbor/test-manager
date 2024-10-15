@@ -38,9 +38,6 @@ class ModuleDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'module.data.table.details.label',
-                            'attr' => [
-                                'class' => 'btn btn-warning'
-                            ],
                             'href' => function(Module $module): string {
                                 return $this->urlGenerator->generate('app_module_details', [
                                     'id' => $module->getId()
@@ -52,12 +49,20 @@ class ModuleDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'module.data.table.addQuestion.label',
-                            'attr' => [
-                                'class' => 'btn btn-success'
-                            ],
                             'href' => function(Module $module): string {
                                 return $this->urlGenerator->generate('app_question_create', [
                                     'moduleId' => $module->getId()
+                                ]);
+                            }
+                        ]
+                    ],
+                    'uploadVideo' => [
+                        'type' => ButtonActionType::class,
+                        'type_options' => [
+                            'label' => 'module.data.table.uploadVideo.label',
+                            'href' => function(Module $module): string {
+                                return $this->urlGenerator->generate('app_video_upload', [
+                                    'id' => $module->getId()
                                 ]);
                             }
                         ]

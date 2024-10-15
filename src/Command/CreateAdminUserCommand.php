@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
@@ -21,7 +22,8 @@ class CreateAdminUserCommand extends Command
     public function __construct(
         private EntityManagerInterface $em,
         private SecurityUserRepository $securityUserRepository,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
+        private ParameterBagInterface $params,
     )
     {
         parent::__construct();
@@ -30,13 +32,13 @@ class CreateAdminUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        
+        $adminEmail = $this->params->get('app.admin_email');
+        $adminPassword = $this->params->get('app.admin_password');
 
-        $adminEmail = $_ENV['ADMIN_EMAIL'] ?? null;
-        $adminPassword = $_ENV['ADMIN_PASSWORD'] ?? null;
-
-        if (!$adminEmail || !$adminPassword) {
-            $io->error('The required environment variables ADMIN_EMAIL or ADMIN_PASSWORD are missing.');
-            $io->info('Please add the ADMIN_EMAIL and ADMIN_PASSWORD variables to the .env file.');
+        if (empty($adminEmail) || empty($adminPassword)) {
+            $io->error('Missing required environment variables: ADMIN_EMAIL or ADMIN_PASSWORD.');
+            $io->info('Please ensure both ADMIN_EMAIL and ADMIN_PASSWORD are set in your .env configuration file.');
             return Command::FAILURE;
         }
 

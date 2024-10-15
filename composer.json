@@ -24,6 +24,8 @@
     "symfony/security-bundle": "7.1.*",
     "symfony/translation": "7.1.*",
     "symfony/twig-bundle": "7.1.*",
+    "symfony/uid": "7.1.*",
+    "symfony/ux-dropzone": "^2.20",
     "symfony/ux-live-component": "^2.19",
     "symfony/ux-toggle-password": "^2.20",
     "symfony/ux-twig-component": "^2.19",
