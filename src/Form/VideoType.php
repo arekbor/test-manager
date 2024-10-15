@@ -11,11 +11,9 @@ use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class VideoType extends AbstractType
 {
-    private string $videoUploadMaxSize;
     private array $videoUploadExtensions;
 
     public function __construct(ParameterBagInterface $params) {
-        $this->videoUploadMaxSize = $params->get('app.video_upload_max_size');
         $this->videoUploadExtensions = $params->get('app.video_upload_extensions');
     }
 
@@ -30,7 +28,6 @@ class VideoType extends AbstractType
                 ],
                 'constraints' => [
                     new File([
-                        'maxSize' => $this->videoUploadMaxSize,
                         'extensions' => $this->videoUploadExtensions,
                         'binaryFormat' => false,
                     ])

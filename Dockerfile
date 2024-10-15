@@ -9,6 +9,8 @@ RUN apt-get update \
 
 RUN docker-php-ext-install pdo pdo_pgsql zip
 
+COPY docker/php.ini /usr/local/etc/php/
+
 COPY docker/security.conf /etc/apache2/conf-enabled/security.conf
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
@@ -21,6 +23,8 @@ RUN wget https://getcomposer.org/download/2.7.7/composer.phar \
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf 
 COPY . /var/www
+
+RUN mkdir /home/uploads/ && chmod a+w /home/uploads/
 
 WORKDIR /var/www
 
