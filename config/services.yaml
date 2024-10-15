@@ -9,8 +9,7 @@ parameters:
   app.allowed_locales: en|pl
   app.admin_email: "%env(ADMIN_EMAIL)%"
   app.admin_password: "%env(ADMIN_PASSWORD)%"
-  app.video_upload_directory: "%env(VIDEO_UPLOAD_DIRECTORY)%"
-  app.video_upload_max_size: "800M"
+  app.video_upload_directory: "/home/uploads/"
   app.video_upload_extensions: ["mp4", "mov", "wmv", "avi"]
 
 services:

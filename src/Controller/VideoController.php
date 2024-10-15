@@ -51,8 +51,12 @@ class VideoController extends AbstractController
 
     private function processFile(File $file): void 
     {
-        if (!is_dir($this->uploadDirectory) || !is_writable($this->uploadDirectory)) {
-            throw new RuntimeException("Upload directory is not writable or does not exist.");
+        if (!is_dir($this->uploadDirectory)) {
+            throw new RuntimeException("Upload directory does not exist.");
+        }
+
+        if (!is_writable($this->uploadDirectory)) {
+            throw new RuntimeException("Upload directory is not writable.");
         }
 
         $newFilename = Uuid::v7() . '.' . $file->guessExtension();
