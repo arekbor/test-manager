@@ -4,10 +4,9 @@ namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class LocaleService {
-
-    public function __construct(private ParameterBagInterface $params) {
-        
+class LocaleService 
+{
+    public function __construct(private ParameterBagInterface $params) { 
     }
 
     public function getAllowedLocales(): array
