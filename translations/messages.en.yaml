@@ -65,6 +65,3 @@ question.data.table.actions.label: Actions
 question.data.table.home.label: List of modules
 question.data.table.title: Questions
 question.data.table.answersCount.label: Count of answers
-
-video.type.file.placeholder: Drag and drop or browse
-video.type.submit.label: Upload
