@@ -5,7 +5,7 @@
             moduleId: moduleId
         })
     ) }}
-    {{ stimulus_target('video_upload', 'dropZone') }}
+    {{ stimulus_target('video_upload', 'dropzone') }}
     {{ 
         stimulus_action('video_upload', 'handleFileDrop', 'drop') | 
         stimulus_action('video_upload', 'handleDragOver', 'dragover') | 
@@ -45,6 +45,15 @@
         >
         </div>
 
+        <!-- Abort button -->
+        <button
+            class="btn btn-outline-warning mt-2 d-none"
+            {{ stimulus_action('video_upload', 'handleAbort', 'click') }}
+            {{ stimulus_target('video_upload', 'abortButton') }}
+        >
+            {{ 'video.upload.video.abort.button'|trans }}
+        </button>
+
         <!-- Upload progress -->
         <div 
             class="text-dark mt-2"
@@ -55,10 +64,10 @@
         <!-- File selection button -->
         <button 
             class="btn btn-outline-primary mt-2"
-            {{ stimulus_action('video_upload', 'handleClick', 'click') }}
-            {{ stimulus_target('video_upload', 'chooseFileButton') }}
+            {{ stimulus_action('video_upload', 'handleFileSelection', 'click') }}
+            {{ stimulus_target('video_upload', 'fileSelectionButton') }}
         >
-            {{ 'video.upload.choose.video.button'|trans }}
+            {{ 'video.upload.file.selection.button'|trans }}
         </button>
 
         <!-- Informational paragraph -->
@@ -66,7 +75,7 @@
             class="text-secondary mt-2"
             {{ stimulus_target('video_upload', 'videoParagraph') }}
         >
-            {{ 'video.upload.choose.video.paragraph'|trans }}
+            {{ 'video.upload.file.selection.paragraph'|trans }}
         </div>
 
         <!-- Feedback message area -->

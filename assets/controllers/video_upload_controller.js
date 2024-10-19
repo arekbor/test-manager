@@ -3,10 +3,11 @@ import { Controller } from "@hotwired/stimulus";
 export default class VideoUploadController extends Controller {
   static targets = [
     "input",
-    "dropZone",
+    "dropzone",
     "progress",
     "spinner",
-    "chooseFileButton",
+    "fileSelectionButton",
+    "abortButton",
     "videoParagraph",
     "uploadImage",
     "previewFilename",
@@ -18,19 +19,45 @@ export default class VideoUploadController extends Controller {
     moduleId: String,
   };
 
+  xhr = null;
+
   handleDragOver(e) {
     e.preventDefault();
+    if (this.#isXhrBusy()) {
+      return;
+    }
+
+    this.#toggleDropzoneBackground(true);
+  }
+
+  handleAbort() {
+    if (this.xhr) {
+      this.xhr.abort();
+    }
   }
 
   handleDragLeave(e) {
     e.preventDefault();
+    if (this.#isXhrBusy()) {
+      return;
+    }
+
+    this.#toggleDropzoneBackground(false);
   }
 
-  handleClick() {
+  handleFileSelection() {
+    if (this.#isXhrBusy()) {
+      return;
+    }
+
     this.inputTarget.click();
   }
 
   handleFileInputChange(e) {
+    if (this.#isXhrBusy()) {
+      return;
+    }
+
     const file = e.target.files[0];
     if (file) {
       this.#uploadFile(file);
@@ -39,16 +66,34 @@ export default class VideoUploadController extends Controller {
 
   async handleFileDrop(e) {
     e.preventDefault();
-
-    const file =
-      e.dataTransfer.items[0]?.kind === "file" ? e.dataTransfer.files[0] : null;
-    if (
-      !file ||
-      e.dataTransfer.items.length > 1 ||
-      !(await this.#isFile(file))
-    ) {
-      this.#displayFeedback("Invalid file. Please upload a valid file.", 400);
+    if (this.#isXhrBusy()) {
       return;
+    }
+
+    this.#toggleDropzoneBackground(false);
+
+    const file = e.dataTransfer.files[0];
+    if (!file) {
+      throw new Error("No file found in the drop. Please try again.");
+    }
+
+    if (e.dataTransfer.items[0]?.kind !== "file") {
+      throw new Error(
+        "The dropped item is not a file. Please make sure to drop a valid file."
+      );
+    }
+
+    if (e.dataTransfer.items.length > 1) {
+      throw new Error(
+        "You can only drop one file at a time. Please drop a single file."
+      );
+    }
+
+    const isDirectory = await this.#isDirectory(file);
+    if (isDirectory) {
+      throw new Error(
+        "Directories cannot be uploaded. Please select a single file."
+      );
     }
 
     this.#uploadFile(file);
@@ -61,26 +106,43 @@ export default class VideoUploadController extends Controller {
     formData.append("file", file);
     formData.append("moduleId", this.moduleIdValue);
 
-    const xhr = new XMLHttpRequest();
-
-    xhr.upload.onprogress = (e) => {
+    this.xhr = new XMLHttpRequest();
+    this.xhr.upload.onprogress = (e) => {
       if (e.lengthComputable) {
         const percentComplete = (e.loaded / e.total) * 100;
         this.progressTarget.textContent = `${Math.round(percentComplete)}%`;
       }
     };
 
-    xhr.onload = () => {
-      const response = JSON.parse(xhr.response);
-      this.#displayFeedback(response.message, xhr.status);
+    this.xhr.onload = () => {
+      this.#handleXhrResponse(this.xhr.response, this.xhr.status);
+    };
+    this.xhr.onerror = () => {
+      this.#handleXhrResponse(this.xhr.response, this.xhr.status);
+    };
+    this.xhr.onabort = () => {
+      this.#resetUIForFileSelection();
+    };
+    this.xhr.ontimeout = () => {
+      this.#resetUIForFileSelection();
     };
 
-    xhr.onerror = () => {
-      this.#displayFeedback("An error occurred during file upload.", 500);
-    };
+    this.xhr.open("POST", this.urlValue, true);
+    this.xhr.send(formData);
+  }
 
-    xhr.open("POST", this.urlValue, true);
-    xhr.send(formData);
+  #handleXhrResponse(xhrResponse, xhrStatus) {
+    this.feedbackTarget.classList.toggle("text-success", xhrStatus === 200);
+    this.feedbackTarget.classList.toggle("text-danger", xhrStatus !== 200);
+
+    const message = xhrResponse ? JSON.parse(xhrResponse)?.message : null;
+    this.feedbackTarget.textContent = message || "Internal server error";
+
+    this.#resetUIForFileSelection();
+  }
+
+  #isXhrBusy() {
+    return this.xhr && this.xhr.readyState > 0 && this.xhr.readyState < 4;
   }
 
   #updateUIForFileSelection(filename) {
@@ -97,33 +159,35 @@ export default class VideoUploadController extends Controller {
   }
 
   #toggleUI(showDefault) {
-    const action = showDefault ? "remove" : "add";
-    this.chooseFileButtonTarget.classList[action]("d-none");
-    this.videoParagraphTarget.classList[action]("d-none");
-    this.uploadImageTarget.classList[action]("d-none");
-    this.spinnerTarget.classList[showDefault ? "add" : "remove"]("d-none");
+    const toggleClass = (element, add) => {
+      element.classList[add ? "add" : "remove"]("d-none");
+    };
+
+    toggleClass(this.fileSelectionButtonTarget, !showDefault);
+    toggleClass(this.videoParagraphTarget, !showDefault);
+    toggleClass(this.uploadImageTarget, !showDefault);
+
+    toggleClass(this.abortButtonTarget, showDefault);
+    toggleClass(this.spinnerTarget, showDefault);
   }
 
-  #displayFeedback(message, status) {
-    this.feedbackTarget.classList.toggle("text-success", status === 200);
-    this.feedbackTarget.classList.toggle("text-danger", status !== 200);
-    this.feedbackTarget.textContent = message || "Internal server error";
-    this.#resetUIForFileSelection();
+  #toggleDropzoneBackground(toggle) {
+    this.dropzoneTarget.style.backgroundColor = toggle ? "#e5e5e5" : "#f8f9fa";
   }
 
-  async #isFile(file) {
+  async #isDirectory(file) {
     return new Promise((resolve) => {
       const fr = new FileReader();
 
       fr.onprogress = (e) => {
         if (e.loaded > 50) {
           fr.abort();
-          resolve(true);
+          resolve(false);
         }
       };
 
-      fr.onload = () => resolve(true);
-      fr.onerror = () => resolve(false);
+      fr.onload = () => resolve(fasle);
+      fr.onerror = () => resolve(true);
 
       fr.readAsArrayBuffer(file);
     });

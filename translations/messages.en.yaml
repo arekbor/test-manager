@@ -67,5 +67,6 @@ question.data.table.title: Questions
 question.data.table.answersCount.label: Count of answers
 
 #video upload
-video.upload.choose.video.button: Choose video file
-video.upload.choose.video.paragraph: or drop the video file here
+video.upload.file.selection.button: Choose video file
+video.upload.file.selection.paragraph: or drop the video file here
+video.upload.video.abort.button: Abort

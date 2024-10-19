@@ -67,5 +67,6 @@ question.data.table.title: Pytania
 question.data.table.answersCount.label: Liczba pytań
 
 #video upload
-video.upload.choose.video.button: Wybierz plik wideo
-video.upload.choose.video.paragraph: lub upuść plik wideo tutaj
+video.upload.file.selection.button: Wybierz plik wideo
+video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
+video.upload.video.abort.button: Przerwij

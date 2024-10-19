@@ -33,8 +33,6 @@ class VideoController extends AbstractController
             ], Response::HTTP_NOT_FOUND);
         }
 
-        sleep(10);
-
         return new JsonResponse([
             'message' => 'File uploaded successfully'
         ], Response::HTTP_OK);
