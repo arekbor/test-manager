@@ -65,3 +65,8 @@ question.data.table.actions.label: Akcje
 question.data.table.home.label: Lista modułów
 question.data.table.title: Pytania
 question.data.table.answersCount.label: Liczba pytań
+
+#video upload
+video.upload.file.selection.button: Wybierz plik wideo
+video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
+video.upload.video.abort.button: Przerwij

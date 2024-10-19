@@ -1,37 +1,37 @@
 {
-    "controllers": {
-        "@kreyu/data-table-bundle": {
-            "personalization": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "batch": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "state": {
-                "enabled": true,
-                "fetch": "eager"
-            }
-        },
-        "@symfony/ux-live-component": {
-            "live": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "@symfony/ux-live-component/dist/live.min.css": true
-                }
-            }
-        },
-        "@symfony/ux-toggle-password": {
-            "toggle-password": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "@symfony/ux-toggle-password/dist/style.min.css": true
-                }
-            }
-        }
+  "controllers": {
+    "@kreyu/data-table-bundle": {
+      "personalization": {
+        "enabled": true,
+        "fetch": "eager"
+      },
+      "batch": {
+        "enabled": true,
+        "fetch": "eager"
+      },
+      "state": {
+        "enabled": true,
+        "fetch": "eager"
+      }
     },
-    "entrypoints": []
+    "@symfony/ux-live-component": {
+      "live": {
+        "enabled": true,
+        "fetch": "eager",
+        "autoimport": {
+          "@symfony/ux-live-component/dist/live.min.css": true
+        }
+      }
+    },
+    "@symfony/ux-toggle-password": {
+      "toggle-password": {
+        "enabled": true,
+        "fetch": "eager",
+        "autoimport": {
+          "@symfony/ux-toggle-password/dist/style.min.css": true
+        }
+      }
+    }
+  },
+  "entrypoints": []
 }

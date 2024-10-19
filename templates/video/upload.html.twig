@@ -5,5 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    Video Upload
+    <div class="mt-5">
+        {{ component('VideoUpload', { moduleId: moduleId, defer: true }) }}
+    </div>
 {% endblock %}
