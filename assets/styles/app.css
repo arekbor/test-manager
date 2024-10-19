@@ -1,0 +1,16 @@
+:root {
+  --navbar-height: 60px;
+}
+
+.navbar {
+  height: var(--navbar-height) !important;
+}
+
+.drop-zone-container {
+  height: calc(100vh - var(--navbar-height));
+}
+
+.drop-zone-spinner {
+  width: 3rem;
+  height: 3rem;
+}

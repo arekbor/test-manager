@@ -65,3 +65,7 @@ question.data.table.actions.label: Actions
 question.data.table.home.label: List of modules
 question.data.table.title: Questions
 question.data.table.answersCount.label: Count of answers
+
+#video upload
+video.upload.choose.video.button: Choose video file
+video.upload.choose.video.paragraph: or drop the video file here
