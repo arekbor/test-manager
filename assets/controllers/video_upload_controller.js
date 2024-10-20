@@ -23,7 +23,7 @@ export default class VideoUploadController extends Controller {
 
   handleDragOver(e) {
     e.preventDefault();
-    if (this.#isXhrBusy()) {
+    if (this.#isUploading()) {
       return;
     }
 
@@ -38,7 +38,7 @@ export default class VideoUploadController extends Controller {
 
   handleDragLeave(e) {
     e.preventDefault();
-    if (this.#isXhrBusy()) {
+    if (this.#isUploading()) {
       return;
     }
 
@@ -46,7 +46,7 @@ export default class VideoUploadController extends Controller {
   }
 
   handleFileSelection() {
-    if (this.#isXhrBusy()) {
+    if (this.#isUploading()) {
       return;
     }
 
@@ -54,7 +54,7 @@ export default class VideoUploadController extends Controller {
   }
 
   handleFileInputChange(e) {
-    if (this.#isXhrBusy()) {
+    if (this.#isUploading()) {
       return;
     }
 
@@ -66,7 +66,7 @@ export default class VideoUploadController extends Controller {
 
   async handleFileDrop(e) {
     e.preventDefault();
-    if (this.#isXhrBusy()) {
+    if (this.#isUploading()) {
       return;
     }
 
@@ -77,22 +77,23 @@ export default class VideoUploadController extends Controller {
       throw new Error("No file found in the drop. Please try again.");
     }
 
-    if (e.dataTransfer.items[0]?.kind !== "file") {
+    const items = e.dataTransfer.items;
+
+    if (items[0]?.kind !== "file") {
       throw new Error(
         "The dropped item is not a file. Please make sure to drop a valid file."
       );
     }
 
-    if (e.dataTransfer.items.length > 1) {
+    if (items[0].webkitGetAsEntry().isDirectory) {
       throw new Error(
-        "You can only drop one file at a time. Please drop a single file."
+        "Directories cannot be uploaded. Please select a single file."
       );
     }
 
-    const isDirectory = await this.#isDirectory(file);
-    if (isDirectory) {
+    if (items.length > 1) {
       throw new Error(
-        "Directories cannot be uploaded. Please select a single file."
+        "You can only drop one file at a time. Please drop a single file."
       );
     }
 
@@ -107,6 +108,7 @@ export default class VideoUploadController extends Controller {
     formData.append("moduleId", this.moduleIdValue);
 
     this.xhr = new XMLHttpRequest();
+
     this.xhr.upload.onprogress = (e) => {
       if (e.lengthComputable) {
         const percentComplete = (e.loaded / e.total) * 100;
@@ -141,7 +143,7 @@ export default class VideoUploadController extends Controller {
     this.#resetUIForFileSelection();
   }
 
-  #isXhrBusy() {
+  #isUploading() {
     return this.xhr && this.xhr.readyState > 0 && this.xhr.readyState < 4;
   }
 
@@ -173,23 +175,5 @@ export default class VideoUploadController extends Controller {
 
   #toggleDropzoneBackground(toggle) {
     this.dropzoneTarget.style.backgroundColor = toggle ? "#e5e5e5" : "#f8f9fa";
-  }
-
-  async #isDirectory(file) {
-    return new Promise((resolve) => {
-      const fr = new FileReader();
-
-      fr.onprogress = (e) => {
-        if (e.loaded > 50) {
-          fr.abort();
-          resolve(false);
-        }
-      };
-
-      fr.onload = () => resolve(fasle);
-      fr.onerror = () => resolve(true);
-
-      fr.readAsArrayBuffer(file);
-    });
   }
 }
