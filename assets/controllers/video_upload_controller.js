@@ -1,84 +1,63 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class VideoUploadController extends Controller {
-  static targets = [
-    "input",
-    "dropzone",
-    "progress",
-    "spinner",
-    "fileSelectionButton",
-    "abortButton",
-    "videoParagraph",
-    "uploadImage",
-    "previewFilename",
-    "feedback",
-  ];
-
   static values = {
-    url: String,
+    uploudUrl: String,
     moduleId: String,
   };
 
-  xhr = null;
+  static targets = [
+    "switchable",
+    "fileInput",
+    "previewFilename",
+    "messageFeedback",
+    "dropzone",
+    "progress",
+  ];
 
-  handleDragOver(e) {
+  #xhr = null;
+
+  handleDragOver = (e) => {
     e.preventDefault();
-    if (this.#isUploading()) {
+
+    if (this.#isFileUplouding) {
       return;
     }
+  };
 
-    this.#toggleDropzoneBackground(true);
-  }
-
-  handleAbort() {
-    if (this.xhr) {
-      this.xhr.abort();
-    }
-  }
-
-  handleDragLeave(e) {
+  handleDragLeave = (e) => {
     e.preventDefault();
-    if (this.#isUploading()) {
+  };
+
+  handleFileSelection = () => {
+    if (this.#isFileUplouding) {
       return;
     }
 
-    this.#toggleDropzoneBackground(false);
-  }
+    this.fileInputTarget.click();
+  };
 
-  handleFileSelection() {
-    if (this.#isUploading()) {
-      return;
-    }
-
-    this.inputTarget.click();
-  }
-
-  handleFileInputChange(e) {
-    if (this.#isUploading()) {
+  handleFileInputChange = (e) => {
+    if (this.#isFileUplouding) {
       return;
     }
 
     const file = e.target.files[0];
-    if (file) {
-      this.#uploadFile(file);
+    if (!file) {
+      throw new Error("No file selected in the form.");
     }
-  }
 
-  async handleFileDrop(e) {
+    this.#uploadFile(file);
+  };
+
+  handleFileDrop = async (e) => {
     e.preventDefault();
-    if (this.#isUploading()) {
+
+    if (this.#isFileUplouding) {
       return;
     }
 
-    this.#toggleDropzoneBackground(false);
-
-    const file = e.dataTransfer.files[0];
-    if (!file) {
-      throw new Error("No file found in the drop. Please try again.");
-    }
-
     const items = e.dataTransfer.items;
-
     if (items[0]?.kind !== "file") {
       throw new Error(
         "The dropped item is not a file. Please make sure to drop a valid file."
@@ -97,83 +76,75 @@ export default class VideoUploadController extends Controller {
       );
     }
 
-    this.#uploadFile(file);
-  }
+    const file = e.dataTransfer.files[0];
+    if (!file) {
+      throw new Error("No file found in the drop. Please try again.");
+    }
 
-  #uploadFile(file) {
-    this.#updateUIForFileSelection(file.name);
+    this.#uploadFile(file);
+  };
+
+  handleAbort = () => {
+    if (!this.#xhr) {
+      throw new Error("Xhr was not initialized.");
+    }
+
+    this.#xhr.abort();
+  };
+
+  #uploadFile = (file) => {
+    this.#toggleUI();
+    this.messageFeedbackTarget.textContent = "";
+    this.previewFilenameTarget.textContent = file.name;
+
+    this.#xhr = new XMLHttpRequest();
+
+    this.#xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        this.#updateProgress((e.loaded / e.total) * 100);
+      }
+    };
+
+    this.#xhr.onloadend = () => {
+      this.#toggleUI();
+
+      const response = this.#xhr.response;
+      const message = response ? JSON.parse(response)?.message : null;
+
+      if (message) {
+        this.messageFeedbackTarget.classList.toggle(
+          "text-success",
+          this.#xhr.status === 200
+        );
+
+        this.messageFeedbackTarget.classList.toggle(
+          "text-danger",
+          this.#xhr.status !== 200
+        );
+
+        this.messageFeedbackTarget.textContent = message;
+      }
+    };
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("moduleId", this.moduleIdValue);
 
-    this.xhr = new XMLHttpRequest();
+    this.#xhr.open("POST", this.uploudUrlValue, true);
+    this.#xhr.send(formData);
+  };
 
-    this.xhr.upload.onprogress = (e) => {
-      if (e.lengthComputable) {
-        const percentComplete = (e.loaded / e.total) * 100;
-        this.progressTarget.textContent = `${Math.round(percentComplete)}%`;
-      }
-    };
+  #toggleUI = () => {
+    this.switchableTargets.forEach((target) => {
+      target.classList.toggle("d-none");
+    });
+  };
 
-    this.xhr.onload = () => {
-      this.#handleXhrResponse(this.xhr.response, this.xhr.status);
-    };
-    this.xhr.onerror = () => {
-      this.#handleXhrResponse(this.xhr.response, this.xhr.status);
-    };
-    this.xhr.onabort = () => {
-      this.#resetUIForFileSelection();
-    };
-    this.xhr.ontimeout = () => {
-      this.#resetUIForFileSelection();
-    };
-
-    this.xhr.open("POST", this.urlValue, true);
-    this.xhr.send(formData);
+  get #isFileUplouding() {
+    return this.#xhr && this.#xhr.readyState > 0 && this.#xhr.readyState < 4;
   }
 
-  #handleXhrResponse(xhrResponse, xhrStatus) {
-    this.feedbackTarget.classList.toggle("text-success", xhrStatus === 200);
-    this.feedbackTarget.classList.toggle("text-danger", xhrStatus !== 200);
-
-    const message = xhrResponse ? JSON.parse(xhrResponse)?.message : null;
-    this.feedbackTarget.textContent = message || "Internal server error";
-
-    this.#resetUIForFileSelection();
-  }
-
-  #isUploading() {
-    return this.xhr && this.xhr.readyState > 0 && this.xhr.readyState < 4;
-  }
-
-  #updateUIForFileSelection(filename) {
-    this.#toggleUI(false);
-    this.previewFilenameTarget.textContent = filename;
-    this.feedbackTarget.textContent = "";
-    this.progressTarget.textContent = "";
-  }
-
-  #resetUIForFileSelection() {
-    this.#toggleUI(true);
-    this.progressTarget.textContent = "";
-    this.previewFilenameTarget.textContent = "";
-  }
-
-  #toggleUI(showDefault) {
-    const toggleClass = (element, add) => {
-      element.classList[add ? "add" : "remove"]("d-none");
-    };
-
-    toggleClass(this.fileSelectionButtonTarget, !showDefault);
-    toggleClass(this.videoParagraphTarget, !showDefault);
-    toggleClass(this.uploadImageTarget, !showDefault);
-
-    toggleClass(this.abortButtonTarget, showDefault);
-    toggleClass(this.spinnerTarget, showDefault);
-  }
-
-  #toggleDropzoneBackground(toggle) {
-    this.dropzoneTarget.style.backgroundColor = toggle ? "#e5e5e5" : "#f8f9fa";
-  }
+  #updateProgress = (progress) => {
+    this.progressTarget.textContent = `${Math.round(progress)}%`;
+  };
 }
