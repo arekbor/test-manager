@@ -71,5 +71,7 @@ video.upload.file.selection.button: Choose video file
 video.upload.file.selection.paragraph: or drop the video file here
 video.upload.video.abort.button: Abort
 
+video.upload.go.to.module.button: Go to module
+
 #validators
 validator.contains.aplanumeric.message: The value should not contain special characters

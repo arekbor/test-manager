@@ -71,5 +71,7 @@ video.upload.file.selection.button: Wybierz plik wideo
 video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
 video.upload.video.abort.button: Przerwij
 
+video.upload.go.to.module.button: Przejdź do modułu
+
 #validators
 validator.contains.aplanumeric.message: Wartość nie powinna zawierać specjalnych znaków
