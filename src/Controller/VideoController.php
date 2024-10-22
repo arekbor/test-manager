@@ -6,6 +6,7 @@ use App\Entity\Module;
 use App\Entity\Video;
 use App\Repository\ModuleRepository;
 use App\Service\VideoService;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -32,12 +33,15 @@ class VideoController extends AbstractController
     }
 
     #[Route('/upload-video')]
-    public function uploadVideo(Request $request, ModuleRepository $moduleRepository): JsonResponse
+    public function uploadVideo(
+        Request $request, 
+        ModuleRepository $moduleRepository,
+        EntityManagerInterface $em): JsonResponse
     {
         $video = new Video();
         $module = $moduleRepository->find($request->get('moduleId'));
         if (!$module) {
-            return $this->jsonResponse("Module not found", Response::HTTP_NOT_FOUND);
+            return $this->jsonResponse("Module not found.", Response::HTTP_NOT_FOUND);
         }
         $video->addModule($module);
         $video->setFile($request->files->get('file'));
@@ -48,12 +52,15 @@ class VideoController extends AbstractController
         }
 
         try {
-            $this->videoService->upload($video);
+            $this->videoService->saveToDisk($video);
         } catch(Exception) {
-            return $this->jsonResponse("Error while uploading the video", Response::HTTP_BAD_REQUEST);
+            return $this->jsonResponse("Error while saving the file.", Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->jsonResponse("File uploaded successfully");
+        $em->persist($video);
+        $em->flush();
+
+        return $this->jsonResponse("File uploaded successfully.");
     }
 
     private function jsonResponse(string $message, int $status = Response::HTTP_OK): JsonResponse
