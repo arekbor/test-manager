@@ -10,13 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as TestManagerAssert;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
-class Module
+class Module extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[TestManagerAssert\ContainsAlphanumeric()]
@@ -45,12 +40,7 @@ class Module
         $this->questions = new ArrayCollection();
         $this->videos = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     public function getName(): ?string
     {
         return $this->name;

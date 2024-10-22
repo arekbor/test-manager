@@ -12,17 +12,10 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
-class Video
+class Video extends BaseEntity
 {   
-    #[Assert\File([
-        'extensions' => ['mp4', 'mov']
-    ])]
+    #[Assert\File(['extensions' => ['mp4', 'mov']])]
     private ?UploadedFile $file = null;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $filename = null;
@@ -37,12 +30,7 @@ class Video
     {
         $this->modules = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     public function getFilename(): ?string
     {
         return $this->filename;
