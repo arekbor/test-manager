@@ -7,6 +7,7 @@ use App\Entity\Video;
 use App\Repository\ModuleRepository;
 use App\Service\VideoService;
 use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/video')]
-class VideoController extends BaseController
+class VideoController extends AbstractController
 {
     public function __construct(
         private VideoService $videoService,
@@ -53,5 +54,10 @@ class VideoController extends BaseController
         }
 
         return $this->jsonResponse("File uploaded successfully");
+    }
+
+    private function jsonResponse(string $message, int $status = Response::HTTP_OK): JsonResponse
+    {
+        return new JsonResponse(['message' => $message], $status);
     }
 }
