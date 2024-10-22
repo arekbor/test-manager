@@ -17,7 +17,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ModuleDataTableType extends AbstractDataTableType
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator) {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator
+    ) {
     }
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void

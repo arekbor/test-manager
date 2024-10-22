@@ -6,7 +6,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class LocaleService 
 {
-    public function __construct(private ParameterBagInterface $params) { 
+    public function __construct(
+        private ParameterBagInterface $params
+    ) { 
     }
 
     public function getAllowedLocales(): array

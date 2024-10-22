@@ -8,8 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Count;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class QuestionType extends AbstractType
@@ -23,9 +21,6 @@ class QuestionType extends AbstractType
                 'attr' => [
                     'placeholder' => 'question.type.content.placeholder',
                     'rows' => 5,
-                ],
-                'constraints' => [
-                    new NotBlank(),
                 ]
             ])
             ->add('answers', LiveCollectionType::class, [
@@ -46,9 +41,6 @@ class QuestionType extends AbstractType
                     'attr' => [
                         'class' => 'btn btn-danger'
                     ]
-                ],
-                'constraints' => [
-                    new Count(min: 1)
                 ]
             ])
             ->add('submit', SubmitType::class, [

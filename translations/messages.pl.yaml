@@ -70,3 +70,6 @@ question.data.table.answersCount.label: Liczba pytań
 video.upload.file.selection.button: Wybierz plik wideo
 video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
 video.upload.video.abort.button: Przerwij
+
+#validators
+validator.contains.aplanumeric.message: Wartość nie powinna zawierać specjalnych znaków

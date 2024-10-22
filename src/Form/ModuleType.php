@@ -10,11 +10,12 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ModuleType extends AbstractType
 {
-    public function __construct(private LocaleService $localeService) {
+    public function __construct(
+        private LocaleService $localeService
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,10 +23,7 @@ class ModuleType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'module.type.name.label',
-                'empty_data' => '',
-                'constraints' => [
-                    new NotBlank(),
-                ]
+                'empty_data' => ''
             ])
             ->add('language', ChoiceType::class, [
                 'label' => 'module.type.language.label',

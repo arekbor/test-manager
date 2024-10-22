@@ -3,38 +3,55 @@
 namespace App\Controller;
 
 use App\Entity\Module;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Video;
+use App\Repository\ModuleRepository;
+use App\Service\VideoService;
+use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/video')]
-class VideoController extends AbstractController
+class VideoController extends BaseController
 {
+    public function __construct(
+        private VideoService $videoService,
+        private ValidatorInterface $validator,
+        private ParameterBagInterface $params,
+    ) {
+    }
+
     #[Route('/upload/{id}')]
     public function upload(Module $module): Response
     {
-        return $this->render('video/upload.html.twig', [
-            'moduleId' => $module->getId()
-        ]);
+        return $this->render('video/upload.html.twig', ['moduleId' => $module->getId()]);
     }
 
-    //TODO: this function is not finished
     #[Route('/upload-video')]
-    public function uploadVideo(Request $request): JsonResponse
+    public function uploadVideo(Request $request, ModuleRepository $moduleRepository): JsonResponse
     {
-        $moduleId = $request->get('moduleId');
-        $file = $request->files->get('file');
+        $video = new Video();
+        $module = $moduleRepository->find($request->get('moduleId'));
+        if (!$module) {
+            return $this->jsonResponse("Module not found", Response::HTTP_NOT_FOUND);
+        }
+        $video->addModule($module);
+        $video->setFile($request->files->get('file'));
 
-        if (!$file || !$moduleId) {
-            return new JsonResponse([
-                'message' => 'File or moduleId not found in form'
-            ], Response::HTTP_NOT_FOUND);
+        $errors = $this->validator->validate($video);
+        if (count($errors) > 0) {
+            return $this->jsonResponse($errors->get(0)->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse([
-            'message' => 'File uploaded successfully'
-        ], Response::HTTP_OK);
+        try {
+            $this->videoService->upload($video);
+        } catch(Exception) {
+            return $this->jsonResponse("Error while uplouding a video", Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->jsonResponse("File uploaded successfully");
     }
 }

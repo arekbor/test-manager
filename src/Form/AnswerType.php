@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AnswerType extends AbstractType
 {
@@ -21,9 +20,6 @@ class AnswerType extends AbstractType
                 'attr' => [
                     'placeholder' => 'answer.type.content.placeholder',
                     'rows' => 5
-                ],
-                'constraints' => [
-                    new NotBlank()
                 ]
             ])
             ->add('correct', CheckboxType::class, [
