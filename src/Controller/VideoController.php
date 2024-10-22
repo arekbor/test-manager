@@ -50,7 +50,7 @@ class VideoController extends AbstractController
         try {
             $this->videoService->upload($video);
         } catch(Exception) {
-            return $this->jsonResponse("Error while uplouding a video", Response::HTTP_BAD_REQUEST);
+            return $this->jsonResponse("Error while uploading the video", Response::HTTP_BAD_REQUEST);
         }
 
         return $this->jsonResponse("File uploaded successfully");
