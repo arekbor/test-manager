@@ -13,12 +13,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/create/{moduleId}')]
-    public function create(
-        #[MapEntity(id: 'moduleId')] Module $module): Response
+    public function create(#[MapEntity(id: 'moduleId')] Module $module): Response
     {
-        return $this->render('question/create.html.twig', [
-            'module' => $module
-        ]);
+        return $this->render('question/create.html.twig', ['module' => $module]);
     }
     
     #[Route('/edit/{moduleId}/{questionId}')]
@@ -26,9 +23,6 @@ class QuestionController extends AbstractController
         #[MapEntity(id: 'moduleId')] Module $module, 
         #[MapEntity(id: 'questionId')] Question $question): Response
     {
-        return $this->render('question/edit.html.twig', [
-            'module' => $module,
-            'question' => $question
-        ]);
+        return $this->render('question/edit.html.twig', ['module' => $module, 'question' => $question]);
     }
 }

@@ -15,10 +15,7 @@ class HomeController extends AbstractController
     use DataTableFactoryAwareTrait;
 
     #[Route('/home')]
-    public function index(
-        Request $request, 
-        ModuleRepository $moduleRepository
-    ): Response
+    public function index(Request $request, ModuleRepository $moduleRepository): Response
     {
         $query = $moduleRepository->createQueryBuilder('m');
 

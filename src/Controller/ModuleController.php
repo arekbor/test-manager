@@ -23,11 +23,7 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/{id}')]
-    public function details(
-        Module $module, 
-        Request $request,
-        QuestionRepository $questionRepository
-    ): Response
+    public function details(Module $module, Request $request, QuestionRepository $questionRepository): Response
     {
         $moduleId = $module->getId();
         $query = $questionRepository->findByModuleId($moduleId);
@@ -37,9 +33,6 @@ class ModuleController extends AbstractController
 
         $dataTable->handleRequest($request);
 
-        return $this->render('module/details.html.twig', [
-            'module' => $module,
-            'questions' => $dataTable->createView()
-        ]);
+        return $this->render('module/details.html.twig', ['module' => $module, 'questions' => $dataTable->createView()]);
     }
 }

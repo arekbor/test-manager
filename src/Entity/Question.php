@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Type;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -17,12 +19,18 @@ class Question
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     private ?string $content = null;
 
     /**
      * @var Collection<int, Answer>
      */
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist'])]
+    #[Assert\Count(min: 1)]
+    #[Assert\All([
+        new Type(Answer::class)
+    ])]
+    #[Assert\Valid()]
     private Collection $answers;
 
     /**
