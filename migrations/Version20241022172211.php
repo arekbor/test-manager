@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241003115240 extends AbstractMigration
+final class Version20241022172211 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,6 +24,7 @@ final class Version20241003115240 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE module_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE question_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE security_user_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE video_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE answer (id INT NOT NULL, question_id INT DEFAULT NULL, content TEXT NOT NULL, correct BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_DADD4A251E27F6BF ON answer (question_id)');
         $this->addSql('CREATE TABLE module (id INT NOT NULL, name VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
@@ -33,9 +34,15 @@ final class Version20241003115240 extends AbstractMigration
         $this->addSql('CREATE TABLE question (id INT NOT NULL, content TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE security_user (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON security_user (email)');
+        $this->addSql('CREATE TABLE video (id INT NOT NULL, filename VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE video_module (video_id INT NOT NULL, module_id INT NOT NULL, PRIMARY KEY(video_id, module_id))');
+        $this->addSql('CREATE INDEX IDX_347386E529C1004E ON video_module (video_id)');
+        $this->addSql('CREATE INDEX IDX_347386E5AFC2B591 ON video_module (module_id)');
         $this->addSql('ALTER TABLE answer ADD CONSTRAINT FK_DADD4A251E27F6BF FOREIGN KEY (question_id) REFERENCES question (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE module_question ADD CONSTRAINT FK_D2379AB0AFC2B591 FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE module_question ADD CONSTRAINT FK_D2379AB01E27F6BF FOREIGN KEY (question_id) REFERENCES question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE video_module ADD CONSTRAINT FK_347386E529C1004E FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE video_module ADD CONSTRAINT FK_347386E5AFC2B591 FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     public function down(Schema $schema): void
@@ -46,13 +53,18 @@ final class Version20241003115240 extends AbstractMigration
         $this->addSql('DROP SEQUENCE module_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE question_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE security_user_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE video_id_seq CASCADE');
         $this->addSql('ALTER TABLE answer DROP CONSTRAINT FK_DADD4A251E27F6BF');
         $this->addSql('ALTER TABLE module_question DROP CONSTRAINT FK_D2379AB0AFC2B591');
         $this->addSql('ALTER TABLE module_question DROP CONSTRAINT FK_D2379AB01E27F6BF');
+        $this->addSql('ALTER TABLE video_module DROP CONSTRAINT FK_347386E529C1004E');
+        $this->addSql('ALTER TABLE video_module DROP CONSTRAINT FK_347386E5AFC2B591');
         $this->addSql('DROP TABLE answer');
         $this->addSql('DROP TABLE module');
         $this->addSql('DROP TABLE module_question');
         $this->addSql('DROP TABLE question');
         $this->addSql('DROP TABLE security_user');
+        $this->addSql('DROP TABLE video');
+        $this->addSql('DROP TABLE video_module');
     }
 }

@@ -11,13 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Type;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
-class Question
+class Question extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $content = null;
@@ -44,12 +39,7 @@ class Question
         $this->answers = new ArrayCollection();
         $this->modules = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     public function getContent(): ?string
     {
         return $this->content;

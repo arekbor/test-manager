@@ -9,13 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: SecurityUserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
+class SecurityUser extends BaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -30,12 +25,7 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     public function getEmail(): ?string
     {
         return $this->email;

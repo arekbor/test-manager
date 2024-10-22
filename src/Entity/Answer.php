@@ -8,13 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnswerRepository::class)]
-class Answer
+class Answer extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $content = null;
@@ -24,11 +19,6 @@ class Answer
 
     #[ORM\ManyToOne(inversedBy: 'answers')]
     private ?Question $question = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getContent(): ?string
     {
