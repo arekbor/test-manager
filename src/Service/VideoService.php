@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class VideoService
 {
-    private string $uploadDirectory;
+    private string $basePath;
 
     public function __construct(
         private ParameterBagInterface $params
     ) {
-        $this->uploadDirectory = $this->params->get('app.video.upload.directory.path');
-        if (empty($this->uploadDirectory)) {
+        $this->basePath = $this->params->get('app.video.upload.base.path');
+        if (empty($this->basePath)) {
             throw new Exception("Missing directory path for video uploads.");
         }
     }
@@ -28,7 +28,7 @@ class VideoService
             throw new Exception("File already exists.");
         }
 
-        $video->getFile()->move($this->uploadDirectory, $video->getFilename());
+        $video->getFile()->move($this->basePath, $video->getFilename());
     }
 
     public function getFile(Video $video): UploadedFile
@@ -42,16 +42,16 @@ class VideoService
             throw new Exception("Filename not found");
         }
 
-        return $this->uploadDirectory . DIRECTORY_SEPARATOR . $filename;
+        return $this->basePath . DIRECTORY_SEPARATOR . $filename;
     }
 
     private function validateUploadDirectory(): void
     {
-        if (!is_dir($this->uploadDirectory)) {
+        if (!is_dir($this->basePath)) {
             throw new Exception("Upload directory does not exist.");
         }
 
-        if (!is_writable($this->uploadDirectory)) {
+        if (!is_writable($this->basePath)) {
             throw new Exception("Upload directory is not writable.");
         }
     }
