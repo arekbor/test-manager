@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,15 +53,25 @@ class VideoController extends AbstractController
         }
 
         try {
-            $this->videoService->saveToDisk($video);
+            $this->videoService->uploadFile($video);
         } catch(Exception) {
-            return $this->jsonResponse("Error while saving the file.", Response::HTTP_BAD_REQUEST);
+            return $this->jsonResponse("Error while uploading the file.", Response::HTTP_BAD_REQUEST);
         }
 
         $em->persist($video);
         $em->flush();
 
         return $this->jsonResponse("File uploaded successfully.");
+    }
+
+    #[Route('/watch/{id}')]
+    public function watch(Video $video)
+    {
+        $file = $this->videoService->getFile($video);
+        $response = new BinaryFileResponse($file->getPathname());
+        $response->headers->set('Content-Type', $file->getMimeType());
+
+        return $response;
     }
 
     private function jsonResponse(string $message, int $status = Response::HTTP_OK): JsonResponse

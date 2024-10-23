@@ -2,9 +2,7 @@
 
 {% block body %}
     <div class="mt-2">
-        <twig:TableTitle>
-            {{ 'module.data.table.title'|trans }}
-        </twig:TableTitle>
+        {{ component('TableTitle', { title: 'module.data.table.title'|trans, defer: true }) }}
         {{ data_table_action_bar(modules) }}
         {{ data_table_table(modules) }}
         <div class="mt-3">

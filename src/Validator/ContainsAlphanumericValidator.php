@@ -19,7 +19,7 @@ class ContainsAlphanumericValidator extends ConstraintValidator
             return;
         }
 
-        if(preg_match('/^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/', $value)) {
+        if(preg_match('/^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]+$/', $value)) {
             return;
         }
 
