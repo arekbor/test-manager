@@ -51,6 +51,7 @@ module.data.table.id.label: Id
 module.data.table.name.label: Name
 module.data.table.language.label: Language
 module.data.table.questionsCount.label: Count of questions
+module.data.table.videosCount.label: Count of video files
 module.data.table.title: Modules
 module.data.table.addQuestion.label: Add question
 module.data.table.uploadVideo.label: Upload video
@@ -59,14 +60,21 @@ module.data.table.uploadVideo.label: Upload video
 question.data.table.id.label: Id
 question.data.table.content.label: Content
 question.data.table.create.label: Create question
-question.data.table.uploadVideo.label: Upload video
 question.data.table.details.label: Question details
 question.data.table.actions.label: Actions
 question.data.table.home.label: List of modules
 question.data.table.title: Questions
 question.data.table.answersCount.label: Count of answers
 
-#video upload
+#video.data.table
+video.data.table.uploadVideo.label: Upload video
+video.data.table.delete.label: Delete video
+video.data.table.id.label: Id
+video.data.table.video.label: Video
+video.data.table.actions.label: Actions
+video.data.table.title: Video files
+
+#video
 video.upload.file.selection.button: Choose video file
 video.upload.file.selection.paragraph: or drop the video file here
 video.upload.video.abort.button: Abort

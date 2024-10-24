@@ -12,4 +12,13 @@ class VideoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Video::class);
     }
+
+    public function findByModuleId(int $moduleId)
+    {
+        return $this
+            ->createQueryBuilder('v')
+            ->innerJoin('v.modules', 'm')
+            ->where('m.id = :module_id')
+            ->setParameter('module_id', $moduleId);
+    }
 }

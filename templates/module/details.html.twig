@@ -6,22 +6,21 @@
 
 {% block body %}
     <div class="mt-2">
-        {{ component('TableTitle', { title: 'question.data.table.title'|trans, defer: true }) }}
-        {{ data_table_action_bar(questions) }}
-        {{ data_table_table(questions) }}
+        {{ component('HeaderBreakLine', { title: 'question.data.table.title'|trans, defer: true }) }}
+        {{ data_table_action_bar(question_data_table_view) }}
+        {{ data_table_table(question_data_table_view) }}
         <div class="mt-3">
-            {{ data_table_pagination(questions) }}
+            {{ data_table_pagination(question_data_table_view) }}
         </div>
+    </div>
 
-        {# Temporary #}
-        <div class="d-flex justify-content-around">
-            {% for video in module.videos %}
-                <video width="320" height="240" controls>
-                    <source src="{{ path('app_video_watch', { id: video.id }) }}" />
-                </video>
-            {% endfor %}
-        </div>
+    <div class="mt-5">
+        {{ component('HeaderBreakLine', { title: 'video.data.table.title'|trans, defer: true }) }}
+        {{ data_table_action_bar(video_data_table_view) }}
+        {{ data_table_table(video_data_table_view) }}
+    </div>
 
+    <div class="mt-5">
         {{ component('ModuleForm', { moduleProp: module, defer: true }) }}
     </div>
 {% endblock %}

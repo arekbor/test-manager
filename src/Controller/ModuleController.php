@@ -3,19 +3,17 @@
 namespace App\Controller;
 
 use App\DataTable\Type\QuestionDataTableType;
+use App\DataTable\Type\VideoDataTableType;
 use App\Entity\Module;
 use App\Repository\QuestionRepository;
-use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\VideoRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/module')]
-class ModuleController extends AbstractController
+class ModuleController extends BaseDataTableController
 {
-    use DataTableFactoryAwareTrait;
-
     #[Route('/create')]
     public function create(): Response
     {
@@ -23,16 +21,26 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/{id}')]
-    public function details(Module $module, Request $request, QuestionRepository $questionRepository): Response
+    public function details(
+        Module $module, 
+        Request $request, 
+        QuestionRepository $questionRepository,
+        VideoRepository $videoRepository
+    ): Response
     {
         $moduleId = $module->getId();
-        $query = $questionRepository->findByModuleId($moduleId);
-        $dataTable = $this->createDataTable(QuestionDataTableType::class, $query, [
-            'module_id' => $moduleId
+
+        $questionsQuery = $questionRepository->findByModuleId($moduleId);
+        $videosQuery = $videoRepository->findByModuleId($moduleId);
+
+        return $this->render('module/details.html.twig', [
+            'module' => $module, 
+            'question_data_table_view' => $this->createDataTableView(QuestionDataTableType::class, $request, $questionsQuery, [
+                'module_id' => $moduleId
+            ]),
+            'video_data_table_view' => $this->createDataTableView(VideoDataTableType::class, $request, $videosQuery, [
+                'module_id' => $moduleId
+            ])
         ]);
-
-        $dataTable->handleRequest($request);
-
-        return $this->render('module/details.html.twig', ['module' => $module, 'questions' => $dataTable->createView()]);
     }
 }
