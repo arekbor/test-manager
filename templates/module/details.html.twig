@@ -5,22 +5,28 @@
 {% endblock %}
 
 {% block body %}
-    <div class="mt-2">
-        {{ component('HeaderBreakLine', { title: 'question.data.table.title'|trans, defer: true }) }}
-        {{ data_table_action_bar(question_data_table_view) }}
-        {{ data_table_table(question_data_table_view) }}
-        <div class="mt-3">
+    <div class="card mt-2">
+        <div class="card-header">
+            {{ 'question.data.table.title'|trans }}
+        </div>
+        <div class="card-body p-0">
+            {{ data_table_action_bar(question_data_table_view) }}
+            {{ data_table_table(question_data_table_view) }}
             {{ data_table_pagination(question_data_table_view) }}
         </div>
     </div>
 
-    <div class="mt-5">
-        {{ component('HeaderBreakLine', { title: 'video.data.table.title'|trans, defer: true }) }}
-        {{ data_table_action_bar(video_data_table_view) }}
-        {{ data_table_table(video_data_table_view) }}
+    <div class="card mt-2">
+        <div class="card-header">
+            {{ 'video.data.table.title'|trans }}
+        </div>
+        <div class="card-body p-0">
+            {{ data_table_action_bar(video_data_table_view) }}
+            {{ data_table_table(video_data_table_view) }}
+        </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-3">
         {{ component('ModuleForm', { moduleProp: module, defer: true }) }}
     </div>
 {% endblock %}
