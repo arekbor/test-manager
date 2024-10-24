@@ -34,12 +34,6 @@ class QuestionDataTableType extends AbstractDataTableType
                 'href' => $this->urlGenerator->generate('app_question_create', [ 
                     'moduleId' => $options['module_id'] 
                 ])
-            ])
-            ->addAction('uploadVideo', ButtonActionType::class, [
-                'label' => 'question.data.table.uploadVideo.label',
-                'href' => $this->urlGenerator->generate('app_video_upload', [ 
-                    'id' => $options['module_id'] 
-                ])
             ]);
             
         $builder

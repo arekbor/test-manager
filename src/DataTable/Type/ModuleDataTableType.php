@@ -84,6 +84,10 @@ class ModuleDataTableType extends AbstractDataTableType
             ->addColumn('questionsCount', TextColumnType::class, [
                 'label' => 'module.data.table.questionsCount.label',
                 'getter' => fn (Module $module) => count($module->getQuestions())
+            ])
+            ->addColumn('videosCount', TextColumnType::class, [
+                'label' => 'module.data.table.videosCount.label',
+                'getter' => fn (Module $module) => count($module->getVideos())
             ]);
 
         $builder
