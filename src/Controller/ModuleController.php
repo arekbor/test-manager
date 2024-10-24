@@ -7,17 +7,13 @@ use App\DataTable\Type\VideoDataTableType;
 use App\Entity\Module;
 use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;
-use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/module')]
-class ModuleController extends AbstractController
+class ModuleController extends BaseDataTableController
 {
-    use DataTableFactoryAwareTrait;
-
     #[Route('/create')]
     public function create(): Response
     {
@@ -35,21 +31,16 @@ class ModuleController extends AbstractController
         $moduleId = $module->getId();
 
         $questionsQuery = $questionRepository->findByModuleId($moduleId);
-        $questionsDataTable = $this->createDataTable(QuestionDataTableType::class, $questionsQuery, [
-            'module_id' => $moduleId
-        ]);
-        $questionsDataTable->handleRequest($request);
-
         $videosQuery = $videoRepository->findByModuleId($moduleId);
-        $videosDataTable = $this->createDataTable(VideoDataTableType::class, $videosQuery, [
-            'module_id' => $moduleId
-        ]);
-        $videosDataTable->handleRequest($request);
 
         return $this->render('module/details.html.twig', [
             'module' => $module, 
-            'questions' => $questionsDataTable->createView(),
-            'videos' => $videosDataTable->createView()
+            'question_data_table_view' => $this->createDataTableView(QuestionDataTableType::class, $request, $questionsQuery, [
+                'module_id' => $moduleId
+            ]),
+            'video_data_table_view' => $this->createDataTableView(VideoDataTableType::class, $request, $videosQuery, [
+                'module_id' => $moduleId
+            ])
         ]);
     }
 }
