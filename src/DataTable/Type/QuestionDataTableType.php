@@ -11,17 +11,10 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
-use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class QuestionDataTableType extends AbstractDataTableType
+class QuestionDataTableType extends BaseDataTableType
 {
-    public function __construct(
-        private UrlGeneratorInterface $urlGenerator
-    ) {
-    }
-
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
