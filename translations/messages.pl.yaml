@@ -52,9 +52,11 @@ module.data.table.name.label: Nazwa
 module.data.table.language.label: Język
 module.data.table.questionsCount.label: Liczba pytań
 module.data.table.videosCount.label: Liczba plików wideo
-module.data.table.title: Moduły
 module.data.table.addQuestion.label: Dodaj pytanie
 module.data.table.uploadVideo.label: Wrzuć wideo
+
+module.details.tabQuestions: Pytania
+module.details.tabVideos: Pliki wideo
 
 #question.data.table
 question.data.table.id.label: Id
@@ -63,7 +65,6 @@ question.data.table.create.label: Stwórz pytanie
 question.data.table.details.label: Szczegóły pytania
 question.data.table.actions.label: Akcje
 question.data.table.home.label: Lista modułów
-question.data.table.title: Pytania
 question.data.table.answersCount.label: Liczba pytań
 
 #video.data.table
@@ -72,7 +73,6 @@ video.data.table.delete.label: Usuń wideo
 video.data.table.id.label: Id
 video.data.table.video.label: Wideo
 video.data.table.actions.label: Akcje
-video.data.table.title: Pliki wideo
 
 #video
 video.upload.file.selection.button: Wybierz plik wideo
