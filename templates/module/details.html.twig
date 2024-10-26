@@ -32,16 +32,13 @@
             </div>
 
             <div class="card-body tab-content p-0">
+
                 <div class="card tab-pane fade" id="tabQuestions">
-                    {{ data_table_action_bar(question_data_table_view) }}
-                    {{ data_table_table(question_data_table_view) }}
-                    {{ data_table_pagination(question_data_table_view) }}
+                    {{ data_table(question_data_table_view) }}
                 </div>
 
                 <div class="card tab-pane fade" id="tabVideos">
-                    {{ data_table_action_bar(video_data_table_view) }}
-                    {{ data_table_table(video_data_table_view) }}
-                    {{ data_table_pagination(video_data_table_view) }}
+                    {{ data_table(video_data_table_view) }}
                 </div>
             </div>
 

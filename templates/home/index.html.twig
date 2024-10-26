@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="mt-3">
-        {{ data_table_action_bar(module_data_table_view) }}
-        {{ data_table_table(module_data_table_view) }}
-        {{ data_table_pagination(module_data_table_view) }}
+    <div class="card">
+        {{ data_table(module_data_table_view) }}
     </div>
 {% endblock %}
