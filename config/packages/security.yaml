@@ -21,7 +21,7 @@ security:
         max_attempts: 2
 
       logout:
-        path: /auth/logout
+        path: app_auth_logout
         target: app_auth_login
         clear_site_data:
           - cookies
