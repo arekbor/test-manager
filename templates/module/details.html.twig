@@ -5,15 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <div {{ stimulus_controller('module_details') }}>
+    <div >
         <div class="card">
             <div class="card-header nav nav-tabs p-0">
                 <li class="nav-item">
                     <button
-                        class="nav-link"
+                        class="nav-link active"
                         data-bs-toggle="tab" 
                         data-bs-target="#tabQuestions"
-                        {{ stimulus_target('module_details', 'tabButton') }}
                     >
                         {{ 'module.details.tabQuestions'|trans }}
                     </button>
@@ -24,7 +23,6 @@
                         class="nav-link"
                         data-bs-toggle="tab" 
                         data-bs-target="#tabVideos"
-                        {{ stimulus_target('module_details', 'tabButton') }}
                     >
                         {{ 'module.details.tabVideos'|trans }}
                     </button>
@@ -32,8 +30,7 @@
             </div>
 
             <div class="card-body tab-content p-0">
-
-                <div class="card tab-pane fade" id="tabQuestions">
+                <div class="card tab-pane fade show active" id="tabQuestions">
                     {{ data_table(question_data_table_view) }}
                 </div>
 
