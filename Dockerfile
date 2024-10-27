@@ -1,7 +1,6 @@
 FROM php:8.3.12-apache
 
 RUN a2enmod rewrite
-RUN a2enmod headers
 
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget libpq-dev acl --no-install-recommends \

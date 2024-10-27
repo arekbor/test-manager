@@ -27,7 +27,6 @@
     "symfony/uid": "7.1.*",
     "symfony/ux-live-component": "^2.19",
     "symfony/ux-toggle-password": "^2.20",
-    "symfony/ux-turbo": "^2.21",
     "symfony/ux-twig-component": "^2.19",
     "symfony/yaml": "7.1.*",
     "twig/extra-bundle": "^2.12|^3.0",
