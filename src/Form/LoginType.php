@@ -40,9 +40,6 @@ class LoginType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => 'token',
             'csrf_token_id' => 'authenticate',
-            'attr' => [
-                'data-turbo' => 'false'
-            ]
         ]);
     }
 }
