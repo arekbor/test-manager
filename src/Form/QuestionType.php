@@ -47,7 +47,6 @@ class QuestionType extends AbstractType
                 'label' => 'submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
-                    'data-loading' => 'addAttribute(disabled)',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'submit',
                 ]
