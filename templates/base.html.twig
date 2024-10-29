@@ -6,6 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="turbo-cache-control" content="no-cache" />
         
         <title>
             {% block title %} 
@@ -20,7 +21,7 @@
         {% endblock %}
     </head>
 
-    <body>
+    <body {{ stimulus_controller('turbo-navigation') }}>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
