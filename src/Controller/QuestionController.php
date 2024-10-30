@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Module;
 use App\Entity\Question;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,5 +25,20 @@ class QuestionController extends AbstractController
         #[MapEntity(id: 'questionId')] Question $question): Response
     {
         return $this->render('question/edit.html.twig', ['module' => $module, 'question' => $question]);
+    }
+
+    #[Route('/delete/{moduleId}/{questionId}')]
+    public function delete(
+        #[MapEntity(id: 'moduleId')] Module $module,
+        #[MapEntity(id: 'questionId')] Question $question,
+        EntityManagerInterface $em,
+    ): Response
+    {
+        $em->remove($question);
+        $em->flush();
+
+        return $this->redirectToRoute('app_module_details', [
+            'id' => $module->getId()
+        ]);
     }
 }

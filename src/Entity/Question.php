@@ -20,7 +20,7 @@ class Question extends BaseEntity
     /**
      * @var Collection<int, Answer>
      */
-    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist', 'remove'])]
     #[Assert\Count(min: 1)]
     #[Assert\All([
         new Type(Answer::class)

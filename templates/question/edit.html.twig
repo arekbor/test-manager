@@ -9,7 +9,7 @@
         {{ component('TriggerModal', {
             modalIdTarget: 'deleteQuestionModal',
             buttonClass: 'btn btn-danger',
-            buttonBody: 'Delete question',
+            buttonBody: 'question.delete.trigger.modal.body'|trans,
             defer: true
         }) }}
 
@@ -20,12 +20,15 @@
 
     {{ component('Modal', {
         modalId: 'deleteQuestionModal',
-        modalTitle: 'Delete question',
-        modalBody: 'Are you shure?',
-        closeButtonText: 'Close',
-        actionButtonText: 'Delete',
+        modalTitle: 'question.delete.modal.title'|trans,
+        modalBody: 'question.delete.modal.body'|trans,
+        closeButtonText: 'question.delete.modal.close'|trans,
+        actionButtonText: 'question.delete.modal.action'|trans,
         actionButtonClass: 'btn btn-danger',
-        actionButtonHref: path('app_home_index'),
+        actionButtonHref: path('app_question_delete', {
+            moduleId: module.id,
+            questionId: question.id
+        }),
         defer: true
     }) }}
 {% endblock %}

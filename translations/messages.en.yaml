@@ -34,6 +34,13 @@ question.type.button_delete_options.label: Delete answer
 question.edit.form.submit.label: Edit question
 question.create.form.submit.label: Create question
 
+#question delete modal
+question.delete.trigger.modal.body: Delete question
+question.delete.modal.title: Delete question confirmation
+question.delete.modal.body: Are you shure?
+question.delete.modal.close: Close
+question.delete.modal.action: Delete
+
 #answer form
 answer.form.content.header: Content
 answer.form.correct.header: Is correct
@@ -77,8 +84,4 @@ video.data.table.actions.label: Actions
 video.upload.file.selection.button: Choose video file
 video.upload.file.selection.paragraph: or drop the video file here
 video.upload.video.abort.button: Abort
-
 video.upload.go.to.module.button: Go to module
-
-#validators
-validator.contains.aplanumeric.message: The value should not contain special characters

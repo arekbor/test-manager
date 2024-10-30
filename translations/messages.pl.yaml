@@ -34,6 +34,13 @@ question.type.button_delete_options.label: Usuń odpowiedź
 question.edit.form.submit.label: Edytuj pytanie
 question.create.form.submit.label: Stwórz pytanie
 
+#question delete modal
+question.delete.trigger.modal.body: Usuń pytanie
+question.delete.modal.title: Potwierdzenie usunięcia pytania
+question.delete.modal.body: Czy jesteś pewień?
+question.delete.modal.close: Zamknij
+question.delete.modal.action: Usuń
+
 #answer form
 answer.form.content.header: Treść odpowiedzi
 answer.form.correct.header: Czy poprawne
@@ -79,5 +86,3 @@ video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
 video.upload.video.abort.button: Przerwij
 video.upload.go.to.module.button: Przejdź do modułu
 
-#validators
-validator.contains.aplanumeric.message: Wartość nie powinna zawierać specjalnych znaków
