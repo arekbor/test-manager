@@ -6,6 +6,26 @@
 
 {% block body %}
     <div class="mt-2">
-        {{ component('QuestionForm', { moduleProp: module, questionProp: question, defer: true }) }}
+        {{ component('TriggerModal', {
+            modalIdTarget: 'deleteQuestionModal',
+            buttonClass: 'btn btn-danger',
+            buttonBody: 'Delete question',
+            defer: true
+        }) }}
+
+        <div class="mt-2">
+            {{ component('QuestionForm', { moduleProp: module, questionProp: question, defer: true }) }}
+        </div>
     </div>
+
+    {{ component('Modal', {
+        modalId: 'deleteQuestionModal',
+        modalTitle: 'Delete question',
+        modalBody: 'Are you shure?',
+        closeButtonText: 'Close',
+        actionButtonText: 'Delete',
+        actionButtonClass: 'btn btn-danger',
+        actionButtonHref: path('app_home_index'),
+        defer: true
+    }) }}
 {% endblock %}
