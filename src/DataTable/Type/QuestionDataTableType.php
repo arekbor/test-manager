@@ -53,7 +53,8 @@ class QuestionDataTableType extends BaseDataTableType
                 'label' => 'question.data.table.id.label'
             ])
             ->addColumn('content', TextColumnType::class, [
-                'label' => 'question.data.table.content.label'
+                'label' => 'question.data.table.content.label',
+                'getter' => fn(Question $question) => $this->trimText($question->getContent())
             ])
             ->addColumn('answersCount', TextColumnType::class, [
                 'label' => 'question.data.table.answersCount.label',

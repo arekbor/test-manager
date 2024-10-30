@@ -38,7 +38,9 @@ final class ModuleForm extends AbstractController
         $em->persist($moduleForm);
         $em->flush();
 
-        return $this->redirectToRoute('app_home_index');
+        return $this->redirectToRoute('app_module_details', [
+            'id' => $this->moduleProp->getId()
+        ]);
     }
 
     protected function instantiateForm(): FormInterface
