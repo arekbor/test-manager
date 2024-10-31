@@ -6,6 +6,7 @@ title.module.details: Szczegóły modułu
 title.edit.question: Edytuj pytanie
 title.create.question: Stwórz pytanie
 title.upload.video: Wrzuć wideo
+title.details.video: Szczegóły wideo
 
 #header
 header.title: Menedże testów
@@ -75,7 +76,7 @@ question.data.table.answersCount.label: Liczba pytań
 
 #video.data.table
 video.data.table.uploadVideo.label: Wrzuć wideo
-video.data.table.delete.label: Usuń wideo
+video.data.table.details.label: Szczegóły wideo
 video.data.table.id.label: Id
 video.data.table.video.label: Wideo
 video.data.table.actions.label: Akcje
@@ -86,3 +87,14 @@ video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
 video.upload.video.abort.button: Przerwij
 video.upload.go.to.module.button: Przejdź do modułu
 
+video.details.id: Wideo id
+video.details.extension: Rozszerzenie pliku
+video.details.mime_type: Mime type
+video.details.filename: Nazwa pliku
+video.details.button.download: Pobierz
+video.details.button.delete: Usuń
+
+video.delete.modal.title: Potwierdzenie usunięcia pliku wideo
+video.delete.modal.body: Czy jesteś pewień?
+video.delete.modal.close: Zamknij
+video.delete.modal.action: Usuń

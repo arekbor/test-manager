@@ -6,6 +6,7 @@ title.module.details: Details module
 title.edit.question: Edit question
 title.create.question: Create question
 title.upload.video: Upload video
+title.details.video: Video details
 
 #header
 header.title: Test manager
@@ -75,7 +76,7 @@ question.data.table.answersCount.label: Count of answers
 
 #video.data.table
 video.data.table.uploadVideo.label: Upload video
-video.data.table.delete.label: Delete video
+video.data.table.details.label: Video details
 video.data.table.id.label: Id
 video.data.table.video.label: Video
 video.data.table.actions.label: Actions
@@ -85,3 +86,15 @@ video.upload.file.selection.button: Choose video file
 video.upload.file.selection.paragraph: or drop the video file here
 video.upload.video.abort.button: Abort
 video.upload.go.to.module.button: Go to module
+
+video.details.id: Video id
+video.details.extension: Extension
+video.details.mime_type: Mime type
+video.details.filename: Filename
+video.details.button.download: Download
+video.details.button.delete: Delete
+
+video.delete.modal.title: Delete video confirmation
+video.delete.modal.body: Are you shure?
+video.delete.modal.close: Close
+video.delete.modal.action: Delete

@@ -36,6 +36,19 @@ class VideoService
         return new UploadedFile($this->getFullPath($video), $video->getFilename());
     }
 
+    public function deleteFile(Video $video): void
+    {
+        $filePath = $this->getFullPath($video);
+
+        if (!file_exists($filePath)) {
+            throw new Exception("File not found: " . $filePath);
+        }
+
+        if (!unlink($filePath)) {
+            throw new Exception("Error: Unable to delete the file at path: " . $filePath);
+        }
+    }
+
     private function getFullPath(Video $video): string {
         $filename = $video->getFilename();
         if (empty($filename)) {
