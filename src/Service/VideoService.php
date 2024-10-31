@@ -38,8 +38,14 @@ class VideoService
 
     public function deleteFile(Video $video): void
     {
-        if (!unlink($this->getFullPath($video))) {
-            throw new Exception("Error while unlinkin the file.");
+        $filePath = $this->getFullPath($video);
+
+        if (!file_exists($filePath)) {
+            throw new Exception("File not found: " . $filePath);
+        }
+
+        if (!unlink($filePath)) {
+            throw new Exception("Error: Unable to delete the file at path: " . $filePath);
         }
     }
 
