@@ -33,13 +33,13 @@ final class ModuleForm extends AbstractController
     public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
-        $moduleForm = $this->getForm()->getData();
+        $module = $this->getForm()->getData();
 
-        $em->persist($moduleForm);
+        $em->persist($module);
         $em->flush();
 
         return $this->redirectToRoute('app_module_details', [
-            'id' => $this->moduleProp->getId()
+            'id' => $module->getId()
         ]);
     }
 
