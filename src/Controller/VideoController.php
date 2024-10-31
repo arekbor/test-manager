@@ -8,6 +8,7 @@ use App\Repository\ModuleRepository;
 use App\Service\VideoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -24,6 +25,7 @@ class VideoController extends AbstractController
         private VideoService $videoService,
         private ValidatorInterface $validator,
         private ParameterBagInterface $params,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -33,11 +35,23 @@ class VideoController extends AbstractController
         return $this->render('video/upload.html.twig', ['moduleId' => $module->getId()]);
     }
 
+    #[Route('/details/{moduleId}/{videoId}')]
+    public function details(
+        #[MapEntity(id: 'moduleId')] Module $module,
+        #[MapEntity(id: 'videoId')] Video $video
+    ): Response
+    {
+        $file = $this->videoService->getFile($video);
+        $video->setFile($file);
+
+        return $this->render('video/details.html.twig', ['moduleId' => $module->getId(), 'video' => $video]);
+    }
+
     #[Route('/upload-video')]
     public function uploadVideo(
         Request $request, 
-        ModuleRepository $moduleRepository,
-        EntityManagerInterface $em): JsonResponse
+        ModuleRepository $moduleRepository
+    ): JsonResponse
     {
         $video = new Video();
         $module = $moduleRepository->find($request->get('moduleId'));
@@ -54,18 +68,41 @@ class VideoController extends AbstractController
 
         try {
             $this->videoService->uploadFile($video);
+
+            $this->em->persist($video);
+            $this->em->flush();
         } catch(Exception) {
             return $this->jsonResponse("Error while uploading the file.", Response::HTTP_BAD_REQUEST);
         }
 
-        $em->persist($video);
-        $em->flush();
-
         return $this->jsonResponse("File uploaded successfully.");
     }
 
+    #[Route('/download/{id}')]
+    public function download(Video $video): BinaryFileResponse
+    {
+        $file = $this->videoService->getFile($video);
+        return $this->file($file->getPathname(), $file->getFilename());
+    }
+
+    #[Route('/delete/{moduleId}/{videoId}')]
+    public function delete(
+        #[MapEntity(id: 'moduleId')] Module $module,
+        #[MapEntity(id: 'videoId')] Video $video,
+    ): Response
+    {
+        $this->videoService->deleteFile($video);
+
+        $this->em->remove($video);
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_module_details', [
+            'id' => $module->getId()
+        ]);
+    }
+
     #[Route('/watch/{id}')]
-    public function watch(Video $video)
+    public function watch(Video $video): BinaryFileResponse
     {
         $file = $this->videoService->getFile($video);
         $response = new BinaryFileResponse($file->getPathname());

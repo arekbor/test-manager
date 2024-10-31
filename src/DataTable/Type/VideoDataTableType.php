@@ -31,10 +31,13 @@ class VideoDataTableType extends BaseDataTableType
                     'delete' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'video.data.table.delete.label',
-                            'attr' => [
-                                'class' => 'btn btn-danger'
-                            ]
+                            'label' => 'video.data.table.details.label',
+                            'href' => function(Video $video) use($options): string {
+                                return $this->urlGenerator->generate('app_video_details', [
+                                    'moduleId' => $options['module_id'],
+                                    'videoId' => $video->getId()
+                                ]);
+                            }
                         ]
                     ]
                 ]

@@ -36,6 +36,13 @@ class VideoService
         return new UploadedFile($this->getFullPath($video), $video->getFilename());
     }
 
+    public function deleteFile(Video $video): void
+    {
+        if (!unlink($this->getFullPath($video))) {
+            throw new Exception("Error while unlinkin the file.");
+        }
+    }
+
     private function getFullPath(Video $video): string {
         $filename = $video->getFilename();
         if (empty($filename)) {

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ 'title.details.video'|trans }} 
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            {{ 'video.details.id'|trans }}: {{ video.id }}
+        </div>
+        <div class="card-body">
+            <video width="320" height="251.5" controls>
+                <source src="{{ path('app_video_watch', { id: video.id }) }}">
+            </video> 
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                {{ 'video.details.extension'|trans }}: {{ video.file.guessExtension }}
+            </li>
+            <li class="list-group-item">
+                {{ 'video.details.mime_type'|trans }}: {{ video.file.MimeType }}
+            </li>
+            <li class="list-group-item">
+                {{ 'video.details.filename'|trans }}: {{ video.file.ClientOriginalName }}
+            </li>
+        </ul>
+        <div class="card-body">
+            <a 
+                class="btn btn-warning"
+                href="{{ path('app_video_download', { id: video.id }) }}"
+            >
+            {{ 'video.details.button.download'|trans }}
+            </a>
+
+            {{ component('TriggerModal', {
+                modalIdTarget: 'deleteVideoModal',
+                buttonClass: 'btn btn-danger',
+                buttonBody: 'video.details.button.delete'|trans,
+                defer: true
+            }) }}
+        </div>
+    </div>
+
+    {{ component('Modal', {
+        modalId: 'deleteVideoModal',
+        modalTitle: 'video.delete.modal.title'|trans,
+        modalBody: 'video.delete.modal.body'|trans,
+        closeButtonText: 'video.delete.modal.close'|trans,
+        actionButtonText: 'video.delete.modal.action'|trans,
+        actionButtonClass: 'btn btn-danger',
+        actionButtonHref: path('app_video_delete', {
+            moduleId: moduleId,
+            videoId: video.id
+        }),
+        defer: true
+    }) }}
+{% endblock %}
