@@ -33,7 +33,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="localeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ app.request.locale|upper }}
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="localeDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="localeDropdown">
                             {% for locale in locales|split('|')|filter(locale => locale != app.request.locale) %}
                                 <li>
                                     <a class="dropdown-item" href="{{ path(route, params|merge({ _locale: locale })) }}">{{ locale|upper }}</a>
