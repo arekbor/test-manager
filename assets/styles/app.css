@@ -6,6 +6,9 @@
 }
 
 .btn,
+input.form-control,
+select.form-select,
+.dropdown-menu,
 .page-link {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
