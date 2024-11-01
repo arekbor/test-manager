@@ -11,7 +11,6 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModuleDataTableType extends BaseDataTableType
 {
@@ -68,7 +67,8 @@ class ModuleDataTableType extends BaseDataTableType
                 'label' => 'module.data.table.id.label'
             ])
             ->addColumn('name', TextColumnType::class, [
-                'label' => 'module.data.table.name.label'
+                'label' => 'module.data.table.name.label',
+                'getter' => fn(Module $module) => $this->trimText($module->getName())
             ])
             ->addColumn('language', TextColumnType::class, [
                 'label' => 'module.data.table.language.label',
@@ -97,10 +97,5 @@ class ModuleDataTableType extends BaseDataTableType
 
         $builder
             ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10));
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        
     }
 }
