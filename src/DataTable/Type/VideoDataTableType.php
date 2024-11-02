@@ -18,7 +18,7 @@ class VideoDataTableType extends BaseDataTableType
     {
         $builder
             ->addAction('uploadVideo', ButtonActionType::class, [
-                'label' => 'video.data.table.uploadVideo.label',
+                'label' => 'data_table.video.uploadVideo',
                 'href' => $this->urlGenerator->generate('app_video_upload', [ 
                     'id' => $options['module_id']
                 ])
@@ -26,12 +26,12 @@ class VideoDataTableType extends BaseDataTableType
 
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
-                'label' => 'video.data.table.actions.label',
+                'label' => 'data_table.actions',
                 'actions' => [
                     'delete' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'video.data.table.details.label',
+                            'label' => 'data_table.details',
                             'href' => function(Video $video) use($options): string {
                                 return $this->urlGenerator->generate('app_video_details', [
                                     'moduleId' => $options['module_id'],
@@ -45,10 +45,10 @@ class VideoDataTableType extends BaseDataTableType
 
         $builder
             ->addColumn('id', NumberColumnType::class, [
-                'label' => 'video.data.table.id.label'
+                'label' => 'data_table.id'
             ])
             ->addColumn('video', TemplateColumnType::class, [
-                'label' => 'video.data.table.video.label',
+                'label' => 'data_table.video.video',
                 'getter' => fn (Video $video) => $video,
                 'template_path' => 'video/data_table_template.html.twig',
                 'template_vars' => function(Video $video) {
@@ -60,7 +60,7 @@ class VideoDataTableType extends BaseDataTableType
 
         $builder
             ->addFilter('id', NumericFilterType::class, [
-                'label' => 'video.data.table.id.label'
+                'label' => 'data_table.id'
             ]);
         
         $builder

@@ -18,7 +18,7 @@ class AnswerType extends AbstractType
                 'label' => false,
                 'empty_data' => '',
                 'attr' => [
-                    'placeholder' => 'answer.type.content.placeholder',
+                    'placeholder' => 'form.type.answer.content_placeholder',
                     'rows' => 5
                 ]
             ])

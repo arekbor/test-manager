@@ -1,100 +1,102 @@
-#titles
-title.base.index: Menedże testów
-title.auth.login: Strona logowania
-title.module.create: Stwórz moduł
-title.module.details: Szczegóły modułu
-title.edit.question: Edytuj pytanie
-title.create.question: Stwórz pytanie
-title.upload.video: Wrzuć wideo
-title.details.video: Szczegóły wideo
+form:
+  type:
+    login:
+      email: E-mail
+      submit: Zaloguj się
+      password:
+        label: Hasło
+        hidden: Ukryj
+        visible: Pokaż
+    module:
+      name: Nazwa
+      language: Język
+    question:
+      content_placeholder: Treść pytania
+      button:
+        add: Dodaj odpowiedź
+        delete: Usuń odpowiedź
+    answer:
+      content_placeholder: Treść odpowiedzi
+  submit:
+    label: Prześlij
 
-#header
-header.title: Menedże testów
-header.item.home: Strona główna
-header.item.logout: Wyloguj się
-header.item.modules: Moduły
+table:
+  question:
+    content: Treść
+    correct: Czy poprawna
+    actions: Akcje
 
-#login form
-form.login.email.label: Email
-form.login.password.label: Hasło
-form.login.submit.label: Zaloguj się
-form.login.password.hidden.password.label: Schowaj
-form.login.password.visible.password.label: Pokaż
+data_table:
+  module:
+    create: Utwórz nowy moduł
+    name: Nazwa
+    language: Język
+    questionsCount: Liczba pytań
+    videosCount: Pliki wideo
+    addQuestion: Dodaj pytanie
+    uploadVideo: Prześlij wideo
+  question:
+    content: Treść
+    answersCount: Liczba odpowiedzi
+    create: Utwórz pytanie
+    home: Moduły
+  video:
+    video: Wideo
+    uploadVideo: Prześlij wideo
+  actions: Akcje
+  details: Szczegóły
+  id: Id
 
-#form submit
-submit.label: Zapisz
+modal:
+  title: Potwierdzenie
+  body: Czy jesteś pewny?
+  close: Zamknij
+  video:
+    details:
+      delete: Usuń
+  module:
+    details:
+      delete: Usuń
 
-#module form
-module.type.name.label: Nazwa
-module.type.language.label: Język
-
-#question form
-question.type.content.placeholder: Treść pytania
-question.type.button_add_options.label: Dodaj odpowiedź
-question.type.button_delete_options.label: Usuń odpowiedź
-question.edit.form.submit.label: Edytuj pytanie
-question.create.form.submit.label: Stwórz pytanie
-
-#question delete modal
-question.delete.trigger.modal.body: Usuń pytanie
-question.delete.modal.title: Potwierdzenie usunięcia pytania
-question.delete.modal.body: Czy jesteś pewień?
-question.delete.modal.close: Zamknij
-question.delete.modal.action: Usuń
-
-#answer form
-answer.form.content.header: Treść odpowiedzi
-answer.form.correct.header: Czy poprawne
-answer.form.actions.header: Akcje
-
-#answer form
-answer.type.content.placeholder: Treść odpowiedzi
-
-#module.data.table
-module.data.table.create.label: Stwórz nowy moduł
-module.data.table.actions.label: Akcje
-module.data.table.details.label: Szczegóły
-module.data.table.id.label: Id
-module.data.table.name.label: Nazwa
-module.data.table.language.label: Język
-module.data.table.questionsCount.label: Liczba pytań
-module.data.table.videosCount.label: Liczba plików wideo
-module.data.table.addQuestion.label: Dodaj pytanie
-module.data.table.uploadVideo.label: Wrzuć wideo
-
-module.details.tabQuestions: Pytania
-module.details.tabVideos: Pliki wideo
-
-#question.data.table
-question.data.table.id.label: Id
-question.data.table.content.label: Treść
-question.data.table.create.label: Stwórz pytanie
-question.data.table.details.label: Szczegóły pytania
-question.data.table.actions.label: Akcje
-question.data.table.home.label: Lista modułów
-question.data.table.answersCount.label: Liczba pytań
-
-#video.data.table
-video.data.table.uploadVideo.label: Wrzuć wideo
-video.data.table.details.label: Szczegóły wideo
-video.data.table.id.label: Id
-video.data.table.video.label: Wideo
-video.data.table.actions.label: Akcje
-
-#video
-video.upload.file.selection.button: Wybierz plik wideo
-video.upload.file.selection.paragraph: lub upuść plik wideo tutaj
-video.upload.video.abort.button: Przerwij
-video.upload.go.to.module.button: Przejdź do modułu
-
-video.details.id: Wideo id
-video.details.extension: Rozszerzenie pliku
-video.details.mime_type: Mime type
-video.details.filename: Nazwa pliku
-video.details.button.download: Pobierz
-video.details.button.delete: Usuń
-
-video.delete.modal.title: Potwierdzenie usunięcia pliku wideo
-video.delete.modal.body: Czy jesteś pewień?
-video.delete.modal.close: Zamknij
-video.delete.modal.action: Usuń
+templates:
+  base:
+    title: Menedżer testów
+  auth:
+    login:
+      title: Zaloguj się
+      header: Zaloguj się do Menedżera Testów
+  module:
+    create:
+      title: Utwórz moduł
+    details:
+      title: Edytuj moduł
+      tab:
+        questions: Pytania
+        videos: Pliki wideo
+  video:
+    upload:
+      title: Prześlij wideo
+      module: Moduł
+    details:
+      title: Szczegóły wideo
+      id: Id wideo
+      extension: Rozszerzenie
+      mime_type: Typ MIME
+      filename: Nazwa pliku
+      download: Pobierz
+      delete: Usuń
+  question:
+    details:
+      title: Szczegóły pytania
+      delete: Usuń
+    create:
+      title: Utwórz pytanie
+  components:
+    videoUpload:
+      abort: Anuluj
+      selectFile: Wybierz plik wideo
+      paragraph: lub upuść plik wideo tutaj
+    nav:
+      navbar_brand: Menedżer testów
+      home: Strona główna
+      logout: Wyloguj się

@@ -1,0 +1,102 @@
+form:
+  type:
+    login:
+      email: Електронна пошта
+      submit: Увійти
+      password:
+        label: Пароль
+        hidden: Приховати
+        visible: Показати
+    module:
+      name: Назва
+      language: Мова
+    question:
+      content_placeholder: Зміст питання
+      button:
+        add: Додати відповідь
+        delete: Видалити відповідь
+    answer:
+      content_placeholder: Зміст відповіді
+  submit:
+    label: Відправити
+
+table:
+  question:
+    content: Зміст
+    correct: Чи правильна
+    actions: Дії
+
+data_table:
+  module:
+    create: Створити новий модуль
+    name: Назва
+    language: Мова
+    questionsCount: Кількість питань
+    videosCount: Відеофайли
+    addQuestion: Додати питання
+    uploadVideo: Завантажити відео
+  question:
+    content: Зміст
+    answersCount: Кількість відповідей
+    create: Створити питання
+    home: Модулі
+  video:
+    video: Відео
+    uploadVideo: Завантажити відео
+  actions: Дії
+  details: Деталі
+  id: Id
+
+modal:
+  title: Підтвердження
+  body: Ви впевнені?
+  close: Закрити
+  video:
+    details:
+      delete: Видалити
+  module:
+    details:
+      delete: Видалити
+
+templates:
+  base:
+    title: Менеджер тестів
+  auth:
+    login:
+      title: Увійти
+      header: Увійдіть у Менеджер Тестів
+  module:
+    create:
+      title: Створити модуль
+    details:
+      title: Редагувати модуль
+      tab:
+        questions: Питання
+        videos: Відеофайли
+  video:
+    upload:
+      title: Завантажити відео
+      module: Модуль
+    details:
+      title: Деталі відео
+      id: Id відео
+      extension: Розширення
+      mime_type: Тип MIME
+      filename: Ім'я файлу
+      download: Завантажити
+      delete: Видалити
+  question:
+    details:
+      title: Деталі питання
+      delete: Видалити
+    create:
+      title: Створити питання
+  components:
+    videoUpload:
+      abort: Скасувати
+      selectFile: Виберіть відеофайл
+      paragraph: або перетягніть відеофайл сюди
+    nav:
+      navbar_brand: Менеджер тестів
+      home: Головна
+      logout: Вийти

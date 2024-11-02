@@ -22,11 +22,11 @@ class ModuleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'module.type.name.label',
+                'label' => 'form.type.module.name',
                 'empty_data' => ''
             ])
             ->add('language', ChoiceType::class, [
-                'label' => 'module.type.language.label',
+                'label' => 'form.type.module.language',
                 'choices' => $this->localeService->getAllowedLocales(),
                 'empty_data' => $this->localeService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
@@ -34,7 +34,7 @@ class ModuleType extends AbstractType
                 },
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'submit.label',
+                'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',

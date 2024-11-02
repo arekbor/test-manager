@@ -18,18 +18,18 @@ class ModuleDataTableType extends BaseDataTableType
     {
         $builder
             ->addAction('create', ButtonActionType::class, [
-                'label' => 'module.data.table.create.label',
+                'label' => 'data_table.module.create',
                 'href' => $this->urlGenerator->generate('app_module_create'),
             ]);
 
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
-                'label' => 'module.data.table.actions.label',
+                'label' => 'data_table.actions',
                 'actions' => [
                     'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'module.data.table.details.label',
+                            'label' => 'data_table.details',
                             'href' => function(Module $module): string {
                                 return $this->urlGenerator->generate('app_module_details', [
                                     'id' => $module->getId()
@@ -40,7 +40,7 @@ class ModuleDataTableType extends BaseDataTableType
                     'addQuestion' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'module.data.table.addQuestion.label',
+                            'label' => 'data_table.module.addQuestion',
                             'href' => function(Module $module): string {
                                 return $this->urlGenerator->generate('app_question_create', [
                                     'moduleId' => $module->getId()
@@ -51,7 +51,7 @@ class ModuleDataTableType extends BaseDataTableType
                     'uploadVideo' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'module.data.table.uploadVideo.label',
+                            'label' => 'data_table.module.uploadVideo',
                             'href' => function(Module $module): string {
                                 return $this->urlGenerator->generate('app_video_upload', [
                                     'id' => $module->getId()
@@ -64,34 +64,34 @@ class ModuleDataTableType extends BaseDataTableType
 
         $builder
             ->addColumn('id', NumberColumnType::class, [
-                'label' => 'module.data.table.id.label'
+                'label' => 'data_table.id'
             ])
             ->addColumn('name', TextColumnType::class, [
-                'label' => 'module.data.table.name.label',
+                'label' => 'data_table.module.name',
                 'getter' => fn(Module $module) => $this->trimText($module->getName())
             ])
             ->addColumn('language', TextColumnType::class, [
-                'label' => 'module.data.table.language.label',
+                'label' => 'data_table.module.language',
                 'getter' => fn (Module $module) => strtoupper($module->getLanguage())
             ])
             ->addColumn('questionsCount', TextColumnType::class, [
-                'label' => 'module.data.table.questionsCount.label',
+                'label' => 'data_table.module.questionsCount',
                 'getter' => fn (Module $module) => count($module->getQuestions())
             ])
             ->addColumn('videosCount', TextColumnType::class, [
-                'label' => 'module.data.table.videosCount.label',
+                'label' => 'data_table.module.videosCount',
                 'getter' => fn (Module $module) => count($module->getVideos())
             ]);
 
         $builder
             ->addFilter('id', NumericFilterType::class, [
-                'label' => 'module.data.table.id.label'
+                'label' => 'data_table.id'
             ])
             ->addFilter('name', StringFilterType::class, [
-                'label' => 'module.data.table.name.label'
+                'label' => 'data_table.module.name'
             ])
             ->addFilter('language', StringFilterType::class, [
-                'label' => 'module.data.table.language.label',
+                'label' => 'data_table.module.language',
                 'lower' => true
             ]);
 

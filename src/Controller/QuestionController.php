@@ -19,12 +19,12 @@ class QuestionController extends AbstractController
         return $this->render('question/create.html.twig', ['module' => $module]);
     }
     
-    #[Route('/edit/{moduleId}/{questionId}')]
-    public function edit(
+    #[Route('/details/{moduleId}/{questionId}')]
+    public function details(
         #[MapEntity(id: 'moduleId')] Module $module, 
         #[MapEntity(id: 'questionId')] Question $question): Response
     {
-        return $this->render('question/edit.html.twig', ['module' => $module, 'question' => $question]);
+        return $this->render('question/details.html.twig', ['module' => $module, 'question' => $question]);
     }
 
     #[Route('/delete/{moduleId}/{questionId}')]

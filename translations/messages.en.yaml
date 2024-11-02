@@ -1,100 +1,102 @@
-#titles
-title.base.index: Test manager
-title.auth.login: Auth log in
-title.module.create: Create module
-title.module.details: Details module
-title.edit.question: Edit question
-title.create.question: Create question
-title.upload.video: Upload video
-title.details.video: Video details
+form:
+  type:
+    login:
+      email: Email
+      submit: Log in
+      password:
+        label: Password
+        hidden: Hide
+        visible: Show
+    module:
+      name: Name
+      language: Language
+    question:
+      content_placeholder: Question content
+      button:
+        add: Add answer
+        delete: Delete answer
+    answer:
+      content_placeholder: Answer content
+  submit:
+    label: Submit
 
-#header
-header.title: Test manager
-header.item.home: Home
-header.item.logout: Log out
-header.item.modules: Modules
+table:
+  question:
+    content: Content
+    correct: Is correct
+    actions: Actions
 
-#login form
-form.login.email.label: Email
-form.login.password.label: Password
-form.login.submit.label: Log in
-form.login.password.hidden.password.label: Hide
-form.login.password.visible.password.label: Show
+data_table:
+  module:
+    create: Create new module
+    name: Name
+    language: Language
+    questionsCount: Questions
+    videosCount: Video files
+    addQuestion: Add question
+    uploadVideo: Upload video
+  question:
+    content: Content
+    answersCount: Answers
+    create: Create question
+    home: Modules
+  video:
+    video: Video
+    uploadVideo: Upload
+  actions: Actions
+  details: Details
+  id: Id
 
-#form submit
-submit.label: Submit
+modal:
+  title: Confirm
+  body: Are you shure?
+  close: Close
+  video:
+    details:
+      delete: Delete
+  module:
+    details:
+      delete: Delete
 
-#module form
-module.type.name.label: Name
-module.type.language.label: Language
-
-#question form
-question.type.content.placeholder: Question content
-question.type.button_add_options.label: Add answer
-question.type.button_delete_options.label: Delete answer
-question.edit.form.submit.label: Edit question
-question.create.form.submit.label: Create question
-
-#question delete modal
-question.delete.trigger.modal.body: Delete question
-question.delete.modal.title: Delete question confirmation
-question.delete.modal.body: Are you shure?
-question.delete.modal.close: Close
-question.delete.modal.action: Delete
-
-#answer form
-answer.form.content.header: Content
-answer.form.correct.header: Is correct
-answer.form.actions.header: Actions
-
-#answer form
-answer.type.content.placeholder: Answer content
-
-#module.data.table
-module.data.table.create.label: Create new module
-module.data.table.actions.label: Actions
-module.data.table.details.label: Details
-module.data.table.id.label: Id
-module.data.table.name.label: Name
-module.data.table.language.label: Language
-module.data.table.questionsCount.label: Count of questions
-module.data.table.videosCount.label: Count of video files
-module.data.table.addQuestion.label: Add question
-module.data.table.uploadVideo.label: Upload video
-
-module.details.tabQuestions: Questions
-module.details.tabVideos: Video files
-
-#question.data.table
-question.data.table.id.label: Id
-question.data.table.content.label: Content
-question.data.table.create.label: Create question
-question.data.table.details.label: Question details
-question.data.table.actions.label: Actions
-question.data.table.home.label: List of modules
-question.data.table.answersCount.label: Count of answers
-
-#video.data.table
-video.data.table.uploadVideo.label: Upload video
-video.data.table.details.label: Video details
-video.data.table.id.label: Id
-video.data.table.video.label: Video
-video.data.table.actions.label: Actions
-
-#video
-video.upload.file.selection.button: Choose video file
-video.upload.file.selection.paragraph: or drop the video file here
-video.upload.video.abort.button: Abort
-video.upload.go.to.module.button: Go to module
-
-video.details.id: Video id
-video.details.extension: Extension
-video.details.mime_type: Mime type
-video.details.filename: Filename
-video.details.button.download: Download
-video.details.button.delete: Delete
-
-video.delete.modal.title: Delete video confirmation
-video.delete.modal.body: Are you shure?
-video.delete.modal.close: Close
-video.delete.modal.action: Delete
+templates:
+  base:
+    title: Test manager
+  auth:
+    login:
+      title: Log in
+      header: Log in to Test Manager
+  module:
+    create:
+      title: Create module
+    details:
+      title: Edit module
+      tab:
+        questions: Questions
+        videos: Video files
+  video:
+    upload:
+      title: Upload video
+      module: Module
+    details:
+      title: Video details
+      id: Video id
+      extension: Extension
+      mime_type: Mime type
+      filename: File name
+      download: Download
+      delete: Delete
+  question:
+    details:
+      title: Question details
+      delete: Delete
+    create:
+      title: Create question
+  components:
+    videoUpload:
+      abort: Abort
+      selectFile: Choose video file
+      paragraph: or drop the video file here
+    nav:
+      navbar_brand: Test manager
+      home: Home
+      logout: Log out
