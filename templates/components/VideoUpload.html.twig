@@ -54,7 +54,7 @@
             {{ stimulus_target('video_upload', 'switchable') }}
             {{ stimulus_action('video_upload', 'handleAbort', 'click') }}
         >
-            {{ 'video.upload.video.abort.button'|trans }}
+            {{ 'templates.components.videoUpload.abort'|trans }}
         </button>
 
         <!-- Upload progress -->
@@ -70,7 +70,7 @@
             {{ stimulus_target('video_upload', 'switchable') }}
             {{ stimulus_action('video_upload', 'handleFileSelection', 'click') }}
         >
-            {{ 'video.upload.file.selection.button'|trans }}
+            {{ 'templates.components.videoUpload.selectFile'|trans }}
         </button>
 
         <!-- Informational paragraph -->
@@ -78,7 +78,7 @@
             class="text-secondary mt-2"
             {{ stimulus_target('video_upload', 'switchable') }}
         >
-            {{ 'video.upload.file.selection.paragraph'|trans }}
+            {{ 'templates.components.videoUpload.paragraph'|trans }}
         </div>
 
         <!-- Feedback message area -->

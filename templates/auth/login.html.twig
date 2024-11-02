@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.auth.login'|trans }}
+    {{ 'templates.auth.login.title'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
         <div class="col-lg-6 vh-100">
             <div class="d-flex align-items-center justify-content-center h-100">
                 <div class="w-100 p-4">
-                    <h1>{{ 'title.base.index'|trans }}</h1>
+                    <h1>{{ 'templates.auth.login.header'|trans }}</h1>
                     {{ form_start(form) }}
                         {{ form_row(form.email) }}
                         <div class="mt-3">

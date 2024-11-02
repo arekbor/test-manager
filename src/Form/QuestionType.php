@@ -19,7 +19,7 @@ class QuestionType extends AbstractType
                 'label' => false,
                 'empty_data' => '',
                 'attr' => [
-                    'placeholder' => 'question.type.content.placeholder',
+                    'placeholder' => 'form.type.question.content_placeholder',
                     'rows' => 5,
                 ]
             ])
@@ -31,20 +31,20 @@ class QuestionType extends AbstractType
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'button_add_options' => [
-                    'label' => 'question.type.button_add_options.label',
+                    'label' => 'form.type.question.button.add',
                     'attr' => [
                         'class' => 'btn btn-primary'
                     ]
                 ],
                 'button_delete_options' => [
-                    'label' => 'question.type.button_delete_options.label',
+                    'label' => 'form.type.question.button.delete',
                     'attr' => [
                         'class' => 'btn btn-danger'
                     ]
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'submit.label',
+                'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',

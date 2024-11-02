@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} 
-    {{ 'title.edit.question'|trans }} 
+    {{ 'templates.question.details.title'|trans }} 
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
         {{ component('TriggerModal', {
             modalIdTarget: 'deleteQuestionModal',
             buttonClass: 'btn btn-danger',
-            buttonBody: 'question.delete.trigger.modal.body'|trans,
+            buttonBody: 'templates.question.details.delete'|trans,
             defer: true
         }) }}
 
@@ -20,10 +20,10 @@
 
     {{ component('Modal', {
         modalId: 'deleteQuestionModal',
-        modalTitle: 'question.delete.modal.title'|trans,
-        modalBody: 'question.delete.modal.body'|trans,
-        closeButtonText: 'question.delete.modal.close'|trans,
-        actionButtonText: 'question.delete.modal.action'|trans,
+        modalTitle: 'modal.title'|trans,
+        modalBody: 'modal.body'|trans,
+        closeButtonText: 'modal.close'|trans,
+        actionButtonText: 'modal.module.details.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_question_delete', {
             moduleId: module.id,

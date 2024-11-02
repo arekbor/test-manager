@@ -19,11 +19,11 @@ class QuestionDataTableType extends BaseDataTableType
     {
         $builder
             ->addAction('home', ButtonActionType::class, [
-                'label' => 'question.data.table.home.label',
+                'label' => 'data_table.question.home',
                 'href' => $this->urlGenerator->generate('app_home_index')
             ])
             ->addAction('create', ButtonActionType::class, [
-                'label' => 'question.data.table.create.label',
+                'label' => 'data_table.question.create',
                 'href' => $this->urlGenerator->generate('app_question_create', [ 
                     'moduleId' => $options['module_id'] 
                 ])
@@ -31,14 +31,14 @@ class QuestionDataTableType extends BaseDataTableType
             
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
-                'label' => 'question.data.table.actions.label',
+                'label' => 'data_table.actions',
                 'actions' => [
                     'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'question.data.table.details.label',
+                            'label' => 'data_table.details',
                             'href' => function(Question $question) use($options): string {
-                                return $this->urlGenerator->generate('app_question_edit', [
+                                return $this->urlGenerator->generate('app_question_details', [
                                     'moduleId' => $options['module_id'],
                                     'questionId' => $question->getId()
                                 ]);
@@ -50,23 +50,23 @@ class QuestionDataTableType extends BaseDataTableType
         
         $builder
             ->addColumn('id', NumberColumnType::class, [
-                'label' => 'question.data.table.id.label'
+                'label' => 'data_table.id'
             ])
             ->addColumn('content', TextColumnType::class, [
-                'label' => 'question.data.table.content.label',
+                'label' => 'data_table.question.content',
                 'getter' => fn(Question $question) => $this->trimText($question->getContent())
             ])
             ->addColumn('answersCount', TextColumnType::class, [
-                'label' => 'question.data.table.answersCount.label',
+                'label' => 'data_table.question.answersCount',
                 'getter' => fn (Question $question) => count($question->getAnswers())
             ]);
 
         $builder
             ->addFilter('id', NumericFilterType::class, [
-                'label' => 'question.data.table.id.label'
+                'label' => 'data_table.id'
             ])
             ->addFilter('content', StringFilterType::class, [
-                'label' => 'question.data.table.content.label'
+                'label' => 'data_table.question.content'
             ]);
         
         $builder

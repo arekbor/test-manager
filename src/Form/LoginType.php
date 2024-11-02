@@ -16,16 +16,16 @@ class LoginType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'form.login.email.label'
+                'label' => 'form.type.login.email'
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'form.login.password.label',
+                'label' => 'form.type.login.password.label',
                 'toggle' => true,
-                'hidden_label' => 'form.login.password.hidden.password.label',
-                'visible_label' => 'form.login.password.visible.password.label'
+                'hidden_label' => 'form.type.login.password.hidden',
+                'visible_label' => 'form.type.login.password.visible'
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'form.login.submit.label',
+                'label' => 'form.type.login.submit',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
