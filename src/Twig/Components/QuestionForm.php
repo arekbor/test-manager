@@ -39,13 +39,13 @@ final class QuestionForm extends AbstractController
     public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
-        $questionForm = $this->getForm()->getData();
+        $question = $this->getForm()->getData();
 
         if ($this->moduleProp) {
-            $questionForm->addModule($this->moduleProp);
+            $question->addModule($this->moduleProp);
         }
 
-        $em->persist($questionForm);
+        $em->persist($question);
         $em->flush();
 
         return $this->redirectToRoute('app_module_details', [
