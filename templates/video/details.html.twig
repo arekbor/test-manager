@@ -10,8 +10,14 @@
             {{ 'templates.video.details.id'|trans }}: {{ video.id }}
         </div>
         <div class="card-body">
-            <video width="320" height="251.5" controls>
-                <source src="{{ path('app_video_watch', { id: video.id }) }}">
+            <video 
+                width="320" 
+                height="251.5" 
+                controls
+            >
+                <source 
+                    src="{{ path('app_video_watch', { id: video.id }) }}" 
+                />
             </video> 
         </div>
         <ul class="list-group list-group-flush">
@@ -30,7 +36,7 @@
                 class="btn btn-warning"
                 href="{{ path('app_video_download', { id: video.id }) }}"
             >
-            {{ 'templates.video.details.download'|trans }}
+                {{ 'templates.video.details.download'|trans }}
             </a>
 
             {{ component('TriggerModal', {
