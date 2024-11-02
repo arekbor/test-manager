@@ -26,6 +26,13 @@ table:
     correct: Is correct
     actions: Actions
 
+controller:
+  video:
+    response:
+      upload_success: File uploaded successfully.
+      upload_fail: Error while uploading the file.
+      module_not_found: Module not found.
+
 data_table:
   module:
     create: Create new module

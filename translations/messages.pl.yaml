@@ -26,6 +26,13 @@ table:
     correct: Czy poprawna
     actions: Akcje
 
+controller:
+  video:
+    response:
+      upload_success: Plik został przesłany pomyślnie.
+      upload_fail: Błąd podczas przesyłania pliku.
+      module_not_found: Nie znaleziono modułu.
+
 data_table:
   module:
     create: Utwórz nowy moduł

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -50,13 +51,14 @@ class VideoController extends AbstractController
     #[Route('/upload-video')]
     public function uploadVideo(
         Request $request, 
-        ModuleRepository $moduleRepository
+        ModuleRepository $moduleRepository,
+        TranslatorInterface $trans,
     ): JsonResponse
     {
         $video = new Video();
         $module = $moduleRepository->find($request->get('moduleId'));
         if (!$module) {
-            return $this->jsonResponse("Module not found.", Response::HTTP_NOT_FOUND);
+            return $this->jsonResponse($trans->trans('controller.video.response.module_not_found'), Response::HTTP_NOT_FOUND);
         }
         $video->addModule($module);
         $video->setFile($request->files->get('file'));
@@ -72,10 +74,10 @@ class VideoController extends AbstractController
             $this->em->persist($video);
             $this->em->flush();
         } catch(Exception) {
-            return $this->jsonResponse("Error while uploading the file.", Response::HTTP_BAD_REQUEST);
+            return $this->jsonResponse($trans->trans('controller.video.response.upload_fail'), Response::HTTP_BAD_REQUEST);
         }
         
-        return $this->jsonResponse("File uploaded successfully.");
+        return $this->jsonResponse($trans->trans('controller.video.response.upload_success'));
     }
 
     #[Route('/download/{id}')]
