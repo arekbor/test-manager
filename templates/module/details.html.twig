@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.module.details.title'|trans }} 
+    {{ 'templates.module.details.title'|trans({ '%id%': module.id }) }} 
 {% endblock %}
 
 {% block body %}

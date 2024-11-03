@@ -76,7 +76,7 @@ templates:
     create:
       title: Create module
     details:
-      title: Edit module
+      title: Module details %id%
       tab:
         questions: Questions
         videos: Video files
@@ -85,7 +85,7 @@ templates:
       title: Upload video
       module: Module
     details:
-      title: Video details
+      title: Video details %id%
       id: Video id
       extension: Extension
       mime_type: Mime type
@@ -94,7 +94,7 @@ templates:
       delete: Delete
   question:
     details:
-      title: Question details
+      title: Question details %id%
       delete: Delete
     create:
       title: Create question

@@ -1,7 +1,7 @@
 {% extends 'video/base.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.video.details.title'|trans }} 
+    {{ 'templates.video.details.title'|trans({ '%id%': video.id }) }} 
 {% endblock %}
 
 {% block wrapper %}

@@ -76,7 +76,7 @@ templates:
     create:
       title: Utwórz moduł
     details:
-      title: Edytuj moduł
+      title: Szczegóły modułu %id%
       tab:
         questions: Pytania
         videos: Pliki wideo
@@ -85,7 +85,7 @@ templates:
       title: Prześlij wideo
       module: Moduł
     details:
-      title: Szczegóły wideo
+      title: Szczegóły wideo %id%
       id: Id wideo
       extension: Rozszerzenie
       mime_type: Typ MIME
@@ -94,7 +94,7 @@ templates:
       delete: Usuń
   question:
     details:
-      title: Szczegóły pytania
+      title: Szczegóły pytania %id%
       delete: Usuń
     create:
       title: Utwórz pytanie
