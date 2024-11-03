@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'video/base.html.twig' %}
 
 {% block title %} 
     {{ 'templates.video.details.title'|trans }} 
 {% endblock %}
 
-{% block body %}
+{% block wrapper %}
     <div class="card">
         <div class="card-header">
             {{ 'templates.video.details.id'|trans }}: {{ video.id }}
