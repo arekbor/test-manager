@@ -50,7 +50,7 @@ class VideoDataTableType extends BaseDataTableType
             ->addColumn('video', TemplateColumnType::class, [
                 'label' => 'data_table.video.video',
                 'getter' => fn (Video $video) => $video,
-                'template_path' => 'video/data_table_template.html.twig',
+                'template_path' => 'components/Video.html.twig',
                 'template_vars' => function(Video $video) {
                     return [
                         'video_id' => $video->getId()
