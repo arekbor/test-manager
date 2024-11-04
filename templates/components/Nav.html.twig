@@ -1,6 +1,6 @@
 <div {{ attributes }}>
     <nav 
-        class="navbar navbar-expand-lg navbar-dark bg-dark"
+        class="navbar navbar-expand-lg navbar"
     >
         <div class="container-fluid">
             <a 
@@ -59,7 +59,7 @@
                     {% set route = app.request.attributes.get('_route') %}
                     {% set route_params = app.request.attributes.get('_route_params') %}
                     {% set params = route_params|merge(app.request.query.all) %}
-                    
+
                     <li class="nav-item dropdown">
                         <a 
                             class="nav-link dropdown-toggle" 
