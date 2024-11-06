@@ -15,3 +15,12 @@ select.form-select,
   line-height: 1.5;
   border-radius: 0.2rem;
 }
+
+.table-responsive {
+  overflow: visible;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+}
