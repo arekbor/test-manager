@@ -22,11 +22,15 @@ class QuestionDataTableType extends BaseDataTableType
                 'label' => 'data_table.question.home',
                 'href' => $this->urlGenerator->generate('app_home_index')
             ])
-            ->addAction('create', ButtonActionType::class, [
-                'label' => 'data_table.question.create',
+            ->addAction('createQuestion', ButtonActionType::class, [
+                'label' => 'data_table.question.createQuestion',
                 'href' => $this->urlGenerator->generate('app_question_create', [ 
                     'moduleId' => $options['module_id'] 
                 ])
+            ])
+            ->addAction('createTest', ButtonActionType::class, [
+                'label' => 'data_table.question.createTest',
+                'href' => $this->urlGenerator->generate('app_home_index')
             ]);
             
         $builder

@@ -1,0 +1,24 @@
+{% block action_dropdown_value %}
+  <div class="d-inline-block dropdown show">
+    <a 
+      class="dropdown-toggle {{ dropdownClass | default('btn btn-primary') }}" 
+      role="button" 
+      data-bs-toggle="dropdown" 
+    >
+      {{ dropdownLabel|trans }}
+    </a>
+
+    <div 
+      class="dropdown-menu" 
+    >
+      {% for item in dropdownItems %}
+        <a 
+          class="dropdown-item"
+          href="{{ item.href }}"
+        >
+          {{ item.label|trans }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

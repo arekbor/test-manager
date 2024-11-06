@@ -2,6 +2,7 @@
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Action\Type\DropdownActionType;
 use App\Entity\Module;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -26,37 +27,43 @@ class ModuleDataTableType extends BaseDataTableType
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
-                    'details' => [
-                        'type' => ButtonActionType::class,
+                    'more' => [
+                        'type' => DropdownActionType::class,
                         'type_options' => [
-                            'label' => 'data_table.details',
-                            'href' => function(Module $module): string {
-                                return $this->urlGenerator->generate('app_module_details', [
-                                    'id' => $module->getId()
-                                ]);
-                            }
-                        ]
-                    ],
-                    'addQuestion' => [
-                        'type' => ButtonActionType::class,
-                        'type_options' => [
-                            'label' => 'data_table.module.addQuestion',
-                            'href' => function(Module $module): string {
-                                return $this->urlGenerator->generate('app_question_create', [
-                                    'moduleId' => $module->getId()
-                                ]);
-                            }
-                        ]
-                    ],
-                    'uploadVideo' => [
-                        'type' => ButtonActionType::class,
-                        'type_options' => [
-                            'label' => 'data_table.module.uploadVideo',
-                            'href' => function(Module $module): string {
-                                return $this->urlGenerator->generate('app_video_upload', [
-                                    'id' => $module->getId()
-                                ]);
-                            }
+                            'dropdown_label' => 'data_table.module.dropdown',
+                            'dropdown_class' => 'btn btn-warning',
+                            'dropdown_items' => [
+                                [
+                                    'label' => 'data_table.details',
+                                    'href' => function(Module $module): string {
+                                        return $this->urlGenerator->generate('app_module_details', [
+                                            'id' => $module->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
+                                    'label' => 'data_table.module.addQuestion',
+                                    'href' => function(Module $module): string {
+                                        return $this->urlGenerator->generate('app_question_create', [
+                                            'moduleId' => $module->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
+                                    'label' => 'data_table.module.uploadVideo',
+                                    'href' => function(Module $module): string {
+                                        return $this->urlGenerator->generate('app_video_upload', [
+                                            'id' => $module->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
+                                    'label' => 'data_table.module.createTest',
+                                    'href' => function(): string {
+                                        return $this->urlGenerator->generate('app_home_index');
+                                    }
+                                ]
+                            ]
                         ]
                     ]
                 ]

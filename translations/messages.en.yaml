@@ -42,10 +42,13 @@ data_table:
     videosCount: Video files
     addQuestion: Add question
     uploadVideo: Upload video
+    createTest: Create test
+    dropdown: More
   question:
     content: Content
     answersCount: Answers
-    create: Create question
+    createQuestion: Create question
+    createTest: Create test
     home: Modules
   video:
     video: Video

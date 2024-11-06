@@ -42,10 +42,13 @@ data_table:
     videosCount: Pliki wideo
     addQuestion: Dodaj pytanie
     uploadVideo: Prześlij wideo
+    createTest: Utwórz test
+    dropdown: Więcej
   question:
     content: Treść
     answersCount: Liczba odpowiedzi
-    create: Utwórz pytanie
+    createQuestion: Utwórz pytanie
+    createTest: Utwórz test
     home: Moduły
   video:
     video: Wideo

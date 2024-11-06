@@ -2,5 +2,6 @@ kreyu_data_table:
   defaults:
     themes:
       - "@KreyuDataTable/themes/bootstrap_5.html.twig"
+      - "data_table/theme.html.twig"
     pagination:
       enabled: true
