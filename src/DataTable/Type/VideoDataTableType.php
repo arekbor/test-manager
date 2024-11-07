@@ -2,12 +2,12 @@
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Column\Type\VideoColumnType;
 use App\Entity\Video;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
-use Kreyu\Bundle\DataTableBundle\Column\Type\TemplateColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,14 +47,11 @@ class VideoDataTableType extends BaseDataTableType
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
-            ->addColumn('video', TemplateColumnType::class, [
+            ->addColumn('video', VideoColumnType::class, [
                 'label' => 'data_table.video.video',
                 'getter' => fn (Video $video) => $video,
-                'template_path' => 'components/Video.html.twig',
-                'template_vars' => function(Video $video) {
-                    return [
-                        'video_id' => $video->getId()
-                    ];
+                'video_id' => function (Video $video): int {
+                    return $video->getId();
                 }
             ]);
 

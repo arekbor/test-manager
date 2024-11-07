@@ -8,7 +8,7 @@ use Kreyu\Bundle\DataTableBundle\Action\Type\AbstractActionType;
 use Kreyu\Bundle\DataTableBundle\Column\ColumnValueView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DropdownActionType extends AbstractActionType
+final class DropdownActionType extends AbstractActionType
 {   
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
