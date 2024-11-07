@@ -30,8 +30,7 @@ class ModuleDataTableType extends BaseDataTableType
                     'more' => [
                         'type' => DropdownActionType::class,
                         'type_options' => [
-                            'dropdown_label' => 'data_table.module.dropdown',
-                            'dropdown_class' => 'btn btn-warning',
+                            'dropdown_label' => 'data_table.actions',
                             'dropdown_items' => [
                                 [
                                     'label' => 'data_table.details',

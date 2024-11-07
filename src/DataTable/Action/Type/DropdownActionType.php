@@ -5,17 +5,20 @@ namespace App\DataTable\Action\Type;
 use Kreyu\Bundle\DataTableBundle\Action\ActionView;
 use Kreyu\Bundle\DataTableBundle\Action\ActionInterface;
 use Kreyu\Bundle\DataTableBundle\Action\Type\AbstractActionType;
+use Kreyu\Bundle\DataTableBundle\Column\ColumnValueView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DropdownActionType extends AbstractActionType
 {   
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
-        $value = $view->parent->value;
+        if ($view->parent instanceof ColumnValueView) {
+            $value = $view->parent->value;
 
-        foreach ($options['dropdown_items'] as $index => $item) {
-            if (is_callable($item['href'])) {
-                $options['dropdown_items'][$index]['href'] = $item['href']($value);
+            foreach ($options['dropdown_items'] as $index => $item) {
+                if (is_callable($item['href'])) {
+                    $options['dropdown_items'][$index]['href'] = $item['href']($value);
+                }
             }
         }
 

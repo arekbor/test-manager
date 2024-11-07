@@ -2,6 +2,7 @@
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Action\Type\DropdownActionType;
 use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -18,19 +19,24 @@ class QuestionDataTableType extends BaseDataTableType
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addAction('home', ButtonActionType::class, [
-                'label' => 'data_table.question.home',
-                'href' => $this->urlGenerator->generate('app_home_index')
-            ])
-            ->addAction('createQuestion', ButtonActionType::class, [
-                'label' => 'data_table.question.createQuestion',
-                'href' => $this->urlGenerator->generate('app_question_create', [ 
-                    'moduleId' => $options['module_id'] 
-                ])
-            ])
-            ->addAction('createTest', ButtonActionType::class, [
-                'label' => 'data_table.question.createTest',
-                'href' => $this->urlGenerator->generate('app_home_index')
+            ->addAction('actions', DropdownActionType::class, [
+                'dropdown_label' => 'data_table.actions',
+                'dropdown_items' => [
+                    [
+                        'label' => 'data_table.question.home',
+                        'href' => $this->urlGenerator->generate('app_home_index')
+                    ],
+                    [
+                        'label' => 'data_table.question.createQuestion',
+                        'href' => $this->urlGenerator->generate('app_question_create', [ 
+                            'moduleId' => $options['module_id'] 
+                        ])
+                    ],
+                    [
+                        'label' => 'data_table.question.createTest',
+                        'href' => $this->urlGenerator->generate('app_home_index')
+                    ]
+                ]
             ]);
             
         $builder

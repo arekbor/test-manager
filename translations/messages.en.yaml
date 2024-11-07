@@ -43,7 +43,6 @@ data_table:
     addQuestion: Add question
     uploadVideo: Upload video
     createTest: Create test
-    dropdown: More
   question:
     content: Content
     answersCount: Answers
