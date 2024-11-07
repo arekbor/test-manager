@@ -22,9 +22,7 @@ class VideoDataTableType extends BaseDataTableType
                 'href' => $this->urlGenerator->generate('app_video_upload', [ 
                     'id' => $options['module_id']
                 ])
-            ]);
-
-        $builder
+            ])
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
@@ -41,9 +39,7 @@ class VideoDataTableType extends BaseDataTableType
                         ]
                     ]
                 ]
-            ]);
-
-        $builder
+            ])
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
@@ -53,15 +49,12 @@ class VideoDataTableType extends BaseDataTableType
                 'video_id' => function (Video $video): int {
                     return $video->getId();
                 }
-            ]);
-
-        $builder
+            ])
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
-            ]);
-        
-        $builder
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 1));
+            ])
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 1))
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -37,9 +37,7 @@ class QuestionDataTableType extends BaseDataTableType
                         'href' => $this->urlGenerator->generate('app_home_index')
                     ]
                 ]
-            ]);
-            
-        $builder
+            ])
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
@@ -56,9 +54,7 @@ class QuestionDataTableType extends BaseDataTableType
                         ]
                     ]
                 ]
-            ]);
-        
-        $builder
+            ])
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
@@ -69,18 +65,15 @@ class QuestionDataTableType extends BaseDataTableType
             ->addColumn('answersCount', TextColumnType::class, [
                 'label' => 'data_table.question.answersCount',
                 'getter' => fn (Question $question) => count($question->getAnswers())
-            ]);
-
-        $builder
+            ])
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content'
-            ]);
-        
-        $builder
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5));
+            ])
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5))
+        ;
 
     }
 

@@ -21,9 +21,7 @@ class ModuleDataTableType extends BaseDataTableType
             ->addAction('create', ButtonActionType::class, [
                 'label' => 'data_table.module.create',
                 'href' => $this->urlGenerator->generate('app_module_create'),
-            ]);
-
-        $builder
+            ])
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
@@ -66,9 +64,7 @@ class ModuleDataTableType extends BaseDataTableType
                         ]
                     ]
                 ]
-            ]);
-
-        $builder
+            ])
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
@@ -87,9 +83,7 @@ class ModuleDataTableType extends BaseDataTableType
             ->addColumn('videosCount', TextColumnType::class, [
                 'label' => 'data_table.module.videosCount',
                 'getter' => fn (Module $module) => count($module->getVideos())
-            ]);
-
-        $builder
+            ])
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
@@ -99,9 +93,8 @@ class ModuleDataTableType extends BaseDataTableType
             ->addFilter('language', StringFilterType::class, [
                 'label' => 'data_table.module.language',
                 'lower' => true
-            ]);
-
-        $builder
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10));
+            ])
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
+        ;
     }
 }
