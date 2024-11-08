@@ -55,10 +55,6 @@
                             {{ 'templates.components.nav.logout'|trans }}
                         </a>
                     </li>
-                    
-                    {% set route = app.request.attributes.get('_route') %}
-                    {% set route_params = app.request.attributes.get('_route_params') %}
-                    {% set params = route_params|merge(app.request.query.all) %}
 
                     <li class="nav-item dropdown">
                         <a 
@@ -74,11 +70,11 @@
                             class="dropdown-menu dropdown-menu-end" 
                             aria-labelledby="localeDropdown"
                         >
-                            {% for locale in locales|split('|')|filter(locale => locale != app.request.locale) %}
+                            {% for locale, link in get_locale_links() %}
                                 <li>
                                     <a 
                                         class="dropdown-item" 
-                                        href="{{ path(route, params|merge({ _locale: locale })) }}"
+                                        href="{{ link }}"
                                     >
                                         {{ locale|upper }}
                                     </a>
