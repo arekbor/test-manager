@@ -17,10 +17,14 @@ select.form-select,
 }
 
 .table-responsive {
-  overflow: visible;
+  white-space: nowrap;
 }
 
-.dropdown-menu {
-  position: absolute;
-  z-index: 1000;
+#kreyu_data_table_module .table-responsive {
+  height: 528.5px;
+}
+
+#kreyu_data_table_question .table-responsive,
+#kreyu_data_table_video .table-responsive {
+  height: 288.5px;
 }

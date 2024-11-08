@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class BaseDataTableType extends AbstractDataTableType
 {
-    private const MAX_LENGHT_TEXT = 30;
+    private const MAX_LENGHT_TEXT = 40;
 
     public function __construct(
         protected UrlGeneratorInterface $urlGenerator
