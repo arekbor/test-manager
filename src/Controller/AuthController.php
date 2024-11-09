@@ -13,9 +13,18 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 #[Route('/auth')]
 class AuthController extends AbstractController
 {
+    public function __construct(
+        private Security $security
+    ) {
+    }
+
     #[Route('/login')]
     public function login(AuthenticationUtils $utils): Response
     {
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_home_index');
+        }
+
         $error = $utils->getLastAuthenticationError();
         $form = $this->createForm(LoginType::class, new SecurityUser());
 
@@ -23,8 +32,8 @@ class AuthController extends AbstractController
     }
 
     #[Route('/logout')]
-    public function logout(Security $security): Response
+    public function logout(): Response
     {
-        return $security->logout();
+        return $this->security->logout();
     }
 }
