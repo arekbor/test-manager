@@ -1,5 +1,6 @@
 .env.dev
 .env.prod
+.env.test
 .git
 vendor/
 var/
@@ -11,3 +12,5 @@ public/assets/
 composer.lock
 .symfony.local.yaml
 assets/vendor
+phpunit.xml.dist
+tests/

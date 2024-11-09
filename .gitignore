@@ -3,6 +3,7 @@
 /.env.local
 /.env.dev
 /.env.prod
+/.env.test
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -17,3 +18,7 @@
 ###< symfony/asset-mapper ###
 
 .vscode
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
