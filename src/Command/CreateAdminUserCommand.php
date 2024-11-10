@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
-    name: 'app:create-admin-user',
-    description: 'Creates an admin user based on variables in the .env file.',
+    name: "app:create-admin-user",
+    description: "Creates an admin user based on variables in the .env file.",
 )]
 class CreateAdminUserCommand extends Command
 {
@@ -24,8 +24,7 @@ class CreateAdminUserCommand extends Command
         private SecurityUserRepository $securityUserRepository,
         private UserPasswordHasherInterface $passwordHasher,
         private ParameterBagInterface $params,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -37,7 +36,7 @@ class CreateAdminUserCommand extends Command
         $adminPassword = $this->params->get('app.admin_password');
 
         if (empty($adminEmail) || empty($adminPassword)) {
-            $io->error('Missing required environment variables: ADMIN_EMAIL or ADMIN_PASSWORD.');
+            $io->error("Missing required environment variables: ADMIN_EMAIL or ADMIN_PASSWORD.");
             return Command::FAILURE;
         }
 
@@ -57,7 +56,7 @@ class CreateAdminUserCommand extends Command
         $this->em->persist($securityUser);
         $this->em->flush();
 
-        $io->success('Admin user successfully created.');
+        $io->success("Admin user successfully created.");
 
         return Command::SUCCESS;
     }

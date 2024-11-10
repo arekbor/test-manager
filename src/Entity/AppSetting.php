@@ -15,8 +15,8 @@ class AppSetting extends BaseEntity
     #[Assert\Length(max: 255)]
     private ?string $key = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $value = null;
+    #[ORM\Column(type: Types::JSON)]
+    private array $value = [];
 
     public function getKey(): ?string
     {
@@ -30,12 +30,12 @@ class AppSetting extends BaseEntity
         return $this;
     }
 
-    public function getValue(): ?string
+    public function getValue(): array
     {
         return $this->value;
     }
 
-    public function setValue(string $value): static
+    public function setValue(array $value): static
     {
         $this->value = $value;
 
