@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241022172211 extends AbstractMigration
+final class Version20241110114121 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,12 +21,15 @@ final class Version20241022172211 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE answer_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE app_setting_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE module_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE question_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE security_user_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE video_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE answer (id INT NOT NULL, question_id INT DEFAULT NULL, content TEXT NOT NULL, correct BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_DADD4A251E27F6BF ON answer (question_id)');
+        $this->addSql('CREATE TABLE app_setting (id INT NOT NULL, key VARCHAR(255) NOT NULL, value TEXT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_722938D58A90ABA9 ON app_setting (key)');
         $this->addSql('CREATE TABLE module (id INT NOT NULL, name VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE module_question (module_id INT NOT NULL, question_id INT NOT NULL, PRIMARY KEY(module_id, question_id))');
         $this->addSql('CREATE INDEX IDX_D2379AB0AFC2B591 ON module_question (module_id)');
@@ -50,6 +53,7 @@ final class Version20241022172211 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP SEQUENCE answer_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE app_setting_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE module_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE question_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE security_user_id_seq CASCADE');
@@ -60,6 +64,7 @@ final class Version20241022172211 extends AbstractMigration
         $this->addSql('ALTER TABLE video_module DROP CONSTRAINT FK_347386E529C1004E');
         $this->addSql('ALTER TABLE video_module DROP CONSTRAINT FK_347386E5AFC2B591');
         $this->addSql('DROP TABLE answer');
+        $this->addSql('DROP TABLE app_setting');
         $this->addSql('DROP TABLE module');
         $this->addSql('DROP TABLE module_question');
         $this->addSql('DROP TABLE question');
