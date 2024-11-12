@@ -2,8 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\AppSetting;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Model\MailSmtpSetting;
+use App\Service\AppSettingService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CreateAppSettingsCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $em,
+        private AppSettingService $appSettingService,
     ) {
         parent::__construct();
     }
@@ -26,28 +26,9 @@ class CreateAppSettingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $mailSmtpAppSetting = $this->createMailSmtpAppSetting();
-        $this->em->persist($mailSmtpAppSetting);
-        
-        $this->em->flush();
-
-        $io->success("App setting: {$mailSmtpAppSetting->getKey()} successfully created.");
+        $this->appSettingService->setValue('mail.smtp', new MailSmtpSetting());
+        $io->success("App setting: " . MailSmtpSetting::class . " successfully created.");
 
         return Command::SUCCESS;
-    }
-
-    private function createMailSmtpAppSetting(): AppSetting
-    {
-        $setting = new AppSetting();
-        return $setting
-            ->setKey('mail.smtp')
-            ->setValue([
-                'server_address' => '',
-                'server_port' => '',
-                'from_address' => '',
-                'name' => '',
-                'password' => ''
-            ])
-        ;
     }
 }

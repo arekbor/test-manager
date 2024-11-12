@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="mt-2">
+        {{ component('MailSmtpSettingForm', { 
+            mailSmtpSetting: mailSmtpSetting,
+            defer: true 
+        }) }}
+    </div>
+{% endblock %}

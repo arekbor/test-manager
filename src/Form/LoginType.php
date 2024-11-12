@@ -19,10 +19,10 @@ class LoginType extends AbstractType
                 'label' => 'form.type.login.email'
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'form.type.login.password.label',
+                'label' => 'form.password.label',
                 'toggle' => true,
-                'hidden_label' => 'form.type.login.password.hidden',
-                'visible_label' => 'form.type.login.password.visible'
+                'hidden_label' => 'form.password.hidden',
+                'visible_label' => 'form.password.visible'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'form.type.login.submit',
