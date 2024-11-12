@@ -5,14 +5,11 @@ namespace App\Entity;
 use App\Repository\AppSettingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppSettingRepository::class)]
 class AppSetting extends BaseEntity
 {
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(max: 255)]
     private ?string $key = null;
 
     #[ORM\Column(type: Types::JSON)]

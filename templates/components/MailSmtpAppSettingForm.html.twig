@@ -1,0 +1,28 @@
+<div {{ attributes }}>
+    {{ form_start(form) }}
+        
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.fromAddress) }}
+        </div>
+
+        <div class="col-6">
+            {{ form_row(form.serverAddress) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.serverPort) }}
+        </div>
+
+        <div class="col-6">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.password) }}
+        </div>
+
+        <div class="col-12">
+            {{ form_row(form.submit) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

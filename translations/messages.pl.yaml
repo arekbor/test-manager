@@ -3,10 +3,6 @@ form:
     login:
       email: E-mail
       submit: Zaloguj się
-      password:
-        label: Hasło
-        hidden: Ukryj
-        visible: Pokaż
     module:
       name: Nazwa
       language: Język
@@ -17,6 +13,18 @@ form:
         delete: Usuń odpowiedź
     answer:
       content_placeholder: Treść odpowiedzi
+    mailSmtpAppSetting:
+      serverAddress: Adres serwera
+      serverPort: Port serwera
+      fromAddress: Z adresu
+      name: Użytkownik SMTP
+      password: Hasło SMTP
+      testReceiverEmail: Email testowego odbiorcy
+      testEmailSend: Wyślij email
+  password:
+    label: Hasło
+    hidden: Ukryj
+    visible: Pokaż
   submit:
     label: Prześlij
 
@@ -110,3 +118,4 @@ templates:
       navbar_brand: Menedżer testów
       home: Strona główna
       logout: Wyloguj się
+      settings: Ustawienia

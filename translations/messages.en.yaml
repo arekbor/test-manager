@@ -3,10 +3,6 @@ form:
     login:
       email: Email
       submit: Log in
-      password:
-        label: Password
-        hidden: Hide
-        visible: Show
     module:
       name: Name
       language: Language
@@ -17,6 +13,18 @@ form:
         delete: Delete answer
     answer:
       content_placeholder: Answer content
+    mailSmtpAppSetting:
+      serverAddress: Server address
+      serverPort: Server port
+      fromAddress: From address
+      name: SMTP Username
+      password: SMTP Password
+      testReceiverEmail: Test receiver email
+      testEmailSend: Send email
+  password:
+    label: Password
+    hidden: Hide
+    visible: Show
   submit:
     label: Submit
 
@@ -109,3 +117,4 @@ templates:
       navbar_brand: Test manager
       home: Home
       logout: Log out
+      settings: Settings
