@@ -37,8 +37,8 @@ final class MailSmtpAppSettingForm extends AbstractController
 
         $mailSmtpAppSetting = $this->getForm()->getData();
 
-        $rawPassword = $mailSmtpAppSetting->getPassword();
-        $encryptedPassword = $this->encryptionService->encrypt($rawPassword);
+        $plainPassword = $mailSmtpAppSetting->getPassword();
+        $encryptedPassword = $this->encryptionService->encrypt($plainPassword);
         $mailSmtpAppSetting->setPassword($encryptedPassword);
 
         $this->appSettingService->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting);
