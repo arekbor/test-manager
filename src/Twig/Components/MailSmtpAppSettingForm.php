@@ -2,8 +2,8 @@
 
 namespace App\Twig\Components;
 
-use App\Form\MailSmtpSettingType;
-use App\Model\MailSmtpSetting;
+use App\Form\MailSmtpAppSettingType;
+use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
 use App\Service\EncryptionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
 #[AsLiveComponent]
-final class MailSmtpSettingForm extends AbstractController
+final class MailSmtpAppSettingForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
@@ -28,26 +28,26 @@ final class MailSmtpSettingForm extends AbstractController
     }
 
     #[LiveProp]
-    public MailSmtpSetting $mailSmtpSetting;
+    public MailSmtpAppSetting $mailSmtpAppSetting;
 
     #[LiveAction]
     public function submit(): Response
     {
         $this->submitForm();
 
-        $mailSmtpSetting = $this->getForm()->getData();
+        $mailSmtpAppSetting = $this->getForm()->getData();
 
-        $rawPassword = $mailSmtpSetting->getPassword();
+        $rawPassword = $mailSmtpAppSetting->getPassword();
         $encryptedPassword = $this->encryptionService->encrypt($rawPassword);
-        $mailSmtpSetting->setPassword($encryptedPassword);
+        $mailSmtpAppSetting->setPassword($encryptedPassword);
 
-        $this->appSettingService->updateValue('mail.smtp', $mailSmtpSetting);
+        $this->appSettingService->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting);
 
         return $this->redirectToRoute('app_home_index');
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(MailSmtpSettingType::class, $this->mailSmtpSetting);
+        return $this->createForm(MailSmtpAppSettingType::class, $this->mailSmtpAppSetting);
     }
 }

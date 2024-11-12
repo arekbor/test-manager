@@ -4,8 +4,10 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class MailSmtpSetting
+class MailSmtpAppSetting
 {
+    public const APP_SETTING_KEY = "mail.smtp";
+
     #[Assert\NotBlank]
     #[Assert\Hostname]
     private string $serverAddress;

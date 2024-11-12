@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Model\MailSmtpSetting;
+use App\Model\MailSmtpAppSetting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -11,25 +11,25 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MailSmtpSettingType extends AbstractType
+class MailSmtpAppSettingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('serverAddress', TextType::class, [
-                'label' => 'form.type.mailSmtpSetting.serverAddress',
+                'label' => 'form.type.mailSmtpAppSetting.serverAddress',
                 'empty_data' => ''
             ])
             ->add('serverPort', TextType::class, [
-                'label' => 'form.type.mailSmtpSetting.serverPort',
+                'label' => 'form.type.mailSmtpAppSetting.serverPort',
                 'empty_data' => ''
             ])
             ->add('fromAddress', EmailType::class, [
-                'label' => 'form.type.mailSmtpSetting.fromAddress',
+                'label' => 'form.type.mailSmtpAppSetting.fromAddress',
                 'empty_data' => ''
             ])
             ->add('name', TextType::class, [
-                'label' => 'form.type.mailSmtpSetting.name',
+                'label' => 'form.type.mailSmtpAppSetting.name',
                 'empty_data' => ''
             ])
             ->add('password', PasswordType::class, [
@@ -57,7 +57,7 @@ class MailSmtpSettingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MailSmtpSetting::class
+            'data_class' => MailSmtpAppSetting::class
         ]);
     }
 }

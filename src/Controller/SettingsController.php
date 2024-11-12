@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\MailSmtpSetting;
+use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +16,11 @@ class SettingsController extends AbstractController
         AppSettingService $appSettingService
     ): Response
     {
-        $mailSmtpSetting = $appSettingService
-            ->getValue('mail.smtp', MailSmtpSetting::class);
+        $mailSmtpAppSetting = $appSettingService
+            ->getValue(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
 
         return $this->render('settings/index.html.twig', [
-            'mailSmtpSetting' => $mailSmtpSetting
+            'mailSmtpAppSetting' => $mailSmtpAppSetting
         ]);
     }
 }

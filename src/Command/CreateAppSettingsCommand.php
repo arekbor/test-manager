@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Model\MailSmtpSetting;
+use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,8 +26,8 @@ class CreateAppSettingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->appSettingService->setValue('mail.smtp', new MailSmtpSetting());
-        $io->success("App setting: " . MailSmtpSetting::class . " successfully created.");
+        $this->appSettingService->setValue(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting());
+        $io->success("App setting: " .MailSmtpAppSetting::APP_SETTING_KEY. " successfully created.");
 
         return Command::SUCCESS;
     }

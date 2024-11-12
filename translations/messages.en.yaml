@@ -13,7 +13,7 @@ form:
         delete: Delete answer
     answer:
       content_placeholder: Answer content
-    mailSmtpSetting:
+    mailSmtpAppSetting:
       serverAddress: Server address
       serverPort: Server port
       fromAddress: From address
