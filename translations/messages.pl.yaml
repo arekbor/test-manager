@@ -14,19 +14,33 @@ form:
     answer:
       content_placeholder: Treść odpowiedzi
     mailSmtpAppSetting:
-      host: Host
-      port: Port
-      fromAddress: Z adresu
-      username: Użytkownik
+      host:
+        label: Host
+        help: Określ host SMTP (np. smtp.example.com).
+      port:
+        label: Port
+        help: Określ port SMTP.
+      fromAddress:
+        label: Z adresu
+        help: Adres nadawcy w każdej wiadomości.
+      username:
+        label: Użytkownik
+        help: Nazwa użytkownika SMTP.
+      password:
+        help: Hasło SMTP.
       smtpAuth:
         label: Uwierzytelnianie
+        help: Czy używać uwierzytelniania SMTP. Używa właściwości Nazwa użytkownika i Hasło.
         enable: Włącz
         disable: Wyłącz
       smtpSecure:
         label: Szyfrowanie
+        help: Jaki rodzaj szyfrowania ma być używany w połączeniu SMTP.
         ssl: ssl
         tls: tls
-      timeout: Timeout (w sek.)
+      timeout:
+        label: Limit czasu
+        help: Limit czasu serwera SMTP w sekundach.
   password:
     label: Hasło
     hidden: Ukryj

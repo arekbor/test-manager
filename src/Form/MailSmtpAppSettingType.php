@@ -20,19 +20,23 @@ class MailSmtpAppSettingType extends AbstractType
     {
         $builder
             ->add('host', TextType::class, [
-                'label' => 'form.type.mailSmtpAppSetting.host',
+                'label' => 'form.type.mailSmtpAppSetting.host.label',
+                'help' => 'form.type.mailSmtpAppSetting.host.help',
                 'empty_data' => ''
             ])
             ->add('port', TextType::class, [
-                'label' => 'form.type.mailSmtpAppSetting.port',
+                'label' => 'form.type.mailSmtpAppSetting.port.label',
+                'help' => 'form.type.mailSmtpAppSetting.port.help',
                 'empty_data' => ''
             ])
             ->add('fromAddress', EmailType::class, [
-                'label' => 'form.type.mailSmtpAppSetting.fromAddress',
+                'label' => 'form.type.mailSmtpAppSetting.fromAddress.label',
+                'help' => 'form.type.mailSmtpAppSetting.fromAddress.help',
                 'empty_data' => ''
             ])
             ->add('username', TextType::class, [
-                'label' => 'form.type.mailSmtpAppSetting.username',
+                'label' => 'form.type.mailSmtpAppSetting.username.label',
+                'help' => 'form.type.mailSmtpAppSetting.username.help',
                 'empty_data' => ''
             ])
             ->add('password', PasswordType::class, [
@@ -42,12 +46,14 @@ class MailSmtpAppSettingType extends AbstractType
                 'hidden_label' => 'form.password.hidden',
                 'visible_label' => 'form.password.visible',
                 'empty_data' => '',
+                'help' => 'form.type.mailSmtpAppSetting.password.help',
                 'attr' => [
                     'autocomplete' => 'new-password'
                 ]
             ])
             ->add('smtpAuth', ChoiceType::class, [
                 'label' => 'form.type.mailSmtpAppSetting.smtpAuth.label',
+                'help' => 'form.type.mailSmtpAppSetting.smtpAuth.help',
                 'choices' => [
                     'form.type.mailSmtpAppSetting.smtpAuth.enable' => true,
                     'form.type.mailSmtpAppSetting.smtpAuth.disable' => false
@@ -56,13 +62,15 @@ class MailSmtpAppSettingType extends AbstractType
             ->add('smtpSecure', ChoiceType::class, [
                 'label' => 'form.type.mailSmtpAppSetting.smtpSecure.label',
                 'empty_data' => PHPMailer::ENCRYPTION_SMTPS,
+                'help' => 'form.type.mailSmtpAppSetting.smtpSecure.help',
                 'choices' => [
                     'form.type.mailSmtpAppSetting.smtpSecure.ssl' => PHPMailer::ENCRYPTION_SMTPS,
                     'form.type.mailSmtpAppSetting.smtpSecure.tls' => PHPMailer::ENCRYPTION_STARTTLS,
                 ]
             ])
             ->add('timeout', NumberType::class, [
-                'label' => 'form.type.mailSmtpAppSetting.timeout',
+                'label' => 'form.type.mailSmtpAppSetting.timeout.label',
+                'help' => 'form.type.mailSmtpAppSetting.timeout.help',
                 'empty_data' => 0,
             ])
             ->add('submit', SubmitType::class, [

@@ -14,19 +14,33 @@ form:
     answer:
       content_placeholder: Answer content
     mailSmtpAppSetting:
-      host: Host
-      port: Port
-      fromAddress: From address
-      username: Username
+      host:
+        label: Host
+        help: Specify SMTP host (e.g smtp.example.com).
+      port:
+        label: Port
+        help: Specify SMTP port
+      fromAddress:
+        label: From address
+        help: The From email address for the every message.
+      username:
+        label: Username
+        help: SMTP username.
+      password:
+        help: SMTP password.
       smtpAuth:
         label: Authentication
+        help: Whether to use SMTP authentication. Uses the Username and Password properties.
         enable: Enable
         disable: Disable
       smtpSecure:
         label: Encryption
+        help: What kind of encryption to use on the SMTP connection.
         ssl: ssl
         tls: tls
-      timeout: Timeout (in sec.)
+      timeout:
+        label: Timeout
+        help: The SMTP server timeout in seconds.
   password:
     label: Password
     hidden: Hide
