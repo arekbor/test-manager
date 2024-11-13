@@ -10,50 +10,62 @@ class MailSmtpAppSetting
 
     #[Assert\NotBlank]
     #[Assert\Hostname]
-    private string $serverAddress;
+    private string $host;
 
     #[Assert\NotBlank]
     #[Assert\Length(max: 5)]
     #[Assert\Range(min: 1, max: 65535)]
-    private string $serverPort;
+    private string $port;
 
     #[Assert\Email]
     #[Assert\NotBlank]
     private string $fromAddress;
 
     #[Assert\NotBlank]
-    private string $name;
+    private string $username;
 
     #[Assert\NotBlank]
     private string $password;
 
+    private bool $smtpAuth;
+
+    #[Assert\NotBlank]
+    private string $smtpSecure;
+
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(300)]
+    private int $timeout;
+
     public function __construct() {
-        $this->serverAddress = "";
-        $this->serverPort = "";
+        $this->host = "";
+        $this->port = "";
         $this->fromAddress = "";
-        $this->name = "";
+        $this->username = "";
         $this->password = "";
+        $this->smtpAuth = false;
+        $this->smtpSecure = "";
+        $this->timeout = 0;
     }
 
-    public function getServerAddress(): string
+    public function getHost(): string
     {
-        return $this->serverAddress;
+        return $this->host;
     }
 
-    public function setServerAddress(string $serverAddress): self
+    public function setHost(string $host): self
     {
-        $this->serverAddress = $serverAddress;
+        $this->host = $host;
         return $this;
     }
 
-    public function getServerPort(): string
+    public function getPort(): string
     {
-        return $this->serverPort;
+        return $this->port;
     }
 
-    public function setServerPort(string $serverPort): self
+    public function setPort(string $port): self
     {
-        $this->serverPort = $serverPort;
+        $this->port = $port;
         return $this;
     }
 
@@ -68,14 +80,14 @@ class MailSmtpAppSetting
         return $this;
     }
 
-    public function getName(): string
+    public function getUsername(): string
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function setName(string $name): self
+    public function setUsername(string $username): self
     {
-        $this->name = $name;
+        $this->username = $username;
         return $this;
     }
 
@@ -87,6 +99,39 @@ class MailSmtpAppSetting
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function getSmtpAuth(): bool
+    {
+        return $this->smtpAuth;
+    }
+
+    public function setSmtpAuth(bool $smtpAuth): self
+    {
+        $this->smtpAuth = $smtpAuth;
+        return $this;
+    }
+
+    public function getSmtpSecure(): string
+    {
+        return $this->smtpSecure;
+    }
+
+    public function setSmtpSecure(string $smtpSecure): self
+    {
+        $this->smtpSecure = $smtpSecure;
+        return $this;
+    }
+
+    public function getTimeout(): int
+    {
+        return $this->timeout;
+    }
+
+    public function setTimeout(int $timeout): self
+    {
+        $this->timeout = $timeout;
         return $this;
     }
 }

@@ -7,17 +7,29 @@
         </div>
 
         <div class="col-6">
-            {{ form_row(form.serverAddress) }}
+            {{ form_row(form.host) }}
         </div>
         <div class="col-6">
-            {{ form_row(form.serverPort) }}
+            {{ form_row(form.port) }}
         </div>
 
         <div class="col-6">
-            {{ form_row(form.name) }}
+            {{ form_row(form.username) }}
         </div>
         <div class="col-6">
             {{ form_row(form.password) }}
+        </div>
+
+        <div class="col-6">
+            {{ form_row(form.smtpAuth) }}
+        </div>
+
+        <div class="col-6">
+            {{ form_row(form.smtpSecure) }}
+        </div>
+
+        <div class="col-12">
+            {{ form_row(form.timeout) }}
         </div>
 
         <div class="col-12">

@@ -14,13 +14,19 @@ form:
     answer:
       content_placeholder: Treść odpowiedzi
     mailSmtpAppSetting:
-      serverAddress: Adres serwera
-      serverPort: Port serwera
+      host: Host
+      port: Port
       fromAddress: Z adresu
-      name: Użytkownik SMTP
-      password: Hasło SMTP
-      testReceiverEmail: Email testowego odbiorcy
-      testEmailSend: Wyślij email
+      username: Użytkownik
+      smtpAuth:
+        label: Uwierzytelnianie
+        enable: Włącz
+        disable: Wyłącz
+      smtpSecure:
+        label: Szyfrowanie
+        ssl: ssl
+        tls: tls
+      timeout: Timeout (w sek.)
   password:
     label: Hasło
     hidden: Ukryj
