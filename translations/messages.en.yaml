@@ -30,7 +30,7 @@ form:
         help: SMTP password.
       smtpAuth:
         label: Authentication
-        help: Whether to use SMTP authentication. Uses the Username and Password properties.
+        help: Whether to use SMTP authentication.
         enable: Enable
         disable: Disable
       smtpSecure:

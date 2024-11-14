@@ -30,7 +30,7 @@ form:
         help: Hasło SMTP.
       smtpAuth:
         label: Uwierzytelnianie
-        help: Czy używać uwierzytelniania SMTP. Używa właściwości Nazwa użytkownika i Hasło.
+        help: Czy używać uwierzytelniania SMTP.
         enable: Włącz
         disable: Wyłącz
       smtpSecure:
