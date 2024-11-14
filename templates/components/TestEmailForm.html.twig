@@ -1,0 +1,15 @@
+<div {{ attributes }}>
+    {{ form_start(form) }}
+
+    {{ form_row(form.receiver) }}
+
+    {% if errorMessage %}
+        <div class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+    {% endif %}
+
+    {{ form_row(form.send) }}
+
+    {{ form_end(form) }}
+</div>

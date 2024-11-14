@@ -43,7 +43,7 @@ final class MailSmtpAppSettingForm extends AbstractController
 
         $this->appSettingService->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting);
 
-        return $this->redirectToRoute('app_home_index');
+        return $this->redirectToRoute('app_settings_smtp');
     }
 
     protected function instantiateForm(): FormInterface

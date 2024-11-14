@@ -11,16 +11,28 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/settings')]
 class SettingsController extends AbstractController
 {
-    #[Route('/index')]
-    public function index(
+    #[Route('/general')]
+    public function general(): Response
+    {
+        return $this->render('settings/general.html.twig');
+    }
+
+    #[Route('/smtp')]
+    public function smtp(
         AppSettingService $appSettingService
     ): Response
     {
         $mailSmtpAppSetting = $appSettingService
             ->getValue(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
 
-        return $this->render('settings/index.html.twig', [
+        return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting
         ]);
+    }
+
+    #[Route('/testMail')]
+    public function testMail(): Response
+    {
+        return $this->render('settings/testMail.html.twig');
     }
 }

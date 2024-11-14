@@ -41,6 +41,11 @@ form:
       timeout:
         label: Timeout
         help: The SMTP server timeout in seconds.
+    testEmail:
+      receiver:
+        label: Receiver
+        help: Test receiver email.
+      send: Send email
   password:
     label: Password
     hidden: Hide
@@ -98,6 +103,11 @@ modal:
 templates:
   base:
     title: Test manager
+  settings:
+    navLink:
+      general: General
+      smtp: SMTP
+      testmail: Test email
   auth:
     login:
       title: Log in

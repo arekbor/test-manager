@@ -1,0 +1,8 @@
+{% extends 'settings/base.html.twig' %}
+
+{% block wrapper %}
+    {{ component('MailSmtpAppSettingForm', {
+        defer: true,
+        mailSmtpAppSetting: mailSmtpAppSetting
+    }) }}
+{% endblock %}
