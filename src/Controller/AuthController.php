@@ -20,7 +20,10 @@ class AuthController extends BaseController
         $error = $utils->getLastAuthenticationError();
         $form = $this->createForm(LoginType::class, new SecurityUser());
 
-        return $this->render('auth/login.html.twig', ['form' => $form, 'error' => $error]);
+        return $this->render('auth/login.html.twig', [
+            'form' => $form, 
+            'error' => $error
+        ]);
     }
 
     #[Route('/logout')]

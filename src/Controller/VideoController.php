@@ -32,7 +32,9 @@ class VideoController extends BaseController
     #[Route('/upload/{id}')]
     public function upload(Module $module): Response
     {
-        return $this->render('video/upload.html.twig', ['moduleId' => $module->getId()]);
+        return $this->render('video/upload.html.twig', [
+            'moduleId' => $module->getId()
+        ]);
     }
 
     #[Route('/details/{moduleId}/{videoId}')]
@@ -44,7 +46,10 @@ class VideoController extends BaseController
         $file = $this->videoService->getFile($video);
         $video->setFile($file);
 
-        return $this->render('video/details.html.twig', ['moduleId' => $module->getId(), 'video' => $video]);
+        return $this->render('video/details.html.twig', [
+            'moduleId' => $module->getId(), 
+            'video' => $video
+        ]);
     }
 
     #[Route('/upload-video')]
