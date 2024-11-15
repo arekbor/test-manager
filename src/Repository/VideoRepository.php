@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class VideoRepository extends ServiceEntityRepository
@@ -13,7 +14,7 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
-    public function findByModuleId(int $moduleId)
+    public function findByModuleId(int $moduleId): QueryBuilder
     {
         return $this
             ->createQueryBuilder('v')

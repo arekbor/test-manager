@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class QuestionRepository extends ServiceEntityRepository
@@ -13,7 +14,7 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function findByModuleId(int $moduleId)
+    public function findByModuleId(int $moduleId): QueryBuilder
     {
         return $this
             ->createQueryBuilder('q')

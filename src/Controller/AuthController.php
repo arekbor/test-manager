@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Attribute\IsNotGranted;
 use App\Entity\SecurityUser;
 use App\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,18 +14,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 #[Route('/auth')]
 class AuthController extends AbstractController
 {
-    public function __construct(
-        private Security $security
-    ) {
-    }
-
     #[Route('/login')]
+    #[IsNotGranted('IS_AUTHENTICATED_FULLY')]
     public function login(AuthenticationUtils $utils): Response
     {
-        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('app_home_index');
-        }
-
         $error = $utils->getLastAuthenticationError();
         $form = $this->createForm(LoginType::class, new SecurityUser());
 
@@ -32,8 +25,8 @@ class AuthController extends AbstractController
     }
 
     #[Route('/logout')]
-    public function logout(): Response
+    public function logout(Security $security): Response
     {
-        return $this->security->logout();
+        return $security->logout();
     }
 }
