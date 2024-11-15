@@ -15,7 +15,7 @@ class TestEmail
         return $this->receiver;
     }
 
-    public function setReceiver(string $receiver): self
+    public function setReceiver(string $receiver): static
     {
         $this->receiver = $receiver;
 

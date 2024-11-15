@@ -2,70 +2,62 @@
 
 namespace App\Service;
 
+use App\Entity\Module;
 use App\Entity\Video;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\Part\File;
+use Symfony\Component\Uid\Uuid;
 
 class VideoService
 {
-    private string $basePath;
-
     public function __construct(
-        private ParameterBagInterface $params
+        private ParameterBagInterface $params,
+        private FileService $fileService,
+        private EntityManagerInterface $em,
     ) {
-        $this->basePath = $this->params->get('app.video.upload.base.path');
-        if (empty($this->basePath)) {
-            throw new Exception("Missing directory path for video uploads.");
-        }
     }
 
-    public function uploadFile(Video $video): void
+    public function upload(UploadedFile $file, Module $module): void
     {
-        $this->validateUploadDirectory();
+        $uuid = Uuid::v7()->toString();
+        $basePath = $this->getBasePath();
+    
+        $file = $this->fileService->save($file, $basePath, $uuid);
 
-        if (file_exists($this->getFullPath($video))) {
-            throw new Exception("File already exists.");
-        }
+        $video = new Video();
+        $video->setFilename($file->getFilename());
+        $video->addModule($module);
 
-        $video->getFile()->move($this->basePath, $video->getFilename());
+        $this->em->persist($video);
+        $this->em->flush();
     }
 
-    public function getFile(Video $video): UploadedFile
+    public function deleteVideo(Video $video): void
     {
-        return new UploadedFile($this->getFullPath($video), $video->getFilename());
-    }
-
-    public function deleteFile(Video $video): void
-    {
-        $filePath = $this->getFullPath($video);
-
-        if (!file_exists($filePath)) {
-            throw new Exception("File not found: " . $filePath);
-        }
-
-        if (!unlink($filePath)) {
-            throw new Exception("Error: Unable to delete the file at path: " . $filePath);
-        }
-    }
-
-    private function getFullPath(Video $video): string {
         $filename = $video->getFilename();
-        if (empty($filename)) {
-            throw new Exception("Filename not found");
+        $basePath = $this->getBasePath();
+
+        if (!$this->fileService->delete($basePath, $filename)) {
+            throw new Exception("Failed to delete the file: {$filename}");
         }
 
-        return $this->basePath . DIRECTORY_SEPARATOR . $filename;
+        $this->em->remove($video);
+        $this->em->flush();
     }
 
-    private function validateUploadDirectory(): void
+    public function getVideoFile(Video $video): File
     {
-        if (!is_dir($this->basePath)) {
-            throw new Exception("Upload directory does not exist.");
-        }
+        $filename = $video->getFilename();
+        $basePath = $this->getBasePath();
 
-        if (!is_writable($this->basePath)) {
-            throw new Exception("Upload directory is not writable.");
-        }
+        return $this->fileService->getFile($basePath, $filename);
+    }
+
+    private function getBasePath(): string
+    {
+        return $this->params->get('app.video.upload.base.path');
     }
 }

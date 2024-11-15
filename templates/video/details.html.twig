@@ -22,13 +22,7 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                {{ 'templates.video.details.extension'|trans }}: {{ video.file.guessExtension }}
-            </li>
-            <li class="list-group-item">
-                {{ 'templates.video.details.mime_type'|trans }}: {{ video.file.MimeType }}
-            </li>
-            <li class="list-group-item">
-                {{ 'templates.video.details.filename'|trans }}: {{ video.file.ClientOriginalName }}
+                {{ 'templates.video.details.filename'|trans }}: {{ video.filename }}
             </li>
         </ul>
         <div class="card-body">

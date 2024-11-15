@@ -3,8 +3,9 @@
     {{ 
         attributes.defaults(
             stimulus_controller('video_upload', { 
-                uploudUrl: path('app_video_uploadvideo'), 
-                moduleId: moduleId 
+                uploudUrl: path('app_video_uploadvideo', {
+                    id: moduleId
+                }) 
             }
         )) 
     }}
