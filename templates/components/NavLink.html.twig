@@ -1,0 +1,7 @@
+<a 
+    {{ attributes }}
+    href="{{ path(routerName) }}"
+    class="nav-link {% if app.request.attributes.get('_route') == routerName %}active{% endif %}"
+>
+    {{ label|trans }}
+</a>

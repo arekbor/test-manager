@@ -9,8 +9,8 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 #[AsLiveComponent]
 final class VideoUpload
 {
+    use DefaultActionTrait;
+
     #[LiveProp]
     public string $moduleId;
-
-    use DefaultActionTrait;
 }

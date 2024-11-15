@@ -41,6 +41,11 @@ form:
       timeout:
         label: Limit czasu
         help: Limit czasu serwera SMTP w sekundach.
+    testEmail:
+      receiver:
+        label: Odbiorca
+        help: Email testowego odbiorcy.
+      send: Wyślij email
   password:
     label: Hasło
     hidden: Ukryj
@@ -99,6 +104,11 @@ modal:
 templates:
   base:
     title: Menedżer testów
+  settings:
+    navLink:
+      general: Ogólne
+      smtp: SMTP
+      testmail: Testowa wiadomość
   auth:
     login:
       title: Zaloguj się

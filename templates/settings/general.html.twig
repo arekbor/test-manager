@@ -1,0 +1,32 @@
+{% extends 'settings/base.html.twig' %}
+
+{% block wrapper %}
+    <h5>
+        Language
+    </h5>
+
+    <div class="dropdown">
+        <button 
+            class="btn btn-secondary dropdown-toggle" 
+            type="button" 
+            id="languageDropdown" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+        >
+            {{ app.request.locale|upper }}
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+            {% for locale, link in get_locale_links() %}
+                <li>
+                    <a 
+                        class="dropdown-item" 
+                        href="{{ link }}"
+                    >
+                        {{ locale|upper }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

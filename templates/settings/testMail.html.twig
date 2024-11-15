@@ -1,0 +1,7 @@
+{% extends 'settings/base.html.twig' %}
+
+{% block wrapper %}
+    {{ component('TestEmailForm', {
+        defer: true
+    }) }}
+{% endblock %}

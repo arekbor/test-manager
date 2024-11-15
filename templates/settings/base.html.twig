@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 col-xl-2">
+            <nav class="nav nav-pills flex-column">
+                {{ component('NavLink', { 
+                    routerName: 'app_settings_general',
+                    label: 'templates.settings.navLink.general'
+                }) }}
+
+                {{ component('NavLink', { 
+                    routerName: 'app_settings_smtp',
+                    label: 'templates.settings.navLink.smtp'
+                }) }}
+
+                {{ component('NavLink', { 
+                    routerName: 'app_settings_testmail',
+                    label: 'templates.settings.navLink.testmail'
+                }) }}
+            </nav>
+        </div>
+        <div class="col-12 col-xl-10 mt-3 mt-xl-0">
+            {% block wrapper %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
