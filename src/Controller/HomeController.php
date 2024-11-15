@@ -4,19 +4,21 @@ namespace App\Controller;
 
 use App\DataTable\Type\ModuleDataTableType;
 use App\Repository\ModuleRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class HomeController extends BaseDataTableController
+class HomeController extends BaseController
 {
     #[Route('/home')]
-    public function index(Request $request, ModuleRepository $moduleRepository): Response
+    public function index(
+        ModuleRepository $moduleRepository
+    ): Response
     {
         $query = $moduleRepository->createQueryBuilder('m');
+        $moduleDataTable = $this->createDataTable(ModuleDataTableType::class, $query); 
 
         return $this->render('home/index.html.twig', [
-            'module_data_table_view' => $this->createDataTableView(ModuleDataTableType::class, $request, $query)
+            'module_data_table' => $moduleDataTable
         ]);
     }
 }

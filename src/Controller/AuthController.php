@@ -5,14 +5,13 @@ namespace App\Controller;
 use App\Attribute\IsNotGranted;
 use App\Entity\SecurityUser;
 use App\Form\LoginType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 #[Route('/auth')]
-class AuthController extends AbstractController
+class AuthController extends BaseController
 {
     #[Route('/login')]
     #[IsNotGranted('IS_AUTHENTICATED_FULLY')]

@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
-class SettingsController extends AbstractController
+class SettingsController extends BaseController
 {
     #[Route('/general')]
     public function general(): Response
