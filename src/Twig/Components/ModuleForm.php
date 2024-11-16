@@ -38,7 +38,7 @@ final class ModuleForm extends AbstractController
         $em->persist($module);
         $em->flush();
 
-        return $this->redirectToRoute('app_module_details', [
+        return $this->redirectToRoute('app_module_questions', [
             'id' => $module->getId()
         ]);
     }

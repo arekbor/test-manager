@@ -19,11 +19,10 @@ class ModuleController extends BaseController
         return $this->render('module/create.html.twig');
     }
 
-    #[Route('/details/{id}')]
-    public function details(
+    #[Route('/details/questions/{id}')]
+    public function questions(
         Module $module, 
-        QuestionRepository $questionRepository,
-        VideoRepository $videoRepository
+        QuestionRepository $questionRepository
     ): Response
     {
         $moduleId = $module->getId();
@@ -33,14 +32,27 @@ class ModuleController extends BaseController
             'module_id' => $moduleId
         ]);
 
+        return $this->render('module/details.questions.html.twig', [
+            'module' => $module, 
+            'question_data_table' => $questionDataTable
+        ]);
+    }
+
+    #[Route('/details/videos/{id}')]
+    public function videos(
+        Module $module,
+        VideoRepository $videoRepository
+    ): Response
+    {
+        $moduleId = $module->getId();
+
         $videosQuery = $videoRepository->findByModuleId($moduleId);
         $videoDataTable = $this->createDataTable(VideoDataTableType::class, $videosQuery, [
             'module_id' => $moduleId
         ]);
 
-        return $this->render('module/details.html.twig', [
+        return $this->render('module/details.videos.html.twig', [
             'module' => $module, 
-            'question_data_table' => $questionDataTable,
             'video_data_table' => $videoDataTable
         ]);
     }

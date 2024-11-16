@@ -91,7 +91,7 @@ class VideoController extends BaseController
         $this->em->remove($video);
         $this->em->flush();
 
-        return $this->redirectToRoute('app_module_details', [
+        return $this->redirectToRoute('app_module_videos', [
             'id' => $module->getId()
         ]);
     }

@@ -33,7 +33,7 @@ class ModuleDataTableType extends BaseDataTableType
                                 [
                                     'label' => 'data_table.details',
                                     'href' => function(Module $module): string {
-                                        return $this->urlGenerator->generate('app_module_details', [
+                                        return $this->urlGenerator->generate('app_module_questions', [
                                             'id' => $module->getId()
                                         ]);
                                     }

@@ -41,7 +41,7 @@ class QuestionController extends BaseController
         $em->remove($question);
         $em->flush();
 
-        return $this->redirectToRoute('app_module_details', [
+        return $this->redirectToRoute('app_module_questions', [
             'id' => $module->getId()
         ]);
     }

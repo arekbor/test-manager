@@ -48,7 +48,7 @@ final class QuestionForm extends AbstractController
         $em->persist($question);
         $em->flush();
 
-        return $this->redirectToRoute('app_module_details', [
+        return $this->redirectToRoute('app_module_questions', [
             'id' => $this->moduleProp->getId()
         ]);
     }

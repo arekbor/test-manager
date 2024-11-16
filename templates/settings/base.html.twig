@@ -5,17 +5,17 @@
         <div class="col-12 col-xl-2">
             <nav class="nav nav-pills flex-column">
                 {{ component('NavLink', { 
-                    routerName: 'app_settings_general',
+                    path: path('app_settings_general'),
                     label: 'templates.settings.navLink.general'
                 }) }}
 
                 {{ component('NavLink', { 
-                    routerName: 'app_settings_smtp',
+                    path: path('app_settings_smtp'),
                     label: 'templates.settings.navLink.smtp'
                 }) }}
 
                 {{ component('NavLink', { 
-                    routerName: 'app_settings_testmail',
+                    path: path('app_settings_testmail'),
                     label: 'templates.settings.navLink.testmail'
                 }) }}
             </nav>
