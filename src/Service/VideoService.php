@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Module;
 use App\Entity\Video;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,12 +14,11 @@ class VideoService
 {
     public function __construct(
         private ParameterBagInterface $params,
-        private FileService $fileService,
-        private EntityManagerInterface $em,
+        private FileService $fileService
     ) {
     }
 
-    public function upload(UploadedFile $file, Module $module): void
+    public function upload(UploadedFile $file, Module $module): Video
     {
         $uuid = Uuid::v7()->toString();
         $basePath = $this->getBasePath();
@@ -31,8 +29,7 @@ class VideoService
         $video->setFilename($file->getFilename());
         $video->addModule($module);
 
-        $this->em->persist($video);
-        $this->em->flush();
+        return $video;
     }
 
     public function deleteVideo(Video $video): void
@@ -43,9 +40,6 @@ class VideoService
         if (!$this->fileService->delete($basePath, $filename)) {
             throw new Exception("Failed to delete the file: {$filename}");
         }
-
-        $this->em->remove($video);
-        $this->em->flush();
     }
 
     public function getVideoFile(Video $video): File

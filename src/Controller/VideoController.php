@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Module;
 use App\Entity\Video;
 use App\Service\VideoService;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,7 +22,8 @@ class VideoController extends BaseController
 {
     public function __construct(
         private VideoService $videoService,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -49,7 +51,10 @@ class VideoController extends BaseController
         }
 
         try {
-            $this->videoService->upload($file, $module);
+            $video = $this->videoService->upload($file, $module);
+
+            $this->em->persist($video);
+            $this->em->flush();
         } catch(Exception) {
             return $this->jsonResponse($trans->trans('controller.video.response.upload_fail'), Response::HTTP_BAD_REQUEST);
         }
@@ -83,6 +88,9 @@ class VideoController extends BaseController
     {
         $this->videoService->deleteVideo($video);
 
+        $this->em->remove($video);
+        $this->em->flush();
+
         return $this->redirectToRoute('app_module_details', [
             'id' => $module->getId()
         ]);
@@ -94,8 +102,10 @@ class VideoController extends BaseController
         #[MapEntity(id: 'videoId')] Video $video
     ): Response
     {
+        $moduleId = $module->getId();
+
         return $this->render('video/details.html.twig', [
-            'moduleId' => $module->getId(), 
+            'moduleId' => $moduleId, 
             'video' => $video
         ]);
     }

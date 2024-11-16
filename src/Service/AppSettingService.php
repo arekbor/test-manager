@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\AppSetting;
 use App\Repository\AppSettingRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -13,8 +12,7 @@ class AppSettingService
     private const SERIALIZER_FORMAT = 'json';
 
     public function __construct(
-        private AppSettingRepository $repository,
-        private EntityManagerInterface $em,
+        private AppSettingRepository $appSettingRepository,
         private SerializerInterface $serializer
     ) {
     }
@@ -22,35 +20,41 @@ class AppSettingService
     public function getValue(string $key, string $type): mixed
     {
         $appSetting = $this->getAppSetting($key);
+        $value = $appSetting->getValue();
 
-        return $this->encode($appSetting->getValue(), $type);
+        return $this->encode($value, $type);
     }
 
-    public function setValue(string $key, mixed $data): void
+    public function setValue(string $key, mixed $data): AppSetting
     {
         $decodedData = $this->decode($data);
 
         $appSetting = new AppSetting();
-        $appSetting->setKey($key)->setValue($decodedData);
+        $appSetting
+            ->setKey($key)
+            ->setValue($decodedData)
+        ;
 
-        $this->em->persist($appSetting);
-        $this->em->flush();
+        return $appSetting;
     }
 
-    public function updateValue(string $key, mixed $data): void
+    public function updateValue(string $key, mixed $data): AppSetting
     {
         $appSetting = $this->getAppSetting($key);
         $decodedData = $this->decode($data);
 
         $appSetting->setValue($decodedData);
 
-        $this->em->persist($appSetting);
-        $this->em->flush();
+        return $appSetting;
     }
 
     private function decode(mixed $data): array
     {
-        $serializedData = $this->serializer->serialize($data, self::SERIALIZER_FORMAT);
+        $serializedData = $this
+            ->serializer
+            ->serialize($data, self::SERIALIZER_FORMAT)
+        ;
+
         $decodedData = json_decode($serializedData, true);
         if (!$decodedData) {
             throw new Exception("Failed to decode serialized value.");
@@ -66,14 +70,21 @@ class AppSettingService
             throw new Exception("Failed to encode value to JSON.");
         }
 
-        return $this->serializer->deserialize($encodedData, $type, self::SERIALIZER_FORMAT);
+        return $this
+            ->serializer
+            ->deserialize($encodedData, $type, self::SERIALIZER_FORMAT)
+        ;
     }
 
     private function getAppSetting(string $key): AppSetting
     {
-        $appSetting = $this->repository->findOneBy(['key' => $key]);
+        $appSetting = $this
+            ->appSettingRepository
+            ->findByKey($key)
+        ;
+
         if (empty($appSetting)) {
-            throw new Exception("Entity with '{$key}' not found.");
+            throw new Exception(AppSetting::class . "with " . $key . " not found.");
         }
 
         return $appSetting;

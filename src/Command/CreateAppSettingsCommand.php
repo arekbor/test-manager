@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,6 +19,7 @@ class CreateAppSettingsCommand extends Command
 {
     public function __construct(
         private AppSettingService $appSettingService,
+        private EntityManagerInterface $em,
     ) {
         parent::__construct();
     }
@@ -26,8 +28,15 @@ class CreateAppSettingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->appSettingService->setValue(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting());
-        $io->success("App setting: " .MailSmtpAppSetting::APP_SETTING_KEY. " successfully created.");
+        $appSetting = $this
+            ->appSettingService
+            ->setValue(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting())
+        ;
+
+        $this->em->persist($appSetting);
+        $io->success("App setting: " .MailSmtpAppSetting::APP_SETTING_KEY. " persisted.");
+
+        $this->em->flush();
 
         return Command::SUCCESS;
     }
