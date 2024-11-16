@@ -64,7 +64,6 @@ controller:
     response:
       upload_success: File uploaded successfully.
       upload_fail: Error while uploading the file.
-      module_not_found: Module not found.
 
 data_table:
   module:
@@ -127,8 +126,6 @@ templates:
     details:
       title: Video details %id%
       id: Video id
-      extension: Extension
-      mime_type: Mime type
       filename: File name
       download: Download
       delete: Delete

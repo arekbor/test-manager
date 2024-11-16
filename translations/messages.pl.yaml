@@ -64,7 +64,6 @@ controller:
     response:
       upload_success: Plik został przesłany pomyślnie.
       upload_fail: Błąd podczas przesyłania pliku.
-      module_not_found: Nie znaleziono modułu.
 
 data_table:
   module:
@@ -128,8 +127,6 @@ templates:
     details:
       title: Szczegóły wideo %id%
       id: Id wideo
-      extension: Rozszerzenie
-      mime_type: Typ MIME
       filename: Nazwa pliku
       download: Pobierz
       delete: Usuń

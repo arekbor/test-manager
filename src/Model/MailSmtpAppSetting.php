@@ -52,7 +52,7 @@ class MailSmtpAppSetting
         return $this->host;
     }
 
-    public function setHost(string $host): self
+    public function setHost(string $host): static
     {
         $this->host = $host;
         return $this;
@@ -63,7 +63,7 @@ class MailSmtpAppSetting
         return $this->port;
     }
 
-    public function setPort(string $port): self
+    public function setPort(string $port): static
     {
         $this->port = $port;
         return $this;
@@ -74,7 +74,7 @@ class MailSmtpAppSetting
         return $this->fromAddress;
     }
 
-    public function setFromAddress(string $fromAddress): self
+    public function setFromAddress(string $fromAddress): static
     {
         $this->fromAddress = $fromAddress;
         return $this;
@@ -85,7 +85,7 @@ class MailSmtpAppSetting
         return $this->username;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername(string $username): static
     {
         $this->username = $username;
         return $this;
@@ -96,7 +96,7 @@ class MailSmtpAppSetting
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->password = $password;
         return $this;
@@ -107,7 +107,7 @@ class MailSmtpAppSetting
         return $this->smtpAuth;
     }
 
-    public function setSmtpAuth(bool $smtpAuth): self
+    public function setSmtpAuth(bool $smtpAuth): static
     {
         $this->smtpAuth = $smtpAuth;
         return $this;
@@ -118,7 +118,7 @@ class MailSmtpAppSetting
         return $this->smtpSecure;
     }
 
-    public function setSmtpSecure(string $smtpSecure): self
+    public function setSmtpSecure(string $smtpSecure): static
     {
         $this->smtpSecure = $smtpSecure;
         return $this;
@@ -129,7 +129,7 @@ class MailSmtpAppSetting
         return $this->timeout;
     }
 
-    public function setTimeout(int $timeout): self
+    public function setTimeout(int $timeout): static
     {
         $this->timeout = $timeout;
         return $this;
