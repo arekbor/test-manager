@@ -6,6 +6,7 @@ use App\Form\MailSmtpAppSettingType;
 use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
 use App\Service\EncryptionService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ final class MailSmtpAppSettingForm extends AbstractController
     public function __construct(
         private AppSettingService $appSettingService,
         private EncryptionService $encryptionService,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -35,13 +37,22 @@ final class MailSmtpAppSettingForm extends AbstractController
     {
         $this->submitForm();
 
-        $mailSmtpAppSetting = $this->getForm()->getData();
+        $mailSmtpAppSetting = $this
+            ->getForm()
+            ->getData()
+        ;
 
         $plainPassword = $mailSmtpAppSetting->getPassword();
         $encryptedPassword = $this->encryptionService->encrypt($plainPassword);
         $mailSmtpAppSetting->setPassword($encryptedPassword);
 
-        $this->appSettingService->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting);
+        $appSetting = $this
+            ->appSettingService
+            ->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting)
+        ;
+
+        $this->em->persist($appSetting);
+        $this->em->flush();
 
         return $this->redirectToRoute('app_settings_smtp');
     }
