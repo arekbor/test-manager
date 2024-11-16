@@ -145,3 +145,5 @@ templates:
       home: Home
       logout: Log out
       settings: Settings
+    testEmailForm:
+      successEmailMessage: Email successfully sent!

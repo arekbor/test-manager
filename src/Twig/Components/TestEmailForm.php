@@ -6,6 +6,7 @@ use App\Form\TestEmailType;
 use App\Service\EmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
@@ -19,10 +20,14 @@ final class TestEmailForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public ?string $errorMessage = null;
+    public ?string $error = null;
+
+    #[LiveProp]
+    public ?string $success = null;
 
     public function __construct(
-        private EmailService $emailService
+        private EmailService $emailService,
+        private TranslatorInterface $trans,
     ) {
     }
 
@@ -34,10 +39,20 @@ final class TestEmailForm extends AbstractController
         $testEmail = $this->getForm()->getData();
         $receiver = $testEmail->getReceiver();
 
-        $this->errorMessage = $this
+        $error = $this
             ->emailService
             ->sendEmail($receiver, "Test Manager", "Test message")
         ;
+
+        if (!empty($error)) {
+            $this->error = $error;
+        } else {
+            $success = $this
+                ->trans
+                ->trans('templates.components.testEmailForm.successEmailMessage')
+            ;
+            $this->success = $success;
+        }
     } 
 
     protected function instantiateForm(): FormInterface

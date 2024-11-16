@@ -146,3 +146,5 @@ templates:
       home: Strona główna
       logout: Wyloguj się
       settings: Ustawienia
+    testEmailForm:
+      successEmailMessage: Wiadomość e-mail została pomyślnie wysłana!
