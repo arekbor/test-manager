@@ -35,17 +35,6 @@ class CreateAdminUserCommand extends Command
         $adminEmail = $this->params->get('app.admin_email');
         $adminPassword = $this->params->get('app.admin_password');
 
-        if (empty($adminEmail) || empty($adminPassword)) {
-            $io->error("Missing required environment variables: ADMIN_EMAIL or ADMIN_PASSWORD.");
-            return Command::FAILURE;
-        }
-
-        $existingUser = $this->securityUserRepository->findOneBy(['email' => $adminEmail]);
-        if ($existingUser) {
-            $io->error("A user with the email $adminEmail already exists.");
-            return Command::FAILURE;
-        }
-
         $securityUser = new SecurityUser();
         $securityUser->setEmail($adminEmail);
 

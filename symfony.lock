@@ -27,7 +27,7 @@
         ]
     },
     "kreyu/data-table-bundle": {
-        "version": "v0.21.4"
+        "version": "v0.25.2"
     },
     "phpunit/phpunit": {
         "version": "11.4",

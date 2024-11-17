@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class EncryptionService
@@ -16,9 +15,6 @@ class EncryptionService
         private ParameterBagInterface $params
     ) {
         $this->encryptionKey = $this->params->get('app.encryption.key');
-        if (empty($this->encryptionKey)) {
-            throw new Exception("Missing encryption key param.");
-        }
     }
 
     public function encrypt(string $plaintext): string
