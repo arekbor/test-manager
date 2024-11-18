@@ -5,7 +5,9 @@ namespace App\Controller;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableView;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController extends AbstractController
 {
@@ -23,5 +25,10 @@ abstract class BaseController extends AbstractController
         $dataTable->handleRequest($request);
 
         return $dataTable->createView();
+    }
+
+    protected function jsonResponse(string $message, int $status = Response::HTTP_OK): JsonResponse
+    {
+        return new JsonResponse(['message' => $message], $status);
     }
 }
