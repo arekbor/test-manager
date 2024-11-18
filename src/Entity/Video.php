@@ -18,7 +18,10 @@ class Video extends BaseEntity
     private ?string $videoName = null;
 
     #[Vich\UploadableField(mapping: 'videos', fileNameProperty: 'videoName')]
-    #[Assert\File(extensions: ['mp4', 'mov'])]
+    #[Assert\File(
+        extensions: ['mp4', 'mov'],
+        mimeTypes: ['video/mp4', 'video/quicktime']
+    )]
     private ?File $videoFile = null;
 
     /**
