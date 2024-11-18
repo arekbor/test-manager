@@ -11,6 +11,7 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
+use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionDataTableType extends BaseDataTableType
@@ -71,6 +72,7 @@ class QuestionDataTableType extends BaseDataTableType
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content'
             ])
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5))
         ;
 
     }

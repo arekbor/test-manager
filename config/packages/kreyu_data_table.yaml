@@ -5,4 +5,4 @@ kreyu_data_table:
       - "data_table/theme.html.twig"
     pagination:
       persistence_enabled: true
-      per_page_choices: [5, 10, 20]
+      per_page_choices: []

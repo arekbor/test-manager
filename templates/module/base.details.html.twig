@@ -5,34 +5,27 @@
 {% endblock %}
 
 {% block body %}
-    <div class="card">
-        <nav class="card-header nav nav-tabs p-0">
-            {{ component('NavLink', { 
-                path: path('app_module_questions', {
-                    id: module.id
-                }),
-                label: 'templates.module.details.tab.questions'
-            }) }}
+    <nav class="nav nav-tabs">
+        {{ component('NavLink', { 
+            path: path('app_module_questions', {
+                id: module.id
+            }),
+            label: 'templates.module.details.tab.questions'
+        }) }}
 
-            {{ component('NavLink', { 
-                path: path('app_module_videos', {
-                    id: module.id
-                }),
-                label: 'templates.module.details.tab.videos'
-            }) }}
-        </nav>
+        {{ component('NavLink', { 
+            path: path('app_module_videos', {
+                id: module.id
+            }),
+            label: 'templates.module.details.tab.videos'
+        }) }}
+    </nav>
 
-        <div class="card-body p-0">
-            <div class="card border-0">
-                {% block wrapper %}{% endblock %}
-            </div>
-        </div>
-
-        <div class="card-footer p-3">
-            {{ component('ModuleForm', { 
-                moduleProp: module, 
-                defer: true 
-            }) }}
-        </div>
+    <div class="py-4">
+        {{ component('ModuleForm', { 
+            moduleProp: module
+        }) }}
     </div>
+
+    {% block wrapper %}{% endblock %}
 {% endblock %}
