@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\SecurityUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Kreyu\Bundle\DataTableBundle\Persistence\PersistenceSubjectInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: SecurityUserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class SecurityUser extends BaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
+class SecurityUser extends BaseEntity implements 
+    UserInterface, 
+    PasswordAuthenticatedUserInterface, 
+    PersistenceSubjectInterface
 {
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -25,6 +29,11 @@ class SecurityUser extends BaseEntity implements UserInterface, PasswordAuthenti
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    public function getDataTablePersistenceIdentifier(): string
+    {
+        return (string) $this->getId();
+    }
     
     public function getEmail(): ?string
     {

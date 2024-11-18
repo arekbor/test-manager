@@ -11,7 +11,6 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
-use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 
 class ModuleDataTableType extends BaseDataTableType
 {
@@ -94,7 +93,6 @@ class ModuleDataTableType extends BaseDataTableType
                 'label' => 'data_table.module.language',
                 'lower' => true
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
         ;
     }
 }

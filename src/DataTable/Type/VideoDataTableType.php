@@ -9,7 +9,6 @@ use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterTy
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
-use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VideoDataTableType extends BaseDataTableType
@@ -53,7 +52,6 @@ class VideoDataTableType extends BaseDataTableType
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 1))
         ;
     }
 
