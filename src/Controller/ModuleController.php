@@ -7,12 +7,15 @@ use App\DataTable\Type\VideoDataTableType;
 use App\Entity\Module;
 use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;
+use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/module')]
 class ModuleController extends BaseController
 {
+    use DataTableFactoryAwareTrait;
+
     #[Route('/create')]
     public function create(): Response
     {
@@ -34,7 +37,7 @@ class ModuleController extends BaseController
 
         return $this->render('module/details.questions.html.twig', [
             'module' => $module, 
-            'question_data_table' => $questionDataTable
+            'question_data_table' => $questionDataTable->createView()
         ]);
     }
 
@@ -53,7 +56,7 @@ class ModuleController extends BaseController
 
         return $this->render('module/details.videos.html.twig', [
             'module' => $module, 
-            'video_data_table' => $videoDataTable
+            'video_data_table' => $videoDataTable->createView()
         ]);
     }
 }

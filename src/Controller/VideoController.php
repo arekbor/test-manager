@@ -4,25 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Module;
 use App\Entity\Video;
-use App\Service\VideoService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 #[Route('/video')]
 class VideoController extends BaseController
 {
     public function __construct(
-        private VideoService $videoService,
-        private ValidatorInterface $validator,
         private EntityManagerInterface $em,
     ) {
     }
@@ -40,44 +36,34 @@ class VideoController extends BaseController
         Request $request,
         Module $module,
         TranslatorInterface $trans,
+        ValidatorInterface $validator,
     ): JsonResponse
     {
         $file = $request->files->get('file');
 
-        $errors = $this->validator->validate($file, new File(extensions: ['mp4', 'mov']));
+        $video = new Video();
+        $video->setVideoFile($file);
+        $video->addModule($module);
+
+        $errors = $validator->validate($video);
         if (count($errors) > 0) {
             $error = $errors->get(0)->getMessage();
             return $this->jsonResponse($error, Response::HTTP_BAD_REQUEST);
         }
 
-        try {
-            $video = $this->videoService->upload($file, $module);
-
-            $this->em->persist($video);
-            $this->em->flush();
-        } catch(Exception) {
-            return $this->jsonResponse($trans->trans('controller.video.response.upload_fail'), Response::HTTP_BAD_REQUEST);
-        }
+        $this->em->persist($video);
+        $this->em->flush();
 
         return $this->jsonResponse($trans->trans('controller.video.response.upload_success'));
     }
 
     #[Route('/download/{id}')]
-    public function download(Video $video): BinaryFileResponse
+    public function download(
+        Video $video, 
+        DownloadHandler $downloadHandler
+    ): StreamedResponse
     {
-        $file = $this->videoService->getVideoFile($video);
-
-        return $this->file($file->getPath(), $file->getFilename());
-    }
-
-    #[Route('/watch/{id}')]
-    public function watch(Video $video): BinaryFileResponse
-    {
-        $file = $this->videoService->getVideoFile($video);
-        $binaryFileResponse = new BinaryFileResponse($file->getPath());
-        $binaryFileResponse->headers->set('Content-Type', $file->getContentType());
-
-        return $binaryFileResponse;
+        return $downloadHandler->downloadObject($video, 'videoFile');
     }
 
     #[Route('/delete/{moduleId}/{videoId}')]
@@ -86,8 +72,6 @@ class VideoController extends BaseController
         #[MapEntity(id: 'videoId')] Video $video,
     ): Response
     {
-        $this->videoService->deleteVideo($video);
-
         $this->em->remove($video);
         $this->em->flush();
 
@@ -108,10 +92,5 @@ class VideoController extends BaseController
             'moduleId' => $moduleId, 
             'video' => $video
         ]);
-    }
-
-    private function jsonResponse(string $message, int $status = Response::HTTP_OK): JsonResponse
-    {
-        return new JsonResponse(['message' => $message], $status);
     }
 }

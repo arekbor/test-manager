@@ -1,0 +1,7 @@
+vich_uploader:
+  db_driver: orm
+
+  mappings:
+    videos:
+      upload_destination: "%app.upload.videos.path%"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

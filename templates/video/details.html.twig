@@ -16,13 +16,13 @@
                 controls
             >
                 <source 
-                    src="{{ path('app_video_watch', { id: video.id }) }}" 
+                    src="{{ path('app_video_download', { id: video.id }) }}" 
                 />
             </video> 
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                {{ 'templates.video.details.filename'|trans }}: {{ video.filename }}
+                {{ 'templates.video.details.filename'|trans }}: {{ video.videoName }}
             </li>
         </ul>
         <div class="card-body">
