@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Model\MailSmtpAppSetting;
+use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
@@ -18,11 +20,20 @@ class SettingsController extends BaseController
 
     #[Route('/smtp')]
     public function smtp(
-        AppSettingService $appSettingService
+        AppSettingService $appSettingService,
+        AppSettingRepository $appSettingRepository
     ): Response
     {
+        $appSetting = $appSettingRepository
+            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
+        ;
+
+        if (empty($appSetting)) {
+            throw new NotFoundHttpException(MailSmtpAppSetting::class);
+        }
+
         $mailSmtpAppSetting = $appSettingService
-            ->getValue(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
+            ->getValue($appSetting, MailSmtpAppSetting::class);
 
         return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting

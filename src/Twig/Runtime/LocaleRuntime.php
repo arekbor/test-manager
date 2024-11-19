@@ -2,8 +2,9 @@
 
 namespace App\Twig\Runtime;
 
+use App\Exception\NotFoundException;
 use App\Service\LocaleService;
-use Exception;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -21,17 +22,21 @@ class LocaleRuntime implements RuntimeExtensionInterface
     {
         $request = $this->requestStack->getCurrentRequest();
         if (!$request) {
-            throw new Exception('Current request not found.');
+            throw new NotFoundException(RequestStack::class);
         }
 
         $route = $request->attributes->get('_route');
         if (empty($route)) {
-            throw new Exception('Route not found in the current request.');
+            throw new NotFoundException(ParameterBag::class, [
+                'key' => '_route'
+            ]);
         }
 
         $routeParams = $request->attributes->get('_route_params');
         if (empty($routeParams)) {
-            throw new Exception('Route parameters not found in the current request.');
+            throw new NotFoundException(ParameterBag::class, [
+                'key' => '_route_params'
+            ]);
         }
 
         $params = array_merge($routeParams, $request->query->all());
