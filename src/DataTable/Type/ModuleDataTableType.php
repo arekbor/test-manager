@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php 
+
+declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
 use App\DataTable\Action\Type\DropdownActionType;
+use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Module;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -12,9 +15,16 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
+use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ModuleDataTableType extends BaseDataTableType
+class ModuleDataTableType extends AbstractDataTableType
 {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator
+    ) {
+    }
+
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
@@ -68,11 +78,11 @@ class ModuleDataTableType extends BaseDataTableType
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
-            ->addColumn('name', TextColumnType::class, [
+            ->addColumn('name', TruncatedTextColumnType::class, [
                 'label' => 'data_table.module.name',
-                'getter' => fn(Module $module) => $this->trimText($module->getName())
+                'getter' => fn(Module $module) => $module->getName()
             ])
-            ->addColumn('language', TextColumnType::class, [
+            ->addColumn('language', TextColumnType::class, [ 
                 'label' => 'data_table.module.language',
                 'getter' => fn (Module $module) => strtoupper($module->getLanguage())
             ])

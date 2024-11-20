@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php 
+
+declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
 use App\DataTable\Action\Type\DropdownActionType;
+use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -12,10 +15,17 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
+use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class QuestionDataTableType extends BaseDataTableType
+class QuestionDataTableType extends AbstractDataTableType
 {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator
+    ) {
+    }
+
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
@@ -58,9 +68,9 @@ class QuestionDataTableType extends BaseDataTableType
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
-            ->addColumn('content', TextColumnType::class, [
+            ->addColumn('content', TruncatedTextColumnType::class, [
                 'label' => 'data_table.question.content',
-                'getter' => fn(Question $question) => $this->trimText($question->getContent())
+                'getter' => fn(Question $question) => $question->getContent()
             ])
             ->addColumn('answersCount', TextColumnType::class, [
                 'label' => 'data_table.question.answersCount',

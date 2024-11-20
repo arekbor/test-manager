@@ -16,10 +16,6 @@ select.form-select,
   border-radius: 0.2rem;
 }
 
-.table-responsive {
-  white-space: nowrap;
-}
-
 #kreyu_data_table_module .table-responsive {
   height: 528.5px;
 }
@@ -27,4 +23,8 @@ select.form-select,
 #kreyu_data_table_question .table-responsive,
 #kreyu_data_table_video .table-responsive {
   height: 288.5px;
+}
+
+.text-limit {
+  max-width: 350px;
 }
