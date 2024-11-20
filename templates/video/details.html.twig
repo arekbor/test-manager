@@ -24,8 +24,7 @@
     {{ component('TriggerModal', {
         modalId: 'deleteVideoModal',
         buttonClass: 'btn btn-danger',
-        buttonBody: 'templates.video.details.delete'|trans,
-        defer: true
+        buttonBody: 'templates.video.details.delete'|trans
     }) }}
 
     <div class="alert alert-secondary d-flex flex-column m-0 mt-2">
@@ -59,7 +58,6 @@
         actionButtonHref: path('app_video_delete', {
             moduleId: moduleId,
             videoId: video.id
-        }),
-        defer: true
+        })
     }) }}
 {% endblock %}

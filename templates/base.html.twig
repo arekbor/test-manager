@@ -29,7 +29,7 @@
 
     <body {{ stimulus_controller('turbo-navigation') }}>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {{ component('Nav', { defer: true }) }}
+            {{ component('Nav') }}
         {% endif %}
         
         <div class="container-fluid">

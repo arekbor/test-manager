@@ -18,14 +18,12 @@
             modalId: 'deleteQuestionModal',
             buttonClass: 'btn btn-danger',
             buttonBody: 'templates.question.details.delete'|trans,
-            defer: true
         }) }}
 
         <div class="mt-2">
             {{ component('QuestionForm', { 
                 moduleProp: module, 
                 questionProp: question, 
-                defer: true 
             }) }}
         </div>
     </div>
@@ -37,7 +35,6 @@
         actionButtonHref: path('app_question_delete', {
             moduleId: module.id,
             questionId: question.id
-        }),
-        defer: true
+        })
     }) }}
 {% endblock %}
