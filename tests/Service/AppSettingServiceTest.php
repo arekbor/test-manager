@@ -4,7 +4,6 @@ namespace App\Tests\Service;
 
 use App\Entity\AppSetting;
 use App\Service\AppSettingService;
-use App\Tests\Model\TestSetting;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -85,5 +84,36 @@ class AppSettingServiceTest extends TestCase
 
         $this->assertNotEquals($updatedTestSetting->getText(), $testText);
         $this->assertNotEquals($updatedTestSetting->getNumber(), $testNumber);
+    }
+}
+
+class TestSetting
+{
+    private ?string $text;
+
+    private ?int $number;
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): static
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(?int $number): static
+    {
+        $this->number = $number;
+
+        return $this;
     }
 }
