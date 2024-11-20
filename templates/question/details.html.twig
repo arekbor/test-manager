@@ -6,8 +6,16 @@
 
 {% block body %}
     <div class="mt-2">
+        <a 
+            href="{{ path('app_module_questions', { id: module.id }) }}" 
+            class="btn btn-primary" 
+            role="button"
+        >
+            {{ 'templates.video.module'|trans }}
+        </a>
+
         {{ component('TriggerModal', {
-            modalIdTarget: 'deleteQuestionModal',
+            modalId: 'deleteQuestionModal',
             buttonClass: 'btn btn-danger',
             buttonBody: 'templates.question.details.delete'|trans,
             defer: true
@@ -23,10 +31,7 @@
     </div>
 
     {{ component('Modal', {
-        modalId: 'deleteQuestionModal',
-        modalTitle: 'modal.title'|trans,
-        modalBody: 'modal.body'|trans,
-        closeButtonText: 'modal.close'|trans,
+        modalTargetId: 'deleteQuestionModal',
         actionButtonText: 'modal.module.details.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_question_delete', {

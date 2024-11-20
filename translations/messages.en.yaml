@@ -120,9 +120,9 @@ templates:
         questions: Questions
         videos: Video files
   video:
+    module: Module
     upload:
       title: Upload video
-      module: Module
     details:
       title: Video details %id%
       id: Video id

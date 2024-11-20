@@ -1,52 +1,59 @@
-{% extends 'video/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %} 
     {{ 'templates.video.details.title'|trans({ '%id%': video.id }) }} 
 {% endblock %}
 
-{% block wrapper %}
-    <div class="card">
-        <div class="card-header">
-            {{ 'templates.video.details.id'|trans }}: {{ video.id }}
-        </div>
-        <div class="card-body">
-            <video 
-                width="320" 
-                height="251.5" 
-                controls
-            >
-                <source 
-                    src="{{ path('app_video_download', { id: video.id }) }}" 
-                />
-            </video> 
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                {{ 'templates.video.details.filename'|trans }}: {{ video.videoName }}
-            </li>
-        </ul>
-        <div class="card-body">
-            <a 
-                class="btn btn-warning"
-                href="{{ path('app_video_download', { id: video.id }) }}"
-            >
-                {{ 'templates.video.details.download'|trans }}
-            </a>
+{% block body %}
+    <a 
+        href="{{ path('app_module_videos', { id: moduleId }) }}" 
+        class="btn btn-primary" 
+        role="button"
+    >
+        {{ 'templates.video.module'|trans }}
+    </a>
 
-            {{ component('TriggerModal', {
-                modalIdTarget: 'deleteVideoModal',
-                buttonClass: 'btn btn-danger',
-                buttonBody: 'templates.video.details.delete'|trans,
-                defer: true
-            }) }}
-        </div>
+    <a 
+        href="{{ path('app_video_download', { id: video.id }) }}"
+        class="btn btn-warning"
+        role="button"
+    >
+        {{ 'templates.video.details.download'|trans }}
+    </a>
+
+    {{ component('TriggerModal', {
+        modalId: 'deleteVideoModal',
+        buttonClass: 'btn btn-danger',
+        buttonBody: 'templates.video.details.delete'|trans,
+        defer: true
+    }) }}
+
+    <div class="alert alert-secondary d-flex flex-column m-0 mt-2">
+        <span>
+            {{ 'templates.video.details.id'|trans }}: {{ video.id }}
+        </span>
+        
+        <span class="text-nowrap text-truncate">
+            {{ 'templates.video.details.filename'|trans }}: {{ video.videoName }}
+        </span>
+    </div>
+
+    <div
+        class="border rounded d-flex mt-2"
+    >
+        <video
+            controls
+            width="100%"
+            class="p-1"
+        >
+            <source 
+                src="{{ path('app_video_download', { id: video.id }) }}" 
+            />
+        </video> 
     </div>
 
     {{ component('Modal', {
-        modalId: 'deleteVideoModal',
-        modalTitle: 'modal.title'|trans,
-        modalBody: 'modal.body'|trans,
-        closeButtonText: 'modal.close'|trans,
+        modalTargetId: 'deleteVideoModal',
         actionButtonText: 'modal.video.details.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_video_delete', {

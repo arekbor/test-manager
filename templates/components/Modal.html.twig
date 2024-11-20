@@ -1,9 +1,9 @@
 <div 
     {{ attributes }}
     class="modal fade"
-    id="{{ modalId }}"
+    id="{{ modalTargetId }}"
     tabindex="-1"
-    aria-labelledby="{{ modalId }}Label" 
+    aria-labelledby="{{ modalTargetId }}Label" 
     aria-hidden="true"
 >
     <div 
@@ -14,9 +14,9 @@
             <div class="modal-header">
                 <h5 
                     class="modal-title" 
-                    id="{{ modalId }}Label"
+                    id="{{ modalTargetId }}Label"
                 >
-                    {{ modalTitle }}
+                    {{ modalTitle|default('modal.title'|trans) }}
                 </h5>
                 <button 
                     type="button" 
@@ -28,7 +28,7 @@
             </div>
 
             <div class="modal-body">
-                {{ modalBody }}
+                {{ modalBody|default('modal.body'|trans) }}
             </div>
 
             <div class="modal-footer">
@@ -37,7 +37,7 @@
                     class="btn btn-secondary" 
                     data-bs-dismiss="modal"
                 >
-                    {{ closeButtonText }}
+                    {{ closeButtonText|default('modal.close'|trans) }}
                 </button>
 
                 <a 

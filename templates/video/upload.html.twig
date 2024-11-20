@@ -1,9 +1,19 @@
-{% extends 'video/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %} 
     {{ 'templates.video.upload.title'|trans }} 
 {% endblock %}
 
-{% block wrapper %}
-    {{ component('VideoUpload', { moduleId: moduleId, defer: true }) }}
+{% block body %}
+    <a 
+        href="{{ path('app_module_videos', { id: moduleId }) }}" 
+        class="btn btn-primary" 
+        role="button"
+    >
+        {{ 'templates.video.module'|trans }}
+    </a>
+
+    <div class="mt-2">
+        {{ component('VideoUpload', { moduleId: moduleId, defer: true }) }}
+    </div>
 {% endblock %}
