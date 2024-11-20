@@ -13,7 +13,7 @@ class AppSettingRepository extends ServiceEntityRepository
         parent::__construct($registry, AppSetting::class);
     }
 
-    public function findByKey(string $key): object|null
+    public function findByKey(string $key): ?object
     {
         return $this->findOneBy(['key' => $key]);
     }

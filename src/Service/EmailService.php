@@ -2,13 +2,16 @@
 
 namespace App\Service;
 
+use App\Exception\NotFoundException;
 use App\Model\MailSmtpAppSetting;
+use App\Repository\AppSettingRepository;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class EmailService
 {
     public function __construct(
         private AppSettingService $appSettingService,
+        private AppSettingRepository $appSettingRepository,
         private EncryptionService $encryptionService,
     ) {
     }
@@ -28,9 +31,18 @@ class EmailService
 
     private function getPHPMailer(): PHPMailer
     {
+        $appSetting = $this
+            ->appSettingRepository
+            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
+        ;
+
+        if ($appSetting === null) {
+            throw new NotFoundException(MailSmtpAppSetting::class);
+        }
+
         $mailSmtpAppSetting = $this
             ->appSettingService
-            ->getValue(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class)
+            ->getValue($appSetting, MailSmtpAppSetting::class)
         ;
 
         $mailer = new PHPMailer();

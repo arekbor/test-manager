@@ -2,8 +2,10 @@
 
 namespace App\Twig\Components;
 
+use App\Exception\NotFoundException;
 use App\Form\MailSmtpAppSettingType;
 use App\Model\MailSmtpAppSetting;
+use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use App\Service\EncryptionService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,6 +27,7 @@ final class MailSmtpAppSettingForm extends AbstractController
     public function __construct(
         private AppSettingService $appSettingService,
         private EncryptionService $encryptionService,
+        private AppSettingRepository $appSettingRepository,
         private EntityManagerInterface $em,
     ) {
     }
@@ -47,14 +50,23 @@ final class MailSmtpAppSettingForm extends AbstractController
         $mailSmtpAppSetting->setPassword($encryptedPassword);
 
         $appSetting = $this
+            ->appSettingRepository
+            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
+        ;
+
+        if ($appSetting === null) {
+            throw new NotFoundException(MailSmtpAppSetting::class);
+        }
+
+        $appSetting = $this
             ->appSettingService
-            ->updateValue(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSetting)
+            ->updateValue($appSetting, $mailSmtpAppSetting)
         ;
 
         $this->em->persist($appSetting);
         $this->em->flush();
 
-        return $this->redirectToRoute('app_settings_smtp');
+        return $this->redirectToRoute('app_settings_testmail');
     }
 
     protected function instantiateForm(): FormInterface
