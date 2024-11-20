@@ -21,7 +21,7 @@ class IsNotGrantedSubscriber implements EventSubscriberInterface
         $attrs = $event->getAttributes();
         $isNotGrantedAttrs = $attrs[IsNotGranted::class] ?? null;
 
-        if(empty($isNotGrantedAttrs)) {
+        if($isNotGrantedAttrs === null) {
             return;
         }
 

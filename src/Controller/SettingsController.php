@@ -28,7 +28,7 @@ class SettingsController extends BaseController
             ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
         ;
 
-        if (empty($appSetting)) {
+        if ($appSetting === null) {
             throw new NotFoundHttpException(MailSmtpAppSetting::class);
         }
 
