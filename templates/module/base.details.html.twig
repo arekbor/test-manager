@@ -7,6 +7,14 @@
 {% block body %}
     <nav class="nav nav-tabs">
         {{ component('NavLink', { 
+            path: path('app_module_general', {
+                id: module.id
+            }),
+            label: 'templates.module.details.tab.general'
+        }) }}
+
+
+        {{ component('NavLink', { 
             path: path('app_module_questions', {
                 id: module.id
             }),
@@ -21,11 +29,7 @@
         }) }}
     </nav>
 
-    <div class="py-4">
-        {{ component('ModuleForm', { 
-            moduleProp: module
-        }) }}
+    <div class="mt-4">
+        {% block wrapper %}{% endblock %}
     </div>
-
-    {% block wrapper %}{% endblock %}
 {% endblock %}

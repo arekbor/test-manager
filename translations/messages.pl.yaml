@@ -81,7 +81,6 @@ data_table:
     answersCount: Liczba odpowiedzi
     createQuestion: Utwórz pytanie
     createTest: Utwórz test
-    home: Moduły
   video:
     video: Wideo
     uploadVideo: Prześlij wideo
@@ -118,6 +117,7 @@ templates:
     details:
       title: Szczegóły modułu %id%
       tab:
+        general: Ogólne
         questions: Pytania
         videos: Pliki wideo
   video:

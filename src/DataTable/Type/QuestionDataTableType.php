@@ -33,10 +33,6 @@ class QuestionDataTableType extends AbstractDataTableType
                 'dropdown_label' => 'data_table.actions',
                 'dropdown_items' => [
                     [
-                        'label' => 'data_table.question.home',
-                        'href' => $this->urlGenerator->generate('app_home_index')
-                    ],
-                    [
                         'label' => 'data_table.question.createQuestion',
                         'href' => $this->urlGenerator->generate('app_question_create', [ 
                             'moduleId' => $options['module_id'] 
@@ -44,7 +40,7 @@ class QuestionDataTableType extends AbstractDataTableType
                     ],
                     [
                         'label' => 'data_table.question.createTest',
-                        'href' => $this->urlGenerator->generate('app_home_index')
+                        'href' => '#'
                     ]
                 ]
             ])

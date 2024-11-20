@@ -80,7 +80,6 @@ data_table:
     answersCount: Answers
     createQuestion: Create question
     createTest: Create test
-    home: Modules
   video:
     video: Video
     uploadVideo: Upload
@@ -117,6 +116,7 @@ templates:
     details:
       title: Module details %id%
       tab:
+        general: General
         questions: Questions
         videos: Video files
   video:

@@ -43,7 +43,7 @@ class ModuleDataTableType extends AbstractDataTableType
                                 [
                                     'label' => 'data_table.details',
                                     'href' => function(Module $module): string {
-                                        return $this->urlGenerator->generate('app_module_questions', [
+                                        return $this->urlGenerator->generate('app_module_general', [
                                             'id' => $module->getId()
                                         ]);
                                     }
