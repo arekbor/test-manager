@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Model\MailSmtpAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
-class SettingsController extends BaseController
+class SettingsController extends AbstractController
 {
     #[Route('/general')]
     public function general(): Response

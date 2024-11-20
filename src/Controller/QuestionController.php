@@ -6,11 +6,12 @@ use App\Entity\Module;
 use App\Entity\Question;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/question')]
-class QuestionController extends BaseController
+class QuestionController extends AbstractController
 {
     #[Route('/create/{moduleId}')]
     public function create(#[MapEntity(id: 'moduleId')] Module $module): Response
