@@ -46,6 +46,19 @@ form:
         label: Receiver
         help: Test receiver email.
       send: Send email
+    updateEmail:
+      email:
+        label: New Email
+        help: After updating your email you will be logged out.
+      update: Update email
+    updatePassword:
+      currentPassword:
+        label: Current password
+      password_first_options:
+        label: New Password
+        help: After updating your password you will be logged out.
+      password_second_options: Repeat new password
+      update: Update password
   password:
     label: Password
     hidden: Hide

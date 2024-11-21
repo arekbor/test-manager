@@ -46,6 +46,19 @@ form:
         label: Odbiorca
         help: Email testowego odbiorcy.
       send: Wyślij email
+    updateEmail:
+      email:
+        label: Nowy adres e-mail
+        help: Po aktualizacji adresu email zostaniesz wylogowany.
+      update: Aktualizuj e-mail
+    updatePassword:
+      currentPassword:
+        label: Obecne hasło
+      password_first_options:
+        label: Nowe hasło
+        help: Po aktualizacji hasła zostaniesz wylogowany.
+      password_second_options: Powtórz nowe hasło
+      update: Aktualizuj hasło
   password:
     label: Hasło
     hidden: Ukryj

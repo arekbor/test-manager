@@ -1,32 +1,51 @@
 {% extends 'settings/base.html.twig' %}
 
 {% block wrapper %}
-    <h5>
-        Language
-    </h5>
+    <div>
+        <h5>
+            Language
+        </h5>
 
-    <div class="dropdown">
-        <button 
-            class="btn btn-secondary dropdown-toggle" 
-            type="button" 
-            id="languageDropdown" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false"
-        >
-            {{ app.request.locale|upper }}
-        </button>
+        <div class="dropdown">
+            <button 
+                class="btn btn-secondary dropdown-toggle" 
+                type="button" 
+                id="languageDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+            >
+                {{ app.request.locale|upper }}
+            </button>
 
-        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-            {% for locale, link in get_locale_links() %}
-                <li>
-                    <a 
-                        class="dropdown-item" 
-                        href="{{ link }}"
-                    >
-                        {{ locale|upper }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                {% for locale, link in get_locale_links() %}
+                    <li>
+                        <a 
+                            class="dropdown-item" 
+                            href="{{ link }}"
+                        >
+                            {{ locale|upper }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
+    <div class="mt-5">
+        <h5>
+            Email
+        </h5>
+
+        {{ component('UpdateEmailForm') }}
+    </div>
+
+    <div class="mt-5">
+        <h5>
+            Password
+        </h5>
+
+        {{ component('UpdatePasswordForm') }}
+    </div>
+
 {% endblock %}
