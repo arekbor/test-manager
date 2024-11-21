@@ -78,7 +78,7 @@ class QuestionDataTableType extends AbstractDataTableType
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content'
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 5))
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
         ;
 
     }

@@ -62,7 +62,7 @@ class VideoDataTableType extends AbstractDataTableType
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 1))
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 2))
         ;
     }
 

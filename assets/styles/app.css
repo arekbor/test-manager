@@ -16,13 +16,24 @@ select.form-select,
   border-radius: 0.2rem;
 }
 
+[id^="kreyu_data_table"] .table-responsive table thead {
+  text-wrap: nowrap;
+}
+
+[id^="kreyu_data_table"] .pagination {
+  text-wrap: nowrap;
+  display: flex !important;
+  flex-direction: row !important;
+  padding: 10px;
+}
+
 #kreyu_data_table_module .table-responsive {
-  height: 528.5px;
+  height: calc(100vh - 56px - 51px - 31px);
 }
 
 #kreyu_data_table_question .table-responsive,
 #kreyu_data_table_video .table-responsive {
-  height: 288.5px;
+  height: calc(100vh - 56px - 51px - 31px - 42px);
 }
 
 .text-limit {
