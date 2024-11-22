@@ -6,7 +6,7 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class MailSmtpAppSetting
+final class MailSmtpAppSetting
 {
     public const APP_SETTING_KEY = "mail.smtp";
 
