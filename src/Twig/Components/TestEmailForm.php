@@ -8,24 +8,18 @@ use App\Form\TestEmailType;
 use App\Service\EmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
 #[AsLiveComponent]
 final class TestEmailForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
-
-    #[LiveProp]
-    public ?string $error = null;
-
-    #[LiveProp]
-    public ?string $success = null;
 
     public function __construct(
         private EmailService $emailService,
@@ -34,7 +28,7 @@ final class TestEmailForm extends AbstractController
     }
 
     #[LiveAction]
-    public function send(): void
+    public function send(): Response
     {
         $this->submitForm();
 
@@ -45,16 +39,14 @@ final class TestEmailForm extends AbstractController
             ->emailService
             ->sendEmail($receiver, "Test Manager", "Test message")
         ;
-
         if (!empty($error)) {
-            $this->error = $error;
-        } else {
-            $success = $this
-                ->trans
-                ->trans('templates.components.testEmailForm.successEmailMessage')
-            ;
-            $this->success = $success;
+            $this->addFlash('danger', $error);
+            return $this->redirectToRoute('app_settings_testmail');
         }
+
+        $this->addFlash('success', $this->trans->trans('flash.testEmailForm.successEmailMessage'));
+
+        return $this->redirectToRoute('app_settings_testmail');
     } 
 
     protected function instantiateForm(): FormInterface

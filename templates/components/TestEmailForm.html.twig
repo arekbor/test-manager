@@ -1,17 +1,3 @@
 <div {{ attributes }}>
-    {{ form_start(form) }}
-
-    {{ form_row(form.receiver) }}
-
-    {% if error %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
-        
-    {% if success %}
-        <div class="alert alert-success">{{ success }}</div>
-    {% endif %}
-
-    {{ form_row(form.send) }}
-
-    {{ form_end(form) }}
+    {{ form(form) }}
 </div>
