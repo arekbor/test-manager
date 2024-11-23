@@ -7,8 +7,6 @@ namespace App\Twig\Components;
 use App\Entity\Module;
 use App\Entity\Question;
 use App\Form\QuestionType;
-use App\Repository\ModuleRepository;
-use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -31,17 +29,15 @@ final class QuestionForm extends AbstractController
     #[LiveProp]
     public Module $moduleProp;
 
-    public function __construct(
-        private QuestionRepository $questionRepository, 
-        private ModuleRepository $moduleRepository
-    ) {
-    }
-
     #[LiveAction]
     public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
-        $question = $this->getForm()->getData();
+
+        $question = $this
+            ->getForm()
+            ->getData()
+        ;
 
         if ($this->moduleProp) {
             $question->addModule($this->moduleProp);

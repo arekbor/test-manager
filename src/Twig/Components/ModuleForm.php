@@ -6,7 +6,6 @@ namespace App\Twig\Components;
 
 use App\Entity\Module;
 use App\Form\ModuleType;
-use App\Repository\ModuleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -26,16 +25,15 @@ final class ModuleForm extends AbstractController
     #[LiveProp]
     public ?Module $moduleProp = null;
 
-    public function __construct(
-        private ModuleRepository $moduleRepository
-    ) {
-    }
-
     #[LiveAction]
     public function submit(EntityManagerInterface $em): Response
     {
         $this->submitForm();
-        $module = $this->getForm()->getData();
+        
+        $module = $this
+            ->getForm()
+            ->getData()
+        ;
 
         $em->persist($module);
         $em->flush();

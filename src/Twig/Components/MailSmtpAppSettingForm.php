@@ -26,19 +26,16 @@ final class MailSmtpAppSettingForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
-    public function __construct(
-        private AppSettingService $appSettingService,
-        private EncryptionService $encryptionService,
-        private AppSettingRepository $appSettingRepository,
-        private EntityManagerInterface $em,
-    ) {
-    }
-
     #[LiveProp]
     public MailSmtpAppSetting $mailSmtpAppSetting;
 
     #[LiveAction]
-    public function submit(): Response
+    public function submit(
+        AppSettingService $appSettingService,
+        EncryptionService $encryptionService,
+        AppSettingRepository $appSettingRepository,
+        EntityManagerInterface $em,
+    ): Response
     {
         $this->submitForm();
 
@@ -48,25 +45,19 @@ final class MailSmtpAppSettingForm extends AbstractController
         ;
 
         $plainPassword = $mailSmtpAppSetting->getPassword();
-        $encryptedPassword = $this->encryptionService->encrypt($plainPassword);
+        $encryptedPassword = $encryptionService->encrypt($plainPassword);
         $mailSmtpAppSetting->setPassword($encryptedPassword);
 
-        $appSetting = $this
-            ->appSettingRepository
-            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
-        ;
+        $appSetting = $appSettingRepository->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY);
 
         if ($appSetting === null) {
             throw new NotFoundException(MailSmtpAppSetting::class);
         }
 
-        $appSetting = $this
-            ->appSettingService
-            ->updateValue($appSetting, $mailSmtpAppSetting)
-        ;
+        $appSetting = $appSettingService->updateValue($appSetting, $mailSmtpAppSetting);
 
-        $this->em->persist($appSetting);
-        $this->em->flush();
+        $em->persist($appSetting);
+        $em->flush();
 
         return $this->redirectToRoute('app_settings_testmail');
     }

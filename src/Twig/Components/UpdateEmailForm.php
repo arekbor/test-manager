@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Twig\Components;
 
 use App\Form\UpdateEmailType;
+use App\Repository\SecurityUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
@@ -25,19 +27,31 @@ final class UpdateEmailForm extends AbstractController
     public function update(
         Security $security,
         EntityManagerInterface $em,
+        SecurityUserRepository $securityUserRepository,
+        TranslatorInterface $trans,
     ): Response
     {
         $this->submitForm();
+        
         $updateEmail = $this
             ->getForm()
             ->getData()
         ;
 
+        $updatedEmail = $updateEmail->getEmail();
+
+        $usersWithTheSameEmail = $securityUserRepository->findByEmail($updatedEmail);
+        if (count($usersWithTheSameEmail) > 0) {
+            $this->addFlash('danger', $trans->trans('flash.updateEmailForm.emailAlreadyExists'));
+
+            return $this->redirectToRoute('app_settings_general');
+        }
+
         /**
          * @var SecurityUser
          */
         $user = $this->getUser();
-        $updatedEmail = $updateEmail->getEmail();
+        
         $user->setEmail($updatedEmail);
 
         $em->persist($user);

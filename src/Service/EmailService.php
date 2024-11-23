@@ -35,7 +35,7 @@ class EmailService
     {
         $appSetting = $this
             ->appSettingRepository
-            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
+            ->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY)
         ;
 
         if ($appSetting === null) {

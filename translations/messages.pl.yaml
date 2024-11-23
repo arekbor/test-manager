@@ -163,5 +163,9 @@ templates:
 flash:
   testEmailForm:
     successEmailMessage: Wiadomość e-mail została pomyślnie wysłana
+  updateEmailForm:
+    emailAlreadyExists: Podany e-mail już istnieje
   updatePasswordForm:
     invalidPassword: Nieprawidłowe hasło
+  mailSmtpAppSettingForm:
+    appSettingMissing: Nie znaleziono ustawienia

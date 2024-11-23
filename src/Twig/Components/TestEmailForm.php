@@ -21,23 +21,22 @@ final class TestEmailForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
-    public function __construct(
-        private EmailService $emailService,
-        private TranslatorInterface $trans,
-    ) {
-    }
-
     #[LiveAction]
-    public function send(): Response
+    public function send(
+        EmailService $emailService, 
+        TranslatorInterface $trans
+    ): Response
     {
         $this->submitForm();
 
-        $testEmail = $this->getForm()->getData();
+        $testEmail = $this
+            ->getForm()
+            ->getData()
+        ;
+
         $receiver = $testEmail->getReceiver();
 
-        $error = $this
-            ->emailService
-            ->sendEmail($receiver, "Test Manager", "Test message")
+        $error = $emailService->sendEmail($receiver, "Test Manager", "Test message")
         ;
         if (!empty($error)) {
             $this->addFlash('danger', $error);
@@ -45,7 +44,7 @@ final class TestEmailForm extends AbstractController
             return $this->redirectToRoute('app_settings_testmail');
         }
 
-        $this->addFlash('success', $this->trans->trans('flash.testEmailForm.successEmailMessage'));
+        $this->addFlash('success', $trans->trans('flash.testEmailForm.successEmailMessage'));
 
         return $this->redirectToRoute('app_settings_testmail');
     } 

@@ -28,4 +28,9 @@ class SecurityUserRepository extends ServiceEntityRepository implements Password
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function findByEmail(string $email): array
+    {
+        return $this->findBy(['email' => $email]);
+    }
 }

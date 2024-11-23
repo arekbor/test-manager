@@ -25,16 +25,13 @@ class SettingsController extends AbstractController
         AppSettingRepository $appSettingRepository
     ): Response
     {
-        $appSetting = $appSettingRepository
-            ->findByKey(MailSmtpAppSetting::APP_SETTING_KEY)
-        ;
+        $appSetting = $appSettingRepository->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY);
 
         if ($appSetting === null) {
             throw new NotFoundHttpException(MailSmtpAppSetting::class);
         }
 
-        $mailSmtpAppSetting = $appSettingService
-            ->getValue($appSetting, MailSmtpAppSetting::class);
+        $mailSmtpAppSetting = $appSettingService->getValue($appSetting, MailSmtpAppSetting::class);
 
         return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting

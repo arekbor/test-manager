@@ -162,5 +162,7 @@ templates:
 flash:
   testEmailForm:
     successEmailMessage: Email successfully sent
+  updateEmailForm:
+    emailAlreadyExists: Email already exists
   updatePasswordForm:
     invalidPassword: Invalid password
