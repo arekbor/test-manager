@@ -55,7 +55,7 @@ form:
       currentPassword:
         label: Current password
       password_first_options:
-        label: New Password
+        label: New password
         help: After updating your password you will be logged out.
       password_second_options: Repeat new password
       update: Update password
