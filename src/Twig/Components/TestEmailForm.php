@@ -41,6 +41,7 @@ final class TestEmailForm extends AbstractController
         ;
         if (!empty($error)) {
             $this->addFlash('danger', $error);
+            
             return $this->redirectToRoute('app_settings_testmail');
         }
 
