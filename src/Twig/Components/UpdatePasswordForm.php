@@ -46,6 +46,7 @@ final class UpdatePasswordForm extends AbstractController
         
         if (!$hasher->isPasswordValid($user, $updatePassword->getCurrentPassword())) {
             $this->addFlash('danger', $trans->trans('flash.updatePasswordForm.invalidPassword'));
+            
             return $this->redirectToRoute('app_settings_general');
         }
 
