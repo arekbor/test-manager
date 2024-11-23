@@ -28,12 +28,42 @@
     </head>
 
     <body {{ stimulus_controller('turbo-navigation') }}>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {{ component('Nav') }}
-        {% endif %}
-        
-        <div class="container-fluid">
-            {% block body %}{% endblock %}
-        </div>
+        <main>
+            <div class="z-3 position-absolute end-0 p-2">
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div 
+                            class="toast" 
+                            role="alert" 
+                            aria-live="assertive" 
+                            aria-atomic="true" 
+                            {{ stimulus_controller('toast') }}
+                        >
+                            <div class="toast-header">
+                                <div class="d-flex justify-content-end w-100">
+                                    <button 
+                                        type="button" 
+                                        class="btn-close" 
+                                        data-bs-dismiss="toast" 
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                            </div>
+                            <div class="toast-body text-{{ type }}">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ component('Nav') }}
+            {% endif %}
+
+            <div class="container-fluid">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
     </body>
 </html>

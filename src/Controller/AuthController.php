@@ -12,20 +12,28 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/auth')]
 class AuthController extends AbstractController
 {
     #[Route('/login')]
     #[IsNotGranted('IS_AUTHENTICATED_FULLY')]
-    public function login(AuthenticationUtils $utils): Response
+    public function login(
+        AuthenticationUtils $utils,
+        TranslatorInterface $trans,
+    ): Response
     {
         $error = $utils->getLastAuthenticationError();
+        if ($error !== null) {
+            $message = $trans->trans($error->getMessageKey(), $error->getMessageData(), 'security');
+            $this->addFlash('danger', $message);
+        }
+
         $form = $this->createForm(LoginType::class, new SecurityUser());
 
         return $this->render('auth/login.html.twig', [
-            'form' => $form, 
-            'error' => $error
+            'form' => $form
         ]);
     }
 

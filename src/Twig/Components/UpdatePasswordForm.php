@@ -12,7 +12,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
@@ -29,6 +29,7 @@ final class UpdatePasswordForm extends AbstractController
         Security $security,
         UserPasswordHasherInterface $hasher,
         EntityManagerInterface $em,
+        TranslatorInterface $trans,
     ): Response
     {
         $this->submitForm();
@@ -44,7 +45,9 @@ final class UpdatePasswordForm extends AbstractController
         $user = $this->getUser();
         
         if (!$hasher->isPasswordValid($user, $updatePassword->getCurrentPassword())) {
-            throw new AccessDeniedException();
+            $this->addFlash('danger', $trans->trans('flash.updatePasswordForm.invalidPassword'));
+            
+            return $this->redirectToRoute('app_settings_general');
         }
 
         $hashedNewPassword = $hasher->hashPassword($user, $updatePassword->getPassword());
