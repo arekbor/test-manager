@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "5e6a32c234dab45d5fd2c132bebc38e2",
+  "content-hash": "1a37cebca2d82534d4aa2a611dd9f7d6",
   "packages": [
     {
       "name": "composer/semver",
@@ -1377,16 +1377,16 @@
     },
     {
       "name": "kreyu/data-table-bundle",
-      "version": "v0.25.3",
+      "version": "v0.25.6",
       "source": {
         "type": "git",
         "url": "https://github.com/Kreyu/data-table-bundle.git",
-        "reference": "680188344bfe22c7ee31732900f321d3e177aeb5"
+        "reference": "102a326c33c5be7266f21e34a7df0cc01c91f82e"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/680188344bfe22c7ee31732900f321d3e177aeb5",
-        "reference": "680188344bfe22c7ee31732900f321d3e177aeb5",
+        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/102a326c33c5be7266f21e34a7df0cc01c91f82e",
+        "reference": "102a326c33c5be7266f21e34a7df0cc01c91f82e",
         "shasum": ""
       },
       "require": {
@@ -1437,9 +1437,9 @@
       ],
       "support": {
         "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.3"
+        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.6"
       },
-      "time": "2024-11-18T09:15:34+00:00"
+      "time": "2024-11-22T18:27:34+00:00"
     },
     {
       "name": "phpmailer/phpmailer",
@@ -6228,16 +6228,16 @@
     },
     {
       "name": "symfony/ux-live-component",
-      "version": "v2.20.0",
+      "version": "v2.21.0",
       "source": {
         "type": "git",
         "url": "https://github.com/symfony/ux-live-component.git",
-        "reference": "c05ac6bfa7368415676d74183eded05be2635a1d"
+        "reference": "1cc963a50a31a8ca92fbd145b29b27231b199b1b"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/symfony/ux-live-component/zipball/c05ac6bfa7368415676d74183eded05be2635a1d",
-        "reference": "c05ac6bfa7368415676d74183eded05be2635a1d",
+        "url": "https://api.github.com/repos/symfony/ux-live-component/zipball/1cc963a50a31a8ca92fbd145b29b27231b199b1b",
+        "reference": "1cc963a50a31a8ca92fbd145b29b27231b199b1b",
         "shasum": ""
       },
       "require": {
@@ -6301,7 +6301,7 @@
         "twig"
       ],
       "support": {
-        "source": "https://github.com/symfony/ux-live-component/tree/v2.20.0"
+        "source": "https://github.com/symfony/ux-live-component/tree/v2.21.0"
       },
       "funding": [
         {
@@ -6317,20 +6317,20 @@
           "type": "tidelift"
         }
       ],
-      "time": "2024-09-24T09:27:42+00:00"
+      "time": "2024-10-15T10:36:54+00:00"
     },
     {
       "name": "symfony/ux-toggle-password",
-      "version": "v2.20.0",
+      "version": "v2.21.0",
       "source": {
         "type": "git",
         "url": "https://github.com/symfony/ux-toggle-password.git",
-        "reference": "4d7d9a70bac309c8e388b09528094a59cd1a01ab"
+        "reference": "48d4aa13c3286849c4d86e03df9c5b90917e4d15"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/symfony/ux-toggle-password/zipball/4d7d9a70bac309c8e388b09528094a59cd1a01ab",
-        "reference": "4d7d9a70bac309c8e388b09528094a59cd1a01ab",
+        "url": "https://api.github.com/repos/symfony/ux-toggle-password/zipball/48d4aa13c3286849c4d86e03df9c5b90917e4d15",
+        "reference": "48d4aa13c3286849c4d86e03df9c5b90917e4d15",
         "shasum": ""
       },
       "require": {
@@ -6381,7 +6381,7 @@
         "symfony-ux"
       ],
       "support": {
-        "source": "https://github.com/symfony/ux-toggle-password/tree/v2.20.0"
+        "source": "https://github.com/symfony/ux-toggle-password/tree/v2.21.0"
       },
       "funding": [
         {
@@ -6397,7 +6397,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2024-08-14T04:55:38+00:00"
+      "time": "2024-10-12T06:22:44+00:00"
     },
     {
       "name": "symfony/ux-turbo",
@@ -6499,16 +6499,16 @@
     },
     {
       "name": "symfony/ux-twig-component",
-      "version": "v2.20.0",
+      "version": "v2.21.0",
       "source": {
         "type": "git",
         "url": "https://github.com/symfony/ux-twig-component.git",
-        "reference": "edcd13daa4566435fbfc8b9766dbcfebb679384f"
+        "reference": "5b60b239fffcb04fc8bdb2a5a4001d19442d575d"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/edcd13daa4566435fbfc8b9766dbcfebb679384f",
-        "reference": "edcd13daa4566435fbfc8b9766dbcfebb679384f",
+        "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/5b60b239fffcb04fc8bdb2a5a4001d19442d575d",
+        "reference": "5b60b239fffcb04fc8bdb2a5a4001d19442d575d",
         "shasum": ""
       },
       "require": {
@@ -6562,7 +6562,7 @@
         "twig"
       ],
       "support": {
-        "source": "https://github.com/symfony/ux-twig-component/tree/v2.20.0"
+        "source": "https://github.com/symfony/ux-twig-component/tree/v2.21.0"
       },
       "funding": [
         {
@@ -6578,7 +6578,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2024-09-24T09:36:36+00:00"
+      "time": "2024-10-05T22:11:16+00:00"
     },
     {
       "name": "symfony/validator",
