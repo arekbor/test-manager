@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241117124547 extends AbstractMigration
+final class Version20241124212045 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -37,7 +37,7 @@ final class Version20241117124547 extends AbstractMigration
         $this->addSql('CREATE TABLE question (id INT NOT NULL, content TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE security_user (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON security_user (email)');
-        $this->addSql('CREATE TABLE video (id INT NOT NULL, video_name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE video (id INT NOT NULL, video_name VARCHAR(255) NOT NULL, size VARCHAR(255) NOT NULL, mime_type VARCHAR(255) NOT NULL, original_name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE video_module (video_id INT NOT NULL, module_id INT NOT NULL, PRIMARY KEY(video_id, module_id))');
         $this->addSql('CREATE INDEX IDX_347386E529C1004E ON video_module (video_id)');
         $this->addSql('CREATE INDEX IDX_347386E5AFC2B591 ON video_module (module_id)');

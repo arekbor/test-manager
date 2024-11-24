@@ -87,7 +87,10 @@ data_table:
     createQuestion: Create question
     createTest: Create test
   video:
-    video: Video
+    originalName: File name
+    mimeType: Mime type
+    size: Size
+    uploadVideo: Upload video
   actions: Actions
   details: Details
   id: Id
@@ -102,6 +105,8 @@ modal:
   module:
     details:
       delete: Delete
+  uploadFile:
+    cancel: Cancel
 
 templates:
   base:
@@ -152,3 +157,5 @@ flash:
     emailAlreadyExists: Email already exists
   updatePasswordForm:
     invalidPassword: Invalid password
+  uploadFile:
+    success: File successfully uploaded

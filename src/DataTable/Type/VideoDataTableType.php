@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
-use App\DataTable\Column\Type\VideoColumnType;
+use App\DataTable\Action\Type\UploadFileActionType;
+use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Video;
+use App\Util\ByteConversion;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
@@ -25,6 +27,20 @@ class VideoDataTableType extends AbstractDataTableType
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
+        $builder
+            ->addAction('uploadVideo', UploadFileActionType::class, [
+                'label' => 'data_table.video.uploadVideo',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ],
+                'upload_url' => function() use($options): string {
+                    return $this->urlGenerator->generate('app_video_upload', [
+                        'id' => $options['module_id']
+                    ]);
+                }
+            ])
+        ;
+
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
@@ -46,23 +62,27 @@ class VideoDataTableType extends AbstractDataTableType
             ->addColumn('id', NumberColumnType::class, [
                 'label' => 'data_table.id'
             ])
-            ->addColumn('video', VideoColumnType::class, [
-                'label' => 'data_table.video.video',
-                'getter' => fn (Video $video) => $video,
-                'video_id' => function (Video $video): int {
-                    return $video->getId();
-                }
+            ->addColumn('originalName', TruncatedTextColumnType::class, [
+                'label' => 'data_table.video.originalName',
+            ])
+            ->addColumn('mimeType', TruncatedTextColumnType::class, [
+                'label' => 'data_table.video.mimeType',
+            ])
+            ->addColumn('size', TruncatedTextColumnType::class, [
+                'label' => 'data_table.video.size',
+                'getter' => fn(Video $video) => ByteConversion::formatBytes($video->getSize())
             ])
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 2))
+            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('module_id');
+            ->setRequired('module_id')
+        ;
     }
 }

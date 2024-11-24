@@ -86,6 +86,7 @@ class QuestionDataTableType extends AbstractDataTableType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('module_id');
+            ->setRequired('module_id')
+        ;
     }
 }

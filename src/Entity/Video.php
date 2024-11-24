@@ -19,7 +19,13 @@ class Video extends BaseEntity
     #[ORM\Column(length: 255)]
     private ?string $videoName = null;
 
-    #[Vich\UploadableField(mapping: 'videos', fileNameProperty: 'videoName')]
+    #[Vich\UploadableField(
+        mapping: 'videos', 
+        fileNameProperty: 'videoName',
+        size: 'size',
+        mimeType: 'mimeType',
+        originalName: 'originalName'
+    )]
     #[Assert\File(
         extensions: ['mp4', 'mov'],
         mimeTypes: ['video/mp4', 'video/quicktime']
@@ -32,11 +38,20 @@ class Video extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'videos')]
     private Collection $modules;
 
+    #[ORM\Column(length: 255)]
+    private ?string $size = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $mimeType = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $originalName = null;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
     }
-
+    
     public function getVideoName(): ?string 
     {
         return $this->videoName;
@@ -79,6 +94,42 @@ class Video extends BaseEntity
     public function removeModule(Module $module): static
     {
         $this->modules->removeElement($module);
+
+        return $this;
+    }
+
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): static
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): static
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getOriginalName(): ?string
+    {
+        return $this->originalName;
+    }
+
+    public function setOriginalName(string $originalName): static
+    {
+        $this->originalName = $originalName;
 
         return $this;
     }
