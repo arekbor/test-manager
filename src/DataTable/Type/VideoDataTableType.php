@@ -29,7 +29,7 @@ class VideoDataTableType extends AbstractDataTableType
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
-                    'delete' => [
+                    'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
