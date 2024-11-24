@@ -1,3 +1,5 @@
+{% extends '@KreyuDataTable/themes/base.html.twig' %}
+
 {% block action_dropdown_value %}
   <div class="d-inline-block dropdown show">
     <a 
@@ -23,14 +25,80 @@
   </div>
 {% endblock %}
 
-{% block column_video_value %}
-  <video 
-      src="{{ path('app_video_download', { id: videoId }) }}"
-      width="384"
-      height="216"
-      controls
+{% block action_upload_file_value %}
+  <button 
+    {% with { attr } %}
+      {{ block('attributes') }}
+    {% endwith %} 
+    data-bs-toggle="modal" 
+    data-bs-target="#uploadFileModal"
   >
-  </video>
+    {{ label|trans }}
+  </button>
+
+  <div 
+    class="modal fade" 
+    data-bs-keyboard="false"
+    data-bs-backdrop="static"
+    id="uploadFileModal" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="uploadFileModalTitle" 
+    aria-hidden="true"
+  >
+    <div 
+      class="modal-dialog modal-dialog-centered" 
+      role="document"
+    >
+      <div 
+        class="modal-content"
+        {{ stimulus_controller('upload_file', { uploadUrl: uploadUrl }) }}
+      >
+        <div class="modal-header">
+          <h5 
+            class="modal-title" 
+            id="uploadFileModalTitle"
+          >
+            {{ modalTitle|default('')|trans }}
+          </h5>
+
+          <button 
+            type="button" 
+            class="btn-close" 
+            data-bs-dismiss="modal" 
+            aria-label="Close"
+            {{ stimulus_action('upload_file', 'handleCancel', 'click') }}
+          >
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <input 
+            type="file"
+            class="form-control"
+            {{ stimulus_action('upload_file', 'handleInputFileChange', 'change') }}
+            {{ stimulus_target('upload_file', 'inputFile') }}
+          />
+
+          <div 
+            class="d-none progress mt-2"
+            {{ stimulus_target('upload_file', 'progress') }}
+          >
+            <div 
+              class="progress-bar" 
+              role="progressbar" 
+              aria-valuenow="0" 
+              aria-valuemin="0" 
+              aria-valuemax="100"
+              {{ stimulus_target('upload_file', 'progressBar') }}
+            >
+              0%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
 {% endblock %}
 
 {% block column_truncated_text_value %}

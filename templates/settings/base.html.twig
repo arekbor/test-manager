@@ -4,6 +4,15 @@
     <div class="row">
         <div class="col-12 col-xl-2">
             <nav class="nav nav-pills flex-column">
+                <div 
+                    class="nav-link"
+                >
+                    <div class="d-flex flex-column text-muted small">
+                        <small class="mb-1">Id: <span class="text-dark">{{ app.user.id }}</span></small>
+                        <small class="mb-1">E-mail: <span class="text-dark">{{ app.user.email }}</span></small>
+                    </div>
+                </div>
+
                 {{ component('NavLink', { 
                     path: path('app_settings_general'),
                     label: 'templates.settings.navLink.general'
