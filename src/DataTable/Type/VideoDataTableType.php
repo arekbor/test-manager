@@ -26,16 +26,10 @@ class VideoDataTableType extends AbstractDataTableType
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addAction('uploadVideo', ButtonActionType::class, [
-                'label' => 'data_table.video.uploadVideo',
-                'href' => $this->urlGenerator->generate('app_video_upload', [ 
-                    'id' => $options['module_id']
-                ])
-            ])
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
-                    'delete' => [
+                    'details' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
