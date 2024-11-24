@@ -57,14 +57,6 @@ class ModuleDataTableType extends AbstractDataTableType
                                     }
                                 ],
                                 [
-                                    'label' => 'data_table.module.uploadVideo',
-                                    'href' => function(Module $module): string {
-                                        return $this->urlGenerator->generate('app_video_upload', [
-                                            'id' => $module->getId()
-                                        ]);
-                                    }
-                                ],
-                                [
                                     'label' => 'data_table.module.createTest',
                                     'href' => function(): string {
                                         return $this->urlGenerator->generate('app_home_index');

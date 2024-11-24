@@ -72,12 +72,6 @@ table:
     correct: Is correct
     actions: Actions
 
-controller:
-  video:
-    response:
-      upload_success: File uploaded successfully.
-      upload_fail: Error while uploading the file.
-
 data_table:
   module:
     create: Create new module
@@ -86,7 +80,6 @@ data_table:
     questionsCount: Questions
     videosCount: Video files
     addQuestion: Add question
-    uploadVideo: Upload video
     createTest: Create test
   question:
     content: Content
@@ -95,7 +88,6 @@ data_table:
     createTest: Create test
   video:
     video: Video
-    uploadVideo: Upload
   actions: Actions
   details: Details
   id: Id
@@ -114,6 +106,11 @@ modal:
 templates:
   base:
     title: Test manager
+    nav:
+      navbar_brand: Test manager
+      home: Home
+      logout: Log out
+      settings: Settings
   settings:
     navLink:
       general: General
@@ -133,10 +130,8 @@ templates:
         questions: Questions
         videos: Video files
   video:
-    module: Module
-    upload:
-      title: Upload video
     details:
+      module: Module
       title: Video details %id%
       id: Video id
       filename: File name
@@ -144,20 +139,11 @@ templates:
       delete: Delete
   question:
     details:
+      module: Module
       title: Question details %id%
       delete: Delete
     create:
       title: Create question
-  components:
-    videoUpload:
-      abort: Abort
-      selectFile: Choose video file
-      paragraph: or drop the video file here
-    nav:
-      navbar_brand: Test manager
-      home: Home
-      logout: Log out
-      settings: Settings
 
 flash:
   testEmailForm:
