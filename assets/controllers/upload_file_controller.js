@@ -27,7 +27,7 @@ export default class extends Controller {
     this.#xhr = new XMLHttpRequest();
 
     this.#xhr.onloadend = () => {
-      location.replace(location.href);
+      this.buttonCloseTarget.click();
     };
 
     this.#xhr.upload.onprogress = (e) => {

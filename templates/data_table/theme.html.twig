@@ -62,14 +62,16 @@
             {{ modalTitle|default('')|trans }}
           </h5>
 
-          <button 
-            type="button" 
-            class="btn-close" 
-            data-bs-dismiss="modal" 
+          <a 
+            href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"
+            data-turbo="false"
+            type="button"
+            class="btn-close"
             aria-label="Close"
             {{ stimulus_action('upload_file', 'handleCancel', 'click') }}
+            {{ stimulus_target('upload_file', 'buttonClose') }}
           >
-          </button>
+          </a>
         </div>
 
         <div class="modal-body">
