@@ -21,7 +21,8 @@ export default class extends Controller {
       throw new Error("No file selected in the form.");
     }
 
-    this.inputFileTarget.classList.add("d-none");
+    this.inputFileTarget.disabled = true;
+
     this.progressTarget.classList.remove("d-none");
     this.#xhr = new XMLHttpRequest();
 

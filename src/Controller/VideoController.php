@@ -6,17 +6,17 @@ namespace App\Controller;
 
 use App\Entity\Module;
 use App\Entity\Video;
+use App\Handler\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Vich\UploaderBundle\Handler\DownloadHandler;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -58,11 +58,13 @@ class VideoController extends AbstractController
 
     #[Route('/download/{id}')]
     public function download(
-        Video $video, 
-        DownloadHandler $downloadHandler
-    ): StreamedResponse
+        Video $video,
+        FileHandler $fileHandler,
+    ): BinaryFileResponse
     {
-        return $downloadHandler->downloadObject($video, 'videoFile');
+        $file = $fileHandler->getFile($video, 'videoFile');
+
+        return $this->file($file);
     }
 
     #[Route('/delete/{moduleId}/{videoId}')]
