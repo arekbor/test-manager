@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
-use App\DataTable\Action\Type\DropdownActionType;
+use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
@@ -14,7 +14,6 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
-use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -29,9 +28,8 @@ class QuestionDataTableType extends AbstractDataTableType
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addAction('actions', DropdownActionType::class, [
-                'dropdown_label' => 'data_table.actions',
-                'dropdown_items' => [
+            ->addAction('actions', ButtonGroupActionType::class, [
+                'buttons' => [
                     [
                         'label' => 'data_table.question.createQuestion',
                         'href' => $this->urlGenerator->generate('app_question_create', [ 
@@ -40,7 +38,6 @@ class QuestionDataTableType extends AbstractDataTableType
                     ],
                     [
                         'label' => 'data_table.question.createTest',
-                        'href' => '#'
                     ]
                 ]
             ])
@@ -78,7 +75,6 @@ class QuestionDataTableType extends AbstractDataTableType
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content'
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
         ;
 
     }

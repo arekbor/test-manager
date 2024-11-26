@@ -1,27 +1,19 @@
 {% extends '@KreyuDataTable/themes/base.html.twig' %}
 
-{% block action_dropdown_value %}
-  <div class="d-inline-block dropdown show">
-    <a 
-      class="dropdown-toggle {{ dropdownClass | default('btn btn-primary') }}" 
-      role="button" 
-      data-bs-toggle="dropdown" 
-    >
-      {{ dropdownLabel|trans }}
-    </a>
-
-    <div 
-      class="dropdown-menu" 
-    >
-      {% for item in dropdownItems %}
-        <a 
-          class="dropdown-item"
-          href="{{ item.href }}"
-        >
-          {{ item.label|trans }}
-        </a>
-      {% endfor %}
-    </div>
+{% block action_button_group_value %}
+  <div 
+    class="btn-group" 
+    role="group" 
+  >
+    {% for button in buttons %}
+      <a 
+        href="{{ button.href|default('#') }}" 
+        class="btn btn-primary mx-1 text-nowrap" 
+        role="button" 
+      >
+        {{ button.label|default('')|trans }}
+      </a>
+    {% endfor %}
   </div>
 {% endblock %}
 

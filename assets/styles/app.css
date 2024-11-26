@@ -27,15 +27,6 @@ select.form-select,
   padding: 10px;
 }
 
-#kreyu_data_table_module .table-responsive {
-  height: calc(100vh - 56px - 51px - 31px);
-}
-
-#kreyu_data_table_question .table-responsive,
-#kreyu_data_table_video .table-responsive {
-  height: calc(100vh - 56px - 51px - 31px - 42px);
-}
-
 .text-limit {
   max-width: 350px;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
-use App\DataTable\Action\Type\DropdownActionType;
+use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Module;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
@@ -14,7 +14,6 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
-use Kreyu\Bundle\DataTableBundle\Pagination\PaginationData;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -36,10 +35,9 @@ class ModuleDataTableType extends AbstractDataTableType
                 'label' => 'data_table.actions',
                 'actions' => [
                     'more' => [
-                        'type' => DropdownActionType::class,
+                        'type' => ButtonGroupActionType::class,
                         'type_options' => [
-                            'dropdown_label' => 'data_table.actions',
-                            'dropdown_items' => [
+                            'buttons' => [
                                 [
                                     'label' => 'data_table.details',
                                     'href' => function(Module $module): string {
@@ -57,10 +55,7 @@ class ModuleDataTableType extends AbstractDataTableType
                                     }
                                 ],
                                 [
-                                    'label' => 'data_table.module.createTest',
-                                    'href' => function(): string {
-                                        return $this->urlGenerator->generate('app_home_index');
-                                    }
+                                    'label' => 'data_table.module.createTest'
                                 ]
                             ]
                         ]
@@ -96,7 +91,6 @@ class ModuleDataTableType extends AbstractDataTableType
                 'label' => 'data_table.module.language',
                 'lower' => true
             ])
-            ->setDefaultPaginationData(new PaginationData(page: 1, perPage: 10))
         ;
     }
 }
