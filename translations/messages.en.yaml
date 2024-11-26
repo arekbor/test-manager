@@ -159,3 +159,5 @@ flash:
     invalidPassword: Invalid password
   uploadFile:
     success: File successfully uploaded
+  exceptionResponseSubscriber:
+    message: "Something went wrong. Please try again later."
