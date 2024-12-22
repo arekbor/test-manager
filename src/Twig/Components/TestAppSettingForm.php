@@ -1,15 +1,14 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace App\Twig\Components;
 
 use App\Exception\NotFoundException;
-use App\Form\MailSmtpAppSettingType;
-use App\Model\MailSmtpAppSetting;
+use App\Form\TestAppSettingType;
+use App\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
-use App\Service\EncryptionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -21,48 +20,43 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
 #[AsLiveComponent]
-final class MailSmtpAppSettingForm extends AbstractController
+final class TestAppSettingForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public MailSmtpAppSetting $mailSmtpAppSetting;
+    public TestAppSetting $testAppSetting;
 
     #[LiveAction]
     public function submit(
         AppSettingService $appSettingService,
-        EncryptionService $encryptionService,
         AppSettingRepository $appSettingRepository,
         EntityManagerInterface $em,
     ): Response
     {
         $this->submitForm();
 
-        $mailSmtpAppSetting = $this
+        $testAppSetting = $this
             ->getForm()
             ->getData()
         ;
 
-        $plainPassword = $mailSmtpAppSetting->getPassword();
-        $encryptedPassword = $encryptionService->encrypt($plainPassword);
-        $mailSmtpAppSetting->setPassword($encryptedPassword);
-
-        $appSetting = $appSettingRepository->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY);
+        $appSetting = $appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         if ($appSetting === null) {
-            throw new NotFoundException(MailSmtpAppSetting::class);
+            throw new NotFoundException(TestAppSetting::class);
         }
 
-        $appSetting = $appSettingService->updateValue($appSetting, $mailSmtpAppSetting);
+        $appSetting = $appSettingService->updateValue($appSetting, $testAppSetting);
 
         $em->persist($appSetting);
         $em->flush();
 
-        return $this->redirectToRoute('app_settings_smtptest');
+        return $this->redirectToRoute('app_settings_test');
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(MailSmtpAppSettingType::class, $this->mailSmtpAppSetting);
+        return $this->createForm(TestAppSettingType::class, $this->testAppSetting);
     }
 }

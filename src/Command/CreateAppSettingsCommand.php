@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Model\MailSmtpAppSetting;
+use App\Model\TestAppSetting;
 use App\Service\AppSettingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,16 +31,24 @@ class CreateAppSettingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $appSetting = $this
-            ->appSettingService
-            ->setValue(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting())
-        ;
-
-        $this->em->persist($appSetting);
-        $io->success("App setting: " .MailSmtpAppSetting::APP_SETTING_KEY. " persisted.");
+        $this->createAndPersistAppSetting(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting(), $io);
+        $this->createAndPersistAppSetting(TestAppSetting::APP_SETTING_KEY, new TestAppSetting(), $io);
 
         $this->em->flush();
 
         return Command::SUCCESS;
     }
+
+    private function createAndPersistAppSetting(string $appSettingKey, object $appSettingInstance, SymfonyStyle $io): void
+    {
+        $appSetting = $this
+            ->appSettingService
+            ->setValue($appSettingKey, $appSettingInstance)
+        ;
+
+        $this->em->persist($appSetting);
+
+        $io->success("App setting: " . $appSettingKey . " persisted.");
+    }
+    
 }
