@@ -13,6 +13,11 @@ form:
         delete: Delete answer
     answer:
       content_placeholder: Answer content
+    testAppSetting:
+      welcomeMessage:
+        label: Welcome message
+      farewellMessage:
+        label: Farewell message
     mailSmtpAppSetting:
       host:
         label: Host
@@ -121,6 +126,7 @@ templates:
       general: General
       smtp: SMTP
       smtpTest: SMTP test
+      test: Test
   auth:
     login:
       title: Log in
