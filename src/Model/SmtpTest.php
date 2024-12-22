@@ -6,7 +6,7 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class TestEmail
+final class SmtpTest
 {
     #[Assert\Email]
     #[Assert\NotBlank]

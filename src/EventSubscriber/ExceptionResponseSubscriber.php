@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -20,11 +21,16 @@ class ExceptionResponseSubscriber implements EventSubscriberInterface
         private RequestStack $requestStack,
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $trans,
+        private KernelInterface $kernel,
     ) {
     }
 
     public function onKernelException(ExceptionEvent $event): void
     {
+        if ($this->kernel->getEnvironment() === 'dev') {
+            return;
+        }
+
         $session = $this->requestStack->getSession();
 
         if (!$session instanceof FlashBagAwareSessionInterface) {

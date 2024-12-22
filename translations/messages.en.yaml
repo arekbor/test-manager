@@ -41,7 +41,7 @@ form:
       timeout:
         label: Timeout
         help: The SMTP server timeout in seconds.
-    testEmail:
+    smtpTest:
       receiver:
         label: Receiver
         help: Test receiver email.
@@ -120,7 +120,7 @@ templates:
     navLink:
       general: General
       smtp: SMTP
-      testmail: Test email
+      smtpTest: SMTP test
   auth:
     login:
       title: Log in

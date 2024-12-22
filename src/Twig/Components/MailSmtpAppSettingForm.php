@@ -59,7 +59,7 @@ final class MailSmtpAppSettingForm extends AbstractController
         $em->persist($appSetting);
         $em->flush();
 
-        return $this->redirectToRoute('app_settings_testmail');
+        return $this->redirectToRoute('app_settings_smtptest');
     }
 
     protected function instantiateForm(): FormInterface

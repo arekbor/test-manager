@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Components;
 
-use App\Form\TestEmailType;
+use App\Form\SmtpTestType;
 use App\Service\EmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -16,7 +16,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-final class TestEmailForm extends AbstractController
+final class SmtpTestForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
@@ -41,16 +41,16 @@ final class TestEmailForm extends AbstractController
         if (!empty($error)) {
             $this->addFlash('danger', $error);
             
-            return $this->redirectToRoute('app_settings_testmail');
+            return $this->redirectToRoute('app_settings_smtptest');
         }
 
         $this->addFlash('success', $trans->trans('flash.testEmailForm.successEmailMessage'));
 
-        return $this->redirectToRoute('app_settings_testmail');
+        return $this->redirectToRoute('app_settings_smtptest');
     } 
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(TestEmailType::class);
+        return $this->createForm(SmtpTestType::class);
     }
 }
