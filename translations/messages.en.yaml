@@ -122,6 +122,11 @@ templates:
       logout: Log out
       settings: Settings
   settings:
+    base:
+      info:
+        id: Id
+        email: E-mail
+        timezone: System timezone
     navLink:
       general: General
       smtp: SMTP

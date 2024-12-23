@@ -8,8 +8,18 @@
                     class="nav-link"
                 >
                     <div class="d-flex flex-column text-muted small">
-                        <small class="mb-1">Id: <span class="text-dark">{{ app.user.id }}</span></small>
-                        <small class="mb-1">E-mail: <span class="text-dark">{{ app.user.email }}</span></small>
+                        <small class="mb-1">
+                            {{ 'templates.settings.base.info.id'|trans }}:
+                            <span class="text-dark">{{ app.user.id }}</span>
+                        </small>
+                        <small class="mb-1">
+                            {{ 'templates.settings.base.info.email'|trans }}:
+                            <span class="text-dark">{{ app.user.email }}</span>
+                        </small>
+                        <small class="mb-1">
+                            {{ 'templates.settings.base.info.timezone'|trans }}: 
+                            <span class="text-dark">{{ get_timezone() }}</span>
+                        </small>
                     </div>
                 </div>
 
