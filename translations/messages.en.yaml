@@ -160,6 +160,9 @@ templates:
       delete: Delete
     create:
       title: Create question
+  test:
+    create:
+      title: Create test
 
 flash:
   testEmailForm:
