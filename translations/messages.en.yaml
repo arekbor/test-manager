@@ -16,8 +16,10 @@ form:
     testAppSetting:
       welcomeMessage:
         label: Welcome message
+        help: The message that will appear for everyone before each test.
       farewellMessage:
         label: Farewell message
+        help: The message that will appear for everyone after each test.
     mailSmtpAppSetting:
       host:
         label: Host
@@ -64,6 +66,13 @@ form:
         help: After updating your password you will be logged out.
       password_second_options: Repeat new password
       update: Update password
+    createTest:
+      takerEmail:
+        label: E-mail
+        help: The email address of the person taking the test.
+      expiration:
+        label: Expiration date
+        help: The time when access to the test will expire and access will be blocked.
   password:
     label: Password
     hidden: Hide
