@@ -55,7 +55,12 @@ class ModuleDataTableType extends AbstractDataTableType
                                     }
                                 ],
                                 [
-                                    'label' => 'data_table.module.createTest'
+                                    'label' => 'data_table.module.createTest',
+                                    'href' => function(Module $module): string {
+                                        return $this->urlGenerator->generate('app_test_create', [
+                                            'id' => $module->getId()
+                                        ]);
+                                    }
                                 ]
                             ]
                         ]

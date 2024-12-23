@@ -18,6 +18,7 @@ class TestAppSettingType extends AbstractType
         $builder
             ->add('welcomeMessage', TextareaType::class, [
                 'label' => 'form.type.testAppSetting.welcomeMessage.label',
+                'help' => 'form.type.testAppSetting.welcomeMessage.help',
                 'empty_data' => '',
                 'attr' => [
                     'rows'=> 10
@@ -25,6 +26,7 @@ class TestAppSettingType extends AbstractType
             ])
             ->add('farewellMessage', TextareaType::class, [
                 'label' => 'form.type.testAppSetting.farewellMessage.label',
+                'help' => 'form.type.testAppSetting.farewellMessage.help',
                 'empty_data' => '',
                 'attr' => [
                     'rows'=> 10
