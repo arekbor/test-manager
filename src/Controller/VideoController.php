@@ -87,10 +87,8 @@ class VideoController extends AbstractController
         #[MapEntity(id: 'videoId')] Video $video
     ): Response
     {
-        $moduleId = $module->getId();
-
         return $this->render('video/details.html.twig', [
-            'moduleId' => $moduleId, 
+            'moduleId' => $module->getId(),
             'video' => $video
         ]);
     }

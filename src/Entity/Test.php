@@ -7,33 +7,25 @@ namespace App\Entity;
 use App\Repository\TestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TestRepository::class)]
 class Test extends BaseEntity
 {
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Module $module = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private ?string $takerEmail = null;
 
-    #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIMETZ_MUTABLE, nullable: true)]
+    #[Assert\GreaterThanOrEqual('today')]
     private ?\DateTimeInterface $expiration = null;
 
-    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeInterface $submission = null;
 
-    public function getModule(): ?Module
-    {
-        return $this->module;
-    }
-
-    public function setModule(?Module $module): static
-    {
-        $this->module = $module;
-
-        return $this;
-    }
+    #[ORM\ManyToOne]
+    private ?Module $module = null;
 
     public function getTakerEmail(): ?string
     {
@@ -52,7 +44,7 @@ class Test extends BaseEntity
         return $this->expiration;
     }
 
-    public function setExpiration(\DateTimeInterface $expiration): static
+    public function setExpiration(?\DateTimeInterface $expiration): static
     {
         $this->expiration = $expiration;
 
@@ -64,9 +56,21 @@ class Test extends BaseEntity
         return $this->submission;
     }
 
-    public function setSubmission(\DateTimeInterface $submission): static
+    public function setSubmission(?\DateTimeInterface $submission): static
     {
         $this->submission = $submission;
+
+        return $this;
+    }
+
+    public function getModule(): ?Module
+    {
+        return $this->module;
+    }
+
+    public function setModule(?Module $module): static
+    {
+        $this->module = $module;
 
         return $this;
     }
