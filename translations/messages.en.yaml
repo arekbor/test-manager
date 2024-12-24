@@ -105,6 +105,11 @@ data_table:
     mimeType: Mime type
     size: Size
     uploadVideo: Upload video
+  test:
+    takerEmail: E-mail
+    moduleId: Module id
+    expiration: Expiration date
+    submission: Submission date
   actions: Actions
   details: Details
   id: Id
@@ -128,6 +133,7 @@ templates:
     nav:
       navbar_brand: Test manager
       home: Home
+      tests: Tests
       logout: Log out
       settings: Settings
   settings:
@@ -172,6 +178,8 @@ templates:
   test:
     create:
       title: Create test
+    index:
+      title: Tests
 
 flash:
   testEmailForm:
