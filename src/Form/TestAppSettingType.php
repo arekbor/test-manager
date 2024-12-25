@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Model\TestAppSetting;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +17,10 @@ class TestAppSettingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('expirationDaysOffset', NumberType::class, [
+                'label' => 'form.type.testAppSetting.expirationDaysOffset.label',
+                'help' => 'form.type.testAppSetting.expirationDaysOffset.help',
+            ])
             ->add('welcomeMessage', TextareaType::class, [
                 'label' => 'form.type.testAppSetting.welcomeMessage.label',
                 'help' => 'form.type.testAppSetting.welcomeMessage.help',

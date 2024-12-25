@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Test;
+use App\Exception\NotFoundException;
+use App\Model\TestAppSetting;
+use App\Repository\AppSettingRepository;
+use App\Service\AppSettingService;
 use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -13,6 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateTestType extends AbstractType
 {
+    public function __construct(
+        private AppSettingRepository $appSettingRepository,
+        private AppSettingService $appSettingService,
+    ) {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -22,7 +33,7 @@ class CreateTestType extends AbstractType
             ])
             ->add('expiration', DateTimeType::class, [
                 'widget' => 'single_text',
-                'data' => (new DateTime())->modify('+7 days'),
+                'data' => $this->getDefaultExpirationDate(),
                 'label' => 'form.type.createTest.expiration.label',
                 'help' => 'form.type.createTest.expiration.help',
             ])
@@ -43,4 +54,17 @@ class CreateTestType extends AbstractType
             'data_class' => Test::class,
         ]);
     } 
+
+    private function getDefaultExpirationDate(): DateTime
+    {
+        $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
+        if (!$appSetting) {
+            throw new NotFoundException(TestAppSetting::class);
+        }
+
+        $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
+        $daysOffset = $testAppSetting->getExpirationDaysOffset();
+
+        return (new DateTime())->modify(sprintf('+%d days', $daysOffset));
+    }
 }

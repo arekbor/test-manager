@@ -14,6 +14,9 @@ form:
     answer:
       content_placeholder: Answer content
     testAppSetting:
+      expirationDaysOffset:
+        label: Days to add to expiration date
+        help: Determines how may days will be added to the 'Expiration' date when creating each test.
       welcomeMessage:
         label: Welcome message
         help: The message that will appear for everyone before each test.
