@@ -33,9 +33,9 @@ class TestDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
-                            'href' => function(): string {
-                                return $this->urlGenerator->generate('app_home_index', [
-
+                            'href' => function(Test $test): string {
+                                return $this->urlGenerator->generate('app_test_details', [
+                                    'id' => $test->getId()
                                 ]);
                             }
                         ]

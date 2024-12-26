@@ -10,7 +10,7 @@
         class="btn btn-primary" 
         role="button"
     >
-        {{ 'templates.video.details.module'|trans }}
+        {{ 'templates.goToModule'|trans }}
     </a>
 
     <a 
@@ -24,7 +24,7 @@
     {{ component('TriggerModal', {
         modalId: 'deleteVideoModal',
         buttonClass: 'btn btn-danger',
-        buttonBody: 'templates.video.details.delete'|trans
+        buttonBody: 'modal.delete'|trans
     }) }}
 
     <div class="alert alert-secondary d-flex flex-column m-0 mt-2">
@@ -53,7 +53,7 @@
 
     {{ component('Modal', {
         modalTargetId: 'deleteVideoModal',
-        actionButtonText: 'modal.video.details.delete'|trans,
+        actionButtonText: 'modal.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_video_delete', {
             moduleId: moduleId,

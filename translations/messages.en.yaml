@@ -69,7 +69,7 @@ form:
         help: After updating your password you will be logged out.
       password_second_options: Repeat new password
       update: Update password
-    createTest:
+    test:
       takerEmail:
         label: E-mail
         help: The email address of the person taking the test.
@@ -102,7 +102,6 @@ data_table:
     content: Content
     answersCount: Answers
     createQuestion: Create question
-    createTest: Create test
   video:
     originalName: File name
     mimeType: Mime type
@@ -121,14 +120,9 @@ modal:
   title: Confirm
   body: Are you shure?
   close: Close
-  video:
-    details:
-      delete: Delete
-  module:
-    details:
-      delete: Delete
   uploadFile:
     cancel: Cancel
+  delete: Delete
 
 templates:
   base:
@@ -159,23 +153,20 @@ templates:
       title: Create module
     details:
       title: Module details %id%
+      createTest: Create test
       tab:
         general: General
         questions: Questions
         videos: Video files
   video:
     details:
-      module: Module
       title: Video details %id%
       id: Video id
       filename: File name
       download: Download
-      delete: Delete
   question:
     details:
-      module: Module
       title: Question details %id%
-      delete: Delete
     create:
       title: Create question
   test:
@@ -183,6 +174,9 @@ templates:
       title: Create test
     index:
       title: Tests
+    details:
+      title: Test details %id%
+  goToModule: Module
 
 flash:
   testEmailForm:

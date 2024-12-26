@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.question.details.title'|trans({ '%id%': question.id }) }} 
+    {{ 'templates.test.details.title'|trans({ '%id%': test.id }) }} 
 {% endblock %}
 
 {% block body %}
     <div class="mt-2">
         <a 
-            href="{{ path('app_module_questions', { id: module.id }) }}" 
+            href="{{ path('app_module_general', { id: test.module.id }) }}" 
             class="btn btn-primary" 
             role="button"
         >
@@ -15,26 +15,25 @@
         </a>
 
         {{ component('TriggerModal', {
-            modalId: 'deleteQuestionModal',
+            modalId: 'deleteTestModal',
             buttonClass: 'btn btn-danger',
             buttonBody: 'modal.delete'|trans,
         }) }}
 
         <div class="mt-2">
-            {{ component('QuestionForm', { 
-                moduleProp: module, 
-                questionProp: question, 
+            {{ component('TestForm', { 
+                moduleProp: test.module,
+                testProp: test
             }) }}
         </div>
     </div>
 
     {{ component('Modal', {
-        modalTargetId: 'deleteQuestionModal',
+        modalTargetId: 'deleteTestModal',
         actionButtonText: 'modal.delete'|trans,
         actionButtonClass: 'btn btn-danger',
-        actionButtonHref: path('app_question_delete', {
-            moduleId: module.id,
-            questionId: question.id
+        actionButtonHref: path('app_test_delete', {
+            id: test.id,
         })
     }) }}
 {% endblock %}
