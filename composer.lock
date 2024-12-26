@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "1a37cebca2d82534d4aa2a611dd9f7d6",
+  "content-hash": "0d312fab9ab325de2ecb83daacb8d4c2",
   "packages": [
     {
       "name": "composer/semver",
@@ -1377,16 +1377,16 @@
     },
     {
       "name": "kreyu/data-table-bundle",
-      "version": "v0.25.6",
+      "version": "v0.25.7",
       "source": {
         "type": "git",
         "url": "https://github.com/Kreyu/data-table-bundle.git",
-        "reference": "102a326c33c5be7266f21e34a7df0cc01c91f82e"
+        "reference": "7e78e5399d565531586199a657d3c2d85bf272ff"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/102a326c33c5be7266f21e34a7df0cc01c91f82e",
-        "reference": "102a326c33c5be7266f21e34a7df0cc01c91f82e",
+        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/7e78e5399d565531586199a657d3c2d85bf272ff",
+        "reference": "7e78e5399d565531586199a657d3c2d85bf272ff",
         "shasum": ""
       },
       "require": {
@@ -1437,9 +1437,9 @@
       ],
       "support": {
         "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.6"
+        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.7"
       },
-      "time": "2024-11-22T18:27:34+00:00"
+      "time": "2024-11-29T20:15:13+00:00"
     },
     {
       "name": "phpmailer/phpmailer",
@@ -6582,16 +6582,16 @@
     },
     {
       "name": "symfony/validator",
-      "version": "v7.1.8",
+      "version": "v7.1.9",
       "source": {
         "type": "git",
         "url": "https://github.com/symfony/validator.git",
-        "reference": "85a90c0a4ab0d10c118d3cdf39115e00d9cca7d0"
+        "reference": "ff71d77da404c700f8b05ba426eb9e6f8d22771b"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/symfony/validator/zipball/85a90c0a4ab0d10c118d3cdf39115e00d9cca7d0",
-        "reference": "85a90c0a4ab0d10c118d3cdf39115e00d9cca7d0",
+        "url": "https://api.github.com/repos/symfony/validator/zipball/ff71d77da404c700f8b05ba426eb9e6f8d22771b",
+        "reference": "ff71d77da404c700f8b05ba426eb9e6f8d22771b",
         "shasum": ""
       },
       "require": {
@@ -6659,7 +6659,7 @@
       "description": "Provides tools to validate values",
       "homepage": "https://symfony.com",
       "support": {
-        "source": "https://github.com/symfony/validator/tree/v7.1.8"
+        "source": "https://github.com/symfony/validator/tree/v7.1.9"
       },
       "funding": [
         {
@@ -6675,7 +6675,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2024-11-08T15:46:42+00:00"
+      "time": "2024-11-27T09:50:41+00:00"
     },
     {
       "name": "symfony/var-dumper",
@@ -6983,16 +6983,16 @@
     },
     {
       "name": "twig/intl-extra",
-      "version": "v3.15.0",
+      "version": "v3.17.0",
       "source": {
         "type": "git",
         "url": "https://github.com/twigphp/intl-extra.git",
-        "reference": "92a127a58857597acc6eca2e34d5ef90057dcc59"
+        "reference": "4eeab2a3f8d04d1838be7251ab2d183f817aea7b"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/92a127a58857597acc6eca2e34d5ef90057dcc59",
-        "reference": "92a127a58857597acc6eca2e34d5ef90057dcc59",
+        "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/4eeab2a3f8d04d1838be7251ab2d183f817aea7b",
+        "reference": "4eeab2a3f8d04d1838be7251ab2d183f817aea7b",
         "shasum": ""
       },
       "require": {
@@ -7031,7 +7031,7 @@
         "twig"
       ],
       "support": {
-        "source": "https://github.com/twigphp/intl-extra/tree/v3.15.0"
+        "source": "https://github.com/twigphp/intl-extra/tree/v3.17.0"
       },
       "funding": [
         {
@@ -7043,7 +7043,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2024-09-16T10:21:35+00:00"
+      "time": "2024-11-20T13:19:52+00:00"
     },
     {
       "name": "twig/twig",
