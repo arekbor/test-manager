@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\TestRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,11 +16,11 @@ class Test extends BaseEntity
     #[Assert\NotBlank]
     private ?string $takerEmail = null;
 
-    #[ORM\Column(type: Types::DATETIMETZ_MUTABLE, nullable: true)]
+    #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
     #[Assert\GreaterThanOrEqual('today')]
     private ?\DateTimeInterface $expiration = null;
 
-    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
     private ?\DateTimeInterface $submission = null;
 
     #[ORM\ManyToOne]

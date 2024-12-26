@@ -35,9 +35,6 @@ class QuestionDataTableType extends AbstractDataTableType
                         'href' => $this->urlGenerator->generate('app_question_create', [ 
                             'moduleId' => $options['module_id'] 
                         ])
-                    ],
-                    [
-                        'label' => 'data_table.question.createTest',
                     ]
                 ]
             ])
