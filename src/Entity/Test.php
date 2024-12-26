@@ -17,7 +17,7 @@ class Test extends BaseEntity
     private ?string $takerEmail = null;
 
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
-    #[Assert\GreaterThanOrEqual('today')]
+    #[Assert\GreaterThanOrEqual('now')]
     private ?\DateTimeInterface $expiration = null;
 
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
