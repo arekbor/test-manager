@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    <p class="h-6 text-muted">
+        {{ 'templates.test.details.info'|trans({ '%email%': test.takerEmail, '%moduleId%': test.module.id }) }}
+    </p>
+
     <div class="mt-2">
         <a 
             href="{{ path('app_module_general', { id: test.module.id }) }}" 

@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    <p class="h-6 text-muted">
+        {{ 'templates.test.create.info'|trans({ '%moduleId%': module.id }) }}
+    </p>
+
     <div class="mt-2">
         {{ component('TestForm', { moduleProp: module }) }}
     </div>

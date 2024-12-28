@@ -172,10 +172,12 @@ templates:
   test:
     create:
       title: Create test
+      info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
     index:
       title: Tests
     details:
       title: Test details %id%
+      info: Edit the test assigned to the email address %email% and module ID %moduleId%.
   goToModule: Module
 
 flash:
