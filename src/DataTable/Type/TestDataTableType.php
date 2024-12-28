@@ -64,6 +64,10 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('takerEmail', StringFilterType::class, [
                 'label' => 'data_table.test.takerEmail'
             ])
+            ->addFilter('moduleId', NumericFilterType::class, [
+                'label' => 'data_table.test.moduleId',
+                'query_path' => 'module.id',
+            ])
         ;
     }
 }

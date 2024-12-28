@@ -26,7 +26,7 @@ class TestController extends AbstractController
         TestRepository $testRepository
     ): Response
     {
-        $query = $testRepository->createQueryBuilder('t');
+        $query = $testRepository->findAllWithModules();
         $testDataTable = $this->createDataTable(TestDataTableType::class, $query);
         $testDataTable->handleRequest($request);
 
