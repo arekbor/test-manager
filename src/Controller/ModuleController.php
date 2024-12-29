@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DataTable\Type\ModuleDataTableType;
 use App\DataTable\Type\QuestionDataTableType;
 use App\DataTable\Type\VideoDataTableType;
 use App\Entity\Module;
+use App\Repository\ModuleRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
@@ -75,6 +77,21 @@ class ModuleController extends AbstractController
         return $this->render('module/details.videos.html.twig', [
             'module' => $module, 
             'video_data_table' => $videoDataTable->createView()
+        ]);
+    }
+
+    #[Route('/index')]
+    public function index(
+        Request $request,
+        ModuleRepository $moduleRepository
+    ): Response
+    {
+        $query = $moduleRepository->createQueryBuilder('m');
+        $moduleDataTable = $this->createDataTable(ModuleDataTableType::class, $query); 
+        $moduleDataTable->handleRequest($request);
+
+        return $this->render('module/index.html.twig', [
+            'module_data_table' => $moduleDataTable->createView()
         ]);
     }
 }

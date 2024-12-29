@@ -11,4 +11,4 @@ home:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
   defaults:
-    route: app_home_index
+    route: app_module_index

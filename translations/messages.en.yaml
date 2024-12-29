@@ -129,7 +129,7 @@ templates:
     title: Test manager
     nav:
       navbar_brand: Test manager
-      home: Home
+      modules: Modules
       tests: Tests
       logout: Log out
       settings: Settings
@@ -190,4 +190,4 @@ flash:
   uploadFile:
     success: File successfully uploaded
   exceptionResponseSubscriber:
-    message: "Something went wrong. Please try again later."
+    message: Something went wrong. Please try again later.

@@ -39,7 +39,7 @@ class ExceptionResponseSubscriber implements EventSubscriberInterface
 
         $session->getFlashBag()->add('danger', $this->trans->trans('flash.exceptionResponseSubscriber.message'));
 
-        $redirect = $this->urlGenerator->generate('app_home_index');
+        $redirect = $this->urlGenerator->generate('app_module_index');
 
         $event->setResponse(new RedirectResponse($redirect));
     }
