@@ -59,4 +59,12 @@ class TestController extends AbstractController
 
         return $this->redirectToRoute('app_test_index');
     }
+
+    #[Route('/solve/{id}')]
+    public function solve(Test $test): Response
+    {
+        return $this->render('/test/solve.html.twig', [
+            'test' => $test
+        ]);
+    }
 }

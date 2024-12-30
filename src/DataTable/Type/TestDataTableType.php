@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Action\Type\CopyToClipboardType;
 use App\Entity\Test;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -15,11 +16,13 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TestDataTableType extends AbstractDataTableType
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $trans,
     ) {
     }
 
@@ -37,6 +40,17 @@ class TestDataTableType extends AbstractDataTableType
                                 return $this->urlGenerator->generate('app_test_details', [
                                     'id' => $test->getId()
                                 ]);
+                            }
+                        ]
+                    ],
+                    'copySolveLinkToClipboard' => [
+                        'type' => CopyToClipboardType::class,
+                        'type_options' => [
+                            'label' => 'data_table.test.copyLink',
+                            'clipboard_link' => function(Test $test): string {
+                                return $this->urlGenerator->generate('app_test_solve', [
+                                    'id' => $test->getId()
+                                ], UrlGeneratorInterface::ABSOLUTE_URL);
                             }
                         ]
                     ]

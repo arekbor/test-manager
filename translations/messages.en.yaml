@@ -112,6 +112,7 @@ data_table:
     moduleId: Module id
     expiration: Expiration date
     submission: Submission date
+    copyLink: Copy link
   actions: Actions
   details: Details
   id: Id
@@ -178,6 +179,8 @@ templates:
     details:
       title: Test details %id%
       info: Edit the test assigned to the email address %email% and module ID %moduleId%.
+    solve:
+      title: Solve test %id%
   goToModule: Module
 
 flash:
