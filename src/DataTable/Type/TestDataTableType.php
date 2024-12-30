@@ -43,7 +43,7 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
-                    'copySolveLinkToClipboard' => [
+                    'solveTestCopyLink' => [
                         'type' => CopyToClipboardType::class,
                         'type_options' => [
                             'label' => 'data_table.test.copyLink',
