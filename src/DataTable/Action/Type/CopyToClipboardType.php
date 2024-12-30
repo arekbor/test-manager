@@ -9,22 +9,24 @@ use Kreyu\Bundle\DataTableBundle\Action\ActionInterface;
 use Kreyu\Bundle\DataTableBundle\Action\Type\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class UploadFileActionType extends AbstractActionType
+final class CopyToClipboardType extends AbstractActionType
 {
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
-        $options['upload_url'] = $options['upload_url']($view);
+        $value = $view->parent->value;
+
+        $options['clipboard_link'] = $options['clipboard_link']($value);
 
         $view->vars = array_merge($view->vars, [
-            'uploadUrl' => $options['upload_url']
+            'clipboardLink' => $options['clipboard_link']
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('upload_url')
-            ->setAllowedTypes('upload_url', ['Closure'])
+            ->setRequired('clipboard_link')
+            ->setAllowedTypes('clipboard_link', ['Closure'])
         ;
     }
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ 'templates.test.solve.title'|trans({ '%id%': test.id }) }} 
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center mt-5">
+        <h6>Someday you will be able to solve the test id: {{test.id}} ❤️️❤️️❤️️❤️️</h6>
+    </div>
+{% endblock %}
+    
