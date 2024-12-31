@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.module.details.title'|trans({ '%id%': module.id }) }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     <nav class="nav nav-tabs">
         {{ component('NavLink', { 
             path: path('app_module_general', {

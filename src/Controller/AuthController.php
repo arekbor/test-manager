@@ -24,16 +24,18 @@ class AuthController extends AbstractController
         TranslatorInterface $trans,
     ): Response
     {
+        $lastAuthenticationErrorMessage = null;
+
         $error = $utils->getLastAuthenticationError();
         if ($error !== null) {
-            $message = $trans->trans($error->getMessageKey(), $error->getMessageData(), 'security');
-            $this->addFlash('danger', $message);
+            $lastAuthenticationErrorMessage = $trans->trans($error->getMessageKey(), $error->getMessageData(), 'security');
         }
 
         $form = $this->createForm(LoginType::class, new SecurityUser());
 
         return $this->render('auth/login.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'lastAuthenticationErrorMessage' => $lastAuthenticationErrorMessage,
         ]);
     }
 

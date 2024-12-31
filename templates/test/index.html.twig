@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.test.index.title'|trans }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     {{ data_table(test_data_table) }}
 {% endblock %}

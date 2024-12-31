@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.test.create.title'|trans }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     <p class="h-6 text-muted">
         {{ 'templates.test.create.info'|trans({ '%moduleId%': module.id }) }}
     </p>

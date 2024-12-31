@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.question.details.title'|trans({ '%id%': question.id }) }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     <div class="mt-2">
         <a 
             href="{{ path('app_module_questions', { id: module.id }) }}" 
