@@ -43,17 +43,28 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
+                    'solveTest' => [
+                        'type' => ButtonActionType::class,
+                        'type_options' => [
+                            'label' => 'data_table.test.solveTest',
+                            'href' => function(Test $test): string {
+                                return $this->urlGenerator->generate('app_test_solve', [
+                                    'id' => $test->getId()
+                                ]);
+                            }
+                        ]
+                    ],
                     'solveTestCopyLink' => [
                         'type' => CopyToClipboardType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.copyLink',
+                            'label' => 'data_table.test.solveTestCopyLink',
                             'clipboard_link' => function(Test $test): string {
                                 return $this->urlGenerator->generate('app_test_solve', [
                                     'id' => $test->getId()
                                 ], UrlGeneratorInterface::ABSOLUTE_URL);
                             }
                         ]
-                    ]
+                    ],
                 ]
             ])
             ->addColumn('id', NumberColumnType::class, [
