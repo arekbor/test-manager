@@ -1,5 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
-{% block body %}
+{% block container %}
     {{ data_table(module_data_table) }}
 {% endblock %}

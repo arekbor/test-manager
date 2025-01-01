@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.module.create.title'|trans }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     {{ component('ModuleForm') }}
 {% endblock %}

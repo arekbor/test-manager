@@ -14,8 +14,21 @@
                     <h1>
                         {{ 'templates.auth.login.header'|trans }}
                     </h1>
-                    
-                    {{ form(form) }}
+
+                    {{ form_start(form) }}
+
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.password) }}
+
+                        {% if lastAuthenticationErrorMessage %}
+                            <div class="text-danger mb-2">
+                                {{ lastAuthenticationErrorMessage }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_row(form.submit) }}
+
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

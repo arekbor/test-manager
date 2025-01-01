@@ -103,7 +103,7 @@ class Video extends BaseEntity
         return $this->size;
     }
 
-    public function setSize(string $size): static
+    public function setSize(?string $size): static
     {
         $this->size = $size;
 
@@ -115,7 +115,7 @@ class Video extends BaseEntity
         return $this->mimeType;
     }
 
-    public function setMimeType(string $mimeType): static
+    public function setMimeType(?string $mimeType): static
     {
         $this->mimeType = $mimeType;
 
@@ -127,7 +127,7 @@ class Video extends BaseEntity
         return $this->originalName;
     }
 
-    public function setOriginalName(string $originalName): static
+    public function setOriginalName(?string $originalName): static
     {
         $this->originalName = $originalName;
 

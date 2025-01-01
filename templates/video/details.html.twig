@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
     {{ 'templates.video.details.title'|trans({ '%id%': video.id }) }} 
 {% endblock %}
 
-{% block body %}
+{% block container %}
     <a 
         href="{{ path('app_module_videos', { id: moduleId }) }}" 
         class="btn btn-primary" 
