@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\TestRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -72,5 +73,12 @@ class Test extends BaseEntity
         $this->module = $module;
 
         return $this;
+    }
+
+    public function isValid(): bool
+    {
+        $now = new DateTime();
+
+        return $now < $this->expiration && $this->submission === null;
     }
 }
