@@ -182,6 +182,12 @@ templates:
       info: Edit the test assigned to the email address %email% and module ID %moduleId%.
     solve:
       title: Solve test %id%
+    notFound:
+      headerLabel: Test Not Found
+      contentLabel: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.
+    isNotValid:
+      headerLabel: Test is not valid
+      contentLabel: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
   goToModule: Module
 
 flash:

@@ -61,8 +61,22 @@ class TestController extends AbstractController
     }
 
     #[Route('/solve/{id}')]
-    public function solve(Test $test): Response
+    public function solve(?Test $test): Response
     {
+        if ($test === null) {
+            return $this->render('/test/info.html.twig', [
+                'headerLabel' => 'templates.test.notFound.headerLabel',
+                'contentLabel' => 'templates.test.notFound.contentLabel',
+            ]);
+        }
+        
+        if (!$test->isValid()) {
+            return $this->render('test/info.html.twig', [
+                'headerLabel' => 'templates.test.isNotValid.headerLabel',
+                'contentLabel' => 'templates.test.isNotValid.contentLabel',
+            ]);
+        }
+
         return $this->render('/test/solve.html.twig', [
             'test' => $test
         ]);
