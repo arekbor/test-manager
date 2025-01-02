@@ -8,14 +8,12 @@ use App\DataTable\Type\TestDataTableType;
 use App\Entity\Module;
 use App\Entity\Test;
 use App\Repository\TestRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/test')]
 class TestController extends AbstractController
