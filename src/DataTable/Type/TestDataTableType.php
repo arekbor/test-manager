@@ -43,10 +43,10 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
-                    'solveTest' => [
+                    'testSolve' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.solveTest',
+                            'label' => 'data_table.test.testSolve',
                             'href' => function(Test $test): string {
                                 return $this->urlGenerator->generate('app_test_solve', [
                                     'id' => $test->getId()
@@ -54,10 +54,10 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
-                    'solveTestCopyLink' => [
+                    'testSolveCopyLink' => [
                         'type' => CopyToClipboardType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.solveTestCopyLink',
+                            'label' => 'data_table.test.testSolveCopyLink',
                             'clipboard_link' => function(Test $test): string {
                                 return $this->urlGenerator->generate('app_test_solve', [
                                     'id' => $test->getId()

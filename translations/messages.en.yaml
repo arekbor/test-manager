@@ -112,8 +112,8 @@ data_table:
     moduleId: Module id
     expiration: Expiration date
     submission: Submission date
-    solveTestCopyLink: Copy test link
-    solveTest: Go to test
+    testSolve: Test
+    testSolveCopyLink: Copy test link
   actions: Actions
   details: Details
   id: Id
