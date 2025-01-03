@@ -91,7 +91,6 @@ table:
     correct: Is correct
   testAppSetting:
     messages: Messages
-    language: Language
   actions: Actions
 
 data_table:

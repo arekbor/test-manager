@@ -10,13 +10,11 @@
             >
                 <thead>
                     <tr>
-                        <th scope="col" colspan="2">
+                        <th scope="col">
                             {{ 'table.testAppSetting.messages'|trans }}
                         </th>
                         <th scope="col">
-                            {{ 'table.testAppSetting.language'|trans }}
-                        </th>
-                        <th scope="col">
+                            {# {{ 'table.testAppSetting.language'|trans }} #}
                             {{ 'table.actions'|trans }}
                         </th>
                     </tr>
@@ -24,15 +22,15 @@
                 <tbody>
                     {% for testMessage in form.testMessages %}
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 {{ form_row(testMessage.welcome) }}
                                 {{ form_row(testMessage.farewell) }}
                             </td>
                             <td>
                                 {{ form_row(testMessage.language) }}
-                            </td>
-                            <td>
-                                {{ form_widget(testMessage.vars.button_delete) }}
+                                <div class="d-flex justify-content-end">
+                                    {{ form_widget(testMessage.vars.button_delete) }}
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
