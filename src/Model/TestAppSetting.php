@@ -20,7 +20,7 @@ final class TestAppSetting
 
     public function __construct() {
         $this->expirationDaysOffset = 7;
-        $this->testMessages = [new TestMessageAppSetting()];
+        $this->testMessages = [];
     }
 
     public function getExpirationDaysOffset(): int
