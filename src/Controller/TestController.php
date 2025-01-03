@@ -64,17 +64,11 @@ class TestController extends AbstractController
     public function solve(?Test $test): Response
     {
         if ($test === null) {
-            return $this->render('/test/info.html.twig', [
-                'headerLabel' => 'templates.test.notFound.headerLabel',
-                'contentLabel' => 'templates.test.notFound.contentLabel',
-            ]);
+            return $this->render('/test/notFound.html.twig');
         }
         
         if (!$test->isValid()) {
-            return $this->render('test/info.html.twig', [
-                'headerLabel' => 'templates.test.isNotValid.headerLabel',
-                'contentLabel' => 'templates.test.isNotValid.contentLabel',
-            ]);
+            return $this->render('test/notValid.html.twig');
         }
 
         return $this->render('/test/solve.html.twig', [
