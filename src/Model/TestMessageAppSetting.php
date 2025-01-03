@@ -15,12 +15,6 @@ final class TestMessageAppSetting
     #[Assert\NotBlank]
     private ?string $language;
 
-    public function __construct() {
-        $this->welcome = "";
-        $this->farewell = "";
-        $this->language = "";
-    }
-
     public function getWelcome(): ?string
     {
         return $this->welcome;
