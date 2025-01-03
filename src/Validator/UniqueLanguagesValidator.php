@@ -34,6 +34,7 @@ class UniqueLanguagesValidator extends ConstraintValidator
                     $this->context
                         ->buildViolation($message)
                         ->addViolation();
+                        
                     return;
                 }
 
