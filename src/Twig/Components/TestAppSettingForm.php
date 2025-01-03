@@ -15,18 +15,18 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\LiveCollectionTrait;
 
 #[AsLiveComponent]
 final class TestAppSettingForm extends AbstractController
 {
     use DefaultActionTrait;
-    use ComponentWithFormTrait;
+    use LiveCollectionTrait;
 
-    #[LiveProp]
-    public TestAppSetting $testAppSetting;
+    #[LiveProp(useSerializerForHydration: true)]
+    public ?TestAppSetting $testAppSetting = null;
 
     #[LiveAction]
     public function submit(
@@ -41,7 +41,7 @@ final class TestAppSettingForm extends AbstractController
             ->getForm()
             ->getData()
         ;
-
+        
         $appSetting = $appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         if ($appSetting === null) {
             throw new NotFoundException(TestAppSetting::class);

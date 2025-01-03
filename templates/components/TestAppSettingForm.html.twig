@@ -1,3 +1,49 @@
 <div {{ attributes }}>
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_row(form.expirationDaysOffset) }}
+    {{ form_widget(form.testMessages.vars.button_add) }}
+
+    {% if form.testMessages|length > 0 %}
+        <div class="table-responsive">
+            <table 
+                class="table table-hover align-middle text-nowrap"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="2">
+                            {{ 'table.testAppSetting.messages'|trans }}
+                        </th>
+                        <th scope="col">
+                            {{ 'table.testAppSetting.language'|trans }}
+                        </th>
+                        <th scope="col">
+                            {{ 'table.actions'|trans }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for testMessage in form.testMessages %}
+                        <tr>
+                            <td colspan="2">
+                                {{ form_row(testMessage.welcome) }}
+                                {{ form_row(testMessage.farewell) }}
+                            </td>
+                            <td>
+                                {{ form_row(testMessage.language) }}
+                            </td>
+                            <td>
+                                {{ form_widget(testMessage.vars.button_delete) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <div class="my-2">
+        {{ form_widget(form.submit) }}
+        {{ form_errors(form.testMessages) }}
+    </div>
+    {{ form_end(form) }}
 </div>
