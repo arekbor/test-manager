@@ -17,12 +17,14 @@ form:
       expirationDaysOffset:
         label: Days to add to expiration date
         help: Determines how may days will be added to the 'Expiration' date when creating each test.
-      welcomeMessage:
+      button:
+        add: Add message
+        delete: Delete message
+    testMessageAppSetting:
+      welcome:
         label: Welcome message
-        help: The message that will appear for everyone before each test.
-      farewellMessage:
+      farewell:
         label: Farewell message
-        help: The message that will appear for everyone after each test.
     mailSmtpAppSetting:
       host:
         label: Host
@@ -87,7 +89,9 @@ table:
   question:
     content: Content
     correct: Is correct
-    actions: Actions
+  testAppSetting:
+    messages: Messages
+  actions: Actions
 
 data_table:
   module:
@@ -146,6 +150,10 @@ templates:
       smtp: SMTP
       smtpTest: SMTP test
       test: Test
+    general:
+      language_header: Language
+      email_header: Email
+      password_header: Password
   auth:
     login:
       title: Log in
@@ -201,3 +209,7 @@ flash:
     success: File successfully uploaded
   exceptionResponseSubscriber:
     message: Something went wrong. Please try again later.
+
+validator:
+  uniqueLanguages:
+    message: Language %language% appears more than once.

@@ -5,44 +5,22 @@ declare(strict_types=1);
 namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AppAssert;
 
 final class TestAppSetting
 {
     public const APP_SETTING_KEY = "test";
 
-    private string $welcomeMessage;
-
-    private string $farewellMessage;
-
     #[Assert\GreaterThanOrEqual(0)]
     private int $expirationDaysOffset;
 
+    #[Assert\Valid]
+    #[AppAssert\UniqueLanguages]
+    private array $testMessages;
+
     public function __construct() {
-        $this->welcomeMessage = "";
-        $this->farewellMessage = "";
         $this->expirationDaysOffset = 7;
-    }
-
-    public function getWelcomeMessage(): string
-    {
-        return $this->welcomeMessage;
-    }
-
-    public function setWelcomeMessage(string $welcomeMessage): static
-    {
-        $this->welcomeMessage = $welcomeMessage;
-        return $this;
-    }
-
-    public function getFarewellMessage(): string
-    {
-        return $this->farewellMessage;
-    }
-
-    public function setFarewellMessage(string $farewellMessage): static
-    {
-        $this->farewellMessage = $farewellMessage;
-        return $this;
+        $this->testMessages = [new TestMessageAppSetting()];
     }
 
     public function getExpirationDaysOffset(): int
@@ -53,6 +31,31 @@ final class TestAppSetting
     public function setExpirationDaysOffset(int $expirationDaysOffset): static
     {
         $this->expirationDaysOffset = $expirationDaysOffset;
+        return $this;
+    }
+
+    public function getTestMessages(): array
+    {
+        return $this->testMessages;
+    }
+
+    public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
+    {
+        if (!in_array($testMessageAppSetting, $this->testMessages, true)) {
+            $this->testMessages[] = $testMessageAppSetting;
+        }
+
+        return $this;
+    }
+
+    public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
+    {
+        $key = array_search($testMessageAppSetting, $this->testMessages, true);
+        if ($key !== false) {
+            unset($this->testMessages[$key]);
+            $this->testMessages = array_values($this->testMessages);
+        }
+
         return $this;
     }
 }
