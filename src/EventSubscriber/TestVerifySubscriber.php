@@ -6,6 +6,7 @@ namespace App\EventSubscriber;
 
 use App\Attribute\TestVerify;
 use App\Entity\Test;
+use App\Util\AttributeHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
@@ -21,10 +22,8 @@ class TestVerifySubscriber implements EventSubscriberInterface
 
     public function onKernelControllerArguments(ControllerArgumentsEvent $event): void
     {
-        $attrs = $event->getAttributes();
-        $testVerifyAttrs = $attrs[TestVerify::class] ?? null;
-
-        if($testVerifyAttrs === null) {
+        $testVerifyAttribute = AttributeHelper::getAttribute($event, TestVerify::class);
+        if ($testVerifyAttribute === null) {
             return;
         }
 

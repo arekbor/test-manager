@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Attribute\IsNotGranted;
+use App\Util\AttributeHelper;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
@@ -20,14 +21,12 @@ class IsNotGrantedSubscriber implements EventSubscriberInterface
 
     public function onKernelControllerArguments(ControllerArgumentsEvent $event): void
     {
-        $attrs = $event->getAttributes();
-        $isNotGrantedAttrs = $attrs[IsNotGranted::class] ?? null;
-
-        if($isNotGrantedAttrs === null) {
+        $isNotGrantedAttribute = AttributeHelper::getAttribute($event, IsNotGranted::class);
+        if ($isNotGrantedAttribute === null) {
             return;
         }
-
-        $isNotGranted = $isNotGrantedAttrs[0];
+        
+        $isNotGranted = $isNotGrantedAttribute[0];
 
         if ($this->security->isGranted($isNotGranted->role)) {
             throw new AccessDeniedException("The role '" . $isNotGranted->role . "' is not allowed to access this resource.");
