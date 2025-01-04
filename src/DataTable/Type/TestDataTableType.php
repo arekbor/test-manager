@@ -43,23 +43,23 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
-                    'testSolve' => [
+                    'goToTest' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.testSolve',
+                            'label' => 'data_table.test.goToTest',
                             'href' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_solve', [
+                                return $this->urlGenerator->generate('app_test_welcome', [
                                     'id' => $test->getId()
                                 ]);
                             }
                         ]
                     ],
-                    'testSolveCopyLink' => [
+                    'testCopyLink' => [
                         'type' => CopyToClipboardType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.testSolveCopyLink',
+                            'label' => 'data_table.test.testCopyLink',
                             'clipboard_link' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_solve', [
+                                return $this->urlGenerator->generate('app_test_welcome', [
                                     'id' => $test->getId()
                                 ], UrlGeneratorInterface::ABSOLUTE_URL);
                             }
@@ -73,6 +73,10 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('moduleId', NumberColumnType::class, [
                 'label' => 'data_table.test.moduleId',
                 'getter' => fn (Test $test) => $test->getModule()->getId()
+            ])
+            ->addColumn('moduleLanguage', TextColumnType::class, [
+                'label' => 'data_table.test.moduleLanguage',
+                'getter' => fn (Test $test) => strtoupper($test->getModule()->getLanguage())
             ])
             ->addColumn('takerEmail', TextColumnType::class, [
                 'label' => 'data_table.test.takerEmail'
@@ -92,6 +96,11 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('moduleId', NumericFilterType::class, [
                 'label' => 'data_table.test.moduleId',
                 'query_path' => 'module.id',
+            ])
+            ->addFilter('moduleLanguage', StringFilterType::class, [
+                'label' => 'data_table.test.moduleLanguage',
+                'query_path' => 'module.language',
+                'lower' => true
             ])
         ;
     }

@@ -73,11 +73,11 @@ class TestController extends AbstractController
         return $this->render('/test/notValid.html.twig');
     }
 
-    #[Route('/solve/{id}')]
+    #[Route('/welcome/{id}')]
     #[TestVerify]
-    public function solve(?Test $test): Response
+    public function welcome(?Test $test): Response
     {
-        return $this->render('/test/solve.html.twig', [
+        return $this->render('/test/welcome.html.twig', [
             'test' => $test
         ]);
     }
