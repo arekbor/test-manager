@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Attribute\TestVerify;
 use App\DataTable\Type\TestDataTableType;
 use App\Entity\Module;
 use App\Entity\Test;
@@ -60,17 +61,22 @@ class TestController extends AbstractController
         return $this->redirectToRoute('app_test_index');
     }
 
+    #[Route('/notFound')]
+    public function notFound(): Response 
+    {
+        return $this->render('/test/notFound.html.twig');
+    }
+
+    #[Route('/notValid')]
+    public function notValid(): Response 
+    {
+        return $this->render('/test/notValid.html.twig');
+    }
+
     #[Route('/solve/{id}')]
+    #[TestVerify]
     public function solve(?Test $test): Response
     {
-        if ($test === null) {
-            return $this->render('/test/notFound.html.twig');
-        }
-        
-        if (!$test->isValid()) {
-            return $this->render('test/notValid.html.twig');
-        }
-
         return $this->render('/test/solve.html.twig', [
             'test' => $test
         ]);
