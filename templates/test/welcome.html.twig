@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ 'templates.test.welcome.title'|trans({ '%id%': test.id }) }} 
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        <p class="p-4">
+            {{ welcome_message(test.module) }}
+        </p>
+    </div>
+{% endblock %}
+    

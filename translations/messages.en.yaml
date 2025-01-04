@@ -116,8 +116,8 @@ data_table:
     moduleId: Module id
     expiration: Expiration date
     submission: Submission date
-    testSolve: Test
-    testSolveCopyLink: Copy test link
+    goToTest: Go to test
+    testCopyLink: Copy test link
   actions: Actions
   details: Details
   id: Id
@@ -188,8 +188,8 @@ templates:
     details:
       title: Test details %id%
       info: Edit the test assigned to the email address %email% and module ID %moduleId%.
-    solve:
-      title: Solve test %id%
+    welcome:
+      title: Welcome test %id%
     notFound:
       header: Test Not Found
       content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.

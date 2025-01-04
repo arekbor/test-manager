@@ -47,7 +47,10 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/(%app.allowed_locales%)/auth, roles: PUBLIC_ACCESS }
-    - { path: ^/(%app.allowed_locales%)/test/solve/\d+$, roles: PUBLIC_ACCESS }
+    - {
+        path: ^/(%app.allowed_locales%)/test/welcome/\d+$,
+        roles: PUBLIC_ACCESS,
+      }
     - { path: ^/(%app.allowed_locales%)/test/notFound, roles: PUBLIC_ACCESS }
     - { path: ^/(%app.allowed_locales%)/test/notValid, roles: PUBLIC_ACCESS }
     - { path: ^/(%app.allowed_locales%), roles: IS_AUTHENTICATED_FULLY }
