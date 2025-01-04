@@ -26,7 +26,8 @@ class TestMessageRuntime implements RuntimeExtensionInterface
 
     public function getFarewellMessage(Module $module)
     {
-        
+        $testMessageAppSetting = $this->getTestMessageAppSetting($module); 
+        return $testMessageAppSetting ? $testMessageAppSetting->getFarewell() : null;
     }
 
     private function getTestMessageAppSetting(Module $module): ?TestMessageAppSetting 

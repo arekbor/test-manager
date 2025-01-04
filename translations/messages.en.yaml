@@ -118,6 +118,7 @@ data_table:
     submission: Submission date
     goToTest: Go to test
     testCopyLink: Copy test link
+    moduleLanguage: Module language
   actions: Actions
   details: Details
   id: Id
