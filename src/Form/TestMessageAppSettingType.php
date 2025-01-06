@@ -22,15 +22,15 @@ class TestMessageAppSettingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('welcome', TextareaType::class, [
-                'label' => 'form.type.testMessageAppSetting.welcome.label',
+            ->add('introduction', TextareaType::class, [
+                'label' => 'form.type.testMessageAppSetting.introduction.label',
                 'empty_data' => '',
                 'attr' => [
                     'rows' => 10
                 ]
             ])
-            ->add('farewell', TextareaType::class, [
-                'label' => 'form.type.testMessageAppSetting.farewell.label',
+            ->add('conclusion', TextareaType::class, [
+                'label' => 'form.type.testMessageAppSetting.conclusion.label',
                 'empty_data' => '',
                 'attr' => [
                     'rows' => 10

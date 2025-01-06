@@ -9,32 +9,32 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class TestMessageAppSetting 
 {
     #[Assert\NotBlank]
-    private ?string $welcome;
+    private ?string $introduction;
     #[Assert\NotBlank]
-    private ?string $farewell;
+    private ?string $conclusion;
     #[Assert\NotBlank]
     private ?string $language;
 
-    public function getWelcome(): ?string
+    public function getIntroduction(): ?string
     {
-        return $this->welcome;
+        return $this->introduction;
     }
 
-    public function setWelcome(?string $welcome): static 
+    public function setIntroduction(?string $introduction): static 
     {
-        $this->welcome = $welcome;
+        $this->introduction = $introduction;
 
         return $this;
     }
 
-    public function getFarewell(): ?string
+    public function getConclusion(): ?string
     {
-        return $this->farewell;
+        return $this->conclusion;
     }
 
-    public function setFarewell(?string $farewell): static 
+    public function setConclusion(?string $conclusion): static 
     {
-        $this->farewell = $farewell;
+        $this->conclusion = $conclusion;
 
         return $this;
     }

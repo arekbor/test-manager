@@ -48,7 +48,7 @@ security:
   access_control:
     - { path: ^/(%app.allowed_locales%)/auth, roles: PUBLIC_ACCESS }
     - {
-        path: ^/(%app.allowed_locales%)/test/welcome/\d+$,
+        path: ^/(%app.allowed_locales%)/test/introduction/\d+$,
         roles: PUBLIC_ACCESS,
       }
     - { path: ^/(%app.allowed_locales%)/test/notFound, roles: PUBLIC_ACCESS }
