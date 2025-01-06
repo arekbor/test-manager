@@ -2,7 +2,6 @@
 
 namespace App\Twig\Runtime;
 
-use App\Entity\Module;
 use App\Model\TestAppSetting;
 use App\Model\TestMessageAppSetting;
 use App\Repository\AppSettingRepository;
@@ -15,28 +14,26 @@ class TestMessageRuntime implements RuntimeExtensionInterface
         private AppSettingRepository $appSettingRepository,
         private AppSettingService $appSettingService
     ) {
-
     }
 
-    public function getWelcomeMessage(Module $module)
+    public function getIntroductionMessage(string $language): ?string
     {
-        $testMessageAppSetting = $this->getTestMessageAppSetting($module); 
-        return $testMessageAppSetting ? $testMessageAppSetting->getWelcome() : null;
+        $testMessageAppSetting = $this->getTestMessageAppSetting($language); 
+        return $testMessageAppSetting ? $testMessageAppSetting->getIntroduction() : null;
     }
 
-    public function getFarewellMessage(Module $module)
+    public function getConclusionMessage(string $language): ?string
     {
-        $testMessageAppSetting = $this->getTestMessageAppSetting($module); 
-        return $testMessageAppSetting ? $testMessageAppSetting->getFarewell() : null;
+        $testMessageAppSetting = $this->getTestMessageAppSetting($language); 
+        return $testMessageAppSetting ? $testMessageAppSetting->getConclusion() : null;
     }
 
-    private function getTestMessageAppSetting(Module $module): ?TestMessageAppSetting 
+    private function getTestMessageAppSetting(string $language): ?TestMessageAppSetting 
     {
         $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
 
         $testMessages = $testAppSetting->getTestMessages();
-        $language = $module->getLanguage();
 
         $filtered = array_filter($testMessages, function($testMessage) use($language) {
             return $testMessage->getLanguage() === $language;

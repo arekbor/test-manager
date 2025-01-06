@@ -21,10 +21,10 @@ form:
         add: Add message
         delete: Delete message
     testMessageAppSetting:
-      welcome:
-        label: Welcome message
-      farewell:
-        label: Farewell message
+      introduction:
+        label: Introduction message
+      conclusion:
+        label: Conclusion message
     mailSmtpAppSetting:
       host:
         label: Host
@@ -116,7 +116,7 @@ data_table:
     moduleId: Module id
     expiration: Expiration date
     submission: Submission date
-    goToTest: Go to test
+    test: Test
     testCopyLink: Copy test link
     moduleLanguage: Module language
   actions: Actions
@@ -189,8 +189,8 @@ templates:
     details:
       title: Test details %id%
       info: Edit the test assigned to the email address %email% and module ID %moduleId%.
-    welcome:
-      title: Welcome test %id%
+    introduction:
+      title: Test introduction %id%
     notFound:
       header: Test Not Found
       content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.

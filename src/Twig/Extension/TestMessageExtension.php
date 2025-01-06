@@ -11,8 +11,8 @@ class TestMessageExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('welcome_message', [TestMessageRuntime::class, 'getWelcomeMessage']),
-            new TwigFunction('farewell_message', [TestMessageRuntime::class, 'getFarewellMessage']),
+            new TwigFunction('introduction_message', [TestMessageRuntime::class, 'getIntroductionMessage']),
+            new TwigFunction('conclusion_message', [TestMessageRuntime::class, 'getConclusionMessage']),
         ];
     }
 }

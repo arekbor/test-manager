@@ -43,12 +43,12 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
-                    'goToTest' => [
+                    'test' => [
                         'type' => ButtonActionType::class,
                         'type_options' => [
-                            'label' => 'data_table.test.goToTest',
+                            'label' => 'data_table.test.test',
                             'href' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_welcome', [
+                                return $this->urlGenerator->generate('app_test_introduction', [
                                     'id' => $test->getId()
                                 ]);
                             }
@@ -59,7 +59,7 @@ class TestDataTableType extends AbstractDataTableType
                         'type_options' => [
                             'label' => 'data_table.test.testCopyLink',
                             'clipboard_link' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_welcome', [
+                                return $this->urlGenerator->generate('app_test_introduction', [
                                     'id' => $test->getId()
                                 ], UrlGeneratorInterface::ABSOLUTE_URL);
                             }
