@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Attribute\IsNotGranted;
+use App\Attribute\NotLogged;
 use App\Entity\SecurityUser;
 use App\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AuthController extends AbstractController
 {
     #[Route('/login')]
-    #[IsNotGranted('IS_AUTHENTICATED_FULLY')]
+    #[NotLogged]
     public function login(
         AuthenticationUtils $utils,
         TranslatorInterface $trans,

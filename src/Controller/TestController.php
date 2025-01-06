@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Attribute\NotLogged;
 use App\Attribute\TestVerify;
 use App\DataTable\Type\TestDataTableType;
 use App\Entity\Module;
@@ -62,12 +63,14 @@ class TestController extends AbstractController
     }
 
     #[Route('/notFound')]
+    #[NotLogged]
     public function notFound(): Response 
     {
         return $this->render('/test/notFound.html.twig');
     }
 
     #[Route('/notValid')]
+    #[NotLogged]
     public function notValid(): Response 
     {
         return $this->render('/test/notValid.html.twig');
@@ -75,6 +78,7 @@ class TestController extends AbstractController
 
     #[Route('/introduction/{id}')]
     #[TestVerify]
+    #[NotLogged]
     public function introduction(?Test $test): Response
     {
         return $this->render('/test/introduction.html.twig', [
