@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
+use App\Attribute\IgnoreLocaleSession;
+use ReflectionMethod;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -15,7 +18,12 @@ class LocaleSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
+        
         if (!$request->hasPreviousSession()) {
+            return;
+        }
+
+        if ($this->routeHasIgnoreLocaleSession($request)) {
             return;
         }
 
@@ -33,5 +41,23 @@ class LocaleSubscriber implements EventSubscriberInterface
         return [
             KernelEvents::REQUEST => [['onKernelRequest', 20]],
         ];
+    }
+
+    private function routeHasIgnoreLocaleSession(Request $request): bool
+    {
+        $controller = $request->attributes->get('_controller');
+
+        if (!$controller || !str_contains($controller, '::')) {
+            return false;
+        }
+
+        [$class, $method] = explode('::', $controller, 2);
+
+        if (!class_exists($class)) {
+            return false;
+        }
+
+        $reflectionMethod = new ReflectionMethod($class, $method);
+        return !empty($reflectionMethod->getAttributes(IgnoreLocaleSession::class));
     }
 }
