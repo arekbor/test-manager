@@ -19,7 +19,9 @@ class TestTest extends TestCase
         $test->setExpiration((new DateTime())->modify('+5 days'));
         $test->setSubmission(null);
 
-        $this->assertTrue($test->isValid(), 'Should return true when expiration is in the future.');
+        $this->assertTrue($test->isValid(), 
+            'Should return true when expiration is in the future.'
+        );
     }
 
     public function testIsNotValidWhenSubmissionIsNotNull(): void
@@ -28,7 +30,9 @@ class TestTest extends TestCase
         $test->setExpiration((new DateTime())->modify('+5 days'));
         $test->setExpiration(new DateTime());
 
-        $this->assertFalse($test->isValid(), 'Should return false when submission is not null');
+        $this->assertFalse($test->isValid(), 
+            'Should return false when submission is not null.'
+        );
     }
 
     public function testIsNotValidWhenExpirationInPast(): void
@@ -37,7 +41,9 @@ class TestTest extends TestCase
         $test->setExpiration((new DateTime())->modify('-12 hours'));
         $test->setSubmission(null);
 
-        $this->assertFalse($test->isValid(), 'Should return false when expiration is in the past');
+        $this->assertFalse($test->isValid(), 
+            'Should return false when expiration is in the past.'
+        );
     }
 
     public function testIsNotValidWhenExpirationIsNull(): void
@@ -45,66 +51,65 @@ class TestTest extends TestCase
         $test = new Test();
         $test->setExpiration(null);
 
-        $this->assertFalse($test->isValid(), 'Should return false when expiration is null');
+        $this->assertFalse($test->isValid(), 
+            'Should return false when expiration is null.'
+        );
     }
 
     public function testVideoBelongsToTest(): void
     {
-        $videoMock = $this->createMock(Video::class);
-        $videoMock->method('getId')->willReturn(1);
+        $videoMock = $this->createVideoMock(1);
+        $videoInModuleMock = $this->createVideoMock(1);
 
-        $videoInModuleMock = $this->createMock(Video::class);
-        $videoInModuleMock->method('getId')->willReturn(1);
+        $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
 
-        $videosCollection = new ArrayCollection([$videoInModuleMock]);
-
-        $moduleMock = $this->createMock(Module::class);
-        $moduleMock->method('getVideos')->willReturn($videosCollection);
-
-        $test = $this->getMockBuilder(Test::class)
-            ->onlyMethods(['getModule'])
-            ->getMock();
-        $test->method('getModule')->willReturn($moduleMock);
-
-        $this->assertTrue($test->videoBelongsToTest($videoMock));
+        $this->assertTrue($test->videoBelongsToTest($videoMock), 
+            'Should return true when the video ID match any video in the test\'s module.'
+        );
     }
 
     public function testVideoDoesNotBelongToTest(): void
     {
-        $videoMock = $this->createMock(Video::class);
-        $videoMock->method('getId')->willReturn(2);
+        $videoMock = $this->createVideoMock(2);
+        $videoInModuleMock = $this->createVideoMock(1);
 
-        $videoInModuleMock = $this->createMock(Video::class);
-        $videoInModuleMock->method('getId')->willReturn(1);
+        $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
 
-        $videosCollection = new ArrayCollection([$videoInModuleMock]);
-
-        $moduleMock = $this->createMock(Module::class);
-        $moduleMock->method('getVideos')->willReturn($videosCollection);
-
-        $test = $this->getMockBuilder(Test::class)
-            ->onlyMethods(['getModule'])
-            ->getMock();
-        $test->method('getModule')->willReturn($moduleMock);
-
-        $this->assertFalse($test->videoBelongsToTest($videoMock));
+        $this->assertFalse($test->videoBelongsToTest($videoMock), 
+            'Should return false when the video ID does not match any video in the test\'s module.'
+        );
     }
 
     public function testVideoBelongsToTestWithEmptyVideoCollection(): void
     {
-        $videoMock = $this->createMock(Video::class);
-        $videoMock->method('getId')->willReturn(1);
+        $videoMock = $this->createVideoMock(1);
+        $test = $this->createTestWithModuleAndVideos([]);
 
-        $videosCollection = new ArrayCollection();
+        $this->assertFalse($test->videoBelongsToTest($videoMock), 
+            'Should return false when there are no videos in the test\'s module.'
+        );
+    }
+
+    private function createTestWithModuleAndVideos(array $videos): Test
+    {
+        $videosCollection = new ArrayCollection($videos);
 
         $moduleMock = $this->createMock(Module::class);
         $moduleMock->method('getVideos')->willReturn($videosCollection);
 
-        $test = $this->getMockBuilder(Test::class)
+        $testMock = $this->getMockBuilder(Test::class)
             ->onlyMethods(['getModule'])
             ->getMock();
-        $test->method('getModule')->willReturn($moduleMock);
+        $testMock->method('getModule')->willReturn($moduleMock);
 
-        $this->assertFalse($test->videoBelongsToTest($videoMock));
+        return $testMock;
+    }
+
+    private function createVideoMock(int $videoId): Video
+    {
+        $videoMock = $this->createMock(Video::class);
+        $videoMock->method('getId')->willReturn($videoId);
+
+        return $videoMock;
     }
 }
