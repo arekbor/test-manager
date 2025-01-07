@@ -43,6 +43,18 @@ class TestDataTableType extends AbstractDataTableType
                             }
                         ]
                     ],
+                    'test' => [
+                        'type' => ButtonActionType::class,
+                        'type_options' => [
+                            'label' => 'data_table.test.test',
+                            'href' => function(Test $test): string {
+                                return $this->urlGenerator->generate('app_test_introduction', [
+                                    '_locale' => $test->getModule()->getLanguage(),
+                                    'id' => $test->getId()
+                                ]);
+                            }
+                        ]
+                    ],
                     'testCopyLink' => [
                         'type' => CopyToClipboardType::class,
                         'type_options' => [
