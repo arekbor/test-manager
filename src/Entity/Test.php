@@ -75,6 +75,18 @@ class Test extends BaseEntity
         return $this;
     }
 
+    public function videoBelongsToTest(Video $video): bool
+    {
+        $videos = $this->getModule()->getVideos();
+        foreach($videos as $testVideo) {
+            if ($testVideo->getId() === $video->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function isValid(): bool
     {
         $now = new DateTime();

@@ -51,6 +51,10 @@ security:
         path: ^/(%app.allowed_locales%)/test/introduction/\d+$,
         roles: PUBLIC_ACCESS,
       }
+    - {
+        path: ^/(%app.allowed_locales%)/test/video/\d+$/\d+$,
+        roles: PUBLIC_ACCESS,
+      }
     - { path: ^/(%app.allowed_locales%)/test/notFound, roles: PUBLIC_ACCESS }
     - { path: ^/(%app.allowed_locales%)/test/notValid, roles: PUBLIC_ACCESS }
     - { path: ^/(%app.allowed_locales%), roles: IS_AUTHENTICATED_FULLY }

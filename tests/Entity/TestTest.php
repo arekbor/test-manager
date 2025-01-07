@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity;
 
+use App\Entity\Module;
 use App\Entity\Test;
+use App\Entity\Video;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class TestTest extends TestCase
@@ -43,5 +46,65 @@ class TestTest extends TestCase
         $test->setExpiration(null);
 
         $this->assertFalse($test->isValid(), 'Should return false when expiration is null');
+    }
+
+    public function testVideoBelongsToTest(): void
+    {
+        $videoMock = $this->createMock(Video::class);
+        $videoMock->method('getId')->willReturn(1);
+
+        $videoInModuleMock = $this->createMock(Video::class);
+        $videoInModuleMock->method('getId')->willReturn(1);
+
+        $videosCollection = new ArrayCollection([$videoInModuleMock]);
+
+        $moduleMock = $this->createMock(Module::class);
+        $moduleMock->method('getVideos')->willReturn($videosCollection);
+
+        $test = $this->getMockBuilder(Test::class)
+            ->onlyMethods(['getModule'])
+            ->getMock();
+        $test->method('getModule')->willReturn($moduleMock);
+
+        $this->assertTrue($test->videoBelongsToTest($videoMock));
+    }
+
+    public function testVideoDoesNotBelongToTest(): void
+    {
+        $videoMock = $this->createMock(Video::class);
+        $videoMock->method('getId')->willReturn(2);
+
+        $videoInModuleMock = $this->createMock(Video::class);
+        $videoInModuleMock->method('getId')->willReturn(1);
+
+        $videosCollection = new ArrayCollection([$videoInModuleMock]);
+
+        $moduleMock = $this->createMock(Module::class);
+        $moduleMock->method('getVideos')->willReturn($videosCollection);
+
+        $test = $this->getMockBuilder(Test::class)
+            ->onlyMethods(['getModule'])
+            ->getMock();
+        $test->method('getModule')->willReturn($moduleMock);
+
+        $this->assertFalse($test->videoBelongsToTest($videoMock));
+    }
+
+    public function testVideoBelongsToTestWithEmptyVideoCollection(): void
+    {
+        $videoMock = $this->createMock(Video::class);
+        $videoMock->method('getId')->willReturn(1);
+
+        $videosCollection = new ArrayCollection();
+
+        $moduleMock = $this->createMock(Module::class);
+        $moduleMock->method('getVideos')->willReturn($videosCollection);
+
+        $test = $this->getMockBuilder(Test::class)
+            ->onlyMethods(['getModule'])
+            ->getMock();
+        $test->method('getModule')->willReturn($moduleMock);
+
+        $this->assertFalse($test->videoBelongsToTest($videoMock));
     }
 }
