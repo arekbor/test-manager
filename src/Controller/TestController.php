@@ -9,9 +9,12 @@ use App\Attribute\TestVerify;
 use App\DataTable\Type\TestDataTableType;
 use App\Entity\Module;
 use App\Entity\Test;
+use App\Entity\Video;
+use App\Handler\FileHandler;
 use App\Repository\TestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,6 +77,21 @@ class TestController extends AbstractController
     public function notValid(): Response 
     {
         return $this->render('/test/notValid.html.twig');
+    }
+
+    #[Route('/video/{testId}/{videoId}')]
+    public function video(
+        #[MapEntity(id: 'testId')] Test $test,
+        #[MapEntity(id: 'videoId')] Video $video,
+        FileHandler $fileHandler,
+    ): Response
+    {
+        if (!$test->videoBelongsToTest($video)) {
+            return $this->redirectToRoute('app_test_notvalid');
+        }   
+
+        $file = $fileHandler->getFile($video, 'videoFile');
+        return $this->file($file);
     }
 
     #[Route('/introduction/{id}')]
