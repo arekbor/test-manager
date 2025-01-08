@@ -41,7 +41,7 @@ class TestMessageAppSettingType extends AbstractType
                 'choices' => $this->parameterService->getAllowedLocales(),
                 'empty_data' => $this->parameterService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
-                    return strtoupper($value);
+                    return $value;
                 },
             ])
         ;
