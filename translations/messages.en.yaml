@@ -192,7 +192,7 @@ templates:
       title: Tests
     details:
       title: Test details %id%
-      info: Edit the test assigned to the email address %email% and module ID %moduleId%.
+      info: Edit the test assigned to the module ID %moduleId%.
     introduction:
       title: Test introduction %id%
     notFound:
