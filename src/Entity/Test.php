@@ -6,17 +6,13 @@ namespace App\Entity;
 
 use App\Repository\TestRepository;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TestRepository::class)]
 class Test extends BaseEntity
 {
-    #[ORM\Column(length: 255)]
-    #[Assert\Email]
-    #[Assert\NotBlank]
-    private ?string $takerEmail = null;
-
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
     #[Assert\GreaterThanOrEqual('now')]
     private ?\DateTimeInterface $expiration = null;
@@ -27,17 +23,20 @@ class Test extends BaseEntity
     #[ORM\ManyToOne]
     private ?Module $module = null;
 
-    public function getTakerEmail(): ?string
-    {
-        return $this->takerEmail;
-    }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstname = null;
 
-    public function setTakerEmail(string $takerEmail): static
-    {
-        $this->takerEmail = $takerEmail;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastname = null;
 
-        return $this;
-    }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $workplace = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateOfBirth = null;
 
     public function getExpiration(): ?\DateTimeInterface
     {
@@ -92,5 +91,65 @@ class Test extends BaseEntity
         $now = new DateTime();
 
         return $now < $this->expiration && $this->submission === null;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getWorkplace(): ?string
+    {
+        return $this->workplace;
+    }
+
+    public function setWorkplace(?string $workplace): static
+    {
+        $this->workplace = $workplace;
+
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): static
+    {
+        $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
     }
 }

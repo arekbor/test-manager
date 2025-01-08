@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241223181230 extends AbstractMigration
+final class Version20250108132754 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -31,16 +31,15 @@ final class Version20241223181230 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_DADD4A251E27F6BF ON answer (question_id)');
         $this->addSql('CREATE TABLE app_setting (id INT NOT NULL, key VARCHAR(255) NOT NULL, value JSON NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_722938D58A90ABA9 ON app_setting (key)');
-        $this->addSql('CREATE TABLE module (id INT NOT NULL, name VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE module (id INT NOT NULL, name VARCHAR(255) NOT NULL, language VARCHAR(255) NOT NULL, category VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE module_question (module_id INT NOT NULL, question_id INT NOT NULL, PRIMARY KEY(module_id, question_id))');
         $this->addSql('CREATE INDEX IDX_D2379AB0AFC2B591 ON module_question (module_id)');
         $this->addSql('CREATE INDEX IDX_D2379AB01E27F6BF ON module_question (question_id)');
         $this->addSql('CREATE TABLE question (id INT NOT NULL, content TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE security_user (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON security_user (email)');
-        $this->addSql('CREATE TABLE test (id INT NOT NULL, module_id INT DEFAULT NULL, taker_email VARCHAR(255) NOT NULL, expiration TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, submission TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE test (id INT NOT NULL, module_id INT DEFAULT NULL, expiration TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, submission TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, workplace VARCHAR(255) DEFAULT NULL, date_of_birth DATE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D87F7E0CAFC2B591 ON test (module_id)');
-        $this->addSql('COMMENT ON COLUMN test.submission IS \'(DC2Type:datetimetz_immutable)\'');
         $this->addSql('CREATE TABLE video (id INT NOT NULL, video_name VARCHAR(255) NOT NULL, size VARCHAR(255) NOT NULL, mime_type VARCHAR(255) NOT NULL, original_name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE video_module (video_id INT NOT NULL, module_id INT NOT NULL, PRIMARY KEY(video_id, module_id))');
         $this->addSql('CREATE INDEX IDX_347386E529C1004E ON video_module (video_id)');

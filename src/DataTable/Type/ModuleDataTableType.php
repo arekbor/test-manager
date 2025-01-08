@@ -7,6 +7,7 @@ namespace App\DataTable\Type;
 use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Module;
+use App\Service\ParameterService;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
@@ -16,11 +17,14 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModuleDataTableType extends AbstractDataTableType
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $trans,
+        private ParameterService $parameterService
     ) {
     }
 
@@ -76,7 +80,15 @@ class ModuleDataTableType extends AbstractDataTableType
             ])
             ->addColumn('language', TextColumnType::class, [ 
                 'label' => 'data_table.module.language',
-                'getter' => fn (Module $module) => strtoupper($module->getLanguage())
+                'getter' => function(Module $module): string {
+                    return $this->trans->trans($module->getLanguage());
+                }
+            ])
+            ->addColumn('category', TextColumnType::class, [ 
+                'label' => 'data_table.module.category',
+                'getter' => function(Module $module): string {
+                    return $this->trans->trans($module->getCategory());
+                }
             ])
             ->addColumn('questionsCount', TextColumnType::class, [
                 'label' => 'data_table.module.questionsCount',
@@ -91,10 +103,6 @@ class ModuleDataTableType extends AbstractDataTableType
             ])
             ->addFilter('name', StringFilterType::class, [
                 'label' => 'data_table.module.name'
-            ])
-            ->addFilter('language', StringFilterType::class, [
-                'label' => 'data_table.module.language',
-                'lower' => true
             ])
         ;
     }

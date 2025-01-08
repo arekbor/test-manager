@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Action\Type\CopyToClipboardType;
 use App\Entity\Test;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
@@ -32,41 +33,39 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
                 'actions' => [
-                    'details' => [
-                        'type' => ButtonActionType::class,
+                    'more' => [
+                        'type' => ButtonGroupActionType::class,
                         'type_options' => [
-                            'label' => 'data_table.details',
-                            'href' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_details', [
-                                    'id' => $test->getId()
-                                ]);
-                            }
+                            'buttons' => [
+                                [
+                                    'label' => 'data_table.details',
+                                    'href' => function(Test $test): string {
+                                        return $this->urlGenerator->generate('app_test_details', [
+                                            'id' => $test->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
+                                    'label' => 'data_table.test.test',
+                                    'href' => function(Test $test): string {
+                                        return $this->urlGenerator->generate('app_test_introduction', [
+                                            '_locale' => $test->getModule()->getLanguage(),
+                                            'id' => $test->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
+                                    'label' => 'data_table.test.testCopyLink',
+                                    'clipboard_link' => function(Test $test): string {
+                                        return $this->urlGenerator->generate('app_test_introduction', [
+                                            '_locale' => $test->getModule()->getLanguage(),
+                                            'id' => $test->getId(),
+                                        ], UrlGeneratorInterface::ABSOLUTE_URL);
+                                    }
+                                ]
+                            ]
                         ]
-                    ],
-                    'test' => [
-                        'type' => ButtonActionType::class,
-                        'type_options' => [
-                            'label' => 'data_table.test.test',
-                            'href' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_introduction', [
-                                    '_locale' => $test->getModule()->getLanguage(),
-                                    'id' => $test->getId()
-                                ]);
-                            }
-                        ]
-                    ],
-                    'testCopyLink' => [
-                        'type' => CopyToClipboardType::class,
-                        'type_options' => [
-                            'label' => 'data_table.test.testCopyLink',
-                            'clipboard_link' => function(Test $test): string {
-                                return $this->urlGenerator->generate('app_test_introduction', [
-                                    '_locale' => $test->getModule()->getLanguage(),
-                                    'id' => $test->getId(),
-                                ], UrlGeneratorInterface::ABSOLUTE_URL);
-                            }
-                        ]
-                    ],
+                    ]
                 ]
             ])
             ->addColumn('id', NumberColumnType::class, [
@@ -78,10 +77,30 @@ class TestDataTableType extends AbstractDataTableType
             ])
             ->addColumn('moduleLanguage', TextColumnType::class, [
                 'label' => 'data_table.test.moduleLanguage',
-                'getter' => fn (Test $test) => strtoupper($test->getModule()->getLanguage())
+                'getter' => function (Test $test): string {
+                    return $this->trans->trans($test->getModule()->getLanguage());
+                }
             ])
-            ->addColumn('takerEmail', TextColumnType::class, [
-                'label' => 'data_table.test.takerEmail'
+            ->addColumn('moduleTestCategory', TextColumnType::class, [
+                'label' => 'data_table.test.moduleTestCategory',
+                'getter' => function (Test $test): string {
+                    return $this->trans->trans($test->getModule()->getCategory());
+                }
+            ])
+            ->addColumn('email', TextColumnType::class, [
+                'label' => 'data_table.test.email'
+            ])
+            ->addColumn('firstname', TextColumnType::class, [
+                'label' => 'data_table.test.firstname'
+            ])
+            ->addColumn('lastname', TextColumnType::class, [
+                'label' => 'data_table.test.lastname'
+            ])
+            ->addColumn('workplace', TextColumnType::class, [
+                'label' => 'data_table.test.workplace'
+            ])
+            ->addColumn('dateOfBirth', DateTimeColumnType::class, [
+                'label' => 'data_table.test.dateOfBirth'
             ])
             ->addColumn('expiration', DateTimeColumnType::class, [
                 'label' => 'data_table.test.expiration'
@@ -92,17 +111,21 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
             ])
-            ->addFilter('takerEmail', StringFilterType::class, [
-                'label' => 'data_table.test.takerEmail'
+            ->addFilter('email', StringFilterType::class, [
+                'label' => 'data_table.test.email'
+            ])
+            ->addFilter('firstname', StringFilterType::class, [
+                'label' => 'data_table.test.firstname'
+            ])
+            ->addFilter('lastname', StringFilterType::class, [
+                'label' => 'data_table.test.lastname'
+            ])
+            ->addFilter('workplace', StringFilterType::class, [
+                'label' => 'data_table.test.workplace'
             ])
             ->addFilter('moduleId', NumericFilterType::class, [
                 'label' => 'data_table.test.moduleId',
                 'query_path' => 'module.id',
-            ])
-            ->addFilter('moduleLanguage', StringFilterType::class, [
-                'label' => 'data_table.test.moduleLanguage',
-                'query_path' => 'module.language',
-                'lower' => true
             ])
         ;
     }
