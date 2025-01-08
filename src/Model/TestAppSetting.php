@@ -7,7 +7,7 @@ namespace App\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as AppAssert;
 
-final class TestAppSetting
+class TestAppSetting
 {
     public const APP_SETTING_KEY = "test";
 
@@ -46,13 +46,12 @@ final class TestAppSetting
 
     public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        if (!in_array($testMessageAppSetting, $this->testMessages, true)) {
-            $this->testMessages[] = $testMessageAppSetting;
-        }
+        $this->addItem($this->testMessages, $testMessageAppSetting);
 
         return $this;
     }
 
+    
     public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
         $this->removeItem($this->testMessages, $testMessageAppSetting);
@@ -67,9 +66,7 @@ final class TestAppSetting
 
     public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
     {
-        if (!in_array($testClauseAppSetting, $this->testClauses, true)) {
-            $this->testClauses[] = $testClauseAppSetting;
-        }
+        $this->addItem($this->testClauses, $testClauseAppSetting);
 
         return $this;
     }
@@ -87,6 +84,13 @@ final class TestAppSetting
         if ($key !== false) {
             unset($array[$key]);
             $array = array_values($array);
+        }
+    }
+
+    private function addItem(array &$array, mixed $item): void
+    {
+        if (!in_array($item, $array, true)) {
+            $array[] = $item;
         }
     }
 }

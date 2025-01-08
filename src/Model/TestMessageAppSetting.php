@@ -6,7 +6,7 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class TestMessageAppSetting extends TestLanguage
+class TestMessageAppSetting extends TestLanguage
 {
     #[Assert\NotBlank]
     private ?string $introduction;

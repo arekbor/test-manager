@@ -6,7 +6,7 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdatePassword
+class UpdatePassword
 {
     #[Assert\PasswordStrength]
     #[Assert\NotBlank]
