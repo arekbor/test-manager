@@ -6,14 +6,12 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class TestMessageAppSetting 
+final class TestMessageAppSetting extends TestLanguage
 {
     #[Assert\NotBlank]
     private ?string $introduction;
     #[Assert\NotBlank]
     private ?string $conclusion;
-    #[Assert\NotBlank]
-    private ?string $language;
 
     public function getIntroduction(): ?string
     {
@@ -35,18 +33,6 @@ final class TestMessageAppSetting
     public function setConclusion(?string $conclusion): static 
     {
         $this->conclusion = $conclusion;
-
-        return $this;
-    }
-
-    public function getLanguage(): ?string
-    {
-        return $this->language;
-    }
-
-    public function setLanguage(?string $language): static 
-    {
-        $this->language = $language;
 
         return $this;
     }

@@ -1,46 +1,82 @@
 <div {{ attributes }}>
     {{ form_start(form) }}
+
+    <!-- Expiration Days Offset -->
     {{ form_row(form.expirationDaysOffset) }}
-    {{ form_widget(form.testMessages.vars.button_add) }}
 
-    {% if form.testMessages|length > 0 %}
-        <div class="table-responsive">
-            <table 
-                class="table table-hover align-middle text-nowrap"
-            >
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            {{ 'table.testAppSetting.messages'|trans }}
-                        </th>
-                        <th scope="col">
-                            {{ 'table.actions'|trans }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for testMessage in form.testMessages %}
+    <!-- Test Messages Section -->
+    <div>
+        {{ form_widget(form.testMessages.vars.button_add) }}
+
+        {% if form.testMessages|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-nowrap">
+                    <thead>
                         <tr>
-                            <td>
-                                {{ form_row(testMessage.introduction) }}
-                                {{ form_row(testMessage.conclusion) }}
-                            </td>
-                            <td>
-                                {{ form_row(testMessage.language) }}
-                                <div class="d-flex justify-content-end">
-                                    {{ form_widget(testMessage.vars.button_delete) }}
-                                </div>
-                            </td>
+                            <th scope="col">{{ 'table.testAppSetting.messages'|trans }}</th>
+                            <th scope="col">{{ 'table.actions'|trans }}</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% endif %}
+                    </thead>
+                    <tbody>
+                        {% for testMessage in form.testMessages %}
+                            <tr>
+                                <td>
+                                    {{ form_row(testMessage.introduction) }}
+                                    {{ form_row(testMessage.conclusion) }}
+                                </td>
+                                <td>
+                                    {{ form_row(testMessage.language) }}
+                                    <div class="d-flex justify-content-end">
+                                        {{ form_widget(testMessage.vars.button_delete) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
 
-    <div class="my-2">
-        {{ form_widget(form.submit) }}
         {{ form_errors(form.testMessages) }}
     </div>
+
+    <!-- Test Clauses Section -->
+    <div class="mt-3">
+        {{ form_widget(form.testClauses.vars.button_add) }}
+
+        {% if form.testClauses|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'table.testAppSetting.clauses'|trans }}</th>
+                            <th scope="col">{{ 'table.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for testClause in form.testClauses %}
+                            <tr>
+                                <td>{{ form_row(testClause.content) }}</td>
+                                <td>
+                                    {{ form_row(testClause.language) }}
+                                    <div class="d-flex justify-content-end">
+                                        {{ form_widget(testClause.vars.button_delete) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        {{ form_errors(form.testClauses) }}
+    </div>
+
+    <!-- Submit Button -->
+    <div class="my-2">
+        {{ form_widget(form.submit) }}
+    </div>
+
     {{ form_end(form) }}
 </div>

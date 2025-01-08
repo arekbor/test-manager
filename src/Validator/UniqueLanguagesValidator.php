@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Model\TestMessageAppSetting;
+use App\Model\TestLanguage;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,9 +22,9 @@ class UniqueLanguagesValidator extends ConstraintValidator
 
         $seenLanguages = [];
 
-        foreach ($value as $testMessage) {
-            if ($testMessage instanceof TestMessageAppSetting) {
-                $language = $testMessage->getLanguage();
+        foreach ($value as $testLanguage) {
+            if ($testLanguage instanceof TestLanguage) {
+                $language = $this->trans->trans($testLanguage->getLanguage());
 
                 if (in_array($language, $seenLanguages, true)) {
                     $message = $this->trans->trans('validator.uniqueLanguages.message', [

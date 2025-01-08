@@ -18,9 +18,14 @@ final class TestAppSetting
     #[AppAssert\UniqueLanguages]
     private array $testMessages;
 
+    #[Assert\Valid]
+    #[AppAssert\UniqueLanguages]
+    private array $testClauses;
+
     public function __construct() {
         $this->expirationDaysOffset = 7;
         $this->testMessages = [];
+        $this->testClauses = [];
     }
 
     public function getExpirationDaysOffset(): int
@@ -50,12 +55,38 @@ final class TestAppSetting
 
     public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        $key = array_search($testMessageAppSetting, $this->testMessages, true);
-        if ($key !== false) {
-            unset($this->testMessages[$key]);
-            $this->testMessages = array_values($this->testMessages);
+        $this->removeItem($this->testMessages, $testMessageAppSetting);
+
+        return $this;
+    }
+
+    public function getTestClauses(): array
+    {
+        return $this->testClauses;
+    }
+
+    public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    {
+        if (!in_array($testClauseAppSetting, $this->testClauses, true)) {
+            $this->testClauses[] = $testClauseAppSetting;
         }
 
         return $this;
+    }
+
+    public function removeTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    {
+        $this->removeItem($this->testClauses, $testClauseAppSetting);
+
+        return $this;
+    }
+
+    private function removeItem(array &$array, mixed $item): void
+    {
+        $key = array_search($item, $array, true);
+        if ($key !== false) {
+            unset($array[$key]);
+            $array = array_values($array);
+        }
     }
 }
