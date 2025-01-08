@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\DataTable\Type;
 
 use App\DataTable\Action\Type\ButtonGroupActionType;
-use App\DataTable\Action\Type\CopyToClipboardType;
 use App\Entity\Test;
-use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
@@ -54,15 +52,6 @@ class TestDataTableType extends AbstractDataTableType
                                         ]);
                                     }
                                 ],
-                                [
-                                    'label' => 'data_table.test.testCopyLink',
-                                    'clipboard_link' => function(Test $test): string {
-                                        return $this->urlGenerator->generate('app_test_introduction', [
-                                            '_locale' => $test->getModule()->getLanguage(),
-                                            'id' => $test->getId(),
-                                        ], UrlGeneratorInterface::ABSOLUTE_URL);
-                                    }
-                                ]
                             ]
                         ]
                     ]

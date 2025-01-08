@@ -17,17 +17,6 @@
   </div>
 {% endblock %}
 
-{% block action_copy_to_clipboard_value %}
-  <button
-    class="btn btn-secondary"
-    {{ stimulus_controller('copy_to_clipboard', { clipboardLink: clipboardLink }) }}
-    {{ stimulus_action('copy_to_clipboard', 'handleCopyToClipboard', 'click') }}
-    {{ stimulus_target('copy_to_clipboard', 'buttonCopyToClipboard') }}
-  >
-    {{ label|trans }}
-  </button>
-{% endblock %}
-
 {% block action_upload_file_value %}
   <button 
     {% with { attr } %}

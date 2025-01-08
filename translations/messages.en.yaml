@@ -120,7 +120,6 @@ data_table:
     expiration: Expiration date
     submission: Submission date
     test: Test
-    testCopyLink: Copy test link
     moduleLanguage: Module language
     moduleTestCategory: Module test category
   actions: Actions
