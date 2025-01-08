@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Module;
-use App\Service\LocaleService;
+use App\Service\ParameterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ModuleType extends AbstractType
 {
     public function __construct(
-        private LocaleService $localeService
+        private ParameterService $parameterService
     ) {
     }
 
@@ -29,10 +29,18 @@ class ModuleType extends AbstractType
             ])
             ->add('language', ChoiceType::class, [
                 'label' => 'form.type.module.language',
-                'choices' => $this->localeService->getAllowedLocales(),
-                'empty_data' => $this->localeService->getAllowedLocales()[0],
+                'choices' => $this->parameterService->getAllowedLocales(),
+                'empty_data' => $this->parameterService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
-                    return strtoupper($value);
+                    return $value;
+                },
+            ])
+            ->add('category', ChoiceType::class, [
+                'label' => 'form.type.module.category',
+                'choices' => $this->parameterService->getTestCategory(),
+                'empty_data' => $this->parameterService->getTestCategory()[0],
+                'choice_label' => function($value) {
+                    return $value;
                 },
             ])
             ->add('submit', SubmitType::class, [

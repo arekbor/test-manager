@@ -14,7 +14,7 @@
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
             >
-                {{ app.request.locale|upper }}
+                {{ app.request.locale|trans }}
             </button>
 
             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
@@ -24,7 +24,7 @@
                             class="dropdown-item" 
                             href="{{ link }}"
                         >
-                            {{ locale|upper }}
+                            {{ locale|trans }}
                         </a>
                     </li>
                 {% endfor %}

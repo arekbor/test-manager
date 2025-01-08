@@ -6,6 +6,7 @@ form:
     module:
       name: Name
       language: Language
+      category: Test category
     question:
       content_placeholder: Question content
       button:
@@ -72,9 +73,6 @@ form:
       password_second_options: Repeat new password
       update: Update password
     test:
-      takerEmail:
-        label: E-mail
-        help: The email address of the person taking the test.
       expiration:
         label: Expiration date
         help: The time when access to the test will expire and access will be blocked.
@@ -98,6 +96,7 @@ data_table:
     create: Create new module
     name: Name
     language: Language
+    category: Category
     questionsCount: Questions
     videosCount: Video files
     addQuestion: Add question
@@ -112,13 +111,18 @@ data_table:
     size: Size
     uploadVideo: Upload video
   test:
-    takerEmail: E-mail
+    email: E-mail
+    firstname: Firstname
+    lastname: Lastname
+    workplace: Workplace
+    dateOfBirth: Date of birth
     moduleId: Module id
     expiration: Expiration date
     submission: Submission date
     test: Test
     testCopyLink: Copy test link
     moduleLanguage: Module language
+    moduleTestCategory: Module test category
   actions: Actions
   details: Details
   id: Id
@@ -188,7 +192,7 @@ templates:
       title: Tests
     details:
       title: Test details %id%
-      info: Edit the test assigned to the email address %email% and module ID %moduleId%.
+      info: Edit the test assigned to the module ID %moduleId%.
     introduction:
       title: Test introduction %id%
     notFound:
@@ -214,3 +218,8 @@ flash:
 validator:
   uniqueLanguages:
     message: Language %language% appears more than once.
+
+en: English
+pl: Polish
+introductory: Introductory
+periodic: Periodic

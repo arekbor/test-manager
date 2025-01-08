@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Model\TestMessageAppSetting;
-use App\Service\LocaleService;
+use App\Service\ParameterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TestMessageAppSettingType extends AbstractType
 {
     public function __construct(
-        private LocaleService $localeService
+        private ParameterService $parameterService
     ) {
     }
 
@@ -38,8 +38,8 @@ class TestMessageAppSettingType extends AbstractType
             ])
             ->add('language', ChoiceType::class, [
                 'label' => false,
-                'choices' => $this->localeService->getAllowedLocales(),
-                'empty_data' => $this->localeService->getAllowedLocales()[0],
+                'choices' => $this->parameterService->getAllowedLocales(),
+                'empty_data' => $this->parameterService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
                     return strtoupper($value);
                 },

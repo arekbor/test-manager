@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Twig\Runtime;
 
 use App\Exception\NotFoundException;
-use App\Service\LocaleService;
+use App\Service\ParameterService;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -15,7 +15,7 @@ class LocaleRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
         private RequestStack $requestStack,
-        private LocaleService $localeService,
+        private ParameterService $parameterService,
         private UrlGeneratorInterface $urlGenerator,
     ) {
     }
@@ -44,7 +44,7 @@ class LocaleRuntime implements RuntimeExtensionInterface
         $params = array_merge($routeParams, $request->query->all());
         $currentLocale = $request->getLocale();
 
-        foreach($this->localeService->getAllowedLocales() as $locale) {
+        foreach($this->parameterService->getAllowedLocales() as $locale) {
             if ($locale !== $currentLocale) {
                 $parameters = array_merge($params, ['_locale' => $locale]);
                 $localeLinks[$locale] = $this->urlGenerator->generate($route, $parameters);
