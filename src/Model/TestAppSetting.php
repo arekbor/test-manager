@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Util\ArrayHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as AppAssert;
 
-final class TestAppSetting
+class TestAppSetting
 {
     public const APP_SETTING_KEY = "test";
 
@@ -15,12 +16,17 @@ final class TestAppSetting
     private int $expirationDaysOffset;
 
     #[Assert\Valid]
-    #[AppAssert\UniqueLanguages]
+    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testMessages;
+
+    #[Assert\Valid]
+    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
+    private array $testClauses;
 
     public function __construct() {
         $this->expirationDaysOffset = 7;
         $this->testMessages = [];
+        $this->testClauses = [];
     }
 
     public function getExpirationDaysOffset(): int
@@ -41,20 +47,34 @@ final class TestAppSetting
 
     public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        if (!in_array($testMessageAppSetting, $this->testMessages, true)) {
-            $this->testMessages[] = $testMessageAppSetting;
-        }
+        ArrayHelper::addItem($this->testMessages, $testMessageAppSetting);
 
         return $this;
     }
 
+    
     public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        $key = array_search($testMessageAppSetting, $this->testMessages, true);
-        if ($key !== false) {
-            unset($this->testMessages[$key]);
-            $this->testMessages = array_values($this->testMessages);
-        }
+        ArrayHelper::removeItem($this->testMessages, $testMessageAppSetting);
+
+        return $this;
+    }
+
+    public function getTestClauses(): array
+    {
+        return $this->testClauses;
+    }
+
+    public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    {
+        ArrayHelper::addItem($this->testClauses, $testClauseAppSetting);
+
+        return $this;
+    }
+
+    public function removeTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    {
+        ArrayHelper::removeItem($this->testClauses, $testClauseAppSetting);
 
         return $this;
     }

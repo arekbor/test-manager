@@ -6,12 +6,14 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class TestMessageAppSetting 
+class TestMessageAppSetting
 {
     #[Assert\NotBlank]
     private ?string $introduction;
+    
     #[Assert\NotBlank]
     private ?string $conclusion;
+
     #[Assert\NotBlank]
     private ?string $language;
 

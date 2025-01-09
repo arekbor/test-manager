@@ -29,13 +29,33 @@ class TestAppSettingType extends AbstractType
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'button_add_options' => [
-                    'label' => 'form.type.testAppSetting.button.add',
+                    'label' => 'form.type.testAppSetting.button.add_message',
                     'attr' => [
                         'class' => 'btn btn-primary'
                     ]
                 ],
                 'button_delete_options' => [
-                    'label' => 'form.type.testAppSetting.button.delete',
+                    'label' => 'form.type.testAppSetting.button.delete_message',
+                    'attr' => [
+                        'class' => 'btn btn-danger'
+                    ]
+                ]
+            ])
+            ->add('testClauses', LiveCollectionType::class, [
+                'label' => false,
+                'entry_type' => TestClauseAppSettingType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'error_bubbling' => false,
+                'button_add_options' => [
+                    'label' => 'form.type.testAppSetting.button.add_clause',
+                    'attr' => [
+                        'class' => 'btn btn-primary'
+                    ]
+                ],
+                'button_delete_options' => [
+                    'label' => 'form.type.testAppSetting.button.delete_clause',
                     'attr' => [
                         'class' => 'btn btn-danger'
                     ]

@@ -19,13 +19,18 @@ form:
         label: Days to add to expiration date
         help: Determines how may days will be added to the 'Expiration' date when creating each test.
       button:
-        add: Add message
-        delete: Delete message
+        add_message: Add test message
+        delete_message: Delete test message
+        add_clause: Add test clause
+        delete_clause: Delete test clause
     testMessageAppSetting:
       introduction:
         label: Introduction message
       conclusion:
         label: Conclusion message
+    testClauseAppSetting:
+      content:
+        label: Content
     mailSmtpAppSetting:
       host:
         label: Host
@@ -89,6 +94,7 @@ table:
     correct: Is correct
   testAppSetting:
     messages: Messages
+    clauses: Clauses
   actions: Actions
 
 data_table:
@@ -215,8 +221,8 @@ flash:
     message: Something went wrong. Please try again later.
 
 validator:
-  uniqueLanguages:
-    message: Language %language% appears more than once.
+  uniqueValuesInArray:
+    message: Key %key% appears more than once.
 
 en: English
 pl: Polish
