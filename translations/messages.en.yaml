@@ -221,8 +221,8 @@ flash:
     message: Something went wrong. Please try again later.
 
 validator:
-  uniqueLanguages:
-    message: Language %language% appears more than once.
+  uniqueValuesInArray:
+    message: Key %key% appears more than once.
 
 en: English
 pl: Polish

@@ -15,11 +15,11 @@ class TestAppSetting
     private int $expirationDaysOffset;
 
     #[Assert\Valid]
-    #[AppAssert\UniqueLanguages]
+    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testMessages;
 
     #[Assert\Valid]
-    #[AppAssert\UniqueLanguages]
+    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testClauses;
 
     public function __construct() {
