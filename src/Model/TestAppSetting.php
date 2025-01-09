@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Util\ArrayHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as AppAssert;
 
@@ -46,7 +47,7 @@ class TestAppSetting
 
     public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        $this->addItem($this->testMessages, $testMessageAppSetting);
+        ArrayHelper::addItem($this->testMessages, $testMessageAppSetting);
 
         return $this;
     }
@@ -54,7 +55,7 @@ class TestAppSetting
     
     public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
-        $this->removeItem($this->testMessages, $testMessageAppSetting);
+        ArrayHelper::removeItem($this->testMessages, $testMessageAppSetting);
 
         return $this;
     }
@@ -66,31 +67,15 @@ class TestAppSetting
 
     public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
     {
-        $this->addItem($this->testClauses, $testClauseAppSetting);
+        ArrayHelper::addItem($this->testClauses, $testClauseAppSetting);
 
         return $this;
     }
 
     public function removeTestClause(TestClauseAppSetting $testClauseAppSetting): static
     {
-        $this->removeItem($this->testClauses, $testClauseAppSetting);
+        ArrayHelper::removeItem($this->testClauses, $testClauseAppSetting);
 
         return $this;
-    }
-
-    private function removeItem(array &$array, mixed $item): void
-    {
-        $key = array_search($item, $array, true);
-        if ($key !== false) {
-            unset($array[$key]);
-            $array = array_values($array);
-        }
-    }
-
-    private function addItem(array &$array, mixed $item): void
-    {
-        if (!in_array($item, $array, true)) {
-            $array[] = $item;
-        }
     }
 }
