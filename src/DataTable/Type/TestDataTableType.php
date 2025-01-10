@@ -77,7 +77,7 @@ class TestDataTableType extends AbstractDataTableType
                 }
             ])
             ->addColumn('email', TextColumnType::class, [
-                'label' => 'data_table.test.email'
+                'label' => 'data_table.test.email',
             ])
             ->addColumn('firstname', TextColumnType::class, [
                 'label' => 'data_table.test.firstname'
@@ -98,19 +98,23 @@ class TestDataTableType extends AbstractDataTableType
                 'label' => 'data_table.test.submission'
             ])
             ->addFilter('id', NumericFilterType::class, [
-                'label' => 'data_table.id'
+                'label' => 'data_table.id',
             ])
             ->addFilter('email', StringFilterType::class, [
-                'label' => 'data_table.test.email'
+                'label' => 'data_table.test.email',
+                'lower' => true
             ])
             ->addFilter('firstname', StringFilterType::class, [
-                'label' => 'data_table.test.firstname'
+                'label' => 'data_table.test.firstname',
+                'lower' => true
             ])
             ->addFilter('lastname', StringFilterType::class, [
-                'label' => 'data_table.test.lastname'
+                'label' => 'data_table.test.lastname',
+                'lower' => true
             ])
             ->addFilter('workplace', StringFilterType::class, [
-                'label' => 'data_table.test.workplace'
+                'label' => 'data_table.test.workplace',
+                'lower' => true
             ])
             ->addFilter('moduleId', NumericFilterType::class, [
                 'label' => 'data_table.test.moduleId',

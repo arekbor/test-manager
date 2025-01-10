@@ -102,7 +102,8 @@ class ModuleDataTableType extends AbstractDataTableType
                 'label' => 'data_table.id'
             ])
             ->addFilter('name', StringFilterType::class, [
-                'label' => 'data_table.module.name'
+                'label' => 'data_table.module.name',
+                'lower' => true,
             ])
         ;
     }

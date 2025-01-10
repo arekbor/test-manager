@@ -70,7 +70,8 @@ class QuestionDataTableType extends AbstractDataTableType
                 'label' => 'data_table.id'
             ])
             ->addFilter('content', StringFilterType::class, [
-                'label' => 'data_table.question.content'
+                'label' => 'data_table.question.content',
+                'lower' => true,
             ])
         ;
 
