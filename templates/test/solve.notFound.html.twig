@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ 'templates.test.solve.notFound.title'|trans }} 
+{% endblock %}
+
+{% block body %}
+    {{ component('TestErrorSolve', {
+        header: 'templates.test.solve.notFound.header',
+        content: 'templates.test.solve.notFound.content'
+    }) }}
+{% endblock %}

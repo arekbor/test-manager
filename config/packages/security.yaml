@@ -52,6 +52,10 @@ security:
         roles: PUBLIC_ACCESS,
       }
     - {
+        path: ^/(%app.allowed_locales%)/test/conclusion/\d+$,
+        roles: PUBLIC_ACCESS,
+      }
+    - {
         path: ^/(%app.allowed_locales%)/test/video/\d+/\d+$,
         roles: PUBLIC_ACCESS,
       }
