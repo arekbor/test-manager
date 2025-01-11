@@ -5,59 +5,48 @@
 {% endblock %}
 
 {% block container %}
-    <a 
-        href="{{ path('app_module_videos', { id: moduleId }) }}" 
-        class="btn btn-primary" 
-        role="button"
-    >
-        {{ 'templates.goToModule'|trans }}
-    </a>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <a 
+                href="{{ path('app_module_videos', { id: moduleId }) }}" 
+                class="btn btn-primary" 
+                role="button"
+            >
+                {{ 'templates.goToModule'|trans }}
+            </a>
 
-    <a 
-        href="{{ path('app_video_download', { id: video.id }) }}"
-        class="btn btn-warning"
-        role="button"
-    >
-        {{ 'templates.video.details.download'|trans }}
-    </a>
+            <a 
+                href="{{ path('app_video_download', { id: video.id }) }}"
+                class="btn btn-warning mx-1"
+                role="button"
+            >
+                {{ 'templates.video.details.download'|trans }}
+            </a>
 
-    {{ component('TriggerModal', {
-        modalId: 'deleteVideoModal',
-        buttonClass: 'btn btn-danger',
-        buttonBody: 'modal.delete'|trans
-    }) }}
+            {{ component('TriggerModal', {
+                modalId: 'deleteVideoModal',
+                buttonClass: 'btn btn-danger',
+                buttonBody: 'modal.delete'|trans
+            }) }}
 
-    <div class="alert alert-secondary d-flex flex-column m-0 mt-2">
-        <span>
-            {{ 'templates.video.details.id'|trans }}: {{ video.id }}
-        </span>
-        
-        <span class="text-nowrap text-truncate">
-            {{ 'templates.video.details.filename'|trans }}: {{ video.videoName }}
-        </span>
+            <div class="mt-2">
+                {{ component('UpdateVideoForm', {
+                    'videoProp': video,
+                    'moduleIdProp': moduleId
+                }) }}
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <video
+                controls
+                width="100%"
+                class="p-1 border rounded"
+            >
+                <source 
+                    src="{{ path('app_video_download', { id: video.id }) }}" 
+                />
+            </video> 
+        </div>
     </div>
-
-    <div
-        class="border rounded d-flex mt-2"
-    >
-        <video
-            controls
-            width="100%"
-            class="p-1"
-        >
-            <source 
-                src="{{ path('app_video_download', { id: video.id }) }}" 
-            />
-        </video> 
-    </div>
-
-    {{ component('Modal', {
-        modalTargetId: 'deleteVideoModal',
-        actionButtonText: 'modal.delete'|trans,
-        actionButtonClass: 'btn btn-danger',
-        actionButtonHref: path('app_video_delete', {
-            moduleId: moduleId,
-            videoId: video.id
-        })
-    }) }}
 {% endblock %}
