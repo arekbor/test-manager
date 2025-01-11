@@ -69,6 +69,11 @@ form:
         label: New Email
         help: After updating your email you will be logged out.
       update: Update email
+    updateVideo:
+      originalName:
+        label: Video title
+        help: Update video title
+      update: Update video
     updatePassword:
       currentPassword:
         label: Current password
@@ -112,7 +117,7 @@ data_table:
     answersCount: Answers
     createQuestion: Create question
   video:
-    originalName: File name
+    originalName: Video title
     mimeType: Mime type
     size: Size
     uploadVideo: Upload video
@@ -181,8 +186,6 @@ templates:
   video:
     details:
       title: Video details %id%
-      id: Video id
-      filename: File name
       download: Download
   question:
     details:

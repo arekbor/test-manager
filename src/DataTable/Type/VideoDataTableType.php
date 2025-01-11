@@ -10,6 +10,7 @@ use App\Entity\Video;
 use App\Util\ByteConversion;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
+use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
@@ -73,6 +74,14 @@ class VideoDataTableType extends AbstractDataTableType
             ])
             ->addFilter('id', NumericFilterType::class, [
                 'label' => 'data_table.id'
+            ])
+            ->addFilter('originalName', StringFilterType::class, [
+                'label' => 'data_table.video.originalName',
+                'lower' => true,
+            ])
+            ->addFilter('mimeType', StringFilterType::class, [
+                'label' => 'data_table.video.mimeType',
+                'lower' => true,
             ])
         ;
     }
