@@ -47,7 +47,7 @@ class LocaleSubscriber implements EventSubscriberInterface
     {
         $controller = $request->attributes->get('_controller');
 
-        if (!$controller || !str_contains($controller, '::')) {
+        if (!$controller || !is_string($controller) || !str_contains($controller, '::')) {
             return false;
         }
 
