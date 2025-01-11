@@ -176,13 +176,14 @@ templates:
   module:
     create:
       title: Create module
-    details:
+    base_details:
       title: Module details %id%
-      createTest: Create test
-      tab:
+      nav:
         general: General
         questions: Questions
         videos: Video files
+    details_general:
+      createTest: Create test
   video:
     details:
       title: Video details %id%
@@ -193,6 +194,11 @@ templates:
     create:
       title: Create question
   test:
+    base_solve:
+      title: Test solve %id%
+      nav:
+        introduction: Introduction
+        conclusion: Conclusion
     create:
       title: Create test
       info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
@@ -201,14 +207,15 @@ templates:
     details:
       title: Test details %id%
       info: Edit the test assigned to the module ID %moduleId%.
-    introduction:
-      title: Test introduction %id%
-    notFound:
-      header: Test Not Found
-      content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.
-    notValid:
-      header: Test is not valid
-      content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
+    solve:
+      notFound:
+        title: Test not found
+        header: Test Not Found
+        content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.
+      notValid:
+        title: Test not valid
+        header: Test is not valid
+        content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
   goToModule: Module
 
 flash:

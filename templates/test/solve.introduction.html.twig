@@ -1,10 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'test/base.solve.html.twig' %}
 
-{% block title %} 
-    {{ 'templates.test.introduction.title'|trans({ '%id%': test.id }) }} 
-{% endblock %}
-
-{% block body %}
+{% block wrapper %}
     <div class="d-flex flex-column justify-content-center">
         <pre class="w-100 pre-test-message p-4">{{ introduction_message() }}</pre>
     </div>

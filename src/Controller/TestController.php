@@ -69,14 +69,14 @@ class TestController extends AbstractController
     #[IgnoreLocaleSession]
     public function notFound(): Response 
     {
-        return $this->render('/test/notFound.html.twig');
+        return $this->render('/test/solve.notFound.html.twig');
     }
 
     #[Route('/notValid')]
     #[IgnoreLocaleSession]
     public function notValid(): Response 
     {
-        return $this->render('/test/notValid.html.twig');
+        return $this->render('/test/solve.notValid.html.twig');
     }
 
     #[Route('/video/{testId}/{videoId}')]
@@ -99,7 +99,17 @@ class TestController extends AbstractController
     #[TestVerify]
     public function introduction(?Test $test): Response
     {
-        return $this->render('/test/introduction.html.twig', [
+        return $this->render('/test/solve.introduction.html.twig', [
+            'test' => $test
+        ]);
+    }
+
+    #[Route('/conclusion/{id}')]
+    #[IgnoreLocaleSession]
+    #[TestVerify]
+    public function conclusion(?Test $test): Response
+    {
+        return $this->render('/test/solve.conclusion.html.twig', [
             'test' => $test
         ]);
     }
