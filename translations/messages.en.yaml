@@ -155,20 +155,21 @@ templates:
       logout: Log out
       settings: Settings
   settings:
-    base:
+    base_setting:
       info:
         id: Id
         email: E-mail
         timezone: System timezone
-    navLink:
-      general: General
-      smtp: SMTP
-      smtpTest: SMTP test
-      test: Test
+      nav:
+        general: General
+        smtp: SMTP
+        smtpTest: SMTP test
+        test: Test
     general:
-      language_header: Language
-      email_header: Email
-      password_header: Password
+      header:
+        language: Language
+        email: Email
+        password: Password
   auth:
     login:
       title: Log in
@@ -207,15 +208,14 @@ templates:
     details:
       title: Test details %id%
       info: Edit the test assigned to the module ID %moduleId%.
-    solve:
-      notFound:
-        title: Test not found
-        header: Test Not Found
-        content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.
-      notValid:
-        title: Test not valid
-        header: Test is not valid
-        content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
+    notFound:
+      title: Test not found
+      header: Test Not Found
+      content: We’re sorry, but we couldn’t find this test. Please contact the administrator to receive a new link to the test.
+    notValid:
+      title: Test not valid
+      header: Test is not valid
+      content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
   goToModule: Module
 
 flash:

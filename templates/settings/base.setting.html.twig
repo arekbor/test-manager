@@ -9,15 +9,15 @@
                 >
                     <div class="d-flex flex-column text-muted small">
                         <small class="mb-1">
-                            {{ 'templates.settings.base.info.id'|trans }}:
+                            {{ 'templates.settings.base_setting.info.id'|trans }}:
                             <span class="text-dark">{{ app.user.id }}</span>
                         </small>
                         <small class="mb-1">
-                            {{ 'templates.settings.base.info.email'|trans }}:
+                            {{ 'templates.settings.base_setting.info.email'|trans }}:
                             <span class="text-dark">{{ app.user.email }}</span>
                         </small>
                         <small class="mb-1">
-                            {{ 'templates.settings.base.info.timezone'|trans }}: 
+                            {{ 'templates.settings.base_setting.info.timezone'|trans }}: 
                             <span class="text-dark">{{ get_timezone() }}</span>
                         </small>
                     </div>
@@ -25,22 +25,22 @@
 
                 {{ component('NavLink', { 
                     path: path('app_settings_general'),
-                    label: 'templates.settings.navLink.general'
+                    label: 'templates.settings.base_setting.nav.general'
                 }) }}
 
                 {{ component('NavLink', { 
                     path: path('app_settings_smtp'),
-                    label: 'templates.settings.navLink.smtp'
+                    label: 'templates.settings.base_setting.nav.smtp'
                 }) }}
 
                 {{ component('NavLink', { 
                     path: path('app_settings_smtptest'),
-                    label: 'templates.settings.navLink.smtpTest'
+                    label: 'templates.settings.base_setting.nav.smtpTest'
                 }) }}
 
                 {{ component('NavLink', { 
                     path: path('app_settings_test'),
-                    label: 'templates.settings.navLink.test'
+                    label: 'templates.settings.base_setting.nav.test'
                 }) }}
             </nav>
         </div>

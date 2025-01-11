@@ -3,7 +3,7 @@
 {% block wrapper %}
     <div>
         <h5>
-            {{ 'templates.settings.general.language_header'|trans }}
+            {{ 'templates.settings.general.header.language'|trans }}
         </h5>
 
         <div class="dropdown">
@@ -34,14 +34,14 @@
 
     <div class="mt-5">
         <h5>
-            {{ 'templates.settings.general.email_header'|trans }}
+            {{ 'templates.settings.general.header.email'|trans }}
         </h5>
         {{ component('UpdateEmailForm') }}
     </div>
 
     <div class="mt-5">
         <h5>
-            {{ 'templates.settings.general.password_header'|trans }}
+            {{ 'templates.settings.general.header.password'|trans }}
         </h5>
 
         {{ component('UpdatePasswordForm') }}
