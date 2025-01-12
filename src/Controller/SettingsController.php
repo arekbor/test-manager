@@ -22,7 +22,7 @@ class SettingsController extends AbstractController
     #[Route('/general')]
     public function general(): Response
     {
-        return $this->render('settings/setting.general.html.twig');
+        return $this->render('settings/general.html.twig');
     }
 
     #[Route('/smtp')]
@@ -37,7 +37,7 @@ class SettingsController extends AbstractController
 
         $mailSmtpAppSetting = $this->appSettingService->getValue($appSetting, MailSmtpAppSetting::class);
 
-        return $this->render('settings/setting.smtp.html.twig', [
+        return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting
         ]);
     }
@@ -45,7 +45,7 @@ class SettingsController extends AbstractController
     #[Route('/smtpTest')]
     public function smtpTest(): Response
     {
-        return $this->render('settings/setting.smtpTest.html.twig');
+        return $this->render('settings/smtpTest.html.twig');
     }
 
     #[Route('/test')]
@@ -58,7 +58,7 @@ class SettingsController extends AbstractController
 
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
 
-        return $this->render('settings/setting.test.html.twig', [
+        return $this->render('settings/test.html.twig', [
             'testAppSetting' => $testAppSetting
         ]);
     }
