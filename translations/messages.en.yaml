@@ -155,7 +155,7 @@ templates:
       logout: Log out
       settings: Settings
   settings:
-    base_setting:
+    base:
       info:
         id: Id
         email: E-mail
