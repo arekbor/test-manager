@@ -1,7 +1,7 @@
 {% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.module.base_details.title'|trans({ '%id%': module.id }) }} 
+    {{ 'templates.module.base.title'|trans({ '%id%': module.id }) }} 
 {% endblock %}
 
 {% block container %}
@@ -10,7 +10,7 @@
             path: path('app_module_general', {
                 id: module.id
             }),
-            label: 'templates.module.base_details.nav.general'
+            label: 'templates.module.base.nav.general'
         }) }}
 
 
@@ -18,14 +18,14 @@
             path: path('app_module_questions', {
                 id: module.id
             }),
-            label: 'templates.module.base_details.nav.questions'
+            label: 'templates.module.base.nav.questions'
         }) }}
 
         {{ component('NavLink', { 
             path: path('app_module_videos', {
                 id: module.id
             }),
-            label: 'templates.module.base_details.nav.videos'
+            label: 'templates.module.base.nav.videos'
         }) }}
     </nav>
 

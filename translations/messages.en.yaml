@@ -177,13 +177,13 @@ templates:
   module:
     create:
       title: Create module
-    base_details:
+    base:
       title: Module details %id%
       nav:
         general: General
         questions: Questions
         videos: Video files
-    details_general:
+    general:
       createTest: Create test
   video:
     details:
