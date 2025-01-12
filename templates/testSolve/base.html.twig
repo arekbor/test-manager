@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.test.base_solve.title'|trans({ '%id%': test.id }) }} 
+    {{ 'templates.testSolve.base.title'|trans({ '%id%': test.id }) }} 
 {% endblock %}
 
 {% block body %}
@@ -13,17 +13,17 @@
         <div class="col-12 col-xl-2">
             <div class="nav nav-pills flex-column">
                 {{ component('NavLink', { 
-                    path: path('app_test_introduction', {
+                    path: path('app_testsolve_introduction', {
                         id: test.id
                     }),
-                    label: 'templates.test.base_solve.nav.introduction'
+                    label: 'templates.testSolve.base.nav.introduction'
                 }) }}
         
                 {{ component('NavLink', { 
-                    path: path('app_test_conclusion', {
+                    path: path('app_testsolve_conclusion', {
                         id: test.id
                     }),
-                    label: 'templates.test.base_solve.nav.conclusion'
+                    label: 'templates.testSolve.base.nav.conclusion'
                 }) }}
             </div>
         </div>
