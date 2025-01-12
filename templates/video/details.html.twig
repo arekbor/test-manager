@@ -49,4 +49,14 @@
             </video> 
         </div>
     </div>
+
+    {{ component('Modal', {
+        modalTargetId: 'deleteVideoModal',
+        actionButtonText: 'modal.delete'|trans,
+        actionButtonClass: 'btn btn-danger',
+        actionButtonHref: path('app_video_delete', {
+            moduleId: moduleId,
+            videoId: video.id
+        })
+    }) }}
 {% endblock %}

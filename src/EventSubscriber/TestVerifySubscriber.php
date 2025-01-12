@@ -32,12 +32,12 @@ class TestVerifySubscriber implements EventSubscriberInterface
         $test = $filtered ? reset($filtered) : null;
 
         if ($test === null) {
-            $this->redirect($event, 'app_test_notfound');
+            $this->redirect($event, 'app_testsolve_notfound');
             return;
         }
 
         if(!$test->isValid()) {
-            $this->redirect($event, 'app_test_notvalid');
+            $this->redirect($event, 'app_testsolve_notvalid');
             return;
         }
     }

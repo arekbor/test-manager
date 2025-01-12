@@ -195,19 +195,18 @@ templates:
     create:
       title: Create question
   test:
-    base_solve:
+    create:
+      title: Create test
+      info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
+    details:
+      title: Test details %id%
+      info: Edit the test assigned to the module ID %moduleId%.
+  testSolve:
+    base:
       title: Test solve %id%
       nav:
         introduction: Introduction
         conclusion: Conclusion
-    create:
-      title: Create test
-      info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
-    index:
-      title: Tests
-    details:
-      title: Test details %id%
-      info: Edit the test assigned to the module ID %moduleId%.
     notFound:
       title: Test not found
       header: Test Not Found

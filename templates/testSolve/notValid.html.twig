@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ 'templates.testSolve.notValid.title'|trans }} 
+{% endblock %}
+
+{% block body %}
+    {{ component('TestErrorSolve', {
+        header: 'templates.testSolve.notValid.header',
+        content: 'templates.testSolve.notValid.content'
+    }) }}
+{% endblock %}
