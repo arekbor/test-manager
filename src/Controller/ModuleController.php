@@ -31,7 +31,7 @@ class ModuleController extends AbstractController
     #[Route('/details/general/{id}')]
     public function general(Module $module): Response
     {
-        return $this->render('module/details.general.html.twig', [
+        return $this->render('module/general.html.twig', [
             'module' => $module, 
         ]);
     }
@@ -52,7 +52,7 @@ class ModuleController extends AbstractController
         
         $questionDataTable->handleRequest($request);
 
-        return $this->render('module/details.questions.html.twig', [
+        return $this->render('module/questions.html.twig', [
             'module' => $module, 
             'question_data_table' => $questionDataTable->createView()
         ]);
@@ -74,7 +74,7 @@ class ModuleController extends AbstractController
 
         $videoDataTable->handleRequest($request);
 
-        return $this->render('module/details.videos.html.twig', [
+        return $this->render('module/videos.html.twig', [
             'module' => $module, 
             'video_data_table' => $videoDataTable->createView()
         ]);
