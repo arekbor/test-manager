@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\Entity\AppSetting;
+use App\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -24,98 +26,129 @@ class AppSettingServiceTest extends TestCase
         $this->appSettingService = new AppSettingService($serializer);
     }
 
-    public function testSetValue(): void
+    #[DataProvider('mailSmtpAppSettingProvider')]
+    public function testSetValue(MailSmtpAppSetting $mailSmtpAppSetting): void
     {
-        $data = new TestSetting();
-        $data->setText($testText = "test text");
-        $data->setNumber($testNumber = 332);
-
         $appSetting = $this
             ->appSettingService
-            ->setValue($key = "test.key", $data)
+            ->setValue($key = "mail.smtp", $mailSmtpAppSetting)
         ;
 
         $this->assertEquals($appSetting->getKey(), $key);
 
         $this->assertEquals($appSetting->getValue(), [
-            "text" => $testText,
-            "number" => $testNumber
+            "host" => $mailSmtpAppSetting->getHost(),
+            "port" => $mailSmtpAppSetting->getPort(),
+            "fromAddress" => $mailSmtpAppSetting->getFromAddress(),
+            "username" => $mailSmtpAppSetting->getUsername(),
+            "password" => $mailSmtpAppSetting->getPassword(),
+            "smtpAuth" => $mailSmtpAppSetting->getSmtpAuth(),
+            "smtpSecure" => $mailSmtpAppSetting->getSmtpSecure(),
+            "timeout" => $mailSmtpAppSetting->getTimeout(),
         ]);
     }
 
-    public function testGetValue(): void
+    #[DataProvider('mailSmtpAppSettingProvider')]
+    public function testGetValue(MailSmtpAppSetting $mailSmtpAppSetting): void
     {
         $appSetting = new AppSetting();
-        $appSetting->setKey("test.key");
+        $appSetting->setKey("mail_smtp_app_setting.key");
         $appSetting->setValue([
-            "text" => $testText = "some text",
-            "number" => $testNumber = 512
+            "host" => $host = $mailSmtpAppSetting->getHost(),
+            "port" => $port = $mailSmtpAppSetting->getPort(),
+            "fromAddress" => $fromAddress = $mailSmtpAppSetting->getFromAddress(),
+            "username" => $username = $mailSmtpAppSetting->getUsername(),
+            "password" => $password = $mailSmtpAppSetting->getPassword(),
+            "smtpAuth" => $smtpAuth = $mailSmtpAppSetting->getSmtpAuth(),
+            "smtpSecure" => $smtpSecure = $mailSmtpAppSetting->getSmtpSecure(),
+            "timeout" => $timeout = $mailSmtpAppSetting->getTimeout(),
         ]);
 
-        $testSetting = $this
+        $MailSmtpAppSettingTesting = $this
             ->appSettingService
-            ->getValue($appSetting, TestSetting::class)
+            ->getValue($appSetting, MailSmtpAppSetting::class)
         ;
 
-        $this->assertEquals($testSetting->getText(), $testText);
-        $this->assertEquals($testSetting->getNumber(), $testNumber);
+        $this->assertEquals($MailSmtpAppSettingTesting->getHost(), $host);
+        $this->assertEquals($MailSmtpAppSettingTesting->getPort(), $port);
+        $this->assertEquals($MailSmtpAppSettingTesting->getFromAddress(), $fromAddress);
+        $this->assertEquals($MailSmtpAppSettingTesting->getUsername(), $username);
+        $this->assertEquals($MailSmtpAppSettingTesting->getPassword(), $password);
+        $this->assertEquals($MailSmtpAppSettingTesting->getSmtpAuth(), $smtpAuth);
+        $this->assertEquals($MailSmtpAppSettingTesting->getSmtpSecure(), $smtpSecure);
+        $this->assertEquals($MailSmtpAppSettingTesting->getTimeout(), $timeout);
     }
 
-    public function testUpdateValue(): void
+    #[DataProvider('mailSmtpAppSettingProvider')]
+    public function testUpdateValue(MailSmtpAppSetting $mailSmtpAppSetting): void
     {   
         $appSetting = new AppSetting();
 
         $appSetting->setKey("test.key");
         $appSetting->setValue([
-            "text" => $testText = "text",
-            "number" => $testNumber = 12
+            "host" => $mailSmtpAppSetting->getHost(),
+            "port" => $mailSmtpAppSetting->getPort(),
+            "fromAddress" => $mailSmtpAppSetting->getFromAddress(),
+            "username" => $mailSmtpAppSetting->getUsername(),
+            "password" => $mailSmtpAppSetting->getPassword(),
+            "smtpAuth" => $mailSmtpAppSetting->getSmtpAuth(),
+            "smtpSecure" => $mailSmtpAppSetting->getSmtpSecure(),
+            "timeout" => $mailSmtpAppSetting->getTimeout(),
         ]);
 
         $appSetting = $this
             ->appSettingService
             ->updateValue($appSetting, [
-                "text" => "some updated text",
-                "number" => 500,
+                "host" => "super@updated.host",
+                "port" => "776",
+                "fromAddress" => "updated_from_address@gmail.com",
             ])
         ;
 
-        $updatedTestSetting = $this
+        $mailSmtpAppSettingTesting = $this
             ->appSettingService
-            ->getValue($appSetting, TestSetting::class)
+            ->getValue($appSetting, MailSmtpAppSetting::class)
         ;
 
-        $this->assertNotEquals($updatedTestSetting->getText(), $testText);
-        $this->assertNotEquals($updatedTestSetting->getNumber(), $testNumber);
-    }
-}
-
-class TestSetting
-{
-    private ?string $text;
-
-    private ?int $number;
-
-    public function getText(): ?string
-    {
-        return $this->text;
+        $this->assertEquals($mailSmtpAppSettingTesting->getHost(), "super@updated.host");
+        $this->assertEquals($mailSmtpAppSettingTesting->getPort(), "776");
+        $this->assertEquals($mailSmtpAppSettingTesting->getFromAddress(), "updated_from_address@gmail.com");
+        
+        $this->assertEquals($mailSmtpAppSettingTesting->getUsername(), "");
+        $this->assertEquals($mailSmtpAppSettingTesting->getPassword(), "");
+        $this->assertEquals($mailSmtpAppSettingTesting->getSmtpAuth(), false);
+        $this->assertEquals($mailSmtpAppSettingTesting->getSmtpSecure(), "");
+        $this->assertEquals($mailSmtpAppSettingTesting->getTimeout(), 0);
     }
 
-    public function setText(?string $text): static
+    public static function mailSmtpAppSettingProvider(): array
     {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    public function getNumber(): ?int
-    {
-        return $this->number;
-    }
-
-    public function setNumber(?int $number): static
-    {
-        $this->number = $number;
-
-        return $this;
+        return [
+            [new MailSmtpAppSetting(
+                host: "test@gmail.com", 
+                port: "523", 
+                fromAddress: "test@gmail.com"
+            )],
+            [new MailSmtpAppSetting(
+                timeout: 100, 
+                smtpAuth: true, 
+                password: "test"
+            )],
+            [new MailSmtpAppSetting(
+                host: "super_test@host.com", 
+                port: "123", 
+                fromAddress: "test@gmail.com", 
+                username: "user test", 
+                password: "test super password",
+                smtpAuth: true,
+                smtpSecure: "ssl",
+                timeout: 150
+            )],
+            [new MailSmtpAppSetting(
+                port: "411", 
+                smtpSecure: "test test secure"
+            )],
+            [new MailSmtpAppSetting()]
+        ];
     }
 }

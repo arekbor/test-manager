@@ -9,14 +9,16 @@ use App\Entity\Test;
 use App\Entity\Video;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TestTest extends TestCase
 {
-    public function testIsValidWhenExpirationInFeature(): void
+    #[DataProvider('featureModifierProvider')]
+    public function testIsValidWhenExpirationInFeature(string $modifier): void
     {
         $test = new Test();
-        $test->setExpiration((new DateTime())->modify('+5 days'));
+        $test->setExpiration((new DateTime())->modify($modifier));
         $test->setSubmission(null);
 
         $this->assertTrue($test->isValid(), 
@@ -35,10 +37,11 @@ class TestTest extends TestCase
         );
     }
 
-    public function testIsNotValidWhenExpirationInPast(): void
+    #[DataProvider('pastModifierProvider')]
+    public function testIsNotValidWhenExpirationInPast(string $modifier): void
     {
         $test = new Test();
-        $test->setExpiration((new DateTime())->modify('-12 hours'));
+        $test->setExpiration((new DateTime())->modify($modifier));
         $test->setSubmission(null);
 
         $this->assertFalse($test->isValid(), 
@@ -88,6 +91,28 @@ class TestTest extends TestCase
         $this->assertFalse($test->videoBelongsToTest($videoMock), 
             'Should return false when there are no videos in the test\'s module.'
         );
+    }
+
+    public static function featureModifierProvider(): array
+    {
+        return [
+            ['+1 seconds'],
+            ['+1 minutes'],
+            ['+3 hours'],
+            ['+5 days'],
+            ['+12 months']
+        ];
+    }
+
+    public static function pastModifierProvider(): array
+    {
+        return [
+            ['-12 seconds'],
+            ['-30 minutes'],
+            ['-1 hours'],
+            ['-3 days'],
+            ['-50 months']
+        ];
     }
 
     private function createTestWithModuleAndVideos(array $videos): Test
