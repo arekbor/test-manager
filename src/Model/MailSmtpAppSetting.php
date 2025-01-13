@@ -38,15 +38,25 @@ class MailSmtpAppSetting
     #[Assert\LessThanOrEqual(300)]
     private int $timeout;
 
-    public function __construct() {
-        $this->host = "";
-        $this->port = "";
-        $this->fromAddress = "";
-        $this->username = "";
-        $this->password = "";
-        $this->smtpAuth = false;
-        $this->smtpSecure = "";
-        $this->timeout = 0;
+    public function __construct(
+        string $host = "", 
+        string $port = "", 
+        string $fromAddress = "",
+        string $username = "",
+        string $password = "",
+        bool $smtpAuth = false,
+        string $smtpSecure = "",
+        int $timeout = 0
+    ) 
+    {
+        $this->host = $host;
+        $this->port = $port;
+        $this->fromAddress = $fromAddress;
+        $this->username = $username;
+        $this->password = $password;
+        $this->smtpAuth = $smtpAuth;
+        $this->smtpSecure = $smtpSecure;
+        $this->timeout = $timeout;
     }
 
     public function getHost(): string
