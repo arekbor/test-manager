@@ -1,0 +1,33 @@
+<div {{ attributes }}>
+    {{ introduction_message() }}
+
+    {{ form(form) }}
+
+    <div class="d-flex justify-content-center align-items-center flex-column m-2">
+        {% for video in testProp.module.videos %}
+            <video 
+                width="500px"
+                controls
+                src="{{ path('app_testsolve_video', { testId: testProp.id, videoId: video.id }) }}">
+            </video>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-column m-5">
+        {% for question in testProp.module.questions %}
+            <div class="mt-5 mb-2">{{ question.content }}</div>
+
+            {% for answer in question.answers %}
+                <small>
+                    {% if answer.isCorrect %}
+                        <strong>{{ answer.content }}</strong>
+                    {% else %}
+                        {{ answer.content }}
+                    {% endif %}
+                </small>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {{ conclusion_message() }}
+</div>

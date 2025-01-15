@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ component('TestSolveForm', {
+        'testProp': test
+    }) }}
 {% endblock %}
