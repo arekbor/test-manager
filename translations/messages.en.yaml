@@ -202,11 +202,6 @@ templates:
       title: Test details %id%
       info: Edit the test assigned to the module ID %moduleId%.
   testSolve:
-    base:
-      title: Test solve %id%
-      nav:
-        introduction: Introduction
-        conclusion: Conclusion
     notFound:
       title: Test not found
       header: Test Not Found

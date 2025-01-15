@@ -21,18 +21,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/testSolve')]
 class TestSolveController extends AbstractController
 {
-    #[Route('/notFound')]
+    #[Route('/solve/{id}')]
     #[IgnoreLocaleSession]
-    public function notFound(): Response 
+    #[TestVerify]
+    public function solve(?Test $test): Response
     {
-        return $this->render('/testSolve/notFound.html.twig');
-    }
-
-    #[Route('/notValid')]
-    #[IgnoreLocaleSession]
-    public function notValid(): Response 
-    {
-        return $this->render('/testSolve/notValid.html.twig');
+        return $this->render('/testSolve/solve.html.twig', [
+            'test' => $test
+        ]);
     }
 
     #[Route('/video/{testId}/{videoId}')]
@@ -52,23 +48,17 @@ class TestSolveController extends AbstractController
         return $this->file($file);
     }
 
-    #[Route('/introduction/{id}')]
+    #[Route('/notFound')]
     #[IgnoreLocaleSession]
-    #[TestVerify]
-    public function introduction(?Test $test): Response
+    public function notFound(): Response 
     {
-        return $this->render('/testSolve/introduction.html.twig', [
-            'test' => $test
-        ]);
+        return $this->render('/testSolve/notFound.html.twig');
     }
 
-    #[Route('/conclusion/{id}')]
+    #[Route('/notValid')]
     #[IgnoreLocaleSession]
-    #[TestVerify]
-    public function conclusion(?Test $test): Response
+    public function notValid(): Response 
     {
-        return $this->render('/testSolve/conclusion.html.twig', [
-            'test' => $test
-        ]);
+        return $this->render('/testSolve/notValid.html.twig');
     }
 }
