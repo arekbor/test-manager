@@ -1,33 +1,76 @@
-<div {{ attributes }}>
-    {{ introduction_message() }}
+<div 
+    {{ attributes }} 
+    class="container"
+>
+    {{ form_start(form) }}
 
-    {{ form(form) }}
+    <div class="alert alert-info text-center mb-5 mt-2">
+        {{ introduction_message() }}
+    </div>
 
-    <div class="d-flex justify-content-center align-items-center flex-column m-2">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            {{ form_row(form.firstname) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.lastname) }}
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.workplace) }}
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            {{ form_row(form.dateOfBirth) }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-wrap my-4">
         {% for video in testProp.module.videos %}
-            <video 
-                width="500px"
-                controls
-                src="{{ path('app_testsolve_video', { testId: testProp.id, videoId: video.id }) }}">
-            </video>
+            <div class="m-3">
+                <video 
+                    width="500px"
+                    class="border rounded shadow-sm"
+                    controls
+                    src="{{ path('app_testsolve_video', { testId: testProp.id, videoId: video.id }) }}">
+                </video>
+            </div>
         {% endfor %}
     </div>
 
-    <div class="d-flex justify-content-center align-items-center flex-column m-5">
-        {% for question in testProp.module.questions %}
-            <div class="mt-5 mb-2">{{ question.content }}</div>
-
-            {% for answer in question.answers %}
-                <small>
-                    {% if answer.isCorrect %}
-                        <strong>{{ answer.content }}</strong>
-                    {% else %}
-                        {{ answer.content }}
-                    {% endif %}
-                </small>
-            {% endfor %}
+    <div class="my-5">
+        {% for question in form.testQuestions %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">
+                        {{ question.vars.data.content }}
+                    </h3>
+                    
+                    <div class="list-group mt-3">
+                        {% for answer in question.testAnswers %}
+                            <div class="list-group-item d-flex align-items-center">
+                                {{ form_widget(answer.chosen) }}
+                                <span class="ms-2">{{ answer.vars.data.content }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
 
-    {{ conclusion_message() }}
+    <div class="alert alert-success text-center my-5">
+        {{ conclusion_message() }}
+    </div>
+
+    <div class="d-grid">
+        {{ form_row(form.submit) }}
+    </div>
+
+    {{ form_end(form) }}
 </div>

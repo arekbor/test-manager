@@ -27,6 +27,9 @@ class TestSolve
     #[Assert\LessThan('now')]
     private ?\DateTimeInterface $dateOfBirth = null;
 
+    #[Assert\Valid]
+    private array $testQuestions;
+
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -83,6 +86,18 @@ class TestSolve
     public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getTestQuestions(): array
+    {
+        return $this->testQuestions;
+    }
+
+    public function setTestQuestions(array $testQuestions): static
+    {
+        $this->testQuestions = $testQuestions;
 
         return $this;
     }
