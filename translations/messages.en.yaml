@@ -14,6 +14,22 @@ form:
         delete: Delete answer
     answer:
       content_placeholder: Answer content
+    testSolve:
+      firstname:
+        label: Firstname
+        help: Enter your first name.
+      lastname:
+        label: Lastname
+        help: Enter your last name.
+      email:
+        label: E-mail
+        help: Enter your email address. Make sure it is in a valid format (e.g., name@example.com).
+      workplace:
+        label: Workplace
+        help: Enter the name of your workplace or organization.
+      dateOfBirth:
+        label: Date of birth
+        help: Enter your date of birth.
     testAppSetting:
       expirationDaysOffset:
         label: Days to add to expiration date
@@ -131,7 +147,9 @@ data_table:
     expiration: Expiration date
     submission: Submission date
     test: Test
+    module: Module
     moduleLanguage: Module language
+    moduleName: Module name
     moduleTestCategory: Module test category
   actions: Actions
   details: Details

@@ -48,6 +48,10 @@ security:
   access_control:
     - { path: ^/(%app.allowed_locales%)/auth, roles: PUBLIC_ACCESS }
     - { path: ^/(%app.allowed_locales%)/testSolve, roles: PUBLIC_ACCESS }
+    - {
+        path: ^/(%app.allowed_locales%)/_components/TestSolve,
+        roles: PUBLIC_ACCESS,
+      }
     - { path: ^/(%app.allowed_locales%), roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

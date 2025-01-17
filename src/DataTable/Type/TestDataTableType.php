@@ -44,6 +44,14 @@ class TestDataTableType extends AbstractDataTableType
                                     }
                                 ],
                                 [
+                                    'label' => 'data_table.test.module',
+                                    'href' => function(Test $test): string {
+                                        return $this->urlGenerator->generate('app_module_general', [
+                                            'id' => $test->getModule()->getId()
+                                        ]);
+                                    }
+                                ],
+                                [
                                     'label' => 'data_table.test.test',
                                     'href' => function(Test $test): string {
                                         return $this->urlGenerator->generate('app_testsolve_solve', [
@@ -63,6 +71,12 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('moduleId', NumberColumnType::class, [
                 'label' => 'data_table.test.moduleId',
                 'getter' => fn (Test $test) => $test->getModule()->getId()
+            ])
+            ->addColumn('moduleName', TextColumnType::class, [
+                'label' => 'data_table.test.moduleName',
+                'getter' => function (Test $test): string {
+                    return $test->getModule()->getName();
+                }
             ])
             ->addColumn('moduleLanguage', TextColumnType::class, [
                 'label' => 'data_table.test.moduleLanguage',
@@ -119,6 +133,11 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('moduleId', NumericFilterType::class, [
                 'label' => 'data_table.test.moduleId',
                 'query_path' => 'module.id',
+            ])
+            ->addFilter('moduleName', StringFilterType::class, [
+                'label' => 'data_table.test.moduleName',
+                'query_path' => 'module.name',
+                'lower' => true
             ])
         ;
     }

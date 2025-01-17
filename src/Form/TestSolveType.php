@@ -8,9 +8,11 @@ use App\Model\TestSolve;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class TestSolveType extends AbstractType
 {
@@ -41,6 +43,18 @@ class TestSolveType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'form.type.testSolve.dateOfBirth.label',
                 'help' => 'form.type.testSolve.dateOfBirth.help',
+            ])
+            ->add('testQuestions', LiveCollectionType::class, [
+                'label' => false,
+                'entry_type' => TestQuestionSolveType::class
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'form.submit.label',
+                'attr' => [
+                    'class' => 'btn btn-success',
+                    'data-action' => 'live#action:prevent',
+                    'data-live-action-param' => 'submit',
+                ]
             ])
         ;
     }
