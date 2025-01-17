@@ -64,6 +64,12 @@ class TestDataTableType extends AbstractDataTableType
                 'label' => 'data_table.test.moduleId',
                 'getter' => fn (Test $test) => $test->getModule()->getId()
             ])
+            ->addColumn('moduleName', TextColumnType::class, [
+                'label' => 'data_table.test.moduleName',
+                'getter' => function (Test $test): string {
+                    return $test->getModule()->getName();
+                }
+            ])
             ->addColumn('moduleLanguage', TextColumnType::class, [
                 'label' => 'data_table.test.moduleLanguage',
                 'getter' => function (Test $test): string {
@@ -119,6 +125,11 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('moduleId', NumericFilterType::class, [
                 'label' => 'data_table.test.moduleId',
                 'query_path' => 'module.id',
+            ])
+            ->addFilter('moduleName', StringFilterType::class, [
+                'label' => 'data_table.test.moduleName',
+                'query_path' => 'module.name',
+                'lower' => true
             ])
         ;
     }

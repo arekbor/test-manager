@@ -148,6 +148,7 @@ data_table:
     submission: Submission date
     test: Test
     moduleLanguage: Module language
+    moduleName: Module name
     moduleTestCategory: Module test category
   actions: Actions
   details: Details
