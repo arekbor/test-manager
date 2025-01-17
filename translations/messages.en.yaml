@@ -147,6 +147,7 @@ data_table:
     expiration: Expiration date
     submission: Submission date
     test: Test
+    module: Module
     moduleLanguage: Module language
     moduleName: Module name
     moduleTestCategory: Module test category
