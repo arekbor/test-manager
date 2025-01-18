@@ -40,13 +40,14 @@ class TestSolveType extends AbstractType
                 'empty_data' => ''
             ])
             ->add('dateOfBirth', DateType::class, array_merge(
-                $options['test_category'] !== 'periodic'
+                $options['test_category'] === 'periodic'
                     ? [
-                        'label' => false,
-                        'attr' => ['class' => 'd-none'],
-                    ] : [
                         'label' => 'form.type.testSolve.dateOfBirth.label',
-                        'help' => 'form.type.testSolve.dateOfBirth.help',
+                        'help' => 'form.type.testSolve.dateOfBirth.help'
+                        
+                    ] : [
+                        'label' => false,
+                        'attr' => ['class' => 'd-none']
                     ]
             ))
             ->add('testQuestions', LiveCollectionType::class, [
