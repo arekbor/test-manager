@@ -246,6 +246,12 @@ validator:
   uniqueValuesInArray:
     message: Key %key% appears more than once.
 
+twig:
+  runtime:
+    testMessage:
+      introductionMessageNotFound: Administrator didn't set a introduction message.
+      conclusionMessageNotFound: Administrator didn't set a conclusion message.
+
 en: English
 pl: Polish
 introductory: Introductory

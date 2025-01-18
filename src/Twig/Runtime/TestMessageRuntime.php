@@ -7,6 +7,7 @@ use App\Model\TestMessageAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TestMessageRuntime implements RuntimeExtensionInterface
@@ -15,19 +16,29 @@ class TestMessageRuntime implements RuntimeExtensionInterface
         private AppSettingRepository $appSettingRepository,
         private AppSettingService $appSettingService,
         private RequestStack $requestStack,
+        private TranslatorInterface $trans
     ) {
     }
 
-    public function getIntroductionMessage(): ?string
+    public function getIntroductionMessage(): string
     {
-        $testMessageAppSetting = $this->getTestMessageAppSetting(); 
-        return $testMessageAppSetting ? $testMessageAppSetting->getIntroduction() : null;
+        $formatedMessage = $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getIntroduction());
+
+        return $formatedMessage ?? $this->trans->trans('twig.runtime.testMessage.introductionMessageNotFound');
     }
 
-    public function getConclusionMessage(): ?string
+    public function getConclusionMessage(): string
     {
-        $testMessageAppSetting = $this->getTestMessageAppSetting(); 
-        return $testMessageAppSetting ? $testMessageAppSetting->getConclusion() : null;
+        $formatedMessage = $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getConclusion());
+
+        return $formatedMessage ?? $this->trans->trans('twig.runtime.testMessage.conclusionMessageNotFound');
+    }
+
+    private function formatMessage(callable $messageGetter): ?string 
+    {
+        $testMessageAppSetting = $this->getTestMessageAppSetting();
+        $text = $testMessageAppSetting ? $messageGetter($testMessageAppSetting) : null;
+        return $text ? nl2br(htmlspecialchars($text)) : null;
     }
 
     private function getTestMessageAppSetting(): ?TestMessageAppSetting 
