@@ -43,7 +43,6 @@ class TestMessageRuntime implements RuntimeExtensionInterface
 
     private function getTestMessageAppSetting(): ?TestMessageAppSetting 
     {
-        
         $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
 
