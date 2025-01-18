@@ -12,22 +12,24 @@
         <div class="col-md-6">
             {{ form_row(form.firstname) }}
         </div>
+
         <div class="col-md-6">
             {{ form_row(form.lastname) }}
         </div>
     </div>
+
     <div class="row mb-4">
         <div class="col-md-6">
             {{ form_row(form.email) }}
         </div>
+        
         <div class="col-md-6">
             {{ form_row(form.workplace) }}
         </div>
     </div>
-    <div class="row mb-4">
-        <div class="col-md-6">
-            {{ form_row(form.dateOfBirth) }}
-        </div>
+
+    <div class="col-md-6">
+        {{ form_row(form.dateOfBirth) }}
     </div>
 
     <div class="d-flex justify-content-center align-items-center flex-wrap my-4">
