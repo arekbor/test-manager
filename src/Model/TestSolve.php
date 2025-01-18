@@ -24,7 +24,7 @@ class TestSolve
     #[Assert\Length(min: 3, max: 100)]
     private ?string $workplace = null;
 
-    #[Assert\LessThan('now')]
+    #[Assert\LessThan('today')]
     private ?\DateTimeInterface $dateOfBirth = null;
 
     #[Assert\Valid]

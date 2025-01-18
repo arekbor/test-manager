@@ -6,6 +6,7 @@ namespace App\Twig\Components;
 
 use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
+use App\Exception\NotFoundException;
 use App\Form\TestSolveType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -40,9 +41,14 @@ final class TestSolveForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        $testCategory = $this->testProp->getModule()->getCategory() 
+            ?? throw new NotFoundException(string::class, ['testCategory']);
+
         $testSolveBuilder = new TestSolveBuilder();
         $testSolve = $testSolveBuilder->build($this->testProp);
 
-        return $this->createForm(TestSolveType::class, $testSolve);
+        return $this->createForm(TestSolveType::class, $testSolve, [
+            'test_category' => $testCategory
+        ]);
     }
 }

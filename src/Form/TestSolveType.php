@@ -6,7 +6,7 @@ namespace App\Form;
 
 use App\Model\TestSolve;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,11 +39,16 @@ class TestSolveType extends AbstractType
                 'help' => 'form.type.testSolve.workplace.help',
                 'empty_data' => ''
             ])
-            ->add('dateOfBirth', DateTimeType::class, [
-                'widget' => 'single_text',
-                'label' => 'form.type.testSolve.dateOfBirth.label',
-                'help' => 'form.type.testSolve.dateOfBirth.help',
-            ])
+            ->add('dateOfBirth', DateType::class, array_merge(
+                $options['test_category'] !== 'periodic'
+                    ? [
+                        'label' => false,
+                        'attr' => ['class' => 'd-none'],
+                    ] : [
+                        'label' => 'form.type.testSolve.dateOfBirth.label',
+                        'help' => 'form.type.testSolve.dateOfBirth.help',
+                    ]
+            ))
             ->add('testQuestions', LiveCollectionType::class, [
                 'label' => false,
                 'entry_type' => TestQuestionSolveType::class
@@ -61,8 +66,12 @@ class TestSolveType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => TestSolve::class,
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => TestSolve::class,
+            ])
+            ->setRequired('test_category')
+            ->setAllowedTypes('test_category', 'string')
+        ;
     }
 }
