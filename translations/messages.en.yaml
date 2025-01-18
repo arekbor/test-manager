@@ -76,9 +76,9 @@ form:
         label: Timeout
         help: The SMTP server timeout in seconds.
     smtpTest:
-      receiver:
-        label: Receiver
-        help: Test receiver email.
+      recipient:
+        label: Recipient
+        help: Test recipient email.
       send: Send email
     updateEmail:
       email:

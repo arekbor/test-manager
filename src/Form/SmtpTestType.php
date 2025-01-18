@@ -16,9 +16,9 @@ class SmtpTestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('receiver', EmailType::class, [
-                'label' => 'form.type.smtpTest.receiver.label',
-                'help' => 'form.type.smtpTest.receiver.help',
+            ->add('recipient', EmailType::class, [
+                'label' => 'form.type.smtpTest.recipient.label',
+                'help' => 'form.type.smtpTest.recipient.help',
             ])
             ->add('send', ButtonType::class, [
                 'label' => 'form.type.smtpTest.send',

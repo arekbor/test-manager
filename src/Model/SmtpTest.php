@@ -10,16 +10,16 @@ class SmtpTest
 {
     #[Assert\Email]
     #[Assert\NotBlank]
-    private string $receiver;
+    private string $recipient;
 
-    public function getReceiver(): string
+    public function getRecipient(): string
     {
-        return $this->receiver;
+        return $this->recipient;
     }
 
-    public function setReceiver(string $receiver): static
+    public function setRecipient(string $recipient): static
     {
-        $this->receiver = $receiver;
+        $this->recipient = $recipient;
 
         return $this;
     }
