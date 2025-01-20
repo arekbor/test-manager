@@ -40,12 +40,12 @@ final class SmtpTestForm extends AbstractController
         if (!empty($error)) {
             $this->addFlash('danger', $error);
             
-            return $this->redirectToRoute('app_settings_smtptest');
+            return $this->redirectToRoute('app_settings_smtp');
         }
 
         $this->addFlash('success', $trans->trans('flash.testEmailForm.successEmailMessage'));
 
-        return $this->redirectToRoute('app_settings_smtptest');
+        return $this->redirectToRoute('app_settings_smtp');
     } 
 
     protected function instantiateForm(): FormInterface

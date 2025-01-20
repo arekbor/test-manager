@@ -42,12 +42,6 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/smtpTest')]
-    public function smtpTest(): Response
-    {
-        return $this->render('settings/smtpTest.html.twig');
-    }
-
     #[Route('/test')]
     public function test(): Response 
     {

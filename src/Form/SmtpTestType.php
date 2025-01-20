@@ -23,7 +23,7 @@ class SmtpTestType extends AbstractType
             ->add('send', ButtonType::class, [
                 'label' => 'form.type.smtpTest.send',
                 'attr' => [
-                    'class' => 'btn btn-success',
+                    'class' => 'btn btn-warning',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'send',
                 ]
