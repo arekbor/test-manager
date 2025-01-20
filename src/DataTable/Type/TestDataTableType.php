@@ -6,11 +6,9 @@ namespace App\DataTable\Type;
 
 use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\Entity\Test;
-use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\DateTimeColumnType;
-use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -65,13 +63,6 @@ class TestDataTableType extends AbstractDataTableType
                     ]
                 ]
             ])
-            ->addColumn('id', NumberColumnType::class, [
-                'label' => 'data_table.id'
-            ])
-            ->addColumn('moduleId', NumberColumnType::class, [
-                'label' => 'data_table.test.moduleId',
-                'getter' => fn (Test $test) => $test->getModule()->getId()
-            ])
             ->addColumn('moduleName', TextColumnType::class, [
                 'label' => 'data_table.test.moduleName',
                 'getter' => function (Test $test): string {
@@ -111,9 +102,6 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('submission', DateTimeColumnType::class, [
                 'label' => 'data_table.test.submission'
             ])
-            ->addFilter('id', NumericFilterType::class, [
-                'label' => 'data_table.id',
-            ])
             ->addFilter('email', StringFilterType::class, [
                 'label' => 'data_table.test.email',
                 'lower' => true
@@ -129,10 +117,6 @@ class TestDataTableType extends AbstractDataTableType
             ->addFilter('workplace', StringFilterType::class, [
                 'label' => 'data_table.test.workplace',
                 'lower' => true
-            ])
-            ->addFilter('moduleId', NumericFilterType::class, [
-                'label' => 'data_table.test.moduleId',
-                'query_path' => 'module.id',
             ])
             ->addFilter('moduleName', StringFilterType::class, [
                 'label' => 'data_table.test.moduleName',

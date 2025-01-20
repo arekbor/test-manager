@@ -8,6 +8,7 @@ use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 class QuestionRepository extends ServiceEntityRepository
 {
@@ -16,7 +17,7 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function findByModuleId(int $moduleId): QueryBuilder
+    public function findByModuleId(Uuid $moduleId): QueryBuilder
     {
         return $this
             ->createQueryBuilder('q')

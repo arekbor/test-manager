@@ -9,10 +9,8 @@ use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Module;
 use App\Service\ParameterService;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
-use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
-use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -71,9 +69,6 @@ class ModuleDataTableType extends AbstractDataTableType
                     ]
                 ]
             ])
-            ->addColumn('id', NumberColumnType::class, [
-                'label' => 'data_table.id'
-            ])
             ->addColumn('name', TruncatedTextColumnType::class, [
                 'label' => 'data_table.module.name',
                 'getter' => fn(Module $module) => $module->getName()
@@ -97,9 +92,6 @@ class ModuleDataTableType extends AbstractDataTableType
             ->addColumn('videosCount', TextColumnType::class, [
                 'label' => 'data_table.module.videosCount',
                 'getter' => fn (Module $module) => count($module->getVideos())
-            ])
-            ->addFilter('id', NumericFilterType::class, [
-                'label' => 'data_table.id'
             ])
             ->addFilter('name', StringFilterType::class, [
                 'label' => 'data_table.module.name',

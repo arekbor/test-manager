@@ -143,7 +143,6 @@ data_table:
     lastname: Lastname
     workplace: Workplace
     dateOfBirth: Date of birth
-    moduleId: Module id
     expiration: Expiration date
     submission: Submission date
     test: Test
@@ -153,7 +152,6 @@ data_table:
     moduleTestCategory: Module test category
   actions: Actions
   details: Details
-  id: Id
 
 modal:
   title: Confirm

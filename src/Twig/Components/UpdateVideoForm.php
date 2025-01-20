@@ -16,6 +16,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\Component\Uid\Uuid;
 
 #[AsLiveComponent]
 final class UpdateVideoForm extends AbstractController
@@ -26,8 +27,8 @@ final class UpdateVideoForm extends AbstractController
     #[LiveProp]
     public Video $videoProp;
 
-    #[LiveProp]
-    public int $moduleIdProp;
+    #[LiveProp(useSerializerForHydration: true)]
+    public Uuid $moduleIdProp;
 
     #[LiveAction]
     public function update(

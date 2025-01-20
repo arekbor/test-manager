@@ -9,10 +9,8 @@ use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Video;
 use App\Util\ByteConversion;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
-use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
-use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -59,9 +57,6 @@ class VideoDataTableType extends AbstractDataTableType
                     ]
                 ]
             ])
-            ->addColumn('id', NumberColumnType::class, [
-                'label' => 'data_table.id'
-            ])
             ->addColumn('originalName', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.originalName',
             ])
@@ -71,9 +66,6 @@ class VideoDataTableType extends AbstractDataTableType
             ->addColumn('size', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.size',
                 'getter' => fn(Video $video) => ByteConversion::formatBytes($video->getSize())
-            ])
-            ->addFilter('id', NumericFilterType::class, [
-                'label' => 'data_table.id'
             ])
             ->addFilter('originalName', StringFilterType::class, [
                 'label' => 'data_table.video.originalName',

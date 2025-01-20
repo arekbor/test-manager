@@ -8,10 +8,8 @@ use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Question;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
-use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
-use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -55,9 +53,6 @@ class QuestionDataTableType extends AbstractDataTableType
                     ]
                 ]
             ])
-            ->addColumn('id', NumberColumnType::class, [
-                'label' => 'data_table.id'
-            ])
             ->addColumn('content', TruncatedTextColumnType::class, [
                 'label' => 'data_table.question.content',
                 'getter' => fn(Question $question) => $question->getContent()
@@ -66,15 +61,11 @@ class QuestionDataTableType extends AbstractDataTableType
                 'label' => 'data_table.question.answersCount',
                 'getter' => fn (Question $question) => count($question->getAnswers())
             ])
-            ->addFilter('id', NumericFilterType::class, [
-                'label' => 'data_table.id'
-            ])
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content',
                 'lower' => true,
             ])
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 class TestTest extends TestCase
 {
@@ -61,8 +62,10 @@ class TestTest extends TestCase
 
     public function testVideoBelongsToTest(): void
     {
-        $videoMock = $this->createVideoMock(1);
-        $videoInModuleMock = $this->createVideoMock(1);
+        $uuid = Uuid::v7();
+
+        $videoMock = $this->createVideoMock($uuid);
+        $videoInModuleMock = $this->createVideoMock($uuid);
 
         $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
 
@@ -73,8 +76,8 @@ class TestTest extends TestCase
 
     public function testVideoDoesNotBelongToTest(): void
     {
-        $videoMock = $this->createVideoMock(2);
-        $videoInModuleMock = $this->createVideoMock(1);
+        $videoMock = $this->createVideoMock(Uuid::v7());
+        $videoInModuleMock = $this->createVideoMock(Uuid::v7());
 
         $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
 
@@ -85,7 +88,7 @@ class TestTest extends TestCase
 
     public function testVideoBelongsToTestWithEmptyVideoCollection(): void
     {
-        $videoMock = $this->createVideoMock(1);
+        $videoMock = $this->createVideoMock(Uuid::v7());
         $test = $this->createTestWithModuleAndVideos([]);
 
         $this->assertFalse($test->videoBelongsToTest($videoMock), 
@@ -130,7 +133,7 @@ class TestTest extends TestCase
         return $testMock;
     }
 
-    private function createVideoMock(int $videoId): Video
+    private function createVideoMock(Uuid $videoId): Video
     {
         $videoMock = $this->createMock(Video::class);
         $videoMock->method('getId')->willReturn($videoId);

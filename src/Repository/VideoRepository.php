@@ -8,6 +8,7 @@ use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 class VideoRepository extends ServiceEntityRepository
 {
@@ -16,7 +17,7 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
-    public function findByModuleId(int $moduleId): QueryBuilder
+    public function findByModuleId(Uuid $moduleId): QueryBuilder
     {
         return $this
             ->createQueryBuilder('v')
