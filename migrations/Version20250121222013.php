@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250120220306 extends AbstractMigration
+final class Version20250121222013 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20250120220306 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE answer (id UUID NOT NULL, question_id UUID DEFAULT NULL, content TEXT NOT NULL, correct BOOLEAN NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE answer (id UUID NOT NULL, question_id UUID DEFAULT NULL, content TEXT NOT NULL, correct BOOLEAN NOT NULL, position INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_DADD4A251E27F6BF ON answer (question_id)');
         $this->addSql('COMMENT ON COLUMN answer.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN answer.question_id IS \'(DC2Type:uuid)\'');

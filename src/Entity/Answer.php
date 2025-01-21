@@ -22,6 +22,9 @@ class Answer extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'answers')]
     private ?Question $question = null;
 
+    #[ORM\Column]
+    private ?int $position = null;
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -54,6 +57,18 @@ class Answer extends BaseEntity
     public function setQuestion(?Question $question): static
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): static
+    {
+        $this->position = $position;
 
         return $this;
     }
