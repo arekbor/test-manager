@@ -23,10 +23,11 @@ class Question extends BaseEntity
      * @var Collection<int, Answer>
      */
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     #[Assert\Count(min: 1)]
     #[Assert\All([
         new Type(Answer::class)
-    ])]
+    ])]   
     #[Assert\Valid()]
     private Collection $answers;
 
@@ -106,6 +107,17 @@ class Question extends BaseEntity
     {
         if ($this->modules->removeElement($module)) {
             $module->removeQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function updateAnswerPositions(): static
+    {
+        $position = 1;
+
+        foreach($this->answers as $answer) {
+            $answer->setPosition($position++);
         }
 
         return $this;

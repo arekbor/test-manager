@@ -38,7 +38,8 @@ final class QuestionForm extends AbstractController
             ->getForm()
             ->getData()
         ;
-        
+
+        $question->updateAnswerPositions();
         $question->addModule($this->moduleProp);
 
         $em->persist($question);
