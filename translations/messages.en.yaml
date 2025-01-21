@@ -143,7 +143,6 @@ data_table:
     lastname: Lastname
     workplace: Workplace
     dateOfBirth: Date of birth
-    moduleId: Module id
     expiration: Expiration date
     submission: Submission date
     test: Test
@@ -153,7 +152,6 @@ data_table:
     moduleTestCategory: Module test category
   actions: Actions
   details: Details
-  id: Id
 
 modal:
   title: Confirm
@@ -175,7 +173,6 @@ templates:
   settings:
     base:
       info:
-        id: Id
         email: E-mail
         timezone: System timezone
       nav:
@@ -196,7 +193,7 @@ templates:
     create:
       title: Create module
     base:
-      title: Module details %id%
+      title: Module details
       nav:
         general: General
         questions: Questions
@@ -205,11 +202,11 @@ templates:
       createTest: Create test
   video:
     details:
-      title: Video details %id%
+      title: Video details
       download: Download
   question:
     details:
-      title: Question details %id%
+      title: Question details
     create:
       title: Create question
   test:
@@ -217,7 +214,7 @@ templates:
       title: Create test
       info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
     details:
-      title: Test details %id%
+      title: Test details
       info: Edit the test assigned to the module ID %moduleId%.
   testSolve:
     notFound:
@@ -249,8 +246,8 @@ validator:
 twig:
   runtime:
     testMessage:
-      introductionMessageNotFound: Administrator didn't set a introduction message.
-      conclusionMessageNotFound: Administrator didn't set a conclusion message.
+      introductionMessageNotFound: The administrator has not configured an introduction message for the selected language.
+      conclusionMessageNotFound: The administrator has not configured a conclusion message for the selected language.
 
 en: English
 pl: Polish

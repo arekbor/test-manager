@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use Symfony\Component\Uid\Uuid;
+
 class TestAnswerSolve
 {
-    private int $answerId;
+    private Uuid $answerId;
 
     private string $content;
 
     private bool $chosen;
 
-    public function getAnswerId(): int
+    public function getAnswerId(): Uuid
     {
         return $this->answerId;
     }
 
-    public function setAnswerId(int $answerId): static
+    public function setAnswerId(Uuid $answerId): static
     {
         $this->answerId = $answerId;
 
