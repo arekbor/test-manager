@@ -1,7 +1,7 @@
 {% extends 'base.authenticated.html.twig' %}
 
 {% block title %} 
-    {{ 'templates.module.base.title'|trans({ '%id%': module.id }) }} 
+    {{ 'templates.module.base.title'|trans }} 
 {% endblock %}
 
 {% block container %}
@@ -12,7 +12,6 @@
             }),
             label: 'templates.module.base.nav.general'
         }) }}
-
 
         {{ component('NavLink', { 
             path: path('app_module_questions', {
