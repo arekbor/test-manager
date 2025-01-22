@@ -44,10 +44,10 @@ class TestSolveType extends AbstractType
                     ? [
                         'label' => 'form.type.testSolve.dateOfBirth.label',
                         'help' => 'form.type.testSolve.dateOfBirth.help'
-                        
                     ] : [
                         'label' => false,
-                        'attr' => ['class' => 'd-none']
+                        'attr' => ['class' => 'd-none'],
+                        'required' => false,
                     ]
             ))
             ->add('testQuestions', LiveCollectionType::class, [
@@ -58,7 +58,7 @@ class TestSolveType extends AbstractType
                 'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
-                    'data-action' => 'live#action:prevent',
+                    'data-action' => 'live#action:prevent test-solve-form#handleSubmit',
                     'data-live-action-param' => 'submit',
                 ]
             ])
