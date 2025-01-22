@@ -30,12 +30,7 @@ final class TestSolveForm extends AbstractController
     public function submit(): void
     {
         $this->submitForm();
-
-        $testSolve = $this
-            ->getForm()
-            ->getData()
-        ;
-
+        
         throw new NotImplementedException("Submit not implemented");
     }
 
