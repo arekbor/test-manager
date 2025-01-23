@@ -58,7 +58,7 @@ class TestSolveType extends AbstractType
                 'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
-                    'data-action' => 'live#action:prevent test-solve-form#handleSubmit',
+                    'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'submit',
                 ]
             ])
