@@ -7,7 +7,6 @@ use App\Model\TestMessageAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TestMessageRuntime implements RuntimeExtensionInterface
@@ -15,23 +14,18 @@ class TestMessageRuntime implements RuntimeExtensionInterface
     public function __construct(
         private AppSettingRepository $appSettingRepository,
         private AppSettingService $appSettingService,
-        private RequestStack $requestStack,
-        private TranslatorInterface $trans
+        private RequestStack $requestStack
     ) {
     }
 
-    public function getIntroductionMessage(): string
+    public function getIntroductionMessage(): ?string
     {
-        $formatedMessage = $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getIntroduction());
-
-        return $formatedMessage ?? $this->trans->trans('twig.runtime.testMessage.introductionMessageNotFound');
+        return $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getIntroduction());
     }
 
-    public function getConclusionMessage(): string
+    public function getConclusionMessage(): ?string
     {
-        $formatedMessage = $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getConclusion());
-
-        return $formatedMessage ?? $this->trans->trans('twig.runtime.testMessage.conclusionMessageNotFound');
+        return $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getConclusion());
     }
 
     private function formatMessage(callable $messageGetter): ?string 

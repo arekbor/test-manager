@@ -225,6 +225,9 @@ templates:
       title: Test not valid
       header: Test is not valid
       content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
+  components:
+    testSolveForm:
+      testMessagesNotFound: Administrator has not configured messages for the %language% language.
   goToModule: Module
 
 flash:
@@ -242,12 +245,6 @@ flash:
 validator:
   uniqueValuesInArray:
     message: Key %key% appears more than once.
-
-twig:
-  runtime:
-    testMessage:
-      introductionMessageNotFound: The administrator has not configured an introduction message for the selected language.
-      conclusionMessageNotFound: The administrator has not configured a conclusion message for the selected language.
 
 en: English
 pl: Polish

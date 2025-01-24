@@ -4,9 +4,19 @@
 >
     {{ form_start(form) }}
 
-    <div class="alert alert-info mt-2">
-        {{ introduction_message() }}
-    </div>
+    {% if not introduction_message() or not conclusion_message() %}
+        <div class="alert alert-danger mt-2">
+            <small>
+                {{ 'templates.components.testSolveForm.testMessagesNotFound'|trans({ 
+                    '%language%': app.request.getLocale()|trans|lower
+                }) }}
+            </small>
+        </div>
+    {% else %}
+        <div class="alert alert-info mt-2">
+            {{ introduction_message() }}
+        </div>
+    {% endif %}
 
     <div class="row mb-4">
         <div class="col-md-6">
@@ -65,9 +75,11 @@
         {% endfor %}
     </div>
 
-    <div class="alert alert-success">
-        {{ conclusion_message() }}
-    </div>
+    {% if conclusion_message() %}
+        <div class="alert alert-success">
+            {{ introduction_message() }}
+        </div>
+    {% endif %}
 
     <div class="d-grid">
         {{ form_row(form.submit) }}
