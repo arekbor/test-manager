@@ -16,7 +16,8 @@ class TestAnswerSolveType extends AbstractType
     {
         $builder
             ->add('chosen', CheckboxType::class, [
-                'label' => false
+                'label' => false,
+                'required' => false,
             ])
         ;
     }
