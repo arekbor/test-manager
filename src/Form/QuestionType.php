@@ -60,7 +60,10 @@ class QuestionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Question::class,
-            'submit_label' => 'Submit'
+            'submit_label' => 'Submit',
+            'attr' => [
+                'autocomplete' => 'off'
+            ]
         ]);
     }
 }
