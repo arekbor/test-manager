@@ -20,19 +20,18 @@ class TestMessageRuntime implements RuntimeExtensionInterface
 
     public function getIntroductionMessage(): ?string
     {
-        return $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getIntroduction());
+        return $this->getFormattedMessage(fn(TestMessageAppSetting $setting) => $setting->getIntroduction());
     }
 
     public function getConclusionMessage(): ?string
     {
-        return $this->formatMessage(fn(TestMessageAppSetting $setting) => $setting->getConclusion());
+        return $this->getFormattedMessage(fn(TestMessageAppSetting $setting) => $setting->getConclusion());
     }
 
-    private function formatMessage(callable $messageGetter): ?string 
+    private function getFormattedMessage(callable $messageGetter): ?string 
     {
-        $testMessageAppSetting = $this->getTestMessageAppSetting();
-        $text = $testMessageAppSetting ? $messageGetter($testMessageAppSetting) : null;
-        return $text ? nl2br(htmlspecialchars($text)) : null;
+        $setting = $this->getTestMessageAppSetting();
+        return $setting ? nl2br(htmlspecialchars($messageGetter($setting))) : null;
     }
 
     private function getTestMessageAppSetting(): ?TestMessageAppSetting 

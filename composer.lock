@@ -1377,16 +1377,16 @@
     },
     {
       "name": "kreyu/data-table-bundle",
-      "version": "v0.25.7",
+      "version": "v0.25.8",
       "source": {
         "type": "git",
         "url": "https://github.com/Kreyu/data-table-bundle.git",
-        "reference": "7e78e5399d565531586199a657d3c2d85bf272ff"
+        "reference": "dfc23fff9234fe3af4c73b60cb002b66c226b636"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/7e78e5399d565531586199a657d3c2d85bf272ff",
-        "reference": "7e78e5399d565531586199a657d3c2d85bf272ff",
+        "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/dfc23fff9234fe3af4c73b60cb002b66c226b636",
+        "reference": "dfc23fff9234fe3af4c73b60cb002b66c226b636",
         "shasum": ""
       },
       "require": {
@@ -1437,9 +1437,9 @@
       ],
       "support": {
         "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.7"
+        "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.8"
       },
-      "time": "2024-11-29T20:15:13+00:00"
+      "time": "2025-01-14T11:56:17+00:00"
     },
     {
       "name": "phpmailer/phpmailer",
