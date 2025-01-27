@@ -1,7 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ component('TestSolveForm', {
-        'testProp': test
-    }) }}
+    <div class="container">
+        {% if not introduction_message() or not conclusion_message() %}
+            <div class="alert alert-warning mt-2">
+                <small>
+                    {{ 'templates.testSolve.testMessagesNotFound'|trans({ 
+                        '%language%': app.request.getLocale()|trans|lower
+                    }) }}
+                </small>
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-2">
+                {{ introduction_message() }}
+            </div>
+        {% endif %}
+
+        <div class="row justify-content-center my-4">
+            {% for video in test.module.videos %}
+                <div class="col-12">
+                    <video 
+                        class="w-100 border rounded shadow-sm"
+                        controls
+                        src="{{ path('app_testsolve_video', { testId: test.id, videoId: video.id }) }}">
+                    </video>
+                </div>
+            {% endfor %}
+        </div>
+    
+        {{ component('TestSolveForm', {
+            'testProp': test
+        }) }}
+    
+        {% if conclusion_message() %}
+            <div class="alert alert-success">
+                {{ introduction_message() }}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -217,6 +217,7 @@ templates:
       title: Test details
       info: Edit the test assigned to the module ID %moduleId%.
   testSolve:
+    testMessagesNotFound: Administrator has not configured messages for the %language% language.
     notFound:
       title: Test not found
       header: Test Not Found
@@ -225,9 +226,6 @@ templates:
       title: Test not valid
       header: Test is not valid
       content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
-  components:
-    testSolveForm:
-      testMessagesNotFound: Administrator has not configured messages for the %language% language.
   goToModule: Module
 
 flash:
