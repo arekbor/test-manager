@@ -217,9 +217,9 @@ templates:
       title: Test details
       info: Edit the test assigned to the module ID %moduleId%.
   testSolve:
-    nextButton: Next
     introduction:
       notFoundMessage: Administrator has not configured introduction message for the %language% language.
+      goToTest: Next
     conclusion:
       notFoundMessage: Administrator has not configured conclusion message for the %language% language.
     clause:
