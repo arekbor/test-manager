@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Attribute\IgnoreLocaleSession;
 use App\Attribute\TestVerify;
 use App\Entity\Test;
 use App\Entity\Video;
@@ -22,7 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestSolveController extends AbstractController
 {
     #[Route('/solve/{id}')]
-    #[IgnoreLocaleSession]
     #[TestVerify]
     public function solve(?Test $test): Response
     {
@@ -32,7 +30,6 @@ class TestSolveController extends AbstractController
     }
 
     #[Route('/introduction/{id}')]
-    #[IgnoreLocaleSession]
     #[TestVerify]
     public function introduction(?Test $test): Response
     {
@@ -42,21 +39,18 @@ class TestSolveController extends AbstractController
     }
 
     #[Route('/conclusion')]
-    #[IgnoreLocaleSession]
     public function conclusion(): Response
     {
         return $this->render('/testSolve/conclusion.html.twig');
     }
 
     #[Route('/clause')]
-    #[IgnoreLocaleSession]
     public function clause(): Response
     {
         return $this->render('/testSolve/clause.html.twig');
     }
 
     #[Route('/video/{testId}/{videoId}')]
-    #[IgnoreLocaleSession]
     #[TestVerify]
     public function video(
         #[MapEntity(id: 'testId')] Test $test,
@@ -73,14 +67,12 @@ class TestSolveController extends AbstractController
     }
 
     #[Route('/notFound')]
-    #[IgnoreLocaleSession]
     public function notFound(): Response 
     {
         return $this->render('/testSolve/notFound.html.twig');
     }
 
     #[Route('/notValid')]
-    #[IgnoreLocaleSession]
     public function notValid(): Response 
     {
         return $this->render('/testSolve/notValid.html.twig');
