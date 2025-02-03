@@ -1,19 +1,10 @@
 {% extends 'testSolve/base.html.twig' %}
 
 {% block wrapper %}
-    {% if not introduction_message() %}
-        <div class="alert alert-warning">
-            <small>
-                {{ 'templates.testSolve.introduction.notFoundMessage'|trans({ 
-                    '%language%': app.request.getLocale()|trans|lower
-                }) }}
-            </small>
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            {{ introduction_message() }}
-        </div>
-    {% endif %}
+    {{ component('TestMessage', {
+        'message': introduction_message(),
+        'notFoundMessage': 'templates.testSolve.introduction.notFoundMessage'
+    }) }}
 
     <a 
         class="btn btn-success" 

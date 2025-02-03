@@ -1,0 +1,13 @@
+<div {{ attributes }}>
+    {% if not message %}
+        <div class="alert alert-warning">
+            <small>
+                {{ notFoundMessage|trans({ '%language%': app.request.getLocale()|trans|lower }) }}
+            </small>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endif %}
+</div>

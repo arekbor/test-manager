@@ -1,17 +1,8 @@
 {% extends 'testSolve/base.html.twig' %}
 
 {% block wrapper %}
-    {% if not conclusion_message() %}
-        <div class="alert alert-warning">
-            <small>
-                {{ 'templates.testSolve.conclusion.notFoundMessage'|trans({ 
-                    '%language%': app.request.getLocale()|trans|lower
-                }) }}
-            </small>
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            {{ conclusion_message() }}
-        </div>
-    {% endif %}
+    {{ component('TestMessage', {
+        'message': conclusion_message(),
+        'notFoundMessage': 'templates.testSolve.conclusion.notFoundMessage'
+    }) }}
 {% endblock %}

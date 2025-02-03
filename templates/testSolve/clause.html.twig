@@ -1,17 +1,8 @@
 {% extends 'testSolve/base.html.twig' %}
 
 {% block wrapper %}
-    {% if not clause() %}
-        <div class="alert alert-warning">
-            <small>
-                {{ 'templates.testSolve.clause.notFoundMessage'|trans({ 
-                    '%language%': app.request.getLocale()|trans|lower
-                }) }}
-            </small>
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            {{ clause() }}
-        </div>
-    {% endif %}
+    {{ component('TestMessage', {
+        'message': clause(),
+        'notFoundMessage': 'templates.testSolve.clause.notFoundMessage'
+    }) }}
 {% endblock %}
