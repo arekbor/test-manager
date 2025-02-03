@@ -10,7 +10,7 @@ use App\Exception\NotFoundException;
 use App\Form\TestSolveType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -27,11 +27,11 @@ final class TestSolveForm extends AbstractController
     public Test $testProp;
 
     #[LiveAction]
-    public function submit(): void
+    public function submit(): Response
     {
         $this->submitForm();
         
-        throw new NotImplementedException("Submit not implemented");
+        return $this->redirectToRoute('app_testsolve_conclusion');
     }
 
     protected function instantiateForm(): FormInterface

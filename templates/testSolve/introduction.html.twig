@@ -1,0 +1,16 @@
+{% extends 'testSolve/base.html.twig' %}
+
+{% block wrapper %}
+    {{ component('TestMessage', {
+        'message': introduction_message(),
+        'notFoundMessage': 'templates.testSolve.introduction.notFoundMessage'
+    }) }}
+
+    <a 
+        class="btn btn-success" 
+        href="{{ path('app_testsolve_solve', { id: test.id }) }}" 
+        role="button"
+    >
+        {{ 'templates.testSolve.introduction.goToTest'|trans }}
+    </a>
+{% endblock %}

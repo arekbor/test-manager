@@ -217,7 +217,13 @@ templates:
       title: Test details
       info: Edit the test assigned to the module ID %moduleId%.
   testSolve:
-    testMessagesNotFound: Administrator has not configured messages for the %language% language.
+    introduction:
+      notFoundMessage: Administrator has not configured introduction message for the %language% language.
+      goToTest: Next
+    conclusion:
+      notFoundMessage: Administrator has not configured conclusion message for the %language% language.
+    clause:
+      notFoundMessage: Administrator has not configured clause message for the %language% language.
     notFound:
       title: Test not found
       header: Test Not Found

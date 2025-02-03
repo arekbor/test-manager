@@ -45,6 +45,11 @@ class TestAppSetting
         return $this->testMessages;
     }
 
+    public function getTestMessageAppSettingByLanguage(string $language): ?TestMessageAppSetting
+    {
+        return ArrayHelper::findFirstByProperty($this->testMessages, 'getLanguage', $language);
+    }
+
     public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
         ArrayHelper::addItem($this->testMessages, $testMessageAppSetting);
@@ -52,7 +57,6 @@ class TestAppSetting
         return $this;
     }
 
-    
     public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
     {
         ArrayHelper::removeItem($this->testMessages, $testMessageAppSetting);
@@ -63,6 +67,11 @@ class TestAppSetting
     public function getTestClauses(): array
     {
         return $this->testClauses;
+    }
+
+    public function getTestClauseAppSettingByLanguage(string $language): ?TestClauseAppSetting
+    {
+        return ArrayHelper::findFirstByProperty($this->testClauses, 'getLanguage', $language);
     }
 
     public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
