@@ -30,6 +30,9 @@ class TestSolve
     #[Assert\Valid]
     private array $testQuestions;
 
+    #[Assert\IsTrue]
+    private bool $consent;
+
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -98,6 +101,18 @@ class TestSolve
     public function setTestQuestions(array $testQuestions): static
     {
         $this->testQuestions = $testQuestions;
+
+        return $this;
+    }
+
+    public function isConsent(): bool
+    {
+        return $this->consent;
+    }
+
+    public function setConsent(bool $consent): static
+    {
+        $this->consent = $consent;
 
         return $this;
     }

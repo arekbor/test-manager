@@ -6,17 +6,26 @@ namespace App\Form;
 
 use App\Model\TestSolve;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class TestSolveType extends AbstractType
 {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $trans,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -55,6 +64,16 @@ class TestSolveType extends AbstractType
             ->add('testQuestions', LiveCollectionType::class, [
                 'label' => false,
                 'entry_type' => TestQuestionSolveType::class
+            ])
+            ->add('consent', CheckboxType::class, [
+                'label' => 'form.type.testSolve.consent.label',
+                'label_html' => true,
+                'label_translation_parameters' => [
+                    '%terms_link%' => '<a href="' 
+                    . $this->urlGenerator->generate('app_testsolve_clause') 
+                    . '" target="_blank">' . $this->trans->trans('form.type.testSolve.consent.terms') 
+                    . '</a>',
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'form.submit.label',

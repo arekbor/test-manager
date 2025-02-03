@@ -30,6 +30,9 @@ form:
       dateOfBirth:
         label: Date of birth
         help: Enter your date of birth.
+      consent:
+        label: I've read and accept the %terms_link%
+        terms: terms of service
     testAppSetting:
       expirationDaysOffset:
         label: Days to add to expiration date

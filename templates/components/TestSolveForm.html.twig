@@ -25,6 +25,10 @@
         {{ form_row(form.dateOfBirth) }}
     </div>
 
+    <div class="col-12">
+        {{ form_row(form.consent) }}
+    </div>
+
     <div class="my-4">
         {% for question in form.testQuestions %}
             <div class="card mb-4 shadow-sm">
