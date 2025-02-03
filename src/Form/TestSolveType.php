@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class TestSolveType extends AbstractType
@@ -43,7 +44,8 @@ class TestSolveType extends AbstractType
                 $options['test_category'] === 'periodic'
                     ? [
                         'label' => 'form.type.testSolve.dateOfBirth.label',
-                        'help' => 'form.type.testSolve.dateOfBirth.help'
+                        'help' => 'form.type.testSolve.dateOfBirth.help',
+                        'constraints' => [new NotBlank()]
                     ] : [
                         'label' => false,
                         'attr' => ['class' => 'd-none'],

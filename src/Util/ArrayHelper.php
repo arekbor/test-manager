@@ -21,4 +21,10 @@ class ArrayHelper
             $array = array_values($array);
         }
     }
+
+    public static function findFirstByProperty(array $array, string $method, mixed $value): mixed
+    {
+        $filtered = array_filter($array, fn($item) => method_exists($item, $method) && $item->$method() === $value);
+        return $filtered ? reset($filtered) : null;
+    }
 }

@@ -1,0 +1,25 @@
+{% extends 'testSolve/base.html.twig' %}
+
+{% block wrapper %}
+    {% if not introduction_message() %}
+        <div class="alert alert-warning">
+            <small>
+                {{ 'templates.testSolve.introduction.notFoundMessage'|trans({ 
+                    '%language%': app.request.getLocale()|trans|lower
+                }) }}
+            </small>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            {{ introduction_message() }}
+        </div>
+    {% endif %}
+
+    <a 
+        class="btn btn-success" 
+        href="{{ path('app_testsolve_solve', { id: test.id }) }}" 
+        role="button"
+    >
+        {{ 'templates.testSolve.nextButton'|trans }}
+    </a>
+{% endblock %}

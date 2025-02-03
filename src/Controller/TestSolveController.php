@@ -31,6 +31,30 @@ class TestSolveController extends AbstractController
         ]);
     }
 
+    #[Route('/introduction/{id}')]
+    #[IgnoreLocaleSession]
+    #[TestVerify]
+    public function introduction(?Test $test): Response
+    {
+        return $this->render('/testSolve/introduction.html.twig', [
+            'test' => $test
+        ]);
+    }
+
+    #[Route('/conclusion')]
+    #[IgnoreLocaleSession]
+    public function conclusion(): Response
+    {
+        return $this->render('/testSolve/conclusion.html.twig');
+    }
+
+    #[Route('/clause')]
+    #[IgnoreLocaleSession]
+    public function clause(): Response
+    {
+        return $this->render('/testSolve/clause.html.twig');
+    }
+
     #[Route('/video/{testId}/{videoId}')]
     #[IgnoreLocaleSession]
     #[TestVerify]
