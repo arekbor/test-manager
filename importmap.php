@@ -19,9 +19,6 @@ return [
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
-    'sortablejs' => [
-        'version' => '1.15.3',
-    ],
     'bootstrap' => [
         'version' => '5.3.3',
     ],
@@ -39,6 +36,9 @@ return [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.12',
+    ],
+    'sortablejs' => [
+        'version' => '1.15.6',
     ],
 ];

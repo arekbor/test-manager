@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d312fab9ab325de2ecb83daacb8d4c2",
+    "content-hash": "065a1ba0f2d4b1cc920c9600e54e2753",
     "packages": [
         {
             "name": "composer/semver",
@@ -1367,16 +1367,16 @@
         },
         {
             "name": "kreyu/data-table-bundle",
-            "version": "v0.25.8",
+            "version": "v0.26.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kreyu/data-table-bundle.git",
-                "reference": "dfc23fff9234fe3af4c73b60cb002b66c226b636"
+                "reference": "b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/dfc23fff9234fe3af4c73b60cb002b66c226b636",
-                "reference": "dfc23fff9234fe3af4c73b60cb002b66c226b636",
+                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc",
+                "reference": "b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc",
                 "shasum": ""
             },
             "require": {
@@ -1427,9 +1427,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.25.8"
+                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.26.2"
             },
-            "time": "2025-01-14T11:56:17+00:00"
+            "time": "2025-01-22T17:11:47+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

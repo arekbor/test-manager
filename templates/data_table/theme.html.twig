@@ -1,6 +1,6 @@
-{% extends '@KreyuDataTable/themes/base.html.twig' %}
+{% extends '@KreyuDataTable/themes/bootstrap_5.html.twig' %}
 
-{% block action_button_group_value %}
+{% block action_button_group_control %}
   <div 
     class="btn-group" 
     role="group" 
@@ -17,7 +17,7 @@
   </div>
 {% endblock %}
 
-{% block action_upload_file_value %}
+{% block action_upload_file_control %}
   <button 
     {% with { attr } %}
       {{ block('attributes') }}
