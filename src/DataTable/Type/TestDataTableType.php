@@ -9,6 +9,7 @@ use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Test;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
+use Kreyu\Bundle\DataTableBundle\Column\Type\DateColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\DateTimeColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
@@ -94,7 +95,7 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('workplace', TextColumnType::class, [
                 'label' => 'data_table.test.workplace'
             ])
-            ->addColumn('dateOfBirth', DateTimeColumnType::class, [
+            ->addColumn('dateOfBirth', DateColumnType::class, [
                 'label' => 'data_table.test.dateOfBirth'
             ])
             ->addColumn('expiration', DateTimeColumnType::class, [

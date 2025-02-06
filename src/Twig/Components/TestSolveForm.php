@@ -8,6 +8,8 @@ use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Form\TestSolveType;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +28,30 @@ final class TestSolveForm extends AbstractController
     #[LiveProp]
     public Test $testProp;
 
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
+    }
+
     #[LiveAction]
     public function submit(): Response
     {
         $this->submitForm();
+
+        $testSolve = $this
+            ->getForm()
+            ->getData()
+        ;
+
+        $this->testProp->setSubmission(new DateTime());
+        $this->testProp->setFirstname($testSolve->getFirstname());
+        $this->testProp->setLastname($testSolve->getLastname());
+        $this->testProp->setEmail($testSolve->getEmail());
+        $this->testProp->setWorkplace($testSolve->getWorkplace());
+        $this->testProp->setDateOfBirth($testSolve->getDateOfBirth());
+
+        $this->em->persist($this->testProp);
+        $this->em->flush();
         
         return $this->redirectToRoute('app_testsolve_conclusion');
     }
