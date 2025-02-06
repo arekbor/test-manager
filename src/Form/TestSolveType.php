@@ -63,7 +63,9 @@ class TestSolveType extends AbstractType
             ))
             ->add('testQuestions', LiveCollectionType::class, [
                 'label' => false,
-                'entry_type' => TestQuestionSolveType::class
+                'entry_type' => TestQuestionSolveType::class,
+                'allow_add' => false,
+                'allow_delete' => false
             ])
             ->add('consent', CheckboxType::class, [
                 'label' => 'form.type.testSolve.consent.label',
