@@ -37,7 +37,7 @@ class VideoController extends AbstractController
         $video = new Video();
 
         $file = $request->files->get('file');
-        $video->setVideoFile($file);
+        $video->setFile($file);
         $video->addModule($module);
 
         $errors = $validator->validate($video);
@@ -62,7 +62,7 @@ class VideoController extends AbstractController
         FileHandler $fileHandler,
     ): BinaryFileResponse
     {
-        $file = $fileHandler->getFile($video, 'videoFile');
+        $file = $fileHandler->getFile($video, 'file');
 
         return $this->file($file);
     }

@@ -3,5 +3,8 @@ vich_uploader:
 
   mappings:
     videos:
-      upload_destination: "%app.upload.videos.path%"
+      upload_destination: "%app.videos.path%"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+    testResults:
+      upload_destination: "%app.testResults.path%"
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
