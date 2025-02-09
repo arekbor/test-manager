@@ -38,6 +38,9 @@ class Test extends BaseEntity
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
+    #[ORM\OneToOne(inversedBy: 'test', cascade: ['persist', 'remove'])]
+    private ?TestResult $testResult = null;
+
     public function getExpiration(): ?\DateTimeInterface
     {
         return $this->expiration;
@@ -149,6 +152,18 @@ class Test extends BaseEntity
     public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getTestResult(): ?TestResult
+    {
+        return $this->testResult;
+    }
+
+    public function setTestResult(?TestResult $testResult): static
+    {
+        $this->testResult = $testResult;
 
         return $this;
     }

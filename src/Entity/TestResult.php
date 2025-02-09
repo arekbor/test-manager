@@ -1,39 +1,24 @@
-<?php 
-
-declare(strict_types=1);
+<?php
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\TestResultRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: VideoRepository::class)]
+#[ORM\Entity(repositoryClass: TestResultRepository::class)]
 #[Vich\Uploadable]
-class Video extends BaseEntity
-{   
+class TestResult extends BaseEntity
+{
     #[Vich\UploadableField(
-        mapping: 'videos', 
+        mapping: 'testResults', 
         fileNameProperty: 'fileName',
         size: 'size',
         mimeType: 'mimeType',
         originalName: 'originalName'
     )]
-    #[Assert\File(
-        extensions: ['mp4', 'mov'],
-        mimeTypes: ['video/mp4', 'video/quicktime']
-    )]
     private ?File $file = null;
-
-    /**
-     * @var Collection<int, Module>
-     */
-    #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'videos')]
-    private Collection $modules;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fileName = null;
@@ -47,34 +32,8 @@ class Video extends BaseEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $originalName = null;
 
-    public function __construct()
-    {
-        $this->modules = new ArrayCollection();
-    }
-    
-    /**
-     * @return Collection<int, Module>
-     */
-    public function getModules(): Collection
-    {
-        return $this->modules;
-    }
-
-    public function addModule(Module $module): static
-    {
-        if (!$this->modules->contains($module)) {
-            $this->modules->add($module);
-        }
-
-        return $this;
-    }
-
-    public function removeModule(Module $module): static
-    {
-        $this->modules->removeElement($module);
-
-        return $this;
-    }
+    #[ORM\OneToOne(mappedBy: 'testResult', cascade: ['persist', 'remove'])]
+    private ?Test $test = null;
 
     public function getFile(): ?File
     {
@@ -130,6 +89,28 @@ class Video extends BaseEntity
     public function setOriginalName(?string $originalName): static
     {
         $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    public function getTest(): ?Test
+    {
+        return $this->test;
+    }
+
+    public function setTest(?Test $test): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($test === null && $this->test !== null) {
+            $this->test->setTestResult(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($test !== null && $test->getTestResult() !== $this) {
+            $test->setTestResult($this);
+        }
+
+        $this->test = $test;
 
         return $this;
     }

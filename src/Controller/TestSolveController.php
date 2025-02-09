@@ -62,7 +62,7 @@ class TestSolveController extends AbstractController
             throw new AccessDeniedHttpException();
         }   
 
-        $file = $fileHandler->getFile($video, 'videoFile');
+        $file = $fileHandler->getFile($video, 'file');
         return $this->file($file);
     }
 
