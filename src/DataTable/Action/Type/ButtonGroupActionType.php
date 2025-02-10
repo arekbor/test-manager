@@ -15,9 +15,9 @@ final class ButtonGroupActionType extends AbstractActionType
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
         $buttons = $options['buttons'];
+
         if ($view->parent instanceof ColumnValueView) {
             $value = $view->parent->value;
-            
             foreach ($buttons as $index => $item) {
                 if (!empty($item['href']) && is_callable($item['href'])) {
                     $buttons[$index]['href'] = $item['href']($value);
@@ -39,7 +39,7 @@ final class ButtonGroupActionType extends AbstractActionType
         $resolver
             ->setDefaults(['buttons' => []])
             ->setAllowedTypes('buttons', 'array')
-            ->setNormalizer('buttons', function (OptionsResolver $resolver, array $buttons): array {
+            ->setNormalizer('buttons', function ($res, array $buttons): array {
                 $buttonResolver = (new OptionsResolver())
                     ->setDefaults([
                         'label' => '',
@@ -50,12 +50,9 @@ final class ButtonGroupActionType extends AbstractActionType
                     ->setAllowedTypes('label', 'string')
                     ->setAllowedTypes('visible', ['bool', 'callable'])
                     ->setAllowedTypes('href', ['null', 'string', 'callable'])
-                    ->setAllowedTypes('attr', 'array')
-                ;
-
-                return array_map(function ($button) use ($buttonResolver) {
-                    return $buttonResolver->resolve($button);
-                }, $buttons);
+                    ->setAllowedTypes('attr', 'array');
+            
+                return array_map(fn($button) => $buttonResolver->resolve($button), $buttons);
             })
         ;
     }
