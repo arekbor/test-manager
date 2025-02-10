@@ -53,6 +53,9 @@ class TestDataTableType extends AbstractDataTableType
                                 ],
                                 [
                                     'label' => 'data_table.test.test',
+                                    'visible' => function (Test $test): bool {
+                                        return $test->isValid();
+                                    },
                                     'href' => function(Test $test): string {
                                         return $this->urlGenerator->generate('app_testsolve_introduction', [
                                             '_locale' => $test->getModule()->getLanguage(),
@@ -60,6 +63,25 @@ class TestDataTableType extends AbstractDataTableType
                                         ]);
                                     }
                                 ],
+                                [
+                                    'label' => 'data_table.test.testResult',
+                                    'visible' => function (Test $test): bool {
+                                        return $test->getTestResult() !== null;
+                                    },
+                                    'href' => function(Test $test): ?string {
+                                        $testResult = $test->getTestResult();
+                                        if ($testResult) {
+                                            return $this->urlGenerator->generate('app_testresult_download', [
+                                                'id' => $testResult->getId()
+                                            ]);
+                                        }
+
+                                        return null;
+                                    },
+                                    'attr' => [
+                                        'data-turbo' => 'false'
+                                    ]
+                                ]
                             ]
                         ]
                     ]

@@ -14,34 +14,49 @@ final class ButtonGroupActionType extends AbstractActionType
 {
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
+        $buttons = $options['buttons'];
         if ($view->parent instanceof ColumnValueView) {
             $value = $view->parent->value;
-
-            foreach ($options['buttons'] as $index => $item) {
-                if (empty($item['href'])) {
-                    break;
+            
+            foreach ($buttons as $index => $item) {
+                if (!empty($item['href']) && is_callable($item['href'])) {
+                    $buttons[$index]['href'] = $item['href']($value);
                 }
 
-                if (!is_callable($item['href'])) {
-                    break;
+                if (!empty($item['visible']) && is_callable($item['visible'])) {
+                    $buttons[$index]['visible'] = $item['visible']($value);
                 }
-
-                $options['buttons'][$index]['href'] = $item['href']($value);
             }
         }
 
         $view->vars = array_replace($view->vars, [
-            'buttons' => $options['buttons'],
+            'buttons' => $buttons,
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefaults([
-                'buttons' => []
-            ])
+            ->setDefaults(['buttons' => []])
             ->setAllowedTypes('buttons', 'array')
+            ->setNormalizer('buttons', function (OptionsResolver $resolver, array $buttons): array {
+                $buttonResolver = (new OptionsResolver())
+                    ->setDefaults([
+                        'label' => '',
+                        'visible' => true,
+                        'href' => null,
+                        'attr' => []
+                    ])
+                    ->setAllowedTypes('label', 'string')
+                    ->setAllowedTypes('visible', ['bool', 'callable'])
+                    ->setAllowedTypes('href', ['null', 'string', 'callable'])
+                    ->setAllowedTypes('attr', 'array')
+                ;
+
+                return array_map(function ($button) use ($buttonResolver) {
+                    return $buttonResolver->resolve($button);
+                }, $buttons);
+            })
         ;
     }
 }
