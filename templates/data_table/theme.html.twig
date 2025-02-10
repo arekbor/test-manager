@@ -8,8 +8,11 @@
     {% for button in buttons %}
       <a 
         href="{{ button.href|default('#') }}" 
-        class="btn btn-primary mx-1 text-nowrap" 
+        class="btn btn-primary mx-1 text-nowrap {% if not button.visible %}d-none{% endif %}" 
         role="button" 
+        {% for attr, value in button.attr %}
+          {{ attr }}="{{ value }}"
+        {% endfor %}
       >
         {{ button.label|default('')|trans }}
       </a>

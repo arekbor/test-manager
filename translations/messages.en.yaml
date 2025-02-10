@@ -153,6 +153,7 @@ data_table:
     moduleLanguage: Module language
     moduleName: Module name
     moduleTestCategory: Module test category
+    testResult: Test result
   actions: Actions
   details: Details
 
