@@ -6,8 +6,8 @@ namespace App\Twig\Components;
 
 use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
-use App\Entity\TestResult;
 use App\Exception\NotFoundException;
+use App\Factory\TestResultFactory;
 use App\Form\TestSolveType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +19,6 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -52,7 +51,8 @@ final class TestSolveForm extends AbstractController
         $this->testProp->setWorkplace($testSolve->getWorkplace());
         $this->testProp->setDateOfBirth($testSolve->getDateOfBirth());
 
-        $testResult = $this->uploadCsv($this->testProp);
+        $testResult = (new TestResultFactory)
+            ->create($this->testProp);
 
         $this->em->persist($this->testProp);
         $this->em->persist($testResult);
@@ -72,37 +72,5 @@ final class TestSolveForm extends AbstractController
         return $this->createForm(TestSolveType::class, $testSolve, [
             'test_category' => $testCategory
         ]);
-    }
-
-    private function uploadCsv(Test $test): TestResult
-    {
-        $testResult = new TestResult();
-        
-        $list = [
-            ['email', $test->getEmail()],
-            ['first name', $test->getFirstname()],
-            ['last name', $test->getLastname()],
-            ['work place', $test->getWorkplace()],
-            ['submission', date_format($test->getSubmission(), "Y/m/d H:i:s")],
-            ['questions count', count($test->getModule()->getQuestions())],
-        ];
-        
-        // Tymczasowy plik
-        $tempFilePath = sys_get_temp_dir() . '/test-result.csv';
-        
-        $fp = fopen($tempFilePath, 'w');
-        
-        foreach ($list as $line) {
-            fputcsv($fp, $line, ',');
-        }
-        
-        fclose($fp);
-
-        $uploadedFile = new UploadedFile($tempFilePath, 'test-result.csv', 'text/csv', null, true);
-
-        $testResult->setFile($uploadedFile);
-        $testResult->setTest($test);
-
-        return $testResult;
     }
 }
