@@ -41,6 +41,10 @@ class Test extends BaseEntity
     #[ORM\OneToOne(inversedBy: 'test', cascade: ['persist', 'remove'])]
     private ?TestResult $testResult = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SecurityUser $creator = null;
+
     public function getExpiration(): ?\DateTimeInterface
     {
         return $this->expiration;
@@ -164,6 +168,18 @@ class Test extends BaseEntity
     public function setTestResult(?TestResult $testResult): static
     {
         $this->testResult = $testResult;
+
+        return $this;
+    }
+
+    public function getCreator(): ?SecurityUser
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?SecurityUser $creator): static
+    {
+        $this->creator = $creator;
 
         return $this;
     }

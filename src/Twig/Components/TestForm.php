@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig\Components;
 
 use App\Entity\Module;
+use App\Entity\SecurityUser;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Form\TestType;
@@ -14,6 +15,7 @@ use App\Service\AppSettingService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -43,6 +45,7 @@ final class TestForm extends AbstractController
     #[LiveAction]
     public function submit(
         EntityManagerInterface $em,
+        Security $security
     ): Response
     {
         $this->submitForm();
@@ -53,6 +56,11 @@ final class TestForm extends AbstractController
         ;
 
         $test->setModule($this->moduleProp);
+
+        $creator = $security->getUser();
+        if ($creator instanceof SecurityUser) {
+            $test->setCreator($creator);
+        }
 
         $em->persist($test);
         $em->flush();
