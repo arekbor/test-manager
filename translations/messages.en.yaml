@@ -147,6 +147,7 @@ data_table:
     workplace: Workplace
     dateOfBirth: Date of birth
     expiration: Expiration date
+    start: Start date
     submission: Submission date
     test: Test
     module: Module

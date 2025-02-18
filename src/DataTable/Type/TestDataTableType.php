@@ -123,6 +123,9 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('expiration', DateTimeColumnType::class, [
                 'label' => 'data_table.test.expiration'
             ])
+            ->addColumn('start', DateTimeColumnType::class, [
+                'label' => 'data_table.test.start'
+            ])
             ->addColumn('submission', DateTimeColumnType::class, [
                 'label' => 'data_table.test.submission'
             ])

@@ -18,6 +18,9 @@ class Test extends BaseEntity
     private ?\DateTimeInterface $expiration = null;
 
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
+    private ?\DateTimeInterface $start = null;
+
+    #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
     private ?\DateTimeInterface $submission = null;
 
     #[ORM\ManyToOne]
@@ -53,6 +56,18 @@ class Test extends BaseEntity
     public function setExpiration(?\DateTimeInterface $expiration): static
     {
         $this->expiration = $expiration;
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(?\DateTimeInterface $start): static
+    {
+        $this->start = $start;
 
         return $this;
     }

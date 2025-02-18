@@ -19,6 +19,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PreMount;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -27,11 +28,20 @@ final class TestSolveForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
+    public ?DateTime $start = null;
+
+    #[LiveProp]
     public Test $testProp;
 
     public function __construct(
         private EntityManagerInterface $em,
     ) {
+    }
+
+    #[PreMount]
+    public function preMount(): void
+    {
+        $this->start = new DateTime();
     }
 
     #[LiveAction]
@@ -44,6 +54,7 @@ final class TestSolveForm extends AbstractController
             ->getData()
         ;
 
+        $this->testProp->setStart($this->start);
         $this->testProp->setSubmission(new DateTime());
         $this->testProp->setFirstname($testSolve->getFirstname());
         $this->testProp->setLastname($testSolve->getLastname());
