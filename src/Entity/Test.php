@@ -48,6 +48,9 @@ class Test extends BaseEntity
     #[ORM\JoinColumn(nullable: false)]
     private ?SecurityUser $creator = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $score = null;
+
     public function getExpiration(): ?\DateTimeInterface
     {
         return $this->expiration;
@@ -195,6 +198,18 @@ class Test extends BaseEntity
     public function setCreator(?SecurityUser $creator): static
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore(?int $score): static
+    {
+        $this->score = $score;
 
         return $this;
     }

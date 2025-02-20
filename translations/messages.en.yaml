@@ -149,6 +149,7 @@ data_table:
     expiration: Expiration date
     start: Start date
     submission: Submission date
+    score: Score
     test: Test
     module: Module
     moduleLanguage: Module language

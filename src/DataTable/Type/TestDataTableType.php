@@ -7,10 +7,12 @@ namespace App\DataTable\Type;
 use App\DataTable\Action\Type\ButtonGroupActionType;
 use App\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Test;
+use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\DateColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\DateTimeColumnType;
+use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -129,6 +131,9 @@ class TestDataTableType extends AbstractDataTableType
             ->addColumn('submission', DateTimeColumnType::class, [
                 'label' => 'data_table.test.submission'
             ])
+            ->addColumn('score', NumberColumnType::class, [
+                'label' => 'data_table.test.score'
+            ])
             ->addFilter('email', StringFilterType::class, [
                 'label' => 'data_table.test.email',
                 'lower' => true
@@ -149,6 +154,9 @@ class TestDataTableType extends AbstractDataTableType
                 'label' => 'data_table.test.moduleName',
                 'query_path' => 'module.name',
                 'lower' => true
+            ])
+            ->addFilter('score', NumericFilterType::class, [
+                'label' => 'data_table.test.score'
             ])
         ;
     }
