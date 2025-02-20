@@ -9,6 +9,7 @@ use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Factory\TestResultFactory;
 use App\Form\TestSolveType;
+use App\Service\TestScoringService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,7 @@ final class TestSolveForm extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em,
+        private TestScoringService $testScoringService
     ) {
     }
 
@@ -49,21 +51,23 @@ final class TestSolveForm extends AbstractController
     {
         $this->submitForm();
 
-        $testSolve = $this
-            ->getForm()
-            ->getData()
+        $testSolve = $this->getForm()->getData();
+
+        $questions = $this->testProp->getModule()->getQuestions();
+        $score = $this->testScoringService->calculate($questions, $testSolve);
+
+        $this->testProp
+            ->setStart($this->start)
+            ->setSubmission(new DateTime())
+            ->setFirstname($testSolve->getFirstname())
+            ->setLastname($testSolve->getLastname())
+            ->setEmail($testSolve->getEmail())
+            ->setWorkplace($testSolve->getWorkplace())
+            ->setDateOfBirth($testSolve->getDateOfBirth())
+            ->setScore($score)
         ;
 
-        $this->testProp->setStart($this->start);
-        $this->testProp->setSubmission(new DateTime());
-        $this->testProp->setFirstname($testSolve->getFirstname());
-        $this->testProp->setLastname($testSolve->getLastname());
-        $this->testProp->setEmail($testSolve->getEmail());
-        $this->testProp->setWorkplace($testSolve->getWorkplace());
-        $this->testProp->setDateOfBirth($testSolve->getDateOfBirth());
-
-        $testResult = (new TestResultFactory)
-            ->create($this->testProp);
+        $testResult = (new TestResultFactory)->create($this->testProp);
 
         $this->em->persist($this->testProp);
         $this->em->persist($testResult);

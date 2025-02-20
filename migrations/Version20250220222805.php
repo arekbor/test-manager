@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250218205744 extends AbstractMigration
+final class Version20250220222805 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -39,7 +39,7 @@ final class Version20250218205744 extends AbstractMigration
         $this->addSql('CREATE TABLE security_user (id UUID NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON security_user (email)');
         $this->addSql('COMMENT ON COLUMN security_user.id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE test (id UUID NOT NULL, module_id UUID DEFAULT NULL, test_result_id UUID DEFAULT NULL, creator_id UUID NOT NULL, expiration TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, start TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, submission TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, workplace VARCHAR(255) DEFAULT NULL, date_of_birth DATE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE test (id UUID NOT NULL, module_id UUID DEFAULT NULL, test_result_id UUID DEFAULT NULL, creator_id UUID NOT NULL, expiration TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, start TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, submission TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, workplace VARCHAR(255) DEFAULT NULL, date_of_birth DATE DEFAULT NULL, score INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D87F7E0CAFC2B591 ON test (module_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_D87F7E0C853A2189 ON test (test_result_id)');
         $this->addSql('CREATE INDEX IDX_D87F7E0C61220EA6 ON test (creator_id)');

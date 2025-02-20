@@ -19,7 +19,8 @@ class QuestionTest extends TestCase
         $question = (new Question())
             ->addAnswer($answer1)
             ->addAnswer($answer2)
-            ->addAnswer($answer3);
+            ->addAnswer($answer3)
+        ;
 
         $question->updateAnswerPositions();
 
@@ -37,7 +38,8 @@ class QuestionTest extends TestCase
         $question = (new Question())
             ->addAnswer($answer1)
             ->addAnswer($answer2)
-            ->addAnswer($answer3);
+            ->addAnswer($answer3)
+        ;
 
         $question->removeAnswer($answer2);
         $question->updateAnswerPositions();
@@ -55,7 +57,8 @@ class QuestionTest extends TestCase
         $question = (new Question())
             ->addAnswer($answer1)
             ->addAnswer($answer2)
-            ->addAnswer($answer3);
+            ->addAnswer($answer3)
+        ;
 
         $question->updateAnswerPositions();
 
@@ -73,7 +76,8 @@ class QuestionTest extends TestCase
         (new Question())
             ->addAnswer($answer1)
             ->addAnswer($answer2)
-            ->addAnswer($answer3);
+            ->addAnswer($answer3)
+        ;
 
         $this->assertNull($answer1->getPosition());
         $this->assertNull($answer2->getPosition());
