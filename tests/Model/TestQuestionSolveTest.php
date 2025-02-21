@@ -40,7 +40,7 @@ class TestQuestionSolveTest extends TestCase
         $this->assertEquals([$testAnswerSolve1Id, $testAnswerSolve2Id, $testAnswerSolve4Id], $extractedAnswerIds);
     }
 
-    public function testExtractChosenAnswerIdsWithNotChosenAnswersReturnsEmptyArray(): void
+    public function testExtractChosenAnswerIdsWithoutChosenAnswersReturnsEmptyArray(): void
     {
         $testAnswerSolve1 = $this->createMock(TestAnswerSolve::class);
         $testAnswerSolve1Id = Uuid::v7();
