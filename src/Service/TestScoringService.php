@@ -4,33 +4,28 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\Answer;
-use App\Entity\Question;
-use App\Model\TestAnswerSolve;
-use App\Model\TestQuestionSolve;
+use App\Entity\Test;
 use App\Model\TestSolve;
-use Doctrine\Common\Collections\Collection;
 
 class TestScoringService
 {
-    public function calculate(Collection $questions, TestSolve $testSolve): int
+    public function calculate(Test $test, TestSolve $testSolve): int
     {
         $score = 0;
 
         foreach($testSolve->getTestQuestions() as $testQuestionSolve) {
-            $question = $this->findMatchingQuestion($questions, $testQuestionSolve);
+            $testQuestionSolveId = $testQuestionSolve->getQuestionId();
+            $question = $test->getModule()->findQuestionById($testQuestionSolveId);
             if (!isset($question)) {
                 continue;
             }
 
-            $testAnswers = $testQuestionSolve->getTestAnswers();
-            $chosenAnswerIds = $this->extractChosenAnswerIds($testAnswers);
+            $chosenAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
             if (empty($chosenAnswerIds)) {
                 continue;
             }
 
-            $answers = $question->getAnswers()->toArray();
-            $correctAnswerIds = $this->extractCorrectAnswerIds($answers);
+            $correctAnswerIds = $question->extractCorrectAnswerIds();
 
             if (count($correctAnswerIds) === 1) {
                 // Standard question - award 1 point for a correct answer
@@ -47,40 +42,5 @@ class TestScoringService
         }
 
         return $score;
-    }
-
-    private function findMatchingQuestion(Collection $questions, TestQuestionSolve $testQuestionSolve): ?Question
-    {
-        return $questions->filter(fn(Question $q) => $q->getId() === $testQuestionSolve->getQuestionId())->first() ?: null;
-    }
-
-    private function extractChosenAnswerIds(array $testAnswers): array
-    {
-        $chosenAnswers = array_filter(
-            $testAnswers, 
-            fn(TestAnswerSolve $testAnswerSolve) => $testAnswerSolve->isChosen()
-        );
-
-        $chosenAnswerIds = array_map(
-            fn(TestAnswerSolve $testAnswerSolve) => $testAnswerSolve->getAnswerId()->toRfc4122(), 
-            $chosenAnswers)
-        ;
-
-        return array_values($chosenAnswerIds);
-    }
-
-    private function extractCorrectAnswerIds(array $answers): array
-    {
-        $correctAnswers = array_filter(
-            $answers, 
-            fn(Answer $answer) => $answer->isCorrect()
-        );
-
-        $correctAnswerIds = array_map(
-            fn(Answer $answer) => $answer->getId()->toRfc4122(), 
-            $correctAnswers
-        );
-
-        return array_values($correctAnswerIds);
     }
 }

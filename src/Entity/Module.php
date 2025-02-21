@@ -8,6 +8,7 @@ use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
@@ -129,5 +130,16 @@ class Module extends BaseEntity
         $this->category = $category;
 
         return $this;
+    }
+
+    public function findQuestionById(Uuid $id): ?Question
+    {
+        $questions = $this->getQuestions();
+
+        $filtered = $questions->filter(
+            fn(Question $q) => $q->getId()->equals($id)
+        );
+
+        return $filtered->first() ?: null;
     }
 }

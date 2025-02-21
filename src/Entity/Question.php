@@ -122,4 +122,21 @@ class Question extends BaseEntity
 
         return $this;
     }
+
+    public function extractCorrectAnswerIds(): array
+    {
+        $answers = $this->answers->toArray();
+
+        $correctAnswers = array_filter(
+            $answers,
+            fn(Answer $a) => $a->isCorrect()
+        );
+
+        $correctAnswerIds = array_map(
+            fn(Answer $a) => $a->getId()->toRfc4122(),
+            $correctAnswers
+        );
+
+        return array_values($correctAnswerIds);
+    }
 }

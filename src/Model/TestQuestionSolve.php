@@ -49,4 +49,19 @@ class TestQuestionSolve
 
         return $this;
     }
+
+    public function extractChosenAnswerIds(): array
+    {
+        $chosenAnswers = array_filter(
+            $this->testAnswers ?? [],
+            fn(TestAnswerSolve $t) => $t->isChosen()
+        );
+
+        $chosenAnswerIds = array_map(
+            fn(TestAnswerSolve $t) => $t->getAnswerId()->toRfc4122(),
+            $chosenAnswers
+        );
+
+        return array_values($chosenAnswerIds);
+    }
 }
