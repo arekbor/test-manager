@@ -119,7 +119,7 @@ class QuestionTest extends TestCase
         $this->assertEquals([$answer2Id, $answer4Id], $extractedQuestionIds);
     }
 
-    public function testExtractCorrectAnswerIdsWithNotCorrectAnswersReturnsEmptyArray(): void
+    public function testExtractCorrectAnswerIdsWithoutCorrectAnswersReturnsEmptyArray(): void
     {
         $answer1 = $this->createMock(Answer::class);
         $answer1Id = Uuid::v7();
