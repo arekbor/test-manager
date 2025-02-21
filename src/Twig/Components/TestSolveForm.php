@@ -53,8 +53,7 @@ final class TestSolveForm extends AbstractController
 
         $testSolve = $this->getForm()->getData();
 
-        $questions = $this->testProp->getModule()->getQuestions();
-        $score = $this->testScoringService->calculate($questions, $testSolve);
+        $score = $this->testScoringService->calculate($this->testProp, $testSolve);
 
         $this->testProp
             ->setStart($this->start)
