@@ -144,11 +144,9 @@ class Question extends BaseEntity
     {
         $correctAnswerIds = $this->extractCorrectAnswerIds();
 
-        if (count($correctAnswerIds) === 1) {
-            return $chosenAnswerIds[0] === $correctAnswerIds[0];
-        }
+        sort($correctAnswerIds);
+        sort($chosenAnswerIds);
 
-        $diff = array_diff($chosenAnswerIds, $correctAnswerIds);
-        return empty($diff) && count($chosenAnswerIds) === count($correctAnswerIds);
+        return !empty($correctAnswerIds) && !empty($chosenAnswerIds) && $chosenAnswerIds === $correctAnswerIds;
     }
 }

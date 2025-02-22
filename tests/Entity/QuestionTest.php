@@ -172,31 +172,69 @@ class QuestionTest extends TestCase
         $uuid1 = Uuid::v7();
         $uuid2 = Uuid::v7();
         $uuid3 = Uuid::v7();
+        $uuid4 = Uuid::v7();
+        $uuid5 = Uuid::v7();
+        $uuid6 = Uuid::v7();
 
         return [
-            'all_correct' => [
+            'all_answers_correct' => [
                 'correctAnswerIds' => [$uuid1, $uuid2],
                 'chosenAnswerIds' => [$uuid1->toRfc4122(), $uuid2->toRfc4122()],
                 'expectedResult' => true,
             ],
-            'single_correct' => [
+            'all_answers_correct_reversed_order' => [
+                'correctAnswerIds' => [$uuid1, $uuid2],
+                'chosenAnswerIds' => [$uuid2->toRfc4122(), $uuid1->toRfc4122()],
+                'expectedResult' => true,
+            ],
+            'multiple_answers_correct' => [
+                'correctAnswerIds' => [$uuid3, $uuid1, $uuid5, $uuid4],
+                'chosenAnswerIds' => [$uuid3->toRfc4122(), $uuid1->toRfc4122(), $uuid5->toRfc4122(), $uuid4->toRfc4122()],
+                'expectedResult' => true,
+            ],
+            'single_correct_answer' => [
                 'correctAnswerIds' => [$uuid3],
                 'chosenAnswerIds' => [$uuid3->toRfc4122()],
                 'expectedResult' => true,
             ],
-            'partial_correct' => [
+            'partial_correct_answers' => [
                 'correctAnswerIds' => [$uuid1, $uuid2],
                 'chosenAnswerIds' => [$uuid1->toRfc4122()],
                 'expectedResult' => false,
             ],
-            'incorrect' => [
+            'completely_incorrect_answers' => [
                 'correctAnswerIds' => [$uuid1, $uuid2],
                 'chosenAnswerIds' => [$uuid3->toRfc4122()],
                 'expectedResult' => false,
             ],
-            'single_incorrect' => [
+            'single_incorrect_answer' => [
                 'correctAnswerIds' => [$uuid2],
                 'chosenAnswerIds' => [$uuid1->toRfc4122()],
+                'expectedResult' => false,
+            ],
+            'more_answers_chosen_than_correct' => [
+                'correctAnswerIds' => [$uuid1, $uuid2],
+                'chosenAnswerIds' => [$uuid1->toRfc4122(), $uuid2->toRfc4122(), $uuid3->toRfc4122()],
+                'expectedResult' => false,
+            ],
+            'mix_of_correct_and_incorrect_answers' => [
+                'correctAnswerIds' => [$uuid4, $uuid5],
+                'chosenAnswerIds' => [$uuid4->toRfc4122(), $uuid6->toRfc4122()],
+                'expectedResult' => false,
+            ],
+            'no_answers_chosen' => [
+                'correctAnswerIds' => [$uuid5, $uuid4],
+                'chosenAnswerIds' => [],
+                'expectedResult' => false,
+            ],
+            'empty_correct_and_chosen_answers' => [
+                'correctAnswerIds' => [],
+                'chosenAnswerIds' => [],
+                'expectedResult' => false,
+            ],
+            'no_correct_answers_but_something_chosen' => [
+                'correctAnswerIds' => [],
+                'chosenAnswerIds' => [$uuid1->toRfc4122(), $uuid2->toRfc4122()],
                 'expectedResult' => false,
             ],
         ];
