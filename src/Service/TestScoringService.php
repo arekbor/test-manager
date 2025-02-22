@@ -24,20 +24,9 @@ class TestScoringService
             if (empty($chosenAnswerIds)) {
                 continue;
             }
-
-            $correctAnswerIds = $question->extractCorrectAnswerIds();
-
-            if (count($correctAnswerIds) === 1) {
-                // Standard question - award 1 point for a correct answer
-                if ($chosenAnswerIds[0] === $correctAnswerIds[0]) {
-                    $score++;
-                }
-            } else {
-                // Multiple choice question - award a point only for all correct answers
-                $diff = array_diff($chosenAnswerIds, $correctAnswerIds);
-                if (empty($diff) && count($chosenAnswerIds) === count($correctAnswerIds)) {
-                    $score++;
-                }
+            
+            if ($question->isAnswerCorrect($chosenAnswerIds)) {
+                $score++;
             }
         }
 

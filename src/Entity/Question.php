@@ -139,4 +139,16 @@ class Question extends BaseEntity
 
         return array_values($correctAnswerIds);
     }
+
+    public function isAnswerCorrect(array $chosenAnswerIds): bool
+    {
+        $correctAnswerIds = $this->extractCorrectAnswerIds();
+
+        if (count($correctAnswerIds) === 1) {
+            return $chosenAnswerIds[0] === $correctAnswerIds[0];
+        }
+
+        $diff = array_diff($chosenAnswerIds, $correctAnswerIds);
+        return empty($diff) && count($chosenAnswerIds) === count($correctAnswerIds);
+    }
 }

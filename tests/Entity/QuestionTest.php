@@ -6,6 +6,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Answer;
 use App\Entity\Question;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -146,5 +147,58 @@ class QuestionTest extends TestCase
         $question = new Question();
 
         $this->assertEquals([], $question->extractCorrectAnswerIds());
+    }
+
+    #[DataProvider('answersProvider')]
+    public function testisAnswerCorrectShouldReturnTrue(array $correctAnswerIds, array $chosenAnswerIds, bool $expectedResult): void
+    {
+        $question = new Question();
+
+        foreach($correctAnswerIds as $correctAnswerId) {
+            $answer = $this->createMock(Answer::class);
+            $answer->method('getId')->willReturn($correctAnswerId);
+            $answer->method('isCorrect')->willReturn(true);
+
+            $question->addAnswer($answer);
+        }
+
+        $result = $question->isAnswerCorrect($chosenAnswerIds);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public static function answersProvider(): array
+    {
+        $uuid1 = Uuid::v7();
+        $uuid2 = Uuid::v7();
+        $uuid3 = Uuid::v7();
+
+        return [
+            'all_correct' => [
+                'correctAnswerIds' => [$uuid1, $uuid2],
+                'chosenAnswerIds' => [$uuid1->toRfc4122(), $uuid2->toRfc4122()],
+                'expectedResult' => true,
+            ],
+            'single_correct' => [
+                'correctAnswerIds' => [$uuid3],
+                'chosenAnswerIds' => [$uuid3->toRfc4122()],
+                'expectedResult' => true,
+            ],
+            'partial_correct' => [
+                'correctAnswerIds' => [$uuid1, $uuid2],
+                'chosenAnswerIds' => [$uuid1->toRfc4122()],
+                'expectedResult' => false,
+            ],
+            'incorrect' => [
+                'correctAnswerIds' => [$uuid1, $uuid2],
+                'chosenAnswerIds' => [$uuid3->toRfc4122()],
+                'expectedResult' => false,
+            ],
+            'single_incorrect' => [
+                'correctAnswerIds' => [$uuid2],
+                'chosenAnswerIds' => [$uuid1->toRfc4122()],
+                'expectedResult' => false,
+            ],
+        ];
     }
 }
