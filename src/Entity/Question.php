@@ -140,7 +140,7 @@ class Question extends BaseEntity
         return array_values($correctAnswerIds);
     }
 
-    public function isAnswerCorrect(array $chosenAnswerIds): bool
+    public function chosenAnswersCorrect(array $chosenAnswerIds): bool
     {
         $correctAnswerIds = $this->extractCorrectAnswerIds();
 

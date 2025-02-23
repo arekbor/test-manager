@@ -9,7 +9,6 @@ use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Factory\TestResultFactory;
 use App\Form\TestSolveType;
-use App\Service\TestScoringService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,8 +34,7 @@ final class TestSolveForm extends AbstractController
     public Test $testProp;
 
     public function __construct(
-        private EntityManagerInterface $em,
-        private TestScoringService $testScoringService
+        private EntityManagerInterface $em
     ) {
     }
 
@@ -53,7 +51,7 @@ final class TestSolveForm extends AbstractController
 
         $testSolve = $this->getForm()->getData();
 
-        $score = $this->testScoringService->calculate($this->testProp, $testSolve);
+        $score = $testSolve->calculateScore($this->testProp);
 
         $this->testProp
             ->setStart($this->start)

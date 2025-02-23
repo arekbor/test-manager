@@ -162,7 +162,7 @@ class QuestionTest extends TestCase
             $question->addAnswer($answer);
         }
 
-        $result = $question->isAnswerCorrect($chosenAnswerIds);
+        $result = $question->chosenAnswersCorrect($chosenAnswerIds);
 
         $this->assertEquals($expectedResult, $result);
     }

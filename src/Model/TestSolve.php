@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Entity\Test;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class TestSolve
@@ -115,5 +116,25 @@ class TestSolve
         $this->consent = $consent;
 
         return $this;
+    }
+
+    public function calculateScore(Test $test): int
+    {
+        $score = 0;
+
+        foreach($this->getTestQuestions() as $testQuestionSolve) {
+            $testQuestionSolveId = $testQuestionSolve->getQuestionId();
+            $question = $test->getModule()->findQuestionById($testQuestionSolveId);
+            if (!$question) { 
+                continue; 
+            }
+
+            $chosenAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
+            if (!empty($chosenAnswerIds) && $question->chosenAnswersCorrect($chosenAnswerIds)) {
+                $score++;
+            }
+        }
+
+        return $score;
     }
 }
