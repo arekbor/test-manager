@@ -13,4 +13,6 @@ bin/console asset-map:compile
 setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX var
 setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX var
 
-exec "$@"
+supervisord -c /etc/supervisor/supervisord.conf
+
+exec apache2-foreground
