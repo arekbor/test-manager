@@ -4,16 +4,19 @@ RUN a2enmod rewrite
 
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget libpq-dev acl --no-install-recommends \
+  && apt-get install -y supervisor \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN docker-php-ext-install pdo pdo_pgsql zip
 
 COPY docker/php.ini /usr/local/etc/php/
-
 COPY docker/security.conf /etc/apache2/conf-enabled/security.conf
-
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
+
+COPY docker/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY docker/supervisor/messenger-worker.conf /etc/supervisor/conf.d/messenger-worker.conf
+
 COPY docker/entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
@@ -28,5 +31,4 @@ RUN mkdir /home/uploads/ && chmod a+w /home/uploads/
 
 WORKDIR /var/www
 
-CMD ["apache2-foreground"]
 ENTRYPOINT ["/entrypoint.sh"]

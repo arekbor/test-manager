@@ -7,13 +7,14 @@ namespace App\Twig\Components;
 use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
-use App\Factory\TestResultFactory;
 use App\Form\TestSolveType;
+use App\Message\Event\GenerateTestResult;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -34,7 +35,8 @@ final class TestSolveForm extends AbstractController
     public Test $testProp;
 
     public function __construct(
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private MessageBusInterface $eventBus
     ) {
     }
 
@@ -48,27 +50,15 @@ final class TestSolveForm extends AbstractController
     public function submit(): Response
     {
         $this->submitForm();
-
         $testSolve = $this->getForm()->getData();
 
-        $score = $testSolve->calculateScore($this->testProp);
-
-        $this->testProp
-            ->setStart($this->start)
-            ->setSubmission(new DateTime())
-            ->setFirstname($testSolve->getFirstname())
-            ->setLastname($testSolve->getLastname())
-            ->setEmail($testSolve->getEmail())
-            ->setWorkplace($testSolve->getWorkplace())
-            ->setDateOfBirth($testSolve->getDateOfBirth())
-            ->setScore($score)
-        ;
-
-        $testResult = (new TestResultFactory)->create($this->testProp);
+        $this->testProp->setStart($this->start);
+        $this->testProp->setSubmission(new DateTime());
 
         $this->em->persist($this->testProp);
-        $this->em->persist($testResult);
         $this->em->flush();
+
+        $this->eventBus->dispatch(new GenerateTestResult($testSolve, $this->testProp->getId()));
 
         return $this->redirectToRoute('app_testsolve_conclusion');
     }
