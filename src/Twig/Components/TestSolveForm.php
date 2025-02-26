@@ -8,8 +8,9 @@ use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Form\TestSolveType;
-use App\Message\Event\GenerateTestResult;
-use DateTime;
+use App\Message\Event\SubmitTestSolve;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +30,7 @@ final class TestSolveForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public ?DateTime $start = null;
+    public ?DateTimeInterface $start = null;
 
     #[LiveProp]
     public Test $testProp;
@@ -43,7 +44,7 @@ final class TestSolveForm extends AbstractController
     #[PreMount]
     public function preMount(): void
     {
-        $this->start = new DateTime();
+        $this->start = new DateTimeImmutable();
     }
 
     #[LiveAction]
@@ -56,13 +57,21 @@ final class TestSolveForm extends AbstractController
         $this->submitForm();
         $testSolve = $this->getForm()->getData();
 
-        $this->testProp->setStart($this->start);
-        $this->testProp->setSubmission(new DateTime());
+        $this->testProp
+            ->setStart($this->start)
+            ->setSubmission(new DateTimeImmutable())
+            ->setScore(null)
+            ->setFirstname($testSolve->getFirstname())
+            ->setLastname($testSolve->getLastname())
+            ->setEmail($testSolve->getEmail())
+            ->setWorkplace($testSolve->getWorkplace())
+            ->setDateOfBirth($testSolve->getDateOfBirth())
+        ;
 
         $this->em->persist($this->testProp);
         $this->em->flush();
 
-        $this->eventBus->dispatch(new GenerateTestResult($testSolve, $this->testProp->getId()));
+        $this->eventBus->dispatch(new SubmitTestSolve($testSolve, $this->testProp->getId()));
 
         return $this->redirectToRoute('app_testsolve_conclusion');
     }

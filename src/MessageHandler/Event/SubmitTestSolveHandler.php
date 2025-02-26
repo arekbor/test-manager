@@ -7,14 +7,14 @@ namespace App\MessageHandler\Event;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Factory\TestResultFactory;
-use App\Message\Event\GenerateTestResult;
+use App\Message\Event\SubmitTestSolve;
 use App\Repository\TestRepository;
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
-class GenerateTestResultHandler
+#[AsMessageHandler(bus: 'event.bus')]
+class SubmitTestSolveHandler
 {
     public function __construct(
         private TestRepository $testRepository,
@@ -23,7 +23,7 @@ class GenerateTestResultHandler
     ) {
     }
 
-    public function __invoke(GenerateTestResult $event)
+    public function __invoke(SubmitTestSolve $event)
     {
         /**
          * @var Test
@@ -35,25 +35,23 @@ class GenerateTestResultHandler
 
         $testSolve = $event->getTestSolve();
 
-        $test
-            ->setScore($testSolve->calculateScore($test))
-            ->setFirstname($testSolve->getFirstname())
-            ->setLastname($testSolve->getLastname())
-            ->setEmail($testSolve->getEmail())
-            ->setWorkplace($testSolve->getWorkplace())
-            ->setDateOfBirth($testSolve->getDateOfBirth())
-        ;
+        $test->setScore($testSolve->calculateScore($test));
 
         $testResult = (new TestResultFactory)->create($test);
-
-        $file = $testResult->getFile();
-        $recipient = $test->getCreator()->getEmail();
-        $content = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
-        $this->emailService->sendEmail($recipient, $content, $content, $file);
 
         $this->em->persist($test);
         $this->em->persist($testResult);
 
         $this->em->flush();
+
+        $this->sendEmail($test);
+    }
+
+    private function sendEmail(Test $test): void
+    {
+        $file = $test->getTestResult()->getFile();
+        $recipient = $test->getCreator()->getEmail();
+        $content = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
+        $this->emailService->sendEmail($recipient, $content, $content, $file);
     }
 }
