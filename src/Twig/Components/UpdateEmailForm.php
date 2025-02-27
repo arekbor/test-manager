@@ -33,10 +33,7 @@ final class UpdateEmailForm extends AbstractController
     {
         $this->submitForm();
         
-        $updateEmail = $this
-            ->getForm()
-            ->getData()
-        ;
+        $updateEmail = $this->getForm()->getData();
 
         $updatedEmail = $updateEmail->getEmail();
 

@@ -35,3 +35,33 @@ select.form-select,
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+button.btn.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+  padding-right: 2em;
+}
+
+button.btn.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.75em;
+  width: 1em;
+  height: 1em;
+  border: 2px solid white;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}

@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -45,15 +46,13 @@ final class TestForm extends AbstractController
     #[LiveAction]
     public function submit(
         EntityManagerInterface $em,
-        Security $security
+        Security $security,
+        TranslatorInterface $trans
     ): Response
     {
         $this->submitForm();
 
-        $test = $this
-            ->getForm()
-            ->getData()
-        ;
+        $test = $this->getForm()->getData();
 
         $test->setModule($this->moduleProp);
 
@@ -64,6 +63,8 @@ final class TestForm extends AbstractController
 
         $em->persist($test);
         $em->flush();
+
+        $this->addFlash('success', $trans->trans('flash.testForm.successfullyCreated'));
 
         return $this->redirectToRoute('app_test_index');
     }

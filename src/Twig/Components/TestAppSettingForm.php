@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -33,14 +34,12 @@ final class TestAppSettingForm extends AbstractController
         AppSettingService $appSettingService,
         AppSettingRepository $appSettingRepository,
         EntityManagerInterface $em,
+        TranslatorInterface $trans
     ): Response
     {
         $this->submitForm();
 
-        $testAppSetting = $this
-            ->getForm()
-            ->getData()
-        ;
+        $testAppSetting = $this->getForm()->getData();
         
         $appSetting = $appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         if ($appSetting === null) {
@@ -52,7 +51,9 @@ final class TestAppSettingForm extends AbstractController
         $em->persist($appSetting);
         $em->flush();
 
-        return $this->redirectToRoute('app_test_index');
+        $this->addFlash('success', $trans->trans('flash.testAppSettingForm.successfullyUpdated'));
+
+        return $this->redirectToRoute('app_settings_test');
     }
 
     protected function instantiateForm(): FormInterface

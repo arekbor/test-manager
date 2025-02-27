@@ -31,13 +31,15 @@ class TestAppSettingType extends AbstractType
                 'button_add_options' => [
                     'label' => 'form.type.testAppSetting.button.add_message',
                     'attr' => [
-                        'class' => 'btn btn-primary'
+                        'class' => 'btn btn-primary',
+                        'data-loading' => 'action(addCollectionItem)|addAttribute(disabled) action(addCollectionItem)|addClass(loading)',
                     ]
                 ],
                 'button_delete_options' => [
                     'label' => 'form.type.testAppSetting.button.delete_message',
                     'attr' => [
-                        'class' => 'btn btn-danger'
+                        'class' => 'btn btn-danger',
+                        'data-loading' => 'action(removeCollectionItem)|addAttribute(disabled)'
                     ]
                 ]
             ])
@@ -51,13 +53,15 @@ class TestAppSettingType extends AbstractType
                 'button_add_options' => [
                     'label' => 'form.type.testAppSetting.button.add_clause',
                     'attr' => [
-                        'class' => 'btn btn-primary'
+                        'class' => 'btn btn-primary',
+                        'data-loading' => 'action(addCollectionItem)|addAttribute(disabled) action(addCollectionItem)|addClass(loading)'
                     ]
                 ],
                 'button_delete_options' => [
                     'label' => 'form.type.testAppSetting.button.delete_clause',
                     'attr' => [
-                        'class' => 'btn btn-danger'
+                        'class' => 'btn btn-danger',
+                        'data-loading' => 'action(removeCollectionItem)|addAttribute(disabled)'
                     ]
                 ]
             ])
@@ -66,7 +70,8 @@ class TestAppSettingType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'submit',
+                    'data-live-action-param' => 'debounce(500)|submit',
+                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
                 ]
             ])
         ;

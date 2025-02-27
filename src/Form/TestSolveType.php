@@ -81,8 +81,9 @@ class TestSolveType extends AbstractType
                 'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
-                    'data-action' => 'live#action',
-                    'data-live-action-param' => 'submit',
+                    'data-action' => 'live#action:prevent',
+                    'data-live-action-param' => 'debounce(300)|submit',
+                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
                 ]
             ])
         ;

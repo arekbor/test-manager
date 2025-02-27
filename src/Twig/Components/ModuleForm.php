@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
@@ -26,7 +27,10 @@ final class ModuleForm extends AbstractController
     public ?Module $moduleProp = null;
 
     #[LiveAction]
-    public function submit(EntityManagerInterface $em): Response
+    public function submit(
+        EntityManagerInterface $em,
+        TranslatorInterface $trans
+    ): Response
     {
         $this->submitForm();
         
@@ -34,6 +38,10 @@ final class ModuleForm extends AbstractController
 
         $em->persist($module);
         $em->flush();
+
+        $this->addFlash('success', $trans->trans('flash.moduleForm.successfullyCreated', [
+            '%moduleName%' => $module->getName()
+        ]));
 
         return $this->redirectToRoute('app_module_index');
     }
