@@ -17,6 +17,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsLiveComponent]
 final class UpdateVideoForm extends AbstractController
@@ -32,23 +33,24 @@ final class UpdateVideoForm extends AbstractController
 
     #[LiveAction]
     public function update(
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        TranslatorInterface $trans
     ): Response
     {
         $this->submitForm();
 
-        $updateVideo = $this
-            ->getForm()
-            ->getData()
-        ;
+        $updateVideo = $this->getForm()->getData();
 
         $newVideoName = $updateVideo->getOriginalName();
         $this->videoProp->setOriginalName($newVideoName);
         $em->persist($this->videoProp);
         $em->flush();
 
-        return $this->redirectToRoute('app_module_videos', [
-            'id' => $this->moduleIdProp
+        $this->addFlash('success', $trans->trans('flash.updateVideoForm.successfullyUpdated'));
+
+        return $this->redirectToRoute('app_video_details', [
+            'moduleId' => $this->moduleIdProp,
+            'videoId' => $this->videoProp->getId()
         ]);
     }
 

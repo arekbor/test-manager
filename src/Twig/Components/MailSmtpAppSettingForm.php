@@ -58,7 +58,7 @@ final class MailSmtpAppSettingForm extends AbstractController
         $em->flush();
 
         $this->addFlash('success', $trans->trans('flash.mailSmtpAppSettingForm.successfullyUpdated'));
-
+        
         return $this->redirectToRoute('app_settings_smtp');
     }
 

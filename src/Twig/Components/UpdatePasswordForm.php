@@ -34,10 +34,7 @@ final class UpdatePasswordForm extends AbstractController
     {
         $this->submitForm();
 
-        $updatePassword = $this
-            ->getForm()
-            ->getData()
-        ;
+        $updatePassword = $this->getForm()->getData();
 
         /**
          * @var SecurityUser

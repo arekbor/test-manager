@@ -55,6 +55,7 @@ final class TestSolveForm extends AbstractController
         }
 
         $this->submitForm();
+        
         $testSolve = $this->getForm()->getData();
 
         $this->testProp

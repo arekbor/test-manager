@@ -241,8 +241,16 @@ templates:
   goToModule: Module
 
 flash:
+  moduleForm:
+    successfullyCreated: Module '%moduleName%' successfully created.
+  testForm:
+    successfullyCreated: Test successfully created.
   mailSmtpAppSettingForm:
     successfullyUpdated: Smtp settings successfully updated.
+  testAppSettingForm:
+    successfullyUpdated: Test settings successfully updated.
+  updateVideoForm:
+    successfullyUpdated: Video successfully updated.
   testEmailForm:
     successEmailMessage: Email successfully sent
   updateEmailForm:

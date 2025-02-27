@@ -25,7 +25,8 @@ class UpdateVideoType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'update',
+                    'data-live-action-param' => 'debounce(300)|update',
+                    'data-loading' => 'action(update)|addAttribute(disabled) action(update)|addClass(loading)'
                 ]
             ])
         ;

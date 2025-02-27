@@ -1,6 +1,27 @@
 <div {{ attributes }}>
     {{ form_start(form) }}
 
+    <div class="my-4">
+        {% for question in form.testQuestions %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">
+                        {{ question.vars.data.content }}
+                    </h3>
+                    
+                    <div class="list-group mt-3">
+                        {% for answer in question.testAnswers %}
+                            <div class="list-group-item d-flex align-items-center">
+                                {{ form_widget(answer.chosen) }}
+                                <span class="ms-2">{{ answer.vars.data.content }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
     <div class="row mb-4">
         <div class="col-md-6">
             {{ form_row(form.firstname) }}
@@ -27,27 +48,6 @@
 
     <div class="col-12">
         {{ form_row(form.consent) }}
-    </div>
-
-    <div class="my-4">
-        {% for question in form.testQuestions %}
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h3 class="card-title text-primary">
-                        {{ question.vars.data.content }}
-                    </h3>
-                    
-                    <div class="list-group mt-3">
-                        {% for answer in question.testAnswers %}
-                            <div class="list-group-item d-flex align-items-center">
-                                {{ form_widget(answer.chosen) }}
-                                <span class="ms-2">{{ answer.vars.data.content }}</span>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
     </div>
 
     <div class="d-grid">

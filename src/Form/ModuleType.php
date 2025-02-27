@@ -48,8 +48,8 @@ class ModuleType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce(500)|submit',
-                    'data-loading' => 'action(submit)|addAttribute(disabled)'
+                    'data-live-action-param' => 'debounce(300)|submit',
+                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
                 ]
             ])
         ;
@@ -60,7 +60,7 @@ class ModuleType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Module::class,
             'attr' => [
-                'autocomplete' => 'off'
+                'autocomplete' => 'off',
             ]
         ]);
     }
