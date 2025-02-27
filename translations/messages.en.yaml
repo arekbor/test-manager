@@ -242,25 +242,25 @@ templates:
 
 flash:
   moduleForm:
-    successfullyCreated: Module '%moduleName%' successfully created.
+    successfullyCreated: Module "%moduleName%" has been successfully created.
   testForm:
-    successfullyCreated: Test successfully created.
+    successfullyCreated: The test has been successfully created.
   mailSmtpAppSettingForm:
-    successfullyUpdated: Smtp settings successfully updated.
+    successfullyUpdated: SMTP settings have been successfully updated.
   testAppSettingForm:
-    successfullyUpdated: Test settings successfully updated.
+    successfullyUpdated: Test settings have been successfully updated.
   updateVideoForm:
-    successfullyUpdated: Video successfully updated.
+    successfullyUpdated: The video has been successfully updated.
   testEmailForm:
-    successEmailMessage: Email successfully sent
+    successEmailMessage: The email has been successfully sent.
   updateEmailForm:
-    emailAlreadyExists: Email already exists
+    emailAlreadyExists: The provided email address already exists.
   updatePasswordForm:
-    invalidPassword: Invalid password
+    invalidPassword: Invalid password.
   uploadFile:
-    success: File successfully uploaded
+    success: The file has been successfully uploaded.
   exceptionResponseSubscriber:
-    message: Something went wrong. Please try again later.
+    message: An error occurred. Please try again later.
 
 validator:
   uniqueValuesInArray:
