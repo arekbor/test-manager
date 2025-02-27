@@ -60,7 +60,7 @@ class ModuleType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Module::class,
             'attr' => [
-                'autocomplete' => 'off',
+                'autocomplete' => 'off'
             ]
         ]);
     }
