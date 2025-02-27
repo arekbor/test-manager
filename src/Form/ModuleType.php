@@ -41,14 +41,15 @@ class ModuleType extends AbstractType
                 'empty_data' => $this->parameterService->getTestCategory()[0],
                 'choice_label' => function($value) {
                     return $value;
-                },
+                }
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'submit',
+                    'data-live-action-param' => 'debounce(500)|submit',
+                    'data-loading' => 'action(submit)|addAttribute(disabled)'
                 ]
             ])
         ;

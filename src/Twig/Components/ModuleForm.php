@@ -30,10 +30,7 @@ final class ModuleForm extends AbstractController
     {
         $this->submitForm();
         
-        $module = $this
-            ->getForm()
-            ->getData()
-        ;
+        $module = $this->getForm()->getData();
 
         $em->persist($module);
         $em->flush();

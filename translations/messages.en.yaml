@@ -241,6 +241,8 @@ templates:
   goToModule: Module
 
 flash:
+  mailSmtpAppSettingForm:
+    successfullyUpdated: Smtp settings successfully updated.
   testEmailForm:
     successEmailMessage: Email successfully sent
   updateEmailForm:

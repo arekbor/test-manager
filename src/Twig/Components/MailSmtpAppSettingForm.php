@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
@@ -35,14 +36,12 @@ final class MailSmtpAppSettingForm extends AbstractController
         EncryptionService $encryptionService,
         AppSettingRepository $appSettingRepository,
         EntityManagerInterface $em,
+        TranslatorInterface $trans,
     ): Response
     {
         $this->submitForm();
 
-        $mailSmtpAppSetting = $this
-            ->getForm()
-            ->getData()
-        ;
+        $mailSmtpAppSetting = $this->getForm()->getData();
 
         $plainPassword = $mailSmtpAppSetting->getPassword();
         $encryptedPassword = $encryptionService->encrypt($plainPassword);
@@ -57,6 +56,8 @@ final class MailSmtpAppSettingForm extends AbstractController
 
         $em->persist($appSetting);
         $em->flush();
+
+        $this->addFlash('success', $trans->trans('flash.mailSmtpAppSettingForm.successfullyUpdated'));
 
         return $this->redirectToRoute('app_settings_smtp');
     }
