@@ -81,7 +81,7 @@ class MailSmtpAppSettingType extends AbstractType
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'debounce(300)|submit',
-                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
+                    'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])
         ;

@@ -32,7 +32,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.add_message',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-loading' => 'action(addCollectionItem)|addAttribute(disabled) action(addCollectionItem)|addClass(loading)',
+                        'data-loading' => 'action(addCollectionItem)|addClass(loading)',
                     ]
                 ],
                 'button_delete_options' => [
@@ -54,7 +54,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.add_clause',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-loading' => 'action(addCollectionItem)|addAttribute(disabled) action(addCollectionItem)|addClass(loading)'
+                        'data-loading' => 'action(addCollectionItem)|addClass(loading)'
                     ]
                 ],
                 'button_delete_options' => [
@@ -71,7 +71,7 @@ class TestAppSettingType extends AbstractType
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'debounce(500)|submit',
-                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
+                    'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])
         ;

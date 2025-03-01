@@ -36,7 +36,7 @@ class QuestionType extends AbstractType
                     'label' => 'form.type.question.button.add',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-loading' => 'action(addCollectionItem)|addAttribute(disabled) action(addCollectionItem)|addClass(loading)'
+                        'data-loading' => 'action(addCollectionItem)|addClass(loading)'
                     ]
                 ],
                 'button_delete_options' => [
@@ -53,7 +53,7 @@ class QuestionType extends AbstractType
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'debounce(300)|submit',
-                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
+                    'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])
         ;
