@@ -59,7 +59,6 @@
 
           <a 
             href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"
-            data-turbo="false"
             type="button"
             class="btn-close"
             aria-label="Close"
@@ -77,19 +76,25 @@
             {{ stimulus_target('upload_file', 'inputFile') }}
           />
 
-          <div 
-            class="d-none progress mt-2"
+          <div
+            class="d-none mt-2"
             {{ stimulus_target('upload_file', 'progress') }}
           >
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
-              aria-valuenow="0" 
-              aria-valuemin="0" 
-              aria-valuemax="100"
-              {{ stimulus_target('upload_file', 'progressBar') }}
-            >
-              0%
+            <div class="text-center">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
+
+            <div class="progress">
+              <div 
+                class="progress-bar" 
+                role="progressbar" 
+                aria-valuenow="0" 
+                aria-valuemin="0" 
+                aria-valuemax="100"
+                {{ stimulus_target('upload_file', 'progressBar') }}
+              >
+                0%
+              </div>
             </div>
           </div>
         </div>
