@@ -26,7 +26,7 @@ class SmtpTestType extends AbstractType
                     'class' => 'btn btn-warning',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'debounce(300)|send',
-                    'data-loading' => 'action(send)|addAttribute(disabled) action(send)|addClass(loading)'
+                    'data-loading' => 'action(send)|addClass(loading)'
                 ]
             ])
         ;

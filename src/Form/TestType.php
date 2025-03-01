@@ -25,7 +25,7 @@ class TestType extends AbstractType
                     'class' => 'btn btn-primary',
                     'data-action' => 'live#action:prevent',
                     'data-live-action-param' => 'submit',
-                    'data-loading' => 'action(submit)|addAttribute(disabled) action(submit)|addClass(loading)'
+                    'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])
         ;
