@@ -1,6 +1,8 @@
 <div 
     {{ attributes }}
     class="modal fade"
+    data-bs-keyboard="false"
+    data-bs-backdrop="static"
     id="{{ modalTargetId }}"
     tabindex="-1"
     aria-labelledby="{{ modalTargetId }}Label" 
@@ -9,6 +11,7 @@
     <div 
         class="modal-dialog modal-dialog-centered" 
         role="document"
+        {{ stimulus_controller('modal') }}
     >
         <div class="modal-content">
             <div class="modal-header">
@@ -23,6 +26,7 @@
                     class="btn-close" 
                     data-bs-dismiss="modal" 
                     aria-label="Close"
+                    {{ stimulus_target('modal', 'buttonClose' ) }}
                 >
                 </button>
             </div>
@@ -36,13 +40,16 @@
                     type="button" 
                     class="btn btn-secondary" 
                     data-bs-dismiss="modal"
+                    {{ stimulus_target('modal', 'buttonModalClose' ) }}
                 >
                     {{ closeButtonText|default('modal.close'|trans) }}
                 </button>
 
                 <a 
-                    href="{{ actionButtonHref }}" 
+                    href="{{ actionButtonHref }}"
                     class="{{ actionButtonClass|default('btn btn-primary') }}"
+                    {{ stimulus_target('modal', 'buttonAction' ) }}
+                    {{ stimulus_action('modal', 'handleAction', 'click' ) }}
                 >
                     {{ actionButtonText }}
                 </a>

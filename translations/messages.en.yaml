@@ -23,7 +23,7 @@ form:
         help: Enter your last name.
       email:
         label: E-mail
-        help: Enter your email address. Make sure it is in a valid format (e.g., name@example.com).
+        help: Enter your email address. Make shure it is in a valid format (e.g., name@example.com).
       workplace:
         label: Workplace
         help: Enter the name of your workplace or organization.

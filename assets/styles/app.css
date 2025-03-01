@@ -36,14 +36,14 @@ select.form-select,
   word-wrap: break-word;
 }
 
-button.btn.loading {
+.loading {
   position: relative;
   pointer-events: none;
   opacity: 0.7;
   padding-right: 2em;
 }
 
-button.btn.loading::after {
+.loading::after {
   content: "";
   position: absolute;
   top: 50%;
