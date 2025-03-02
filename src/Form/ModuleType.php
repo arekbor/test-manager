@@ -48,7 +48,7 @@ class ModuleType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce(300)|submit',
+                    'data-live-action-param' => 'debounce|submit',
                     'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])
