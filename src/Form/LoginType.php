@@ -30,7 +30,7 @@ class LoginType extends AbstractType
                 'label' => 'form.type.login.submit',
                 'attr' => [
                     'class' => 'btn btn-success',
-                    'data-login-target' => 'submit'
+                    'data-loading-button-target' => 'button'
                 ]
             ])
         ;
@@ -45,8 +45,8 @@ class LoginType extends AbstractType
             'csrf_token_id' => 'authenticate',
             'attr' => [
                 'data-turbo' => 'false',
-                'data-controller' => 'login',
-                'data-action' => 'submit->login#startLoading',
+                'data-controller' => 'loading-button',
+                'data-action' => 'submit->loading-button#startLoading',
             ]
         ]);
     }
