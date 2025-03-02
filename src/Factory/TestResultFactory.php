@@ -6,7 +6,7 @@ namespace App\Factory;
 
 use App\Entity\Test;
 use App\Entity\TestResult;
-use DateTimeInterface;
+use App\Util\DateHelper;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -21,14 +21,15 @@ class TestResultFactory
 
         $list = [
             ['ID', $test->getId()],
-            ['Start', $this->formatDate($test->getStart())],
-            ['Submission', $this->formatDate($test->getSubmission())],
+            ['Start', DateHelper::formatDateTime($test->getStart())],
+            ['Submission', DateHelper::formatDateTime($test->getSubmission())],
+            ['Diff', DateHelper::diff($test->getStart(), $test->getSubmission())],
             ['Name', sprintf('%s %s', $test->getFirstname(), $test->getLastname())],
             ['Email', $test->getEmail()],
             ['Workplace', $test->getWorkplace()],
             ['Category', $test->getModule()->getCategory()],
             ['Module name', $test->getModule()->getName()],
-            ['Date of birth', $test->getDateOfBirth() ? $this->formatDate($test->getDateOfBirth()) : ''],
+            ['Date of birth', $test->getDateOfBirth() ? DateHelper::formatDate($test->getDateOfBirth()) : ''],
             ['Questions count', count($test->getModule()->getQuestions())],
             ['Score', $test->getScore()],
         ];
@@ -41,11 +42,6 @@ class TestResultFactory
         $testResult->setTest($test);
 
         return $testResult;
-    }
-
-    private function formatDate(DateTimeInterface $date): string
-    {
-        return date_format($date, "Y/m/d H:i:s");
     }
 
     private function writeCsvFile(string $filePath, array $data): void
