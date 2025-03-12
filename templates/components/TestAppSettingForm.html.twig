@@ -1,10 +1,10 @@
 <div {{ attributes }}>
     {{ form_start(form) }}
 
-    <!-- Expiration Days Offset -->
     {{ form_row(form.expirationDaysOffset) }}
 
-    <!-- Test Messages Section -->
+    {{ form_row(form.notificationsEnabled) }}
+
     <div>
         {{ form_widget(form.testMessages.vars.button_add) }}
 
@@ -40,7 +40,6 @@
         {{ form_errors(form.testMessages) }}
     </div>
 
-    <!-- Test Clauses Section -->
     <div class="mt-3">
         {{ form_widget(form.testClauses.vars.button_add) }}
 
@@ -73,7 +72,6 @@
         {{ form_errors(form.testClauses) }}
     </div>
 
-    <!-- Submit Button -->
     <div class="my-2">
         {{ form_widget(form.submit) }}
     </div>

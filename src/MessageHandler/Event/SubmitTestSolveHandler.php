@@ -4,11 +4,15 @@ declare(strict_types = 1);
 
 namespace App\MessageHandler\Event;
 
+use App\Entity\AppSetting;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Factory\TestResultFactory;
 use App\Message\Event\SubmitTestSolve;
+use App\Model\TestAppSetting;
+use App\Repository\AppSettingRepository;
 use App\Repository\TestRepository;
+use App\Service\AppSettingService;
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -19,7 +23,9 @@ class SubmitTestSolveHandler
     public function __construct(
         private TestRepository $testRepository,
         private EntityManagerInterface $em,
-        private EmailService $emailService
+        private EmailService $emailService,
+        private AppSettingRepository $appSettingRepository,
+        private AppSettingService $appSettingService
     ) {
     }
 
@@ -44,7 +50,19 @@ class SubmitTestSolveHandler
 
         $this->em->flush();
 
-        $this->sendEmail($test);
+        $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
+        if ($appSetting === null) {
+            throw new NotFoundException(AppSetting::class);
+        }
+
+        /**
+         * @var TestAppSetting $testAppSetting
+         */
+        $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
+
+        if ($testAppSetting->getNotificationsEnabled()) {
+            $this->sendEmail($test);
+        }
     }
 
     private function sendEmail(Test $test): void

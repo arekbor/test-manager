@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Model\TestAppSetting;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,14 @@ class TestAppSettingType extends AbstractType
             ->add('expirationDaysOffset', NumberType::class, [
                 'label' => 'form.type.testAppSetting.expirationDaysOffset.label',
                 'help' => 'form.type.testAppSetting.expirationDaysOffset.help',
+            ])
+            ->add('notificationsEnabled', ChoiceType::class, [
+                'label' => 'form.type.testAppSetting.notificationsEnabled.label',
+                'help' => 'form.type.testAppSetting.notificationsEnabled.help',
+                'choices' => [
+                    'form.type.testAppSetting.notificationsEnabled.disable' => false,
+                    'form.type.testAppSetting.notificationsEnabled.enable' => true
+                ]
             ])
             ->add('testMessages', LiveCollectionType::class, [
                 'label' => false,

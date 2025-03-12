@@ -34,6 +34,11 @@ form:
         label: I've read and accept the %terms_link%
         terms: terms of service
     testAppSetting:
+      notificationsEnabled:
+        label: Test result notifications
+        help: Specifies whether the test results should be sent to the test author.
+        enable: Enable
+        disable: Disable
       expirationDaysOffset:
         label: Days to add to expiration date
         help: Determines how may days will be added to the 'Expiration' date when creating each test.
