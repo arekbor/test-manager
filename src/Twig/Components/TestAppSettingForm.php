@@ -40,7 +40,7 @@ final class TestAppSettingForm extends AbstractController
         $this->submitForm();
 
         $testAppSetting = $this->getForm()->getData();
-        
+
         $appSetting = $appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         if ($appSetting === null) {
             throw new NotFoundException(TestAppSetting::class);

@@ -23,10 +23,13 @@ class TestAppSetting
     #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testClauses;
 
+    private bool $notificationsEnabled;
+
     public function __construct() {
         $this->expirationDaysOffset = 7;
         $this->testMessages = [];
         $this->testClauses = [];
+        $this->notificationsEnabled = true;
     }
 
     public function getExpirationDaysOffset(): int
@@ -37,12 +40,25 @@ class TestAppSetting
     public function setExpirationDaysOffset(int $expirationDaysOffset): static
     {
         $this->expirationDaysOffset = $expirationDaysOffset;
+
         return $this;
     }
 
     public function getTestMessages(): array
     {
         return $this->testMessages;
+    }
+
+    public function setNotificationsEnabled(bool $notificationsEnabled): static
+    {
+        $this->notificationsEnabled = $notificationsEnabled;
+
+        return $this;
+    }
+
+    public function getNotificationsEnabled(): bool
+    {
+        return $this->notificationsEnabled;
     }
 
     public function getTestMessageAppSettingByLanguage(string $language): ?TestMessageAppSetting
