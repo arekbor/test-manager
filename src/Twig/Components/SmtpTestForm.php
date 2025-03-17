@@ -32,7 +32,7 @@ final class SmtpTestForm extends AbstractController
         $smtpTest = $this->getForm()->getData();
 
         $recipient = $smtpTest->getRecipient();
-        $error = $emailService->sendEmail($recipient, "Test Manager", "Test message");
+        $error = $emailService->send($recipient, "Test Manager", "Test message");
         
         if (!empty($error)) {
             $this->addFlash('danger', $error);

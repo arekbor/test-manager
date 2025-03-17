@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Model\TestQuestionSolve;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -148,5 +149,14 @@ class Question extends BaseEntity
         sort($chosenAnswerIds);
 
         return !empty($correctAnswerIds) && !empty($chosenAnswerIds) && $chosenAnswerIds === $correctAnswerIds;
+    }
+
+    public function totestQuestionSolve(): TestQuestionSolve
+    {
+        $testQuestionSolve = new TestQuestionSolve();
+        $testQuestionSolve->setQuestionId($this->getId());
+        $testQuestionSolve->setContent($this->getContent());
+
+        return $testQuestionSolve;
     }
 }

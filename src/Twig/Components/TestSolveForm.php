@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Twig\Components;
 
-use App\Builder\TestSolveBuilder;
 use App\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Form\TestSolveType;
@@ -82,9 +81,8 @@ final class TestSolveForm extends AbstractController
         $testCategory = $this->testProp->getModule()->getCategory() 
             ?? throw new NotFoundException(string::class, ['testCategory']);
 
-        $testSolveBuilder = new TestSolveBuilder();
-        $testSolve = $testSolveBuilder->build($this->testProp);
-
+        $testSolve = $this->testProp->toTestSolve();
+        
         return $this->createForm(TestSolveType::class, $testSolve, [
             'test_category' => $testCategory
         ]);

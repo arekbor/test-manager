@@ -4,30 +4,68 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Factory\MailerFactory;
-use Symfony\Component\HttpFoundation\File\File;
+use App\Exception\NotFoundException;
+use App\Model\MailSmtpAppSetting;
+use App\Repository\AppSettingRepository;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class EmailService
 {
     public function __construct(
-        private MailerFactory $mailer
+        private AppSettingRepository $appSettingRepository,
+        private AppSettingService $appSettingService,
+        private EncryptionService $encryptionService
     ) {
     }
 
-    public function sendEmail(string $recipient, string $subject, string $body, ?File $file = null): string
+    public function send(string $recipient, string $subject, string $body, ?\SplFileInfo $file = null): string
     {
-        $mailer = $this->mailer->create();
+        $phpMailer = $this->getConfiguredPHPMailer();
 
-        $mailer->addAddress($recipient);
-        $mailer->Subject = $subject;
-        $mailer->Body = $body;
+        $phpMailer->addAddress($recipient);
+        $phpMailer->Subject = $subject;
+        $phpMailer->Body = $body;
 
         if ($file) {
-            $mailer->addAttachment($file->getPathname(), $file->getFilename());
+            $phpMailer->addAttachment($file->getPathname(), $file->getFilename());
         }
 
-        $mailer->send();
+        $phpMailer->send();
 
-        return $mailer->ErrorInfo;
+        return $phpMailer->ErrorInfo;
+    }
+
+    private function getConfiguredPHPMailer(): PHPMailer
+    {
+        $appSetting = $this
+            ->appSettingRepository
+            ->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY)
+        ;
+
+        if ($appSetting === null) {
+            throw new NotFoundException(MailSmtpAppSetting::class);
+        }
+
+        $mailSmtpAppSetting = $this
+            ->appSettingService
+            ->getValue($appSetting, MailSmtpAppSetting::class)
+        ;
+
+        $mailer = new PHPMailer();
+        $mailer->isSMTP();
+        $mailer->Host = $mailSmtpAppSetting->getHost();
+        $mailer->Port = $mailSmtpAppSetting->getPort();
+        $mailer->SMTPAuth = $mailSmtpAppSetting->getSmtpAuth();
+        $mailer->Username = $mailSmtpAppSetting->getUsername();
+
+        $encryptedPassword = $mailSmtpAppSetting->getPassword();
+        $password = $this->encryptionService->decrypt($encryptedPassword);
+        $mailer->Password = $password; 
+
+        $mailer->SMTPSecure = $mailSmtpAppSetting->getSmtpSecure();
+        $mailer->Timeout = $mailSmtpAppSetting->getTimeout();
+        $mailer->setFrom($mailSmtpAppSetting->getFromAddress());
+        
+        return $mailer;
     }
 }
