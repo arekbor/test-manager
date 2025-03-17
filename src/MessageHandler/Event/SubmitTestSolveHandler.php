@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\MessageHandler\Event;
 
-use App\Entity\AppSetting;
 use App\Entity\Test;
 use App\Entity\TestResult;
 use App\Exception\NotFoundException;
@@ -79,20 +78,23 @@ class SubmitTestSolveHandler
          */
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
 
-        if ($testAppSetting->getNotificationsEnabled()) {
-            $file = $test->getTestResult()->getFile();
+        if (!$testAppSetting->getNotificationsEnabled()) {
+            $this->logger->info("Sending test result emails is disabled.");
+            return;
+        }
+
+        $file = $test->getTestResult()->getFile();
             
-            $recipient = $test->getCreator()->getEmail();
+        $recipient = $test->getCreator()->getEmail();
 
-            $content = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
+        $content = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
 
-            $errorMessage = $this->emailService->send($recipient, $content, $content, $file);
+        $errorMessage = $this->emailService->send($recipient, $content, $content, $file);
 
-            if ($errorMessage) {
-                $this->logger->warning("Failed to send test result email to {$recipient} with attachemnt {$file->getFilename()}: " . $errorMessage);
-            } else {
-                $this->logger->info("Email with test result sent successfully to {$recipient} with attachemnt {$file->getFilename()}.");
-            }
+        if ($errorMessage) {
+            $this->logger->warning("Failed to send test result email to {$recipient} with attachemnt {$file->getFilename()}: " . $errorMessage);
+        } else {
+            $this->logger->info("Email with test result sent successfully to {$recipient} with attachemnt {$file->getFilename()}.");
         }
     }
 }
