@@ -2,24 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Factory;
+namespace App\Service;
 
 use App\Entity\Test;
-use App\Entity\TestResult;
 use App\Util\DateHelper;
-use RuntimeException;
+use SplFileInfo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class TestResultFactory
+class TestService
 {
-    public function create(Test $test): TestResult
+    public function createCsv(Test $test): SplFileInfo
     {
-        $testResult = new TestResult();
-
         $fileName = sprintf('%s_%s.csv', strtolower($test->getFirstname()), strtolower($test->getLastname()));
         $tempFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 
-        $list = [
+        $data = [
             ['ID', $test->getId()],
             ['Start', DateHelper::formatDateTime($test->getStart())],
             ['Submission', DateHelper::formatDateTime($test->getSubmission())],
@@ -34,26 +31,16 @@ class TestResultFactory
             ['Score', $test->getScore()],
         ];
 
-        $this->writeCsvFile($tempFilePath, $list);
-
-        $uploadedFile = new UploadedFile($tempFilePath, $fileName, 'text/csv', null, true);
-
-        $testResult->setFile($uploadedFile);
-        $testResult->setTest($test);
-
-        return $testResult;
-    }
-
-    private function writeCsvFile(string $filePath, array $data): void
-    {
-        $fp = fopen($filePath, 'w');
+        $fp = fopen($tempFilePath, 'w');
         if ($fp === false) {
-            throw new RuntimeException("Unable to open file for writing: $filePath");
+            throw new \RuntimeException("Unable to open file for writing: $tempFilePath");
         }
 
-        foreach ($data as $line) {
-            fputcsv($fp, $line);
+        foreach ($data as $row) {
+            fputcsv($fp, $row);
         }
         fclose($fp);
+
+        return new UploadedFile($tempFilePath, $fileName, 'text/csv', test: true);
     }
 }

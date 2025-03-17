@@ -4,17 +4,65 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity;
 
+use App\Entity\Answer;
 use App\Entity\Module;
+use App\Entity\Question;
 use App\Entity\Test;
 use App\Entity\Video;
+use App\Model\TestSolve;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 
 class TestTest extends TestCase
 {
+    public function testToTestSolve(): void
+    {
+        //Arrange
+        $answer1 = new Answer();
+        $this->setEntityId($answer1Id = Uuid::v7(), Answer::class, $answer1);
+        $answer1->setContent($answer1Content = 'Answer 1');
+
+        $answer2 = new Answer();
+        $this->setEntityId($answer2Id = Uuid::v7(), Answer::class, $answer2);
+        $answer2->setContent($answer2Content = 'Answer 2');
+
+        $question = new Question();
+        $this->setEntityId($questionId = Uuid::v7(), Question::class, $question);
+        $question->setContent($questionContent = 'Sample Question?');
+        $question->addAnswer($answer1);
+        $question->addAnswer($answer2);
+
+        $module = new Module();
+        $module->addQuestion($question);
+
+        $test = new Test();
+        $test->setModule($module);
+
+        //Act
+        $testSolve = $test->toTestSolve();
+
+        $testSolveQuestions = $testSolve->getTestQuestions();
+        $testSolveAnswers = $testSolveQuestions[0]->getTestAnswers();
+
+        //Assert
+        $this->assertInstanceOf(TestSolve::class, $testSolve);
+        $this->assertEquals(1, count($testSolveQuestions));
+        $this->assertEquals($questionId, $testSolveQuestions[0]->getQuestionId());
+        $this->assertEquals($questionContent, $testSolveQuestions[0]->getContent());
+
+        $this->assertEquals(2, count($testSolveAnswers));
+
+        $this->assertEquals($answer1Id, $testSolveAnswers[0]->getAnswerId());
+        $this->assertEquals($answer1Content, $testSolveAnswers[0]->getContent());
+
+        $this->assertEquals($answer2Id, $testSolveAnswers[1]->getAnswerId());
+        $this->assertEquals($answer2Content, $testSolveAnswers[1]->getContent());
+    }
+
     #[DataProvider('featureModifierProvider')]
     public function testIsValidWhenExpirationInFeature(string $modifier): void
     {
@@ -139,5 +187,17 @@ class TestTest extends TestCase
         $videoMock->method('getId')->willReturn($videoId);
 
         return $videoMock;
+    }
+
+    private function setEntityId(Uuid $id, string $className, mixed $objectOrValue): void
+    {
+        $reflectionClass = new ReflectionClass($className);
+        $parentClass = $reflectionClass->getParentClass();
+        if (!$parentClass) {
+            $this->fail('Base entity not exists.');
+        }
+
+        $property = $parentClass->getProperty('id');
+        $property->setValue($objectOrValue, $id);
     }
 }

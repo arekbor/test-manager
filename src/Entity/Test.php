@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Model\TestSolve;
 use App\Repository\TestRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -212,5 +213,30 @@ class Test extends BaseEntity
         $this->score = $score;
 
         return $this;
+    }
+
+    public function toTestSolve(): TestSolve
+    {
+        $testSolve = new TestSolve();
+
+        $testQuestions = [];
+
+        foreach($this->getModule()->getQuestions() as $question) {
+            $testQuestionSolve = $question->toTestQuestionSolve();
+
+            $testAnswers = [];
+
+            foreach($question->getAnswers() as $answer) {
+                $testAnswerSolve = $answer->toTestAnswerSolve();
+                $testAnswers[] = $testAnswerSolve;
+            }
+
+            $testQuestionSolve->setTestAnswers($testAnswers);
+            $testQuestions[] = $testQuestionSolve;
+        }
+
+        $testSolve->setTestQuestions($testQuestions);
+        
+        return $testSolve;
     }
 }
