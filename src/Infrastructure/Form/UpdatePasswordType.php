@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Form;
 
-use App\Model\UpdatePassword;
+use App\Domain\Model\UpdatePassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

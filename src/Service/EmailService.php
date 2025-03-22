@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\NotFoundException;
-use App\Model\MailSmtpAppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
 use App\Repository\AppSettingRepository;
 use PHPMailer\PHPMailer\PHPMailer;
 

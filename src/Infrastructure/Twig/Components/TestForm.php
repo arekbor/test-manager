@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Entity\Module;
-use App\Entity\SecurityUser;
-use App\Entity\Test;
+use App\Domain\Entity\Module;
+use App\Domain\Entity\SecurityUser;
+use App\Domain\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Infrastructure\Form\TestType;
-use App\Model\TestAppSetting;
+use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use DateTime;

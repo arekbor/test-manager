@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Domain\Entity;
 
-use App\Model\TestAnswerSolve;
+use App\Domain\Model\TestAnswerSolve;
 use App\Repository\AnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

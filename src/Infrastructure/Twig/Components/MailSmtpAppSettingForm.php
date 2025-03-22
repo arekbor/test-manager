@@ -6,7 +6,7 @@ namespace App\Infrastructure\Twig\Components;
 
 use App\Exception\NotFoundException;
 use App\Infrastructure\Form\MailSmtpAppSettingType;
-use App\Model\MailSmtpAppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use App\Service\EncryptionService;

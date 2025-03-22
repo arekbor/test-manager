@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller;
 
-use App\Entity\Module;
-use App\Entity\Video;
+use App\Domain\Entity\Module;
+use App\Domain\Entity\Video;
 use App\Handler\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;

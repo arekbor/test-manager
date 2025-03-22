@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity;
 
-use App\Entity\Answer;
-use App\Entity\Module;
-use App\Entity\Question;
-use App\Entity\Test;
-use App\Entity\Video;
-use App\Model\TestSolve;
+use App\Domain\Entity\Answer;
+use App\Domain\Entity\Module;
+use App\Domain\Entity\Question;
+use App\Domain\Entity\Test;
+use App\Domain\Entity\Video;
+use App\Domain\Model\TestSolve;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;

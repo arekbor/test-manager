@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Form;
 
-use App\Entity\Question;
+use App\Domain\Entity\Question;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

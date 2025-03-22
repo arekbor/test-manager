@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Entity\Module;
-use App\Entity\Question;
+use App\Domain\Entity\Module;
+use App\Domain\Entity\Question;
 use App\Infrastructure\Form\QuestionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

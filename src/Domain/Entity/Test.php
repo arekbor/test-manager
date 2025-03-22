@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Domain\Entity;
 
-use App\Model\TestSolve;
+use App\Domain\Model\TestSolve;
 use App\Repository\TestRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Form;
 
-use App\Entity\Answer;
+use App\Domain\Entity\Answer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

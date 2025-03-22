@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DataTable\Type;
 
+use App\Domain\Entity\Test;
 use App\Infrastructure\DataTable\Action\Type\ButtonGroupActionType;
 use App\Infrastructure\DataTable\Column\Type\TruncatedTextColumnType;
-use App\Entity\Test;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;

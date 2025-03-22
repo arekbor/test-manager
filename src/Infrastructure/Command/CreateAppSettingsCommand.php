@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Command;
 
-use App\Model\MailSmtpAppSetting;
-use App\Model\TestAppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
+use App\Domain\Model\TestAppSetting;
 use App\Service\AppSettingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;

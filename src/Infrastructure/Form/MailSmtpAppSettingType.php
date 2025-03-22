@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Form;
 
-use App\Model\MailSmtpAppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
 use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

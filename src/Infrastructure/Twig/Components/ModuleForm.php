@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Entity\Module;
+use App\Domain\Entity\Module;
 use App\Infrastructure\Form\ModuleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

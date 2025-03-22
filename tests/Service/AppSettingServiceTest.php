@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Entity\AppSetting;
-use App\Model\MailSmtpAppSetting;
+use App\Domain\Entity\AppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
 use App\Service\AppSettingService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;

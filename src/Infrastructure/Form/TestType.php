@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Form;
 
-use App\Entity\Test;
+use App\Domain\Entity\Test;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

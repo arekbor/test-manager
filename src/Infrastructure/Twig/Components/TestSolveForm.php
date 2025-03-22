@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Entity\Test;
+use App\Domain\Entity\Test;
 use App\Exception\NotFoundException;
 use App\Infrastructure\Form\TestSolveType;
 use App\Message\Event\SubmitTestSolve;

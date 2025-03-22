@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Model;
 
-use App\Model\TestAnswerSolve;
-use App\Model\TestQuestionSolve;
+use App\Domain\Model\TestAnswerSolve;
+use App\Domain\Model\TestQuestionSolve;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
