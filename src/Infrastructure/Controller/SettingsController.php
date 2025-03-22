@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Model\MailSmtpAppSetting;
 use App\Model\TestAppSetting;
@@ -19,13 +19,13 @@ class SettingsController extends AbstractController
         private AppSettingRepository $appSettingRepository) {
     }
 
-    #[Route('/general')]
+    #[Route('/general', name: 'app_settings_general')]
     public function general(): Response
     {
         return $this->render('settings/general.html.twig');
     }
 
-    #[Route('/smtp')]
+    #[Route('/smtp', name: 'app_settings_smtp')]
     public function smtp(
         
     ): Response
@@ -42,7 +42,7 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/test')]
+    #[Route('/test', name: 'app_settings_test')]
     public function test(): Response 
     {
         $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);

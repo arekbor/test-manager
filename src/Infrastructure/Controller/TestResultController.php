@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Entity\TestResult;
 use App\Handler\FileHandler;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/testResult')]
 class TestResultController extends AbstractController
 {
-    #[Route('/download/{id}')]
+    #[Route('/download/{id}', name: 'app_testresult_download')]
     public function download(
         TestResult $testResult,
         FileHandler $fileHandler

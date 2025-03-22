@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\DataTable\Type\ModuleDataTableType;
 use App\DataTable\Type\QuestionDataTableType;
@@ -22,13 +22,13 @@ class ModuleController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
 
-    #[Route('/create')]
+    #[Route('/create', name: 'app_module_create')]
     public function create(): Response
     {
         return $this->render('module/create.html.twig');
     }
 
-    #[Route('/details/general/{id}')]
+    #[Route('/details/general/{id}', name: 'app_module_general')]
     public function general(Module $module): Response
     {
         return $this->render('module/general.html.twig', [
@@ -36,7 +36,7 @@ class ModuleController extends AbstractController
         ]);
     }
 
-    #[Route('/details/questions/{id}')]
+    #[Route('/details/questions/{id}', name: 'app_module_questions')]
     public function questions(
         Module $module, 
         Request $request,
@@ -58,7 +58,7 @@ class ModuleController extends AbstractController
         ]);
     }
 
-    #[Route('/details/videos/{id}')]
+    #[Route('/details/videos/{id}', name: 'app_module_videos')]
     public function videos(
         Module $module,
         Request $request,
@@ -80,7 +80,7 @@ class ModuleController extends AbstractController
         ]);
     }
 
-    #[Route('/index')]
+    #[Route('/index', name: 'app_module_index')]
     public function index(
         Request $request,
         ModuleRepository $moduleRepository

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Attribute\NotLogged;
 use App\Entity\SecurityUser;
@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/auth')]
 class AuthController extends AbstractController
 {
-    #[Route('/login')]
+    #[Route('/login', name: 'app_auth_login')]
     #[NotLogged]
     public function login(
         AuthenticationUtils $utils,
@@ -39,7 +39,7 @@ class AuthController extends AbstractController
         ]);
     }
 
-    #[Route('/logout')]
+    #[Route('/logout', name: 'app_auth_logout')]
     public function logout(Security $security): Response
     {
         return $security->logout();

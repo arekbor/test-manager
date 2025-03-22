@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Entity\Module;
 use App\Entity\Video;
@@ -26,7 +26,7 @@ class VideoController extends AbstractController
     ) {
     }
 
-    #[Route('/upload/{id}')]
+    #[Route('/upload/{id}', name: 'app_video_upload')]
     public function upload(
         Request $request,
         Module $module,
@@ -56,7 +56,7 @@ class VideoController extends AbstractController
         return $this->json(null, Response::HTTP_OK);
     }
 
-    #[Route('/download/{id}')]
+    #[Route('/download/{id}', name: 'app_video_download')]
     public function download(
         Video $video,
         FileHandler $fileHandler,
@@ -67,7 +67,7 @@ class VideoController extends AbstractController
         return $this->file($file);
     }
 
-    #[Route('/delete/{moduleId}/{videoId}')]
+    #[Route('/delete/{moduleId}/{videoId}', name: 'app_video_delete')]
     public function delete(
         #[MapEntity(id: 'moduleId')] Module $module,
         #[MapEntity(id: 'videoId')] Video $video,
@@ -81,7 +81,7 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{moduleId}/{videoId}')]
+    #[Route('/details/{moduleId}/{videoId}', name: 'app_video_details')]
     public function details(
         #[MapEntity(id: 'moduleId')] Module $module,
         #[MapEntity(id: 'videoId')] Video $video

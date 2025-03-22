@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Entity\Module;
 use App\Entity\Question;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/question')]
 class QuestionController extends AbstractController
 {
-    #[Route('/create/{moduleId}')]
+    #[Route('/create/{moduleId}', name: 'app_question_create')]
     public function create(#[MapEntity(id: 'moduleId')] Module $module): Response
     {
         return $this->render('question/create.html.twig', [
@@ -23,7 +23,7 @@ class QuestionController extends AbstractController
         ]);
     }
     
-    #[Route('/details/{moduleId}/{questionId}')]
+    #[Route('/details/{moduleId}/{questionId}', name: 'app_question_details')]
     public function details(
         #[MapEntity(id: 'moduleId')] Module $module, 
         #[MapEntity(id: 'questionId')] Question $question): Response
@@ -34,7 +34,7 @@ class QuestionController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{moduleId}/{questionId}')]
+    #[Route('/delete/{moduleId}/{questionId}', name: 'app_question_delete')]
     public function delete(
         #[MapEntity(id: 'moduleId')] Module $module,
         #[MapEntity(id: 'questionId')] Question $question,

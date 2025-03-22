@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\DataTable\Type\TestDataTableType;
 use App\Entity\Module;
@@ -20,7 +20,7 @@ class TestController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
 
-    #[Route('/index')]
+    #[Route('/index', name: 'app_test_index')]
     public function index(
         Request $request, 
         TestRepository $testRepository
@@ -35,7 +35,7 @@ class TestController extends AbstractController
         ]);
     }
 
-    #[Route('/create/{id}')]
+    #[Route('/create/{id}', name: 'app_test_create')]
     public function create(Module $module): Response
     {
         return $this->render('test/create.html.twig', [
@@ -43,7 +43,7 @@ class TestController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{id}')]
+    #[Route('/details/{id}', name: 'app_test_details')]
     public function details(Test $test): Response
     {
         return $this->render('test/details.html.twig', [
@@ -51,7 +51,7 @@ class TestController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}')]
+    #[Route('/delete/{id}', name: 'app_test_delete')]
     public function delete(Test $test, EntityManagerInterface $em): Response
     {
         $em->remove($test);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use App\Attribute\TestVerify;
 use App\Entity\Test;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/testSolve')]
 class TestSolveController extends AbstractController
 {
-    #[Route('/solve/{id}')]
+    #[Route('/solve/{id}', name: 'app_testsolve_solve')]
     #[TestVerify]
     public function solve(?Test $test): Response
     {
@@ -29,7 +29,7 @@ class TestSolveController extends AbstractController
         ]);
     }
 
-    #[Route('/introduction/{id}')]
+    #[Route('/introduction/{id}', name: 'app_testsolve_introduction')]
     #[TestVerify]
     public function introduction(?Test $test): Response
     {
@@ -38,19 +38,19 @@ class TestSolveController extends AbstractController
         ]);
     }
 
-    #[Route('/conclusion')]
+    #[Route('/conclusion', name: 'app_testsolve_conclusion')]
     public function conclusion(): Response
     {
         return $this->render('/testSolve/conclusion.html.twig');
     }
 
-    #[Route('/clause')]
+    #[Route('/clause', name: 'app_testsolve_clause')]
     public function clause(): Response
     {
         return $this->render('/testSolve/clause.html.twig');
     }
 
-    #[Route('/video/{testId}/{videoId}')]
+    #[Route('/video/{testId}/{videoId}', name: 'app_testsolve_video')]
     #[TestVerify]
     public function video(
         #[MapEntity(id: 'testId')] Test $test,
@@ -66,13 +66,13 @@ class TestSolveController extends AbstractController
         return $this->file($file);
     }
 
-    #[Route('/notFound')]
+    #[Route('/notFound', name: 'app_testsolve_notfound')]
     public function notFound(): Response 
     {
         return $this->render('/testSolve/notFound.html.twig');
     }
 
-    #[Route('/notValid')]
+    #[Route('/notValid', name: 'app_testsolve_notvalid')]
     public function notValid(): Response 
     {
         return $this->render('/testSolve/notValid.html.twig');
