@@ -6,7 +6,7 @@ namespace App\Infrastructure\Controller;
 
 use App\Attribute\NotLogged;
 use App\Entity\SecurityUser;
-use App\Form\LoginType;
+use App\Infrastructure\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
