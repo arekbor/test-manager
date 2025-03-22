@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataTable\Action\Type;
+namespace App\Infrastructure\DataTable\Action\Type;
 
 use Kreyu\Bundle\DataTableBundle\Action\ActionView;
 use Kreyu\Bundle\DataTableBundle\Action\ActionInterface;

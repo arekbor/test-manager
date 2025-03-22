@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller;
 
-use App\DataTable\Type\ModuleDataTableType;
-use App\DataTable\Type\QuestionDataTableType;
-use App\DataTable\Type\VideoDataTableType;
+use App\Infrastructure\DataTable\Type\ModuleDataTableType;
+use App\Infrastructure\DataTable\Type\QuestionDataTableType;
+use App\Infrastructure\DataTable\Type\VideoDataTableType;
 use App\Entity\Module;
 use App\Repository\ModuleRepository;
 use App\Repository\QuestionRepository;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\DataTable\Type;
+namespace App\Infrastructure\DataTable\Type;
 
-use App\DataTable\Action\Type\ButtonGroupActionType;
-use App\DataTable\Column\Type\TruncatedTextColumnType;
+use App\Infrastructure\DataTable\Action\Type\ButtonGroupActionType;
+use App\Infrastructure\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Entity\Module;
 use App\Service\ParameterService;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataTable\Column\Type;
+namespace App\Infrastructure\DataTable\Column\Type;
 
 use Kreyu\Bundle\DataTableBundle\Column\Type\AbstractColumnType;
 
