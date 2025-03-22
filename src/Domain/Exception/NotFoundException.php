@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Exception;
+namespace App\Domain\Exception;
 
-use Exception;
-
-class NotFoundException extends Exception
+class NotFoundException extends \Exception
 {
     public function __construct(string $className, ?array $params = null) {
         $message = $className;

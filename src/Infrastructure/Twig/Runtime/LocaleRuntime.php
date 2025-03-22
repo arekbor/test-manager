@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Runtime;
 
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Service\ParameterService;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RequestStack;
