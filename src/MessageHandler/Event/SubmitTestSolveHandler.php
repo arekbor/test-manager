@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\MessageHandler\Event;
 
-use App\Entity\Test;
-use App\Entity\TestResult;
+use App\Domain\Entity\Test;
+use App\Domain\Entity\TestResult;
 use App\Exception\NotFoundException;
 use App\Message\Event\SubmitTestSolve;
-use App\Model\TestAppSetting;
+use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Repository\TestRepository;
 use App\Service\AppSettingService;

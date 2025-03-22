@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Attribute\TestVerify;
-use App\Entity\Test;
+use App\Domain\Entity\Test;
 use App\Util\AttributeHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

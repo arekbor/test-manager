@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller;
 
+use App\Domain\Entity\Module;
 use App\Infrastructure\DataTable\Type\ModuleDataTableType;
 use App\Infrastructure\DataTable\Type\QuestionDataTableType;
 use App\Infrastructure\DataTable\Type\VideoDataTableType;
-use App\Entity\Module;
 use App\Repository\ModuleRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;

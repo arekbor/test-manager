@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DataTable\Type;
 
+use App\Domain\Entity\Video;
 use App\Infrastructure\DataTable\Action\Type\UploadFileActionType;
 use App\Infrastructure\DataTable\Column\Type\TruncatedTextColumnType;
-use App\Entity\Video;
 use App\Util\ByteConversion;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;

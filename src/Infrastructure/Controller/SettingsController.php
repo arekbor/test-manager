@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Model\MailSmtpAppSetting;
-use App\Model\TestAppSetting;
+use App\Domain\Model\MailSmtpAppSetting;
+use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

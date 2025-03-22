@@ -6,7 +6,7 @@ namespace App\Infrastructure\Twig\Components;
 
 use App\Exception\NotFoundException;
 use App\Infrastructure\Form\TestAppSettingType;
-use App\Model\TestAppSetting;
+use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Doctrine\ORM\EntityManagerInterface;

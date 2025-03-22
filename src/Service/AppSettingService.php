@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\AppSetting;
+use App\Domain\Entity\AppSetting;
 use App\Exception\JsonDecodeException;
 use App\Exception\JsonEncodeException;
 use Symfony\Component\Serializer\SerializerInterface;

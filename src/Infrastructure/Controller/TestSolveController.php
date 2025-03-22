@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Controller;
 
 use App\Attribute\TestVerify;
-use App\Entity\Test;
-use App\Entity\Video;
+use App\Domain\Entity\Test;
+use App\Domain\Entity\Video;
 use App\Handler\FileHandler;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

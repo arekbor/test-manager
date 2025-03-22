@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Event;
 
-use App\Model\TestSolve;
+use App\Domain\Model\TestSolve;
 use Symfony\Component\Uid\Uuid;
 
 class SubmitTestSolve

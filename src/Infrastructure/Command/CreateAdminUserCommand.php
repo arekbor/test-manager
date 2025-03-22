@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Command;
 
-use App\Entity\SecurityUser;
+use App\Domain\Entity\SecurityUser;
 use App\Repository\SecurityUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;

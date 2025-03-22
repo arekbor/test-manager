@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller;
 
+use App\Domain\Entity\Module;
+use App\Domain\Entity\Test;
 use App\Infrastructure\DataTable\Type\TestDataTableType;
-use App\Entity\Module;
-use App\Entity\Test;
 use App\Repository\TestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
