@@ -36,7 +36,7 @@ class QuestionType extends AbstractType
                     'label' => 'form.type.question.button.add',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-live-action-param' => 'debounce|addCollectionItem',
+                        'data-live-action-param' => 'addCollectionItem',
                         'data-loading' => 'action(addCollectionItem)|addClass(loading)'
                     ]
                 ],
@@ -44,7 +44,7 @@ class QuestionType extends AbstractType
                     'label' => 'form.type.question.button.delete',
                     'attr' => [
                         'class' => 'btn btn-danger',
-                        'data-live-action-param' => 'debounce|removeCollectionItem',
+                        'data-live-action-param' => 'removeCollectionItem',
                         'data-loading' => 'action(removeCollectionItem)|addAttribute(disabled)'
                     ]
                 ]
@@ -54,7 +54,7 @@ class QuestionType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce|submit',
+                    'data-live-action-param' => 'submit',
                     'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])

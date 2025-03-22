@@ -41,7 +41,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.add_message',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-live-action-param' => 'debounce|addCollectionItem',
+                        'data-live-action-param' => 'addCollectionItem',
                         'data-loading' => 'action(addCollectionItem)|addClass(loading)',
                     ]
                 ],
@@ -49,7 +49,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.delete_message',
                     'attr' => [
                         'class' => 'btn btn-danger',
-                        'data-live-action-param' => 'debounce|removeCollectionItem',
+                        'data-live-action-param' => 'removeCollectionItem',
                         'data-loading' => 'action(removeCollectionItem)|addAttribute(disabled)'
                     ]
                 ]
@@ -65,7 +65,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.add_clause',
                     'attr' => [
                         'class' => 'btn btn-primary',
-                        'data-live-action-param' => 'debounce|addCollectionItem',
+                        'data-live-action-param' => 'addCollectionItem',
                         'data-loading' => 'action(addCollectionItem)|addClass(loading)'
                     ]
                 ],
@@ -73,7 +73,7 @@ class TestAppSettingType extends AbstractType
                     'label' => 'form.type.testAppSetting.button.delete_clause',
                     'attr' => [
                         'class' => 'btn btn-danger',
-                        'data-live-action-param' => 'debounce|removeCollectionItem',
+                        'data-live-action-param' => 'removeCollectionItem',
                         'data-loading' => 'action(removeCollectionItem)|addAttribute(disabled)'
                     ]
                 ]
@@ -83,7 +83,7 @@ class TestAppSettingType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce|submit',
+                    'data-live-action-param' => 'submit',
                     'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])

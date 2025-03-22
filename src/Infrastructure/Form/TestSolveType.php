@@ -82,7 +82,7 @@ class TestSolveType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce|submit',
+                    'data-live-action-param' => 'submit',
                     'data-loading' => 'action(submit)|addClass(loading)'
                 ]
             ])

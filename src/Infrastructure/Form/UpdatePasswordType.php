@@ -44,7 +44,7 @@ class UpdatePasswordType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary',
                     'data-action' => 'live#action:prevent',
-                    'data-live-action-param' => 'debounce|update',
+                    'data-live-action-param' => 'update',
                     'data-loading' => 'action(update)|addClass(loading)'
                 ]
             ])
