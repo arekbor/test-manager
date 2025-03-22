@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\MailSmtpAppSettingType;
 use App\Domain\Model\MailSmtpAppSetting;
 use App\Repository\AppSettingRepository;

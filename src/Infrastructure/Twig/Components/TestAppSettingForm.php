@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\TestAppSettingType;
 use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;

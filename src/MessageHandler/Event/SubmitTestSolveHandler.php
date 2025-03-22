@@ -6,7 +6,7 @@ namespace App\MessageHandler\Event;
 
 use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Message\Event\SubmitTestSolve;
 use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;

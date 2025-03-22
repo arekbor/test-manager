@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Infrastructure\Twig\Components;
 
 use App\Domain\Entity\Test;
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\TestSolveType;
 use App\Message\Event\SubmitTestSolve;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +27,7 @@ final class TestSolveForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public ?DateTimeInterface $start = null;
+    public ?\DateTimeInterface $start = null;
 
     #[LiveProp]
     public Test $testProp;
@@ -43,7 +41,7 @@ final class TestSolveForm extends AbstractController
     #[PreMount]
     public function preMount(): void
     {
-        $this->start = new DateTimeImmutable();
+        $this->start = new \DateTimeImmutable();
     }
 
     #[LiveAction]
@@ -59,7 +57,7 @@ final class TestSolveForm extends AbstractController
 
         $this->testProp
             ->setStart($this->start)
-            ->setSubmission(new DateTimeImmutable())
+            ->setSubmission(new \DateTimeImmutable())
             ->setScore(null)
             ->setFirstname($testSolve->getFirstname())
             ->setLastname($testSolve->getLastname())

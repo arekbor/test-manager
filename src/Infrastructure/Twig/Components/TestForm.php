@@ -7,12 +7,11 @@ namespace App\Infrastructure\Twig\Components;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\SecurityUser;
 use App\Domain\Entity\Test;
-use App\Exception\NotFoundException;
+use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\TestType;
 use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -79,7 +78,7 @@ final class TestForm extends AbstractController
         return $this->createForm(TestType::class, $this->testProp);
     }
 
-    private function getDefaultExpirationDate(): DateTime
+    private function getDefaultExpirationDate(): \DateTime
     {
         $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
         if (!$appSetting) {
@@ -89,6 +88,6 @@ final class TestForm extends AbstractController
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
         $daysOffset = $testAppSetting->getExpirationDaysOffset();
 
-        return (new DateTime())->modify(sprintf('+%d days', $daysOffset));
+        return (new \DateTime())->modify(sprintf('+%d days', $daysOffset));
     }
 }
