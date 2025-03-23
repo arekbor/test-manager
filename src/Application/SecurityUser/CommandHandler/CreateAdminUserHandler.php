@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\CommandHandler;
+namespace App\Application\SecurityUser\CommandHandler;
 
-use App\Application\Command\CreateAdminUser;
-use App\Application\Repository\SecurityUserRepositoryInterface;
+use App\Application\SecurityUser\Command\CreateAdminUser;
+use App\Application\SecurityUser\Repository\SecurityUserRepositoryInterface;
 use App\Domain\Entity\SecurityUser;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\Command;
+namespace App\Application\AppSetting\Command;
 
 final class CreateAppSetting
 {

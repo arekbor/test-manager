@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Command;
+namespace App\Infrastructure\AppSetting\Command;
 
-use App\Application\Command\CreateAppSetting;
+use App\Application\AppSetting\Command\CreateAppSetting;
 use App\Domain\Model\MailSmtpAppSetting;
 use App\Domain\Model\TestAppSetting;
 use Symfony\Component\Console\Attribute\AsCommand;
