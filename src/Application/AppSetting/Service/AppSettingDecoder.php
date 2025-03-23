@@ -2,20 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\AppSetting\Service;
+namespace App\Application\AppSetting\Service;
 
-use App\Application\AppSetting\Service\AppSettingDecoderInterface;
 use App\Domain\Exception\JsonDecodeException;
 use App\Domain\Exception\JsonEncodeException;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class AppSettingDecoder implements AppSettingDecoderInterface
+final class AppSettingDecoder
 {
+    private const SERIALIZER_FORMAT = 'json';
+
     public function __construct(
         private readonly SerializerInterface $serializer
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function decode(mixed $data): array
     {
         $serializedData = $this->serializer->serialize($data, self::SERIALIZER_FORMAT);
@@ -28,6 +32,9 @@ final class AppSettingDecoder implements AppSettingDecoderInterface
         return $decodedData;
     }
 
+    /**
+     * @param array<string, mixed> $value
+     */
     public function encode(array $value, string $className): mixed
     {
         $encodedData = json_encode($value);
