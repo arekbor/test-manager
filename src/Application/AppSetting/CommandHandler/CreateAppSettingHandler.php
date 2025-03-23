@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\CommandHandler;
+namespace App\Application\AppSetting\CommandHandler;
 
-use App\Application\AppSetting\AppSettingDecoderInterface;
-use App\Application\Command\CreateAppSetting;
-use App\Application\Repository\AppSettingRepositoryInterface;
+use App\Application\AppSetting\Command\CreateAppSetting;
+use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
+use App\Application\AppSetting\Service\AppSettingDecoderInterface;
 use App\Domain\Entity\AppSetting;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

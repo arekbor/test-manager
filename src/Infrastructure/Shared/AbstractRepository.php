@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\Persistence;
+namespace App\Infrastructure\Shared;
 
-use App\Application\Repository\BaseRepositoryInterface;
+use App\Application\Shared\BaseRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class BaseRepository implements BaseRepositoryInterface
+abstract class AbstractRepository implements BaseRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em

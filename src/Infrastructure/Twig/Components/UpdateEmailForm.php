@@ -16,6 +16,7 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\Domain\Entity\SecurityUser;
 
 #[AsLiveComponent]
 final class UpdateEmailForm extends AbstractController

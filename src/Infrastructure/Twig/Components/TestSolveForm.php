@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
+use App\Application\TestSolve\Command\CreateTestSolve;
 use App\Domain\Entity\Test;
 use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\TestSolveType;
-use App\Message\Event\SubmitTestSolve;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -34,7 +34,7 @@ final class TestSolveForm extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em,
-        private MessageBusInterface $eventBus
+        private MessageBusInterface $commandBus
     ) {
     }
 
@@ -69,7 +69,7 @@ final class TestSolveForm extends AbstractController
         $this->em->persist($this->testProp);
         $this->em->flush();
 
-        $this->eventBus->dispatch(new SubmitTestSolve($testSolve, $this->testProp->getId()));
+        $this->commandBus->dispatch(new CreateTestSolve($testSolve, $this->testProp->getId()));
 
         return $this->redirectToRoute('app_testsolve_conclusion');
     }

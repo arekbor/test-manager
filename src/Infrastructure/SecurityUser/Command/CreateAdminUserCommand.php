@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Command;
+namespace App\Infrastructure\SecurityUser\Command;
 
-use App\Application\Command\CreateAdminUser;
+use App\Application\SecurityUser\Command\CreateAdminUser;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

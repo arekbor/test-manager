@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\MessageHandler\Event;
+namespace App\Application\TestSolve\CommandHandler;
 
+use App\Application\TestSolve\Command\CreateTestSolve;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
 use App\Domain\Exception\NotFoundException;
-use App\Message\Event\SubmitTestSolve;
 use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Repository\TestRepository;
@@ -18,8 +18,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(bus: 'event.bus')]
-class SubmitTestSolveHandler
+#[AsMessageHandler(bus: 'command.bus')]
+final class CreateTestSolveHandler
 {
     public function __construct(
         private TestRepository $testRepository,
@@ -32,19 +32,19 @@ class SubmitTestSolveHandler
     ) {
     }
 
-    public function __invoke(SubmitTestSolve $event)
+    public function __invoke(CreateTestSolve $command): void
     {
         /**
          * @var Test
          */
-        $test = $this->testRepository->find($event->getTestId());
+        $test = $this->testRepository->find($command->getTestId());
         if (!$test) {
-            $this->logger->error("Test id: {$event->getTestId()} not found");
+            $this->logger->error("Test id: {$command->getTestId()} not found");
 
-            throw new NotFoundException(Test::class, [$event->getTestId()]);
+            throw new NotFoundException(Test::class, [$command->getTestId()]);
         }
 
-        $testSolve = $event->getTestSolve();
+        $testSolve = $command->getTestSolve();
 
         $test->setScore($testSolve->calculateScore($test));
 
@@ -62,7 +62,7 @@ class SubmitTestSolveHandler
 
         $this->em->flush();
 
-        $this->sendNotification($test);
+        $this->sendNotification($test); 
     }
 
     private function sendNotification(Test $test): void
@@ -78,7 +78,7 @@ class SubmitTestSolveHandler
          */
         $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
 
-        if (!$testAppSetting->getNotificationsEnabled()) {
+        if ($testAppSetting->getNotificationsEnabled() === false) {
             $this->logger->info("Sending test result emails is disabled.");
             return;
         }

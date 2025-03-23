@@ -7,7 +7,7 @@ namespace App\Infrastructure;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-class Kernel extends BaseKernel
+final class TestManagerKernel extends BaseKernel
 {
     use MicroKernelTrait;
 }

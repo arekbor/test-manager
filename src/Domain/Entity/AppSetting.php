@@ -8,8 +8,6 @@ use App\Repository\AppSettingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-//PRzeniesc fuckje z starego AppSettingService tutaj, albo sie postaraj
-
 #[ORM\Entity(repositoryClass: AppSettingRepository::class)]
 class AppSetting extends BaseEntity
 {
