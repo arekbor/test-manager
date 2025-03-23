@@ -13,7 +13,7 @@ class UniqueValuesInArray extends Constraint
 {
     public string $key;
 
-    public function __construct(string $key, array $groups = null, mixed $payload = null) 
+    public function __construct(string $key, ?array $groups = null, mixed $payload = null) 
     {
         parent::__construct(options: ['key' => $key], groups: $groups, payload: $payload);
 
