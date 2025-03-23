@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Command;
 
-use App\Domain\Entity\SecurityUser;
-use App\Repository\SecurityUserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Application\Command\CreateAdminUser;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(
     name: "app:create-admin-user",
@@ -22,10 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class CreateAdminUserCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private SecurityUserRepository $securityUserRepository,
-        private UserPasswordHasherInterface $passwordHasher,
-        private ParameterBagInterface $params,
+        private readonly MessageBusInterface $commandBus
     ) {
         parent::__construct();
     }
@@ -34,18 +28,12 @@ class CreateAdminUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         
-        $adminEmail = $this->params->get('app.admin_email');
-        $adminPassword = $this->params->get('app.admin_password');
-
-        $securityUser = new SecurityUser();
-        $securityUser->setEmail($adminEmail);
-
-        $hashedPassword = $this->passwordHasher->hashPassword($securityUser, $adminPassword);
-        $securityUser->setPassword($hashedPassword);
-        $securityUser->setRoles(['ROLE_ADMIN']);
-
-        $this->em->persist($securityUser);
-        $this->em->flush();
+        try {
+            $this->commandBus->dispatch(new CreateAdminUser());
+        } catch(\Exception $ex) {
+            $io->error($ex->getMessage());
+            return Command::FAILURE;
+        }
 
         $io->success("Admin user successfully created.");
 
