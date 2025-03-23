@@ -23,5 +23,3 @@ framework:
           max_delay: 0
       sync: "sync://"
       failed: "doctrine://default?queue_name=failed"
-    routing:
-      'App\Application\Message\Command\*': sync
