@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig\Components;
 
-use App\Application\TestSolve\Command\CreateTestSolve;
+use App\Application\Test\Command\UpdateTestWithTestSolve;
+use App\Application\TestSolve\Command\ProcessTestResult;
 use App\Domain\Entity\Test;
 use App\Domain\Exception\NotFoundException;
 use App\Infrastructure\Form\TestSolveType;
@@ -19,6 +20,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
+use App\Domain\Model\TestSolve;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -53,23 +55,26 @@ final class TestSolveForm extends AbstractController
 
         $this->submitForm();
         
+        /**
+         * @var TestSolve $testSolve
+         */
         $testSolve = $this->getForm()->getData();
 
-        $this->testProp
-            ->setStart($this->start)
-            ->setSubmission(new \DateTimeImmutable())
-            ->setScore(null)
-            ->setFirstname($testSolve->getFirstname())
-            ->setLastname($testSolve->getLastname())
-            ->setEmail($testSolve->getEmail())
-            ->setWorkplace($testSolve->getWorkplace())
-            ->setDateOfBirth($testSolve->getDateOfBirth())
-        ;
+        try {
+            $this->commandBus->dispatch(new UpdateTestWithTestSolve(
+                test: $this->testProp,
+                start: $this->start,
+                submission: new \DateTimeImmutable(),
+                testSolve: $testSolve
+            ));
+        } catch(\Exception) {
+            return $this->redirectToRoute('app_testsolve_notvalid');
+        }
 
-        $this->em->persist($this->testProp);
-        $this->em->flush();
-
-        $this->commandBus->dispatch(new CreateTestSolve($testSolve, $this->testProp->getId()));
+        $this->commandBus->dispatch(new ProcessTestResult(
+            testSolve: $testSolve,
+            testId: $this->testProp->getId()
+        ));
 
         return $this->redirectToRoute('app_testsolve_conclusion');
     }

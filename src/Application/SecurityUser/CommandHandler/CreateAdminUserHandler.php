@@ -6,6 +6,7 @@ namespace App\Application\SecurityUser\CommandHandler;
 
 use App\Application\SecurityUser\Command\CreateAdminUser;
 use App\Application\SecurityUser\Repository\SecurityUserRepositoryInterface;
+use App\Application\Shared\UnitOfWorkInterface;
 use App\Domain\Entity\SecurityUser;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -16,6 +17,7 @@ final class CreateAdminUserHandler
 {
     public function __construct(
         private readonly SecurityUserRepositoryInterface $securityUserRepository,
+        private readonly UnitOfWorkInterface $unitOfWork,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly ParameterBagInterface $parameterBag
     ) {
@@ -34,7 +36,8 @@ final class CreateAdminUserHandler
         $securityUser->setPassword($hashedPassowrd);
         $securityUser->setRoles(['ROLE_ADMIN']);
 
-        $this->securityUserRepository->create($securityUser);
-        $this->securityUserRepository->commitChanges();
+        $this->securityUserRepository->persistSecurityUser($securityUser);
+        
+        $this->unitOfWork->commit();
     }
 }

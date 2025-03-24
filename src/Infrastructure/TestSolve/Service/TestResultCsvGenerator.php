@@ -1,19 +1,20 @@
-<?php 
+<?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Service;
+namespace App\Infrastructure\TestSolve\Service;
 
+use App\Application\TestSolve\Service\TestResultCsvGeneratorInterface;
 use App\Domain\Entity\Test;
 use App\Util\DateHelper;
-use SplFileInfo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class TestService
+final class TestResultCsvGenerator implements TestResultCsvGeneratorInterface
 {
-    public function createCsv(Test $test): SplFileInfo
+    public function create(Test $test): \SplFileInfo
     {
         $fileName = sprintf('%s_%s.csv', strtolower($test->getFirstname()), strtolower($test->getLastname()));
+
         $tempFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 
         $data = [
@@ -37,8 +38,9 @@ class TestService
         }
 
         foreach ($data as $row) {
-            fputcsv($fp, $row);
+            fputcsv($fp, $row, ',', '"', '\\');
         }
+
         fclose($fp);
 
         return new UploadedFile($tempFilePath, $fileName, 'text/csv', test: true);

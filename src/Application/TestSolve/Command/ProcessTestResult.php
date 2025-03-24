@@ -7,7 +7,7 @@ namespace App\Application\TestSolve\Command;
 use App\Domain\Model\TestSolve;
 use Symfony\Component\Uid\Uuid;
 
-final class CreateTestSolve
+final class ProcessTestResult
 {
     public function __construct(
         private TestSolve $testSolve,

@@ -4,23 +4,22 @@ declare(strict_types = 1);
 
 namespace App\Infrastructure\Shared;
 
-use App\Application\Shared\BaseRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-abstract class AbstractRepository implements BaseRepositoryInterface
+abstract class AbstractRepository
 {
     public function __construct(
-        private readonly EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em
     ) {
     }
 
-    public function create(object $entity): void
+    public function get(string $className, mixed $id): ?object
     {
-        $this->em->persist($entity);
+        return $this->em->find($className, $id);
     }
 
-    public function commitChanges(): void
+    public function persist(object $entity): void
     {
-        $this->em->flush();
+        $this->em->persist($entity);
     }
 }

@@ -10,11 +10,10 @@ use App\Domain\Entity\Question;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\Video;
 use App\Domain\Model\TestSolve;
-use DateTime;
+use App\Tests\EntityHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 
 class TestTest extends TestCase
@@ -23,15 +22,15 @@ class TestTest extends TestCase
     {
         //Arrange
         $answer1 = new Answer();
-        $this->setEntityId($answer1Id = Uuid::v7(), Answer::class, $answer1);
+        EntityHelper::setId($answer1Id = Uuid::v7(), Answer::class, $answer1);
         $answer1->setContent($answer1Content = 'Answer 1');
 
         $answer2 = new Answer();
-        $this->setEntityId($answer2Id = Uuid::v7(), Answer::class, $answer2);
+        EntityHelper::setId($answer2Id = Uuid::v7(), Answer::class, $answer2);
         $answer2->setContent($answer2Content = 'Answer 2');
 
         $question = new Question();
-        $this->setEntityId($questionId = Uuid::v7(), Question::class, $question);
+        EntityHelper::setId($questionId = Uuid::v7(), Question::class, $question);
         $question->setContent($questionContent = 'Sample Question?');
         $question->addAnswer($answer1);
         $question->addAnswer($answer2);
@@ -67,7 +66,7 @@ class TestTest extends TestCase
     public function testIsValidWhenExpirationInFeature(string $modifier): void
     {
         $test = new Test();
-        $test->setExpiration((new DateTime())->modify($modifier));
+        $test->setExpiration((new \DateTime())->modify($modifier));
         $test->setSubmission(null);
 
         $this->assertTrue($test->isValid(), 
@@ -78,8 +77,8 @@ class TestTest extends TestCase
     public function testIsNotValidWhenSubmissionIsNotNull(): void
     {
         $test = new Test();
-        $test->setExpiration((new DateTime())->modify('+5 days'));
-        $test->setExpiration(new DateTime());
+        $test->setExpiration((new \DateTime())->modify('+5 days'));
+        $test->setExpiration(new \DateTime());
 
         $this->assertFalse($test->isValid(), 
             'Should return false when submission is not null.'
@@ -90,7 +89,7 @@ class TestTest extends TestCase
     public function testIsNotValidWhenExpirationInPast(string $modifier): void
     {
         $test = new Test();
-        $test->setExpiration((new DateTime())->modify($modifier));
+        $test->setExpiration((new \DateTime())->modify($modifier));
         $test->setSubmission(null);
 
         $this->assertFalse($test->isValid(), 
@@ -187,17 +186,5 @@ class TestTest extends TestCase
         $videoMock->method('getId')->willReturn($videoId);
 
         return $videoMock;
-    }
-
-    private function setEntityId(Uuid $id, string $className, mixed $objectOrValue): void
-    {
-        $reflectionClass = new ReflectionClass($className);
-        $parentClass = $reflectionClass->getParentClass();
-        if (!$parentClass) {
-            $this->fail('Base entity not exists.');
-        }
-
-        $property = $parentClass->getProperty('id');
-        $property->setValue($objectOrValue, $id);
     }
 }
