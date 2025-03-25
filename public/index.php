@@ -1,6 +1,8 @@
 <?php
 
-use App\Infrastructure\TestManagerKernel;
+declare(strict_types = 1);
+
+use App\Presentation\TestManagerKernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
