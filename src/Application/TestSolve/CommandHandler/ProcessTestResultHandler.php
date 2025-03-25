@@ -4,13 +4,12 @@ declare(strict_types = 1);
 
 namespace App\Application\TestSolve\CommandHandler;
 
+use App\Application\Shared\RepositoryInterface;
 use App\Application\Shared\UnitOfWorkInterface;
-use App\Application\Test\Repository\TestRepositoryInterface;
-use App\Application\TestResult\Repository\TestResultRepositoryInterface;
 use App\Application\TestSolve\Command\ProcessTestResult;
-use App\Application\TestSolve\Service\TestResultCsvGeneratorInterface;
-use App\Application\TestSolve\Service\TestResultNotificationInterface;
-use App\Application\TestSolve\Service\TestScoreCalculatorInterface;
+use App\Application\TestSolve\Service\TestResultCsvGenerator;
+use App\Application\TestSolve\Service\TestResultNotification;
+use App\Application\TestSolve\Service\TestScoreCalculator;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
 use App\Domain\Model\TestSolve;
@@ -22,11 +21,10 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final class ProcessTestResultHandler
 {
     public function __construct(
-        private readonly TestScoreCalculatorInterface $testScoreCalculator,
-        private readonly TestResultCsvGeneratorInterface $testResultCsvGenerator,
-        private readonly TestResultNotificationInterface $testResultNotification,
-        private readonly TestRepositoryInterface $testRepository,
-        private readonly TestResultRepositoryInterface $testResultRepository,
+        private readonly TestScoreCalculator $testScoreCalculator,
+        private readonly TestResultCsvGenerator $testResultCsvGenerator,
+        private readonly TestResultNotification $testResultNotification,
+        private readonly RepositoryInterface $repository,
         private readonly UnitOfWorkInterface $unitOfWork,
         private readonly LoggerInterface $logger
     ) {
@@ -36,7 +34,10 @@ final class ProcessTestResultHandler
     {
         $testId = $command->getTestId();
 
-        $test = $this->testRepository->getTestById($testId);
+        /**
+         * @var Test $test
+         */
+        $test = $this->repository->get(Test::class, $testId);
         if (!$test) {
             throw new NotFoundException(Test::class, ['id' => $testId]);
         }
@@ -56,8 +57,8 @@ final class ProcessTestResultHandler
         $testResult->setTest($test);
         $testResult->setFile($testResultCsv);
 
-        $this->testRepository->persistTest($test);
-        $this->testResultRepository->persistTestResult($testResult);
+        $this->repository->persist($test);
+        $this->repository->persist($testResult);
 
         $this->unitOfWork->commit();
 

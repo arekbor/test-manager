@@ -10,11 +10,6 @@ use App\Infrastructure\Shared\AbstractRepository;
 
 final class AppSettingRepository extends AbstractRepository implements AppSettingRepositoryInterface
 {
-    public function persistAppSetting(AppSetting $appSetting): void
-    {
-        $this->persist($appSetting);
-    }
-
     public function getByKey(string $appSettingKey): ?AppSetting
     {
         $queryBuilder = $this->em->createQueryBuilder();

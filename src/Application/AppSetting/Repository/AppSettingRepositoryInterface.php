@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Application\AppSetting\Repository;
 
+use App\Application\Shared\RepositoryInterface;
 use App\Domain\Entity\AppSetting;
 
-interface AppSettingRepositoryInterface
+interface AppSettingRepositoryInterface extends RepositoryInterface
 {
-    public function persistAppSetting(AppSetting $appSetting): void;
     public function getByKey(string $appSettingKey): ?AppSetting;
 }

@@ -2,12 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\TestSolve\Service;
+namespace App\Application\TestSolve\Service;
 
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
-use App\Application\AppSetting\Service\AppSettingDecoderInterface;
+use App\Application\AppSetting\Service\AppSettingDecoder;
 use App\Application\Shared\EmailerInterface;
-use App\Application\TestSolve\Service\TestResultNotificationInterface;
 use App\Domain\Entity\AppSetting;
 use App\Domain\Entity\Test;
 use App\Domain\Exception\EmailerException;
@@ -15,11 +14,11 @@ use App\Domain\Exception\NotFoundException;
 use App\Domain\Exception\TestResultNotificationDisabledException;
 use App\Domain\Model\TestAppSetting;
 
-final class TestResultNotification implements TestResultNotificationInterface
+final class TestResultNotification
 {
     public function __construct(
         private readonly AppSettingRepositoryInterface $appSettingRepository,
-        private readonly AppSettingDecoderInterface $appSettingDecoder,
+        private readonly AppSettingDecoder $appSettingDecoder,
         private readonly EmailerInterface $emailer
     ) {
     }

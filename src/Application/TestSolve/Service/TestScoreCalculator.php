@@ -2,14 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\TestSolve\Service;
+namespace App\Application\TestSolve\Service;
 
-use App\Application\TestSolve\Service\TestScoreCalculatorInterface;
 use App\Domain\Entity\Test;
 use App\Domain\Model\TestSolve;
 use App\Domain\Model\TestQuestionSolve;
 
-final class TestScoreCalculator implements TestScoreCalculatorInterface
+final class TestScoreCalculator
 {
     public function calculate(TestSolve $testSolve, Test $test): int
     {

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Infrastructure\Shared;
 
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
-use App\Application\AppSetting\Service\AppSettingDecoderInterface;
+use App\Application\AppSetting\Service\AppSettingDecoder;
 use App\Application\Shared\CryptoInterface;
 use App\Application\Shared\EmailerInterface;
 use App\Domain\Entity\AppSetting;
@@ -17,7 +17,7 @@ final class Emailer implements EmailerInterface
 {
     public function __construct(
         private readonly AppSettingRepositoryInterface $appSettingRepository,
-        private readonly AppSettingDecoderInterface $appSettingDecoder,
+        private readonly AppSettingDecoder $appSettingDecoder,
         private readonly CryptoInterface $crypto
     ) {
     }

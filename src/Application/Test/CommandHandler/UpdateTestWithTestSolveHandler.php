@@ -4,16 +4,16 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\CommandHandler;
 
+use App\Application\Shared\RepositoryInterface;
 use App\Application\Shared\UnitOfWorkInterface;
 use App\Application\Test\Command\UpdateTestWithTestSolve;
-use App\Application\Test\Repository\TestRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final class UpdateTestWithTestSolveHandler
 {
     public function __construct(
-        private readonly TestRepositoryInterface $testRepository,
+        private readonly RepositoryInterface $repository,
         private readonly UnitOfWorkInterface $unitOfWork
     ) {
     }
@@ -33,8 +33,7 @@ final class UpdateTestWithTestSolveHandler
         $test->setWorkplace($testSolve->getWorkplace());
         $test->setDateOfBirth($testSolve->getDateOfBirth());
 
-        $this->testRepository->persistTest($test);
-
+        $this->repository->persist($test);
         $this->unitOfWork->commit();
     }
 }

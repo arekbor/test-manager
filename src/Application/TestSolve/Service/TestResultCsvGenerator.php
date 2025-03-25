@@ -2,21 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\TestSolve\Service;
+namespace App\Application\TestSolve\Service;
 
-use App\Application\TestSolve\Service\TestResultCsvGeneratorInterface;
+use App\Application\Shared\CsvGeneratorInterface;
 use App\Domain\Entity\Test;
 use App\Util\DateHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class TestResultCsvGenerator implements TestResultCsvGeneratorInterface
+final class TestResultCsvGenerator
 {
-    public function create(Test $test): \SplFileInfo
+    public function __construct(
+        private readonly CsvGeneratorInterface $csvGenerator,
+    ) {
+    }
+
+    public function create(Test $test): UploadedFile
     {
         $fileName = sprintf('%s_%s.csv', strtolower($test->getFirstname()), strtolower($test->getLastname()));
-
-        $tempFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
-
+        
         $data = [
             ['ID', $test->getId()],
             ['Start', DateHelper::formatDateTime($test->getStart())],
@@ -32,17 +35,8 @@ final class TestResultCsvGenerator implements TestResultCsvGeneratorInterface
             ['Score', $test->getScore()],
         ];
 
-        $fp = fopen($tempFilePath, 'w');
-        if ($fp === false) {
-            throw new \RuntimeException("Unable to open file for writing: $tempFilePath");
-        }
+        $file = $this->csvGenerator->generate($fileName, $data);
 
-        foreach ($data as $row) {
-            fputcsv($fp, $row, ',', '"', '\\');
-        }
-
-        fclose($fp);
-
-        return new UploadedFile($tempFilePath, $fileName, 'text/csv', test: true);
+        return new UploadedFile($file->getPathname(), $fileName, 'text/csv', test: true);
     }
 }

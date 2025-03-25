@@ -2,14 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\AppSetting\Service;
+namespace App\Application\AppSetting\Service;
 
-use App\Application\AppSetting\Service\AppSettingDecoderInterface;
 use App\Domain\Exception\JsonDecodeException;
 use App\Domain\Exception\JsonEncodeException;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class AppSettingDecoder implements AppSettingDecoderInterface
+final class AppSettingDecoder
 {
     private const SERIALIZER_FORMAT = 'json';
 

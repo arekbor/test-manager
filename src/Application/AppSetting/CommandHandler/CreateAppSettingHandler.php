@@ -6,7 +6,7 @@ namespace App\Application\AppSetting\CommandHandler;
 
 use App\Application\AppSetting\Command\CreateAppSetting;
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
-use App\Application\AppSetting\Service\AppSettingDecoderInterface;
+use App\Application\AppSetting\Service\AppSettingDecoder;
 use App\Application\Shared\UnitOfWorkInterface;
 use App\Domain\Entity\AppSetting;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final class CreateAppSettingHandler
 {
     public function __construct(
-        private readonly AppSettingDecoderInterface $appSettingDecoder,
+        private readonly AppSettingDecoder $appSettingDecoder,
         private readonly AppSettingRepositoryInterface $appSettingRepository,
         private readonly UnitOfWorkInterface $unitOfWork
     ) {
@@ -30,7 +30,7 @@ final class CreateAppSettingHandler
         $appSetting->setKey($command->getKeyAppSetting());
         $appSetting->setValue($value);
 
-        $this->appSettingRepository->persistAppSetting($appSetting);
+        $this->appSettingRepository->persist($appSetting);
         $this->unitOfWork->commit();
     }
 }
