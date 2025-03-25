@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Attribute\NotLogged;
 use App\Domain\Entity\SecurityUser;
+use App\Presentation\Controller\Attribute\NotLogged;
 use App\Presentation\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
