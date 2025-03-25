@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Presentation\EventSubscriber;
 
-use LogicException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -34,7 +33,7 @@ class ExceptionResponseSubscriber implements EventSubscriberInterface
         $session = $this->requestStack->getSession();
 
         if (!$session instanceof FlashBagAwareSessionInterface) {
-            throw new LogicException("The session does not implement " . FlashBagAwareSessionInterface::class);
+            throw new \LogicException("Session is not istance of " . FlashBagAwareSessionInterface::class);
         }
 
         $session->getFlashBag()->add('danger', $this->trans->trans('flash.exceptionResponseSubscriber.message'));

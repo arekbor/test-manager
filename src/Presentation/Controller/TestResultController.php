@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Presentation\Controller;
 
 use App\Domain\Entity\TestResult;
-use App\Handler\FileHandler;
+use App\Presentation\Util\FileHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Attribute\Route;

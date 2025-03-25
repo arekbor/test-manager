@@ -6,7 +6,7 @@ namespace App\Presentation\Controller;
 
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Video;
-use App\Handler\FileHandler;
+use App\Presentation\Util\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
