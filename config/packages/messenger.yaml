@@ -21,4 +21,4 @@ framework:
       sync: "sync://"
       failed: "doctrine://default?queue_name=failed"
     routing:
-      'App\Application\TestSolve\Command\CreateTestSolve': async
+      'App\Application\TestSolve\Command\ProcessTestResult': async
