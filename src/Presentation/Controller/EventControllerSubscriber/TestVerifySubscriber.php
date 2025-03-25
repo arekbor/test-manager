@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Presentation\Controller\EventControllerSubscriber;
 
-use App\Attribute\TestVerify;
 use App\Domain\Entity\Test;
-use App\Util\AttributeHelper;
+use App\Presentation\Controller\Attribute\TestVerify;
+use App\Presentation\Controller\Util\AttributeHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class TestVerifySubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator
     ) {
     }
 

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Presentation\Controller\EventControllerSubscriber;
 
-use App\Attribute\NotLogged;
-use App\Util\AttributeHelper;
+use App\Presentation\Controller\Attribute\NotLogged;
+use App\Presentation\Controller\Util\AttributeHelper;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
