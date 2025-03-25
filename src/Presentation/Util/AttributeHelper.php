@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Presentation\Controller\Util;
+namespace App\Presentation\Util;
 
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Presentation\Controller\EventControllerSubscriber;
+namespace App\Presentation\EventSubscriber;
 
 use App\Domain\Entity\Test;
-use App\Presentation\Controller\Attribute\TestVerify;
-use App\Presentation\Controller\Util\AttributeHelper;
+use App\Presentation\Attribute\TestVerify;
+use App\Presentation\Util\AttributeHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;

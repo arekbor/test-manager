@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Presentation\Controller\Attribute;
+namespace App\Presentation\Attribute;
 
 /**
  * This attribute checks if the test exists in the database and if it is active
