@@ -7,7 +7,7 @@ namespace App\Application\TestSolve\CommandHandler;
 use App\Application\Shared\RepositoryInterface;
 use App\Application\Shared\UnitOfWorkInterface;
 use App\Application\TestSolve\Command\ProcessTestResult;
-use App\Application\TestSolve\Service\TestResultCsvGenerator;
+use App\Application\TestSolve\Service\TestResultDocumentGenerator;
 use App\Application\TestSolve\Service\TestResultNotification;
 use App\Application\TestSolve\Service\TestScoreCalculator;
 use App\Domain\Entity\Test;
@@ -22,7 +22,7 @@ final class ProcessTestResultHandler
 {
     public function __construct(
         private readonly TestScoreCalculator $testScoreCalculator,
-        private readonly TestResultCsvGenerator $testResultCsvGenerator,
+        private readonly TestResultDocumentGenerator $testResultDocumentGenerator,
         private readonly TestResultNotification $testResultNotification,
         private readonly RepositoryInterface $repository,
         private readonly UnitOfWorkInterface $unitOfWork,
@@ -51,7 +51,7 @@ final class ProcessTestResultHandler
 
         $test->setScore($score);
 
-        $testResultCsv = $this->testResultCsvGenerator->create($test);
+        $testResultCsv = $this->testResultDocumentGenerator->create($test);
 
         $testResult = new TestResult();
         $testResult->setTest($test);
