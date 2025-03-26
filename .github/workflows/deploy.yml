@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main # lub inna główna gałąź
+      - master # lub inna główna gałąź
 
 jobs:
   deploy:
