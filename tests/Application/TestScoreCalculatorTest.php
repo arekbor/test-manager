@@ -18,7 +18,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class TestScoreCalculatorTest extends TestCase
 {
-    public function test_calculator_should_award_correct_number_of_points(): void
+    public function testCalculatorAwardsCorrectNumberOfPoints(): void
     {
         //Arrange
         $answersOfQuestion1 = [
@@ -102,7 +102,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(3, $score);
     }
 
-    public function test_calculator_does_not_award_point_for_wrong_answer(): void
+    public function testCalculatorDoesNotAwardPointForWrongAnswer(): void
     {
         //Arrange
         $answers = [
@@ -138,7 +138,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(0, $score);
     }
 
-    public function test_calculator_does_not_award_point_for_unselected_answer(): void
+    public function testCalculatorDoesNotAwardPointForUnselectedAnswer(): void
     {
         //Arrange
         $answers = [
@@ -174,7 +174,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(0, $score);
     }
 
-    public function test_calculator_does_not_award_point_when_no_answers_selected(): void
+    public function testCalculatorDoesNotAwardPointWhenNoAnswersSelected(): void
     {
         //Arrange
         $answers = [

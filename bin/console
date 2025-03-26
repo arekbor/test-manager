@@ -3,7 +3,7 @@
 
 declare(strict_types = 1);
 
-use App\Presentation\TestManagerKernel;
+use App\Infrastructure\TestManagerKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 if (!is_dir(dirname(__DIR__).'/vendor')) {
