@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Model;
 
-use App\Util\ArrayHelper;
+use App\Application\Util\ArrayHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as AppAssert;
 

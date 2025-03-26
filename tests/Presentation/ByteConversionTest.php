@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Util;
+namespace App\Tests\Presentation;
 
-use App\Util\ByteConversion;
+use App\Presentation\Util\ByteConversion;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

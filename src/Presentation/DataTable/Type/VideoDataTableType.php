@@ -7,7 +7,7 @@ namespace App\Presentation\DataTable\Type;
 use App\Domain\Entity\Video;
 use App\Presentation\DataTable\Action\Type\UploadFileActionType;
 use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
-use App\Util\ByteConversion;
+use App\Presentation\Util\ByteConversion;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;

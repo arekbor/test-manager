@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\AppSetting;
+namespace App\Tests\Infrastructure;
 
 use App\Domain\Model\MailSmtpAppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;

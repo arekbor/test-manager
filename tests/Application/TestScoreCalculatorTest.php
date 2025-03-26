@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Tests\TestSolve;
+namespace App\Tests\Application;
 
 use App\Application\TestSolve\Service\TestScoreCalculator;
 use App\Domain\Entity\Answer;
