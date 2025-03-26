@@ -24,7 +24,7 @@ final class AppSettingDecoderTest extends TestCase
         $this->appSettingDecoder = new AppSettingDecoder($serializer);
     }
 
-    public function test_decodes_correctly(): void
+    public function testDecodesCorrectly(): void
     {
         //Arrange
         $mailSmtpAppSetting = new MailSmtpAppSetting(
@@ -52,7 +52,7 @@ final class AppSettingDecoderTest extends TestCase
         $this->assertEquals(10, $decodedData['timeout']);
     }
 
-    public function test_encodes_correctly(): void
+    public function testEncodesCorrectly(): void
     {
         //Arrange
         $mailSmtpAppSetting = [

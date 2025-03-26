@@ -21,7 +21,7 @@ final class CryptoTest extends TestCase
         $this->crypto = new Crypto($parameterBag);
     }
 
-    public function test_encrypts_plainText_correctly(): void
+    public function testEncryptsPlainTextCorrectly(): void
     {
         //Arrange
         $plainText = "Test text to be encrypted.";
@@ -38,7 +38,7 @@ final class CryptoTest extends TestCase
         $this->assertNotEquals($encryptedData, $anotherEncryptedData);
     }
 
-    public function test_decrypts_correctly(): void
+    public function testDecryptsCorrectly(): void
     {
         //Arrange
         $plainText = "Test text to be encrypted.";
