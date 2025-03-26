@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Command;
 
-use App\Application\AppSetting\Command\CreateAppSetting;
-use App\Domain\Model\MailSmtpAppSetting;
-use App\Domain\Model\TestAppSetting;
+use App\Application\AppSetting\Command\CreateStartAppSettings;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,8 +29,7 @@ class CreateAppSettingsCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $this->commandBus->dispatch(new CreateAppSetting(MailSmtpAppSetting::APP_SETTING_KEY, new MailSmtpAppSetting()));
-            $this->commandBus->dispatch(new CreateAppSetting(TestAppSetting::APP_SETTING_KEY, new TestAppSetting()));
+            $this->commandBus->dispatch(new CreateStartAppSettings());
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
             return Command::FAILURE;
