@@ -6,7 +6,7 @@ namespace App\Domain\Model;
 
 use App\Application\Util\ArrayHelper;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator as AppAssert;
+use App\Application\Validator as ApplicationAssert;
 
 class TestAppSetting
 {
@@ -16,11 +16,11 @@ class TestAppSetting
     private int $expirationDaysOffset;
 
     #[Assert\Valid]
-    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
+    #[ApplicationAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testMessages;
 
     #[Assert\Valid]
-    #[AppAssert\UniqueValuesInArray(key: 'getLanguage')]
+    #[ApplicationAssert\UniqueValuesInArray(key: 'getLanguage')]
     private array $testClauses;
 
     private bool $notificationsEnabled;

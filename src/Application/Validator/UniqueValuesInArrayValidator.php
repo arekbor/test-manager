@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Validator;
+declare(strict_types = 1);
+
+namespace App\Application\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UniqueValuesInArrayValidator extends ConstraintValidator
+final class UniqueValuesInArrayValidator extends ConstraintValidator
 {
     public function __construct(
-        private TranslatorInterface $trans
+        private readonly TranslatorInterface $trans
     ) {
     }
 

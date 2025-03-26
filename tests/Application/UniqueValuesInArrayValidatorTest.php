@@ -1,11 +1,11 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Validator;
+namespace App\Tests\Application;
 
-use App\Validator\UniqueValuesInArray;
-use App\Validator\UniqueValuesInArrayValidator;
+use App\Application\Validator\UniqueValuesInArray;
+use App\Application\Validator\UniqueValuesInArrayValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
