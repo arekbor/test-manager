@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Command;
 
-use App\Application\AppSetting\Command\CreateStartAppSettings;
+use App\Application\AppSetting\Command\CreateInitialAppSettings;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +29,7 @@ class CreateAppSettingsCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $this->commandBus->dispatch(new CreateStartAppSettings());
+            $this->commandBus->dispatch(new CreateInitialAppSettings());
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
             return Command::FAILURE;
