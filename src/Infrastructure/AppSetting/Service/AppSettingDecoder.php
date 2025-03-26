@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\AppSetting\Service;
+namespace App\Infrastructure\AppSetting\Service;
 
 use App\Domain\Exception\JsonDecodeException;
 use App\Domain\Exception\JsonEncodeException;
@@ -17,7 +17,7 @@ final class AppSettingDecoder
     ) {
     }
 
-    public function decode(mixed $data): array
+    public function decode(mixed $data): mixed
     {
         $serializedData = $this->serializer->serialize($data, self::SERIALIZER_FORMAT);
 

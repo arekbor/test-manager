@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\AppSetting;
 
-use App\Application\AppSetting\Service\AppSettingDecoder;
 use App\Domain\Model\MailSmtpAppSetting;
+use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
