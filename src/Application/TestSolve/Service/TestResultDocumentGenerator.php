@@ -5,11 +5,11 @@ declare(strict_types = 1);
 namespace App\Application\TestSolve\Service;
 
 use App\Application\Shared\CsvGeneratorInterface;
+use App\Application\Util\DateHelper;
 use App\Domain\Entity\Test;
-use App\Util\DateHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class TestResultCsvGenerator
+final class TestResultDocumentGenerator
 {
     public function __construct(
         private readonly CsvGeneratorInterface $csvGenerator,

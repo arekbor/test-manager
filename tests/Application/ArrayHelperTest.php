@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Util;
+namespace App\Tests\Application;
 
+use App\Application\Util\ArrayHelper;
 use App\Domain\Model\TestMessageAppSetting;
-use App\Util\ArrayHelper;
 use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase

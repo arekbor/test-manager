@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Util;
+namespace App\Presentation\Util;
 
 final class ByteConversion
 {

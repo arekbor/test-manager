@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Util;
+namespace App\Application\Util;
 
-class ArrayHelper 
+final class ArrayHelper 
 {
     public static function addItem(array &$array, mixed $item): void
     {

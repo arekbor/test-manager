@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Shared;
+namespace App\Tests\Infrastructure;
 
 use App\Infrastructure\Shared\Crypto;
 use PHPUnit\Framework\TestCase;
