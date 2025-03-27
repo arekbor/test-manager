@@ -1,17 +1,19 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Application;
+namespace App\Tests\Unit;
 
 use App\Application\Util\DateHelper as UtilDateHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class DateHelperTest extends TestCase
+final class DateHelperTest extends TestCase
 {
+    #[Test]
     #[DataProvider('diffDatesProvider')]
-    public function testDiff(\DateTimeInterface $start, \DateTimeInterface $end, string $expected): void
+    public function testDiffDates(\DateTimeInterface $start, \DateTimeInterface $end, string $expected): void
     {
         $diff = UtilDateHelper::diff($start, $end);
 

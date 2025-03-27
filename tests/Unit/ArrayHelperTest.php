@@ -1,71 +1,86 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Application;
+namespace App\Tests\Unit;
 
 use App\Application\Util\ArrayHelper;
 use App\Domain\Model\TestMessageAppSetting;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class ArrayHelperTest extends TestCase
+final class ArrayHelperTest extends TestCase
 {
-    public function testAddItemSuccessfullyAddsItem(): void
+    #[Test]
+    public function testAddItemAddsItemSuccessfully(): void
     {
+        //Arrange
         $testArray = [];
         $testingValue = 'test';
 
+        //Act
         ArrayHelper::addItem($testArray, $testingValue);
 
+        //Assert
         $this->assertCount(1, $testArray);
         $this->assertSame($testingValue, $testArray[0]);
     }
 
+    #[Test]
     public function testAddItemPreventsDuplicateEntries(): void
     {
+        //Arrange
         $testArray = [];
         $testingValue = 'test';
 
+        //Act
         ArrayHelper::addItem($testArray, $testingValue);
         ArrayHelper::addItem($testArray, $testingValue);
         ArrayHelper::addItem($testArray, $testingValue);
         ArrayHelper::addItem($testArray, $testingValue);
 
+        //Assert
         $this->assertCount(1, $testArray);
     }
 
-    public function testRemoveItemSuccessfullyRemovesItem(): void
+    #[Test]
+    public function testRemoveItemRemovesItemSuccessfully(): void
     {
+        //Arrange
         $testingValue1 = 'test1';
         $testingValue2 = 'test2';
 
-        $testArray = [
-            $testingValue1, $testingValue2
-        ];
+        $testArray = [$testingValue1, $testingValue2];
 
+        //Act
         ArrayHelper::removeItem($testArray, $testingValue2);
 
+        //Assert
         $this->assertCount(1, $testArray);
         $this->assertSame($testingValue1, $testArray[0]);
     }
 
-    public function testRemoveItemDoesNothingIfItemNotPresent(): void
+    #[Test]
+    public function testRemoveItemDoesNothingWhenItemNotFound(): void
     {
+        //Arrange
         $testingValue1 = 'test1';
         $testingValue2 = 'test2';
 
-        $testArray = [
-            $testingValue1
-        ];
+        $testArray = [$testingValue1];
 
+        //Act
         ArrayHelper::removeItem($testArray, $testingValue2);
 
+        //Assert
         $this->assertCount(1, $testArray);
         $this->assertContains($testingValue1, $testArray);
     }
 
+    #[Test]
     public function testFindFirstByPropertyReturnsCorrectObject(): void
     {
+        //Arrange
         $testMessages = [
             (new TestMessageAppSetting())
                 ->setIntroduction('test 1')
@@ -83,23 +98,31 @@ class ArrayHelperTest extends TestCase
                 ->setLanguage('fr'),
         ];
 
+        //Act
         $testMessageAppSetting = ArrayHelper::findFirstByProperty($testMessages, 'getLanguage', 'en');
         
+        //Assert
         $this->assertEquals('test 3', $testMessageAppSetting->getIntroduction());
         $this->assertEquals('test 4', $testMessageAppSetting->getConclusion());
     }
 
+    #[Test]
     public function testFindFirstByPropertyReturnsNullWhenNoMatchFound(): void
     {
+        //Arrange
         $testMessages = [];
 
+        //Act
         $testMessageAppSetting = ArrayHelper::findFirstByProperty($testMessages, 'getLanguage', 'pl');
 
+        //Assert
         $this->assertNull($testMessageAppSetting);
     }
 
-    public function testFindFirstByPropertyReturnsNullWhenMethodNotExists(): void
+    #[Test]
+    public function testFindFirstByPropertyReturnsNullWhenMethodDoesNotExist(): void
     {
+        //Arrange
         $testMessages = [
             (new TestMessageAppSetting())
                 ->setIntroduction('test 1')
@@ -107,8 +130,10 @@ class ArrayHelperTest extends TestCase
                 ->setLanguage('pl')
         ];
 
+        //Act
         $testMessageAppSetting = ArrayHelper::findFirstByProperty($testMessages, 'getFirstMessage', 'pl');
 
+        //Assert
         $this->assertNull($testMessageAppSetting);
     }
 }

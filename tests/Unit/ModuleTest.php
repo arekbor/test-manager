@@ -1,18 +1,21 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Domain\Entity;
+namespace App\Tests\Unit;
 
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Question;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class ModuleTest extends TestCase
+final class ModuleTest extends TestCase
 {
+    #[Test]
     public function testFindQuestionByIdReturnsCorrectQuestion(): void
     {
+        //Arrange
         $question1 = $this->createMock(Question::class);
         $question1Id = Uuid::v7();
         $question1->method('getId')->willReturn($question1Id);
@@ -32,13 +35,17 @@ class ModuleTest extends TestCase
             ->addQuestion($question3)
         ;
 
+        //Act
         $foundQuestion = $module->findQuestionById($question2Id);
 
+        //Assert
         $this->assertSame($question2, $foundQuestion);
     }
 
+    #[Test]
     public function testFindQuestionByIdReturnsFirstQuestionWhenDuplicateIdsExist(): void
     {
+        //Arrange
         $duplicateId = Uuid::v7();
 
         $question1 = $this->createMock(Question::class);
@@ -53,13 +60,17 @@ class ModuleTest extends TestCase
             ->addQuestion($question2)
         ;
 
+        //Act
         $foundQuestion = $module->findQuestionById($duplicateId);
 
+        //Assert
         $this->assertSame($question1, $foundQuestion);
     }
 
+    #[Test]
     public function testFindQuestionByIdReturnsNullWhenIdNotFound(): void
     {
+        //Assert
         $question1 = $this->createMock(Question::class);
         $question1Id = Uuid::v7();
         $question1->method('getId')->willReturn($question1Id);
@@ -80,8 +91,10 @@ class ModuleTest extends TestCase
 
         $nonExistentId = Uuid::v7();
 
+        //Act
         $foundQuestion = $module->findQuestionById($nonExistentId);
 
+        //Assert
         $this->assertNull($foundQuestion);
     }
 }

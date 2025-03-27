@@ -1,10 +1,11 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Infrastructure;
+namespace App\Tests\Unit;
 
 use App\Infrastructure\Shared\Crypto;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
@@ -21,6 +22,7 @@ final class CryptoTest extends TestCase
         $this->crypto = new Crypto($parameterBag);
     }
 
+    #[Test]
     public function testEncryptsPlainTextCorrectly(): void
     {
         //Arrange
@@ -38,6 +40,7 @@ final class CryptoTest extends TestCase
         $this->assertNotEquals($encryptedData, $anotherEncryptedData);
     }
 
+    #[Test]
     public function testDecryptsCorrectly(): void
     {
         //Arrange

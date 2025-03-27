@@ -1,19 +1,24 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Presentation;
+namespace App\Tests\Unit;
 
 use App\Presentation\Util\ByteConversion;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class ByteConversionTest extends TestCase
+final class ByteConversionTest extends TestCase
 {
+    #[Test]
     #[DataProvider('bytesProvider')]
-    public function testFormatBytes($inputBytes, $expectedOutput, $precision = 2)
+    public function testFormatBytesConvertsCorrectly($inputBytes, $expectedOutput, $precision = 2)
     {
+        //Act
         $result = ByteConversion::formatBytes($inputBytes, $precision);
+        
+        //Assert
         $this->assertSame($expectedOutput, $result);
     }
 
