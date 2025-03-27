@@ -1,14 +1,14 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Service;
+namespace App\Tests\Unit;
 
 use App\Service\ParameterService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
-class ParameterServiceTest extends TestCase
+final class ParameterServiceTest extends TestCase
 {
     private ParameterService $parameterService;
 

@@ -1,8 +1,8 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Domain\Entity;
+namespace App\Tests\Unit;
 
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Module;
@@ -16,9 +16,10 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class TestTest extends TestCase
+final class TestTest extends TestCase
 {
-    public function testToTestSolve(): void
+    #[Test]
+    public function testConvertsTestToTestSolveCorrectly(): void
     {
         //Arrange
         $answer1 = new Answer();
@@ -49,6 +50,7 @@ class TestTest extends TestCase
 
         //Assert
         $this->assertInstanceOf(TestSolve::class, $testSolve);
+
         $this->assertEquals(1, count($testSolveQuestions));
         $this->assertEquals($questionId, $testSolveQuestions[0]->getQuestionId());
         $this->assertEquals($questionContent, $testSolveQuestions[0]->getContent());
@@ -62,85 +64,113 @@ class TestTest extends TestCase
         $this->assertEquals($answer2Content, $testSolveAnswers[1]->getContent());
     }
 
+    #[Test]
     #[DataProvider('featureModifierProvider')]
-    public function testIsValidWhenExpirationInFeature(string $modifier): void
+    public function testIsValidReturnsTrueWhenExpirationIsInTheFuture(string $modifier): void
     {
+        //Arrange
         $test = new Test();
         $test->setExpiration((new \DateTime())->modify($modifier));
         $test->setSubmission(null);
 
-        $this->assertTrue($test->isValid(), 
-            'Should return true when expiration is in the future.'
-        );
+        //Act
+        $isValid = $test->isValid();
+
+        //Assert
+        $this->assertTrue($isValid, 'Should return true when expiration is in the future.');
     }
 
+    #[Test]
     public function testIsNotValidWhenSubmissionIsNotNull(): void
     {
+        //Arrange
         $test = new Test();
         $test->setExpiration((new \DateTime())->modify('+5 days'));
-        $test->setExpiration(new \DateTime());
+        $test->setSubmission(new \DateTime());
 
-        $this->assertFalse($test->isValid(), 
-            'Should return false when submission is not null.'
-        );
+        //Act
+        $isValid = $test->isValid();
+
+        //Assert
+        $this->assertFalse($isValid, 'Should return false when submission is not null.');
     }
 
+    #[Test]
     #[DataProvider('pastModifierProvider')]
-    public function testIsNotValidWhenExpirationInPast(string $modifier): void
+    public function testIsNotValidWhenExpirationIsInThePast(string $modifier): void
     {
+        //Arrange
         $test = new Test();
         $test->setExpiration((new \DateTime())->modify($modifier));
         $test->setSubmission(null);
 
-        $this->assertFalse($test->isValid(), 
-            'Should return false when expiration is in the past.'
-        );
+        //Act
+        $isValid = $test->isValid();
+
+        //Assert
+        $this->assertFalse($isValid, 'Should return false when expiration is in the past.');
     }
 
+    #[Test]
     public function testIsNotValidWhenExpirationIsNull(): void
     {
+        //Arrange
         $test = new Test();
         $test->setExpiration(null);
 
-        $this->assertFalse($test->isValid(), 
-            'Should return false when expiration is null.'
-        );
+        //Act
+        $isValid = $test->isValid();
+
+        //Assert
+        $this->assertFalse($isValid, 'Should return false when expiration is null.');
     }
 
-    public function testVideoBelongsToTest(): void
+    #[Test]
+    public function testReturnsTrueWhenVideoIdMatchesBetweenTestAndModule(): void
     {
+        //Arrange
         $uuid = Uuid::v7();
 
         $videoMock = $this->createVideoMock($uuid);
         $videoInModuleMock = $this->createVideoMock($uuid);
 
         $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
+        
+        //Act
+        $belongs = $test->videoBelongsToTest($videoMock);
 
-        $this->assertTrue($test->videoBelongsToTest($videoMock), 
-            'Should return true when the video ID match any video in the test\'s module.'
-        );
+        //Assert
+        $this->assertTrue($belongs, 'Should return true when the video ID match any video in the test\'s module.');
     }
 
-    public function testVideoDoesNotBelongToTest(): void
+    #[Test]
+    public function testReturnsFalseWhenVideoIdDoesNotMatchInTestModule(): void
     {
+        //Arrange
         $videoMock = $this->createVideoMock(Uuid::v7());
         $videoInModuleMock = $this->createVideoMock(Uuid::v7());
 
         $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
 
-        $this->assertFalse($test->videoBelongsToTest($videoMock), 
-            'Should return false when the video ID does not match any video in the test\'s module.'
-        );
+        //Act
+        $belongs = $test->videoBelongsToTest($videoMock);
+
+        //Assert
+        $this->assertFalse($belongs, 'Should return false when the video ID does not match any video in the test\'s module.');
     }
 
-    public function testVideoBelongsToTestWithEmptyVideoCollection(): void
+    #[Test]
+    public function testReturnsFalseWhenNoVideosInTestModule(): void
     {
+        //Arrange
         $videoMock = $this->createVideoMock(Uuid::v7());
         $test = $this->createTestWithModuleAndVideos([]);
 
-        $this->assertFalse($test->videoBelongsToTest($videoMock), 
-            'Should return false when there are no videos in the test\'s module.'
-        );
+        //Act
+        $belongs = $test->videoBelongsToTest($videoMock);
+
+        //Assert
+        $this->assertFalse($belongs, 'Should return false when there are no videos in the test\'s module.');
     }
 
     public static function featureModifierProvider(): array

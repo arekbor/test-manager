@@ -1,19 +1,22 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Domain\Entity;
+namespace App\Tests\Unit;
 
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Question;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class QuestionTest extends TestCase
+final class QuestionTest extends TestCase
 {
-    public function testUpdateAnswerPositionsAssignsSequentialPositions(): void
+    #[Test]
+    public function testUpdateAnswerPositionsAssignsPositionsInOrder(): void
     {
+        //Arrange
         $answer1 = (new Answer())->setContent('Answer 1');
         $answer2 = (new Answer())->setContent('Answer 2');
         $answer3 = (new Answer())->setContent('Answer 3');
@@ -24,15 +27,23 @@ class QuestionTest extends TestCase
             ->addAnswer($answer3)
         ;
 
+        //Act
         $question->updateAnswerPositions();
 
+        //Assert
         $this->assertEquals(1, $answer1->getPosition());
         $this->assertEquals(2, $answer2->getPosition());
         $this->assertEquals(3, $answer3->getPosition());
+
+        $this->assertEquals('Answer 1', $answer1->getContent());
+        $this->assertEquals('Answer 2', $answer2->getContent());
+        $this->assertEquals('Answer 3', $answer3->getContent());
     }
 
-    public function testUpdateAnswerPositionsAfterRemovingAnAnswer(): void
+    #[Test]
+    public function testUpdateAnswerPositionsAssignsCorrectPositionsAfterRemovingAnswer(): void
     {
+        //Arrange
         $answer1 = (new Answer())->setContent('Answer 1');
         $answer2 = (new Answer())->setContent('Answer 2');
         $answer3 = (new Answer())->setContent('Answer 3');
@@ -43,15 +54,22 @@ class QuestionTest extends TestCase
             ->addAnswer($answer3)
         ;
 
+        //Act
         $question->removeAnswer($answer2);
         $question->updateAnswerPositions();
 
+        //Assert
         $this->assertEquals(1, $answer1->getPosition());
         $this->assertEquals(2, $answer3->getPosition());
+
+        $this->assertEquals('Answer 1', $answer1->getContent());
+        $this->assertEquals('Answer 3', $answer3->getContent());
     }
 
-    public function testUpdateAnswerPositionsWithReorderedAnswers(): void
+    #[Test]
+    public function testUpdateAnswerPositionsCorrectsOrderOfAnswers(): void
     {
+        //Arrange
         $answer1 = (new Answer())->setContent('Answer 1')->setPosition(3);
         $answer2 = (new Answer())->setContent('Answer 2')->setPosition(1);
         $answer3 = (new Answer())->setContent('Answer 3')->setPosition(2);
@@ -62,15 +80,23 @@ class QuestionTest extends TestCase
             ->addAnswer($answer3)
         ;
 
+        //Act
         $question->updateAnswerPositions();
 
+        //Assert
         $this->assertEquals(1, $answer1->getPosition());
         $this->assertEquals(2, $answer2->getPosition());
         $this->assertEquals(3, $answer3->getPosition());
+
+        $this->assertEquals('Answer 1', $answer1->getContent());
+        $this->assertEquals('Answer 2', $answer2->getContent());
+        $this->assertEquals('Answer 3', $answer3->getContent());
     }
 
-    public function testAnswerPositionsAreInitiallyNull(): void
+    #[Test]
+    public function testAnswerPositionsAreNullInitially(): void
     {
+        //Arrange
         $answer1 = (new Answer())->setContent('Answer 1');
         $answer2 = (new Answer())->setContent('Answer 2');
         $answer3 = (new Answer())->setContent('Answer 3');
@@ -81,31 +107,31 @@ class QuestionTest extends TestCase
             ->addAnswer($answer3)
         ;
 
+        //Act
         $this->assertNull($answer1->getPosition());
         $this->assertNull($answer2->getPosition());
         $this->assertNull($answer3->getPosition());
     }
 
-    public function testExtractCorrectAnswerIdsReturnsOnlyCorrectAnswers(): void
+    #[Test]
+    public function testExtractsCorrectAnswerIds(): void
     {
+        //Arrange
         $answer1 = $this->createMock(Answer::class);
-        $answer1Id = Uuid::v7();
-        $answer1->method('getId')->willReturn($answer1Id);
+        
+        $answer1->method('getId')->willReturn(Uuid::v7());
         $answer1->method('isCorrect')->willReturn(false);
 
         $answer2 = $this->createMock(Answer::class);
-        $answer2Id = Uuid::v7();
-        $answer2->method('getId')->willReturn($answer2Id);
+        $answer2->method('getId')->willReturn($answer2Id = Uuid::v7());
         $answer2->method('isCorrect')->willReturn(true);
 
         $answer3 = $this->createMock(Answer::class);
-        $answer3Id = Uuid::v7();
-        $answer3->method('getId')->willReturn($answer3Id);
+        $answer3->method('getId')->willReturn(Uuid::v7());
         $answer3->method('isCorrect')->willReturn(false);
 
         $answer4 = $this->createMock(Answer::class);
-        $answer4Id = Uuid::v7();
-        $answer4->method('getId')->willReturn($answer4Id);
+        $answer4->method('getId')->willReturn($answer4Id = Uuid::v7());
         $answer4->method('isCorrect')->willReturn(true);
 
         $question = new Question();
@@ -116,20 +142,23 @@ class QuestionTest extends TestCase
             ->addAnswer($answer4)
         ;
 
+        //Act
         $extractedQuestionIds = $question->extractCorrectAnswerIds();
+        
+        //Assert
         $this->assertEquals([$answer2Id, $answer4Id], $extractedQuestionIds);
     }
 
-    public function testExtractCorrectAnswerIdsWithoutCorrectAnswersReturnsEmptyArray(): void
+    #[Test]
+    public function testReturnsEmptyArrayWhenNoCorrectAnswers(): void
     {
+        //Arrange
         $answer1 = $this->createMock(Answer::class);
-        $answer1Id = Uuid::v7();
-        $answer1->method('getId')->willReturn($answer1Id);
+        $answer1->method('getId')->willReturn(Uuid::v7());
         $answer1->method('isCorrect')->willReturn(false);
 
         $answer2 = $this->createMock(Answer::class);
-        $answer2Id = Uuid::v7();
-        $answer2->method('getId')->willReturn($answer2Id);
+        $answer2->method('getId')->willReturn(Uuid::v7());
         $answer2->method('isCorrect')->willReturn(false);
 
         $question = new Question();
@@ -138,36 +167,47 @@ class QuestionTest extends TestCase
             ->addAnswer($answer2)
         ;
 
+        //Act
         $extractedQuestionIds = $question->extractCorrectAnswerIds();
+        
+        //Assert
         $this->assertEquals([], $extractedQuestionIds);
     }
 
-    public function testExtractCorrectAnswerIdsWithoutAnyAnswersReturnsEmptyArray(): void
+    #[Test]
+    public function testReturnsEmptyArrayWhenNoAnswers(): void
     {
         $question = new Question();
 
         $this->assertEquals([], $question->extractCorrectAnswerIds());
     }
 
-    #[DataProvider('answersProvider')]
-    public function testisAnswerCorrectShouldReturnTrue(array $correctAnswerIds, array $chosenAnswerIds, bool $expectedResult): void
+    #[Test]
+    #[DataProvider('selectedAnswersProvider')]
+    public function testReturnsTrueForCorrectlySelectedAnswers(
+        array $correctAnswerIds, array $chosenAnswerIds, bool $expectedResult): void
     {
+        //Arrange
         $question = new Question();
 
         foreach($correctAnswerIds as $correctAnswerId) {
             $answer = $this->createMock(Answer::class);
+
             $answer->method('getId')->willReturn($correctAnswerId);
+
             $answer->method('isCorrect')->willReturn(true);
 
             $question->addAnswer($answer);
         }
 
+        //Act
         $result = $question->chosenAnswersCorrect($chosenAnswerIds);
 
+        //Assert
         $this->assertEquals($expectedResult, $result);
     }
 
-    public static function answersProvider(): array
+    public static function selectedAnswersProvider(): array
     {
         $uuid1 = Uuid::v7();
         $uuid2 = Uuid::v7();

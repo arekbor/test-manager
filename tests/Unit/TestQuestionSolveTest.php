@@ -1,18 +1,21 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Domain\Model;
+namespace App\Tests\Unit;
 
 use App\Domain\Model\TestAnswerSolve;
 use App\Domain\Model\TestQuestionSolve;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class TestQuestionSolveTest extends TestCase
+final class TestQuestionSolveTest extends TestCase
 {
-    public function testExtractChosenAnswerIdsReturnsOnlyChosenAnswers(): void
+    #[Test]
+    public function testExtractsOnlyChosenAnswerIds(): void
     {
+        //Arrange
         $testAnswerSolve1 = $this->createMock(TestAnswerSolve::class);
         $testAnswerSolve1Id = Uuid::v7();
         $testAnswerSolve1->method('getAnswerId')->willReturn($testAnswerSolve1Id);
@@ -34,14 +37,20 @@ class TestQuestionSolveTest extends TestCase
         $testAnswerSolve4->method('isChosen')->willReturn(true);
 
         $testQuestionSolve = new TestQuestionSolve();
+
         $testQuestionSolve->setTestAnswers([$testAnswerSolve1, $testAnswerSolve2, $testAnswerSolve3, $testAnswerSolve4]);
 
+        //Act
         $extractedAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
+
+        //Assert
         $this->assertEquals([$testAnswerSolve1Id, $testAnswerSolve2Id, $testAnswerSolve4Id], $extractedAnswerIds);
     }
 
-    public function testExtractChosenAnswerIdsWithoutChosenAnswersReturnsEmptyArray(): void
+    #[Test]
+    public function testExtractsEmptyArrayWhenNoChosenAnswers(): void
     {
+        //Arrange
         $testAnswerSolve1 = $this->createMock(TestAnswerSolve::class);
         $testAnswerSolve1Id = Uuid::v7();
         $testAnswerSolve1->method('getAnswerId')->willReturn($testAnswerSolve1Id);
@@ -53,16 +62,26 @@ class TestQuestionSolveTest extends TestCase
         $testAnswerSolve2->method('isChosen')->willReturn(false);
 
         $testQuestionSolve = new TestQuestionSolve();
-        $testQuestionSolve->setTestAnswers([$testAnswerSolve1, $testAnswerSolve2]);
 
+        $testQuestionSolve->setTestAnswers([$testAnswerSolve1, $testAnswerSolve2]);
+        
+        //Act
         $extractedAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
+
+        //Assert
         $this->assertEquals([], $extractedAnswerIds);
     }
 
-    public function testExtractChosenAnswerIdsWithoutAnyAnswersReturnsEmptyArray(): void
+    #[Test]
+    public function testExtractsEmptyArrayWhenNoAnswers(): void
     {
+        //Arrange
         $testQuestionSolve = new TestQuestionSolve();
 
-        $this->assertEquals([], $testQuestionSolve->extractChosenAnswerIds());
+        //Act
+        $extractedAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
+
+        //Assert
+        $this->assertEquals([], $extractedAnswerIds);
     }
 }

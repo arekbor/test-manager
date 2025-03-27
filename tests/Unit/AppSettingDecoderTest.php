@@ -1,11 +1,12 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Tests\Infrastructure;
+namespace App\Tests\Unit;
 
 use App\Domain\Model\MailSmtpAppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -17,13 +18,12 @@ final class AppSettingDecoderTest extends TestCase
 
     protected function setUp(): void
     {
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
         $this->appSettingDecoder = new AppSettingDecoder($serializer);
     }
 
+    #[Test]
     public function testDecodesCorrectly(): void
     {
         //Arrange
@@ -52,6 +52,7 @@ final class AppSettingDecoderTest extends TestCase
         $this->assertEquals(10, $decodedData['timeout']);
     }
 
+    #[Test]
     public function testEncodesCorrectly(): void
     {
         //Arrange

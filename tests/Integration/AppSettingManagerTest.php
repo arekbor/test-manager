@@ -14,6 +14,7 @@ use App\Infrastructure\AppSetting\Service\AppSettingManager;
 use App\Infrastructure\Shared\UnitOfWork;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -21,6 +22,7 @@ use Symfony\Component\Serializer\Serializer;
 final class AppSettingManagerTest extends DatabaseTestCase
 {
     private readonly AppSettingManager $appSettingManager;
+    private readonly AppSettingDecoder $appSettingDecoder;
 
     protected function setUp(): void
     {
@@ -28,14 +30,15 @@ final class AppSettingManagerTest extends DatabaseTestCase
 
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
-        $appSettingDecoder = new AppSettingDecoder($serializer);
+        $this->appSettingDecoder = new AppSettingDecoder($serializer);
 
         $appSettingRepository = new AppSettingRepository($this->entityManager);
         $unitOfWork = new UnitOfWork($this->entityManager);
 
-        $this->appSettingManager = new AppSettingManager($appSettingDecoder, $appSettingRepository, $unitOfWork);
+        $this->appSettingManager = new AppSettingManager($this->appSettingDecoder, $appSettingRepository, $unitOfWork);
     }
 
+    #[Test]
     #[Group("Integration")]
     public function testCreateManyPersistsAppSettingsCorrectly(): void
     {
@@ -56,5 +59,44 @@ final class AppSettingManagerTest extends DatabaseTestCase
         //assert
         $this->assertNotNull($mailSmtpAppSetting);
         $this->assertNotNull($testAppSetting);
+    }
+
+    #[Test]
+    #[Group("Integration")]
+    public function testGetReturnsCorrectAppSetting(): void
+    {
+        //Arrange
+        $testAppSettingToPersist = new TestAppSetting();
+        $testAppSettingToPersist->setExpirationDaysOffset(12);
+        $testAppSettingToPersist->setNotificationsEnabled(true);
+
+        $decodedValue = $this->appSettingDecoder->decode($testAppSettingToPersist);
+
+        $appSetting = new AppSetting();
+        $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
+        $appSetting->setValue($decodedValue);
+
+        $this->entityManager->persist($appSetting);
+        $this->entityManager->flush();
+
+        //Act
+        /**
+         * @var TestAppSetting $testAppSetting
+         */
+        $testAppSetting = $this->appSettingManager->get(TestAppSetting::APP_SETTING_KEY, TestAppSetting::class);
+
+        //Assert
+        $this->assertEquals(12, $testAppSetting->getExpirationDaysOffset());
+        $this->assertEquals(true, $testAppSetting->getNotificationsEnabled());
+    }
+
+    #[Test]
+    #[Group("Integration")]
+    public function testGetThrowsNotFoundExceptionWhenAppSettingNotFound(): void
+    {
+        $this->expectException(\App\Domain\Exception\NotFoundException::class);
+        $this->expectExceptionMessage('App\Domain\Entity\AppSetting {"key":"mail.smtp"}');
+
+        $this->appSettingManager->get(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
     }
 }

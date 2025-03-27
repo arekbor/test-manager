@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Tests\Application;
+namespace App\Tests\Unit;
 
 use App\Application\TestSolve\Service\TestScoreCalculator;
 use App\Domain\Entity\Answer;
@@ -18,6 +18,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class TestScoreCalculatorTest extends TestCase
 {
+    #[Test]
     public function testCalculatorAwardsCorrectNumberOfPoints(): void
     {
         //Arrange
@@ -102,6 +103,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(3, $score);
     }
 
+    #[Test]
     public function testCalculatorDoesNotAwardPointForWrongAnswer(): void
     {
         //Arrange
@@ -138,6 +140,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(0, $score);
     }
 
+    #[Test]
     public function testCalculatorDoesNotAwardPointForUnselectedAnswer(): void
     {
         //Arrange
@@ -174,6 +177,7 @@ final class TestScoreCalculatorTest extends TestCase
         $this->assertEquals(0, $score);
     }
 
+    #[Test]
     public function testCalculatorDoesNotAwardPointWhenNoAnswersSelected(): void
     {
         //Arrange
