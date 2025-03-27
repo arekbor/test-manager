@@ -252,6 +252,7 @@ flash:
     successfullyCreated: The test has been successfully created.
   mailSmtpAppSettingForm:
     successfullyUpdated: SMTP settings have been successfully updated.
+    error: Error while updating SMTP settings.
   testAppSettingForm:
     successfullyUpdated: Test settings have been successfully updated.
   updateVideoForm:

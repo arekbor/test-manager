@@ -99,4 +99,66 @@ final class AppSettingManagerTest extends DatabaseTestCase
 
         $this->appSettingManager->get(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
     }
+
+    #[Test]
+    #[Group("Integration")]
+    public function testUpdateAppSettingPersistsNewValuesCorrectly(): void
+    {
+        //Arrange
+        $mailSmtpAppSettingBeforeUpdate = new MailSmtpAppSetting(
+            host: 'gmail.host.com',
+            port: '546',
+            fromAddress: 'test@gmail.com',
+            username: 'username@gmail.com',
+            password: 'secret',
+            smtpAuth: true,
+            smtpSecure: 'ssl',
+            timeout: 20
+        );
+
+        $decodedValue = $this->appSettingDecoder->decode($mailSmtpAppSettingBeforeUpdate);
+
+        $appSetting = new AppSetting();
+        $appSetting->setKey(MailSmtpAppSetting::APP_SETTING_KEY);
+        $appSetting->setValue($decodedValue);
+
+        $this->entityManager->persist($appSetting);
+        $this->entityManager->flush();
+
+        $mailSmtpAppSettingAfterUpdate = new MailSmtpAppSetting(
+            host: 'test.host.com',
+            port: '223',
+            fromAddress: 'test_user@gmal.com',
+            username: 'test123@gmail.com',
+            password: 'test secret',
+            smtpAuth: false,
+            smtpSecure: 'tls',
+            timeout: 5
+        );
+
+        //Act
+        $this->appSettingManager->update(MailSmtpAppSetting::APP_SETTING_KEY, $mailSmtpAppSettingAfterUpdate);
+
+        $repo = $this->entityManager->getRepository(AppSetting::class);
+
+        /**
+         * @var AppSetting $appSetting
+         */
+        $appSetting = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
+
+        /**
+         * @var MailSmtpAppSetting $mailSmtpAppSetting
+         */
+        $mailSmtpAppSetting = $this->appSettingDecoder->encode($appSetting->getValue(), MailSmtpAppSetting::class);
+
+        //Assert
+        $this->assertEquals('test.host.com', $mailSmtpAppSetting->getHost());
+        $this->assertEquals('223', $mailSmtpAppSetting->getPort());
+        $this->assertEquals('test_user@gmal.com', $mailSmtpAppSetting->getFromAddress());
+        $this->assertEquals('test123@gmail.com', $mailSmtpAppSetting->getUsername());
+        $this->assertEquals('test secret', $mailSmtpAppSetting->getPassword());
+        $this->assertEquals(false, $mailSmtpAppSetting->getSmtpAuth());
+        $this->assertEquals('tls', $mailSmtpAppSetting->getSmtpSecure());
+        $this->assertEquals(5, $mailSmtpAppSetting->getTimeout());
+    }
 }

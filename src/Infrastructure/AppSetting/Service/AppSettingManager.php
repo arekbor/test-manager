@@ -48,4 +48,23 @@ final class AppSettingManager implements AppSettingManagerInterface
 
         return $this->appSettingDecoder->encode($appSetting->getValue(), $appSettingClassName);
     }
+
+    public function update(string $key, mixed $newValue): void
+    {
+        /**
+         * @var AppSetting $appSetting
+         */
+        $appSetting = $this->appSettingRepository->getByKey($key);
+        if (!$appSetting) {
+            throw new NotFoundException(AppSetting::class, ['key' => $key]);
+        }
+
+        $decodedValue = $this->appSettingDecoder->decode($newValue);
+
+        $appSetting->setValue($decodedValue);
+
+        $this->appSettingRepository->persist($appSetting);
+
+        $this->unitOfWork->commit();
+    }
 }
