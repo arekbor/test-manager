@@ -1,19 +1,16 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Domain\Exception\NotFoundException;
+use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
 use App\Presentation\Form\MailSmtpAppSettingType;
 use App\Domain\Model\MailSmtpAppSetting;
-use App\Repository\AppSettingRepository;
-use App\Service\AppSettingService;
-use App\Service\EncryptionService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -27,37 +24,31 @@ final class MailSmtpAppSettingForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
+    public function __construct(
+        private readonly MessageBusInterface $commandBus,
+        private readonly TranslatorInterface $trans,
+    ) {
+    }
+
     #[LiveProp]
     public MailSmtpAppSetting $mailSmtpAppSetting;
 
     #[LiveAction]
-    public function submit(
-        AppSettingService $appSettingService,
-        EncryptionService $encryptionService,
-        AppSettingRepository $appSettingRepository,
-        EntityManagerInterface $em,
-        TranslatorInterface $trans,
-    ): Response
+    public function submit(): Response
     {
         $this->submitForm();
 
         $mailSmtpAppSetting = $this->getForm()->getData();
 
-        $plainPassword = $mailSmtpAppSetting->getPassword();
-        $encryptedPassword = $encryptionService->encrypt($plainPassword);
-        $mailSmtpAppSetting->setPassword($encryptedPassword);
+        try {
+            $this->commandBus->dispatch(new UpdateMailSmtpAppSetting($mailSmtpAppSetting));
+        } catch (\Exception) {
+            $this->addFlash('danger', $this->trans->trans('flash.mailSmtpAppSettingForm.error'));
 
-        $appSetting = $appSettingRepository->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY);
-        if ($appSetting === null) {
-            throw new NotFoundException(MailSmtpAppSetting::class);
+            return $this->redirectToRoute('app_settings_smtp');
         }
-
-        $appSetting = $appSettingService->updateValue($appSetting, $mailSmtpAppSetting);
-
-        $em->persist($appSetting);
-        $em->flush();
-
-        $this->addFlash('success', $trans->trans('flash.mailSmtpAppSettingForm.successfullyUpdated'));
+        
+        $this->addFlash('success', $this->trans->trans('flash.mailSmtpAppSettingForm.successfullyUpdated'));
         
         return $this->redirectToRoute('app_settings_smtp');
     }
