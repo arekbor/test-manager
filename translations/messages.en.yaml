@@ -248,11 +248,12 @@ templates:
 flash:
   moduleForm:
     successfullyCreated: Module "%moduleName%" has been successfully created.
+    error: An issue occurred while creating the module.
   testForm:
     successfullyCreated: The test has been successfully created.
   mailSmtpAppSettingForm:
     successfullyUpdated: SMTP settings have been successfully updated.
-    error: Error while updating SMTP settings.
+    error: An issue occurred while updating SMTP settings.
   testAppSettingForm:
     successfullyUpdated: Test settings have been successfully updated.
   updateVideoForm:
