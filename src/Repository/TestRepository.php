@@ -22,7 +22,6 @@ class TestRepository extends ServiceEntityRepository
             ->createQueryBuilder('t')
             ->leftJoin('t.module', 'module')
             ->addSelect('module')
-            ->where('(t.testResult IS NOT NULL) OR (t.testResult IS NULL AND t.start IS NULL AND t.submission IS NULL)')
         ;
     }
 }

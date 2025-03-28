@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Test\Command\UpdateTestWithTestSolve;
-use App\Application\TestSolve\Command\ProcessTestResult;
+use App\Application\Test\Command\RegisterTestSolve;
 use App\Domain\Entity\Test;
 use App\Domain\Exception\NotFoundException;
 use App\Presentation\Form\TestSolveType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,8 +33,7 @@ final class TestSolveForm extends AbstractController
     public Test $testProp;
 
     public function __construct(
-        private EntityManagerInterface $em,
-        private MessageBusInterface $commandBus
+        private readonly MessageBusInterface $commandBus
     ) {
     }
 
@@ -61,20 +58,15 @@ final class TestSolveForm extends AbstractController
         $testSolve = $this->getForm()->getData();
 
         try {
-            $this->commandBus->dispatch(new UpdateTestWithTestSolve(
+            $this->commandBus->dispatch(new RegisterTestSolve(
                 test: $this->testProp,
+                testSolve: $testSolve,
                 start: $this->start,
-                submission: new \DateTimeImmutable(),
-                testSolve: $testSolve
+                submission: new \DateTimeImmutable()
             ));
-        } catch(\Exception) {
+        } catch (\Exception) {
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
-
-        $this->commandBus->dispatch(new ProcessTestResult(
-            testSolve: $testSolve,
-            testId: $this->testProp->getId()
-        ));
 
         return $this->redirectToRoute('app_testsolve_conclusion');
     }
