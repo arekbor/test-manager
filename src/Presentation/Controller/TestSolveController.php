@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Shared\VichFileHandlerInterface;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\Video;
 use App\Presentation\Attribute\TestVerify;
-use App\Presentation\Util\FileHandler;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,14 +55,15 @@ class TestSolveController extends AbstractController
     public function video(
         #[MapEntity(id: 'testId')] Test $test,
         #[MapEntity(id: 'videoId')] Video $video,
-        FileHandler $fileHandler,
+        VichFileHandlerInterface $vichFileHandler,
     ): Response
     {
         if (!$test->videoBelongsToTest($video)) {
             throw new AccessDeniedHttpException();
         }   
 
-        $file = $fileHandler->getFile($video, 'file');
+        $file = $vichFileHandler->handle($video, Video::FILE_FIELD_NAME);
+        
         return $this->file($file);
     }
 

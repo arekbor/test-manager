@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Shared\VichFileHandlerInterface;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Video;
-use App\Presentation\Util\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,10 +59,10 @@ class VideoController extends AbstractController
     #[Route('/download/{id}', name: 'app_video_download')]
     public function download(
         Video $video,
-        FileHandler $fileHandler,
+        VichFileHandlerInterface $vichFileHandler,
     ): BinaryFileResponse
     {
-        $file = $fileHandler->getFile($video, 'file');
+        $file = $vichFileHandler->handle($video, Video::FILE_FIELD_NAME);
 
         return $this->file($file);
     }

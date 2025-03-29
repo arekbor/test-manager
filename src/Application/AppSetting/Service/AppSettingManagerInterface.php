@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Application\AppSetting\Service;
 
-use App\Application\AppSetting\DTO\AppSettingToCreate;
+use App\Domain\Entity\AppSetting;
 
 interface AppSettingManagerInterface 
 {
-    public function createMany(AppSettingToCreate ...$appSettings): void;
-    public function get(string $key, string $appSettingClassName): object;
-    public function update(string $key, mixed $newValue): void;
+    public function create(string $key, mixed $value): AppSetting;
+    public function update(AppSetting $appSetting, mixed $newValue): AppSetting;
+    public function get(AppSetting $appSetting, string $appSettingClassName): object;
 }

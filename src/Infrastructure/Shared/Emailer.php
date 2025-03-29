@@ -4,15 +4,18 @@ declare(strict_types = 1);
 
 namespace App\Infrastructure\Shared;
 
+use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\CryptoInterface;
 use App\Application\Shared\EmailerInterface;
+use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Model\MailSmtpAppSetting;
 use PHPMailer\PHPMailer\PHPMailer;
 
 final class Emailer implements EmailerInterface
 {
     public function __construct(
+        private readonly AppSettingRepositoryInterface $appSettingRepository,
         private readonly AppSettingManagerInterface $appSettingManager,
         private readonly CryptoInterface $crypto
     ) {
@@ -37,10 +40,15 @@ final class Emailer implements EmailerInterface
 
     private function getPHPMailer(): PHPMailer
     {
+        $appSetting = $this->appSettingRepository->getByKey(MailSmtpAppSetting::APP_SETTING_KEY);
+        if (!$appSetting) {
+            throw new AppSettingByKeyNotFound(MailSmtpAppSetting::APP_SETTING_KEY);
+        }
+
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
          */
-        $mailSmtpAppSetting = $this->appSettingManager->get(MailSmtpAppSetting::APP_SETTING_KEY, MailSmtpAppSetting::class);
+        $mailSmtpAppSetting = $this->appSettingManager->get($appSetting, MailSmtpAppSetting::class);
 
         $mailer = new PHPMailer();
 

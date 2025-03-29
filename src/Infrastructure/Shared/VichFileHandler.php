@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace App\Presentation\Util;
+namespace App\Infrastructure\Shared;
 
+use App\Application\Shared\VichFileHandlerInterface;
 use Vich\UploaderBundle\Exception\NoFileFoundException;
 use Vich\UploaderBundle\Handler\AbstractHandler;
 
-final class FileHandler extends AbstractHandler
+final class VichFileHandler extends AbstractHandler implements VichFileHandlerInterface
 {
-    public function getFile(object|array $object, string $field, ?string $className = null): \SplFileInfo
+    public function handle(object|array $object, string $field, ?string $className = null): \SplFileInfo
     {
         $path = $this->storage->resolvePath($object, $field, $className);
         if (!$path) {
