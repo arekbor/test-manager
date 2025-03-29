@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\CommandHandler;
 
+use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\EmailerInterface;
 use App\Application\Shared\RepositoryInterface;
 use App\Application\Test\Command\SendTestResultCsvToTestCreator;
 use App\Domain\Entity\Test;
+use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Model\TestAppSetting;
 use Psr\Log\LoggerInterface;
@@ -18,6 +20,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final class SendTestResultCsvToTestCreatorHandler
 {
     public function __construct(
+        private readonly AppSettingRepositoryInterface $appSettingRepository,
         private readonly AppSettingManagerInterface $appSettingManager,
         private readonly LoggerInterface $logger,
         private readonly EmailerInterface $emailer,
@@ -28,10 +31,15 @@ final class SendTestResultCsvToTestCreatorHandler
     public function __invoke(SendTestResultCsvToTestCreator $command): void
     {
         try {
+            $appSetting = $this->appSettingRepository->getByKey(TestAppSetting::APP_SETTING_KEY);
+            if (!$appSetting) {
+                throw new AppSettingByKeyNotFound(TestAppSetting::APP_SETTING_KEY);
+            }
+
             /**
              * @var TestAppSetting $testAppSetting
              */
-            $testAppSetting = $this->appSettingManager->get(TestAppSetting::APP_SETTING_KEY, TestAppSetting::class);
+            $testAppSetting = $this->appSettingManager->get($appSetting, TestAppSetting::class);
 
             if (!$testAppSetting->getNotificationsEnabled()) {
                 $this->logger->warning(sprintf("[%s] Notifications for the test creator are disabled. Skipping notification sending.",
