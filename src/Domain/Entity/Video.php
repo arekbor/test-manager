@@ -15,7 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Vich\Uploadable]
 class Video extends BaseEntity
-{   
+{       
+    public const FILE_FIELD_NAME = 'file';
+
     #[Vich\UploadableField(
         mapping: 'videos', 
         fileNameProperty: 'fileName',

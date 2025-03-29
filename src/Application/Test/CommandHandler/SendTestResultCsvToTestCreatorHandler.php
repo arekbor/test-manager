@@ -8,8 +8,10 @@ use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\EmailerInterface;
 use App\Application\Shared\RepositoryInterface;
+use App\Application\Shared\VichFileHandlerInterface;
 use App\Application\Test\Command\SendTestResultCsvToTestCreator;
 use App\Domain\Entity\Test;
+use App\Domain\Entity\TestResult;
 use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Model\TestAppSetting;
@@ -24,7 +26,8 @@ final class SendTestResultCsvToTestCreatorHandler
         private readonly AppSettingManagerInterface $appSettingManager,
         private readonly LoggerInterface $logger,
         private readonly EmailerInterface $emailer,
-        private readonly RepositoryInterface $repository
+        private readonly RepositoryInterface $repository,
+        private readonly VichFileHandlerInterface $vichFileHandler,
     ) {
     }
 
@@ -59,9 +62,9 @@ final class SendTestResultCsvToTestCreatorHandler
                 throw new NotFoundException(Test::class, ['id' => $testId]);
             }
 
-            $attachment = $test->getTestResult()->getFile();
-
             $recipient = $test->getCreator()->getEmail();
+
+            $attachment = $this->vichFileHandler->handle($test->getTestResult(), TestResult::FILE_FIELD_NAME);
 
             $subject = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
 

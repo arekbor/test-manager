@@ -11,6 +11,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class TestResult extends BaseEntity
 {
+    public const FILE_FIELD_NAME = 'file';
+
     #[Vich\UploadableField(
         mapping: 'testResults', 
         fileNameProperty: 'fileName',
