@@ -8,7 +8,7 @@ use App\Application\AppSetting\Command\CreateInitialAppSettings;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\RepositoryInterface;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
-use App\Domain\Model\TestAppSetting;
+use App\Application\AppSetting\Model\TestAppSetting;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]

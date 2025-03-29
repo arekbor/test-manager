@@ -14,7 +14,7 @@ use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
 use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Exception\NotFoundException;
-use App\Domain\Model\TestAppSetting;
+use App\Application\AppSetting\Model\TestAppSetting;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

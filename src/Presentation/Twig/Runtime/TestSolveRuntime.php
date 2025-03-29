@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Runtime;
 
-use App\Domain\Model\TestAppSetting;
-use App\Domain\Model\TestClauseAppSetting;
-use App\Domain\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestAppSetting;
+use App\Application\AppSetting\Model\TestClauseAppSetting;
+use App\Application\AppSetting\Model\TestMessageAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Component\HttpFoundation\RequestStack;

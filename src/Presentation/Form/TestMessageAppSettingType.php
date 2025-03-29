@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Form;
 
-use App\Domain\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestMessageAppSetting;
 use App\Service\ParameterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Tests\Integration;
 
-use App\Domain\Entity\AppSetting;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
-use App\Domain\Model\TestAppSetting;
+use App\Application\AppSetting\Model\TestAppSetting;
+use App\Domain\Entity\AppSetting;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;

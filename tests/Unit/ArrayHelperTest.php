@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Tests\Unit;
 
 use App\Application\Util\ArrayHelper;
-use App\Domain\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestMessageAppSetting;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

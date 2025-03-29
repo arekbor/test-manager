@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Presentation\Controller;
 
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
-use App\Domain\Model\TestAppSetting;
+use App\Application\AppSetting\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
