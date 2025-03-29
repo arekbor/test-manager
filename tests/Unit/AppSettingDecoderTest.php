@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Tests\Unit;
 
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

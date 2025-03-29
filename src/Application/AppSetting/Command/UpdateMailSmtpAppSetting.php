@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Application\AppSetting\Command;
 
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 
 final class UpdateMailSmtpAppSetting
 {

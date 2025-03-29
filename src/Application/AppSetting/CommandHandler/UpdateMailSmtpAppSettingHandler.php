@@ -9,7 +9,7 @@ use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\CryptoInterface;
 use App\Domain\Exception\AppSettingByKeyNotFound;
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]

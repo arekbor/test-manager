@@ -7,7 +7,7 @@ namespace App\Tests\Integration;
 use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
 use App\Application\AppSetting\CommandHandler\UpdateMailSmtpAppSettingHandler;
 use App\Domain\Entity\AppSetting;
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use App\Infrastructure\AppSetting\Repository\AppSettingRepository;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;

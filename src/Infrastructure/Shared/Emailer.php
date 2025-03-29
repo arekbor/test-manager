@@ -9,7 +9,7 @@ use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\CryptoInterface;
 use App\Application\Shared\EmailerInterface;
 use App\Domain\Exception\AppSettingByKeyNotFound;
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use PHPMailer\PHPMailer\PHPMailer;
 
 final class Emailer implements EmailerInterface

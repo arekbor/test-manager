@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use App\Domain\Model\TestAppSetting;
 use App\Repository\AppSettingRepository;
 use App\Service\AppSettingService;

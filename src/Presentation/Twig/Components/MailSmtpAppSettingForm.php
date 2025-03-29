@@ -6,7 +6,7 @@ namespace App\Presentation\Twig\Components;
 
 use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
 use App\Presentation\Form\MailSmtpAppSettingType;
-use App\Domain\Model\MailSmtpAppSetting;
+use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
