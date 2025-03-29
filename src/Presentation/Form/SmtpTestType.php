@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Form;
 
-use App\Domain\Model\SmtpTest;
+use App\Application\AppSetting\Model\SmtpTest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
