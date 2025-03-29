@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Tests\Unit;
 
-use App\Application\TestSolve\Service\TestScoreCalculator;
+use App\Application\Test\Service\TestScoreCalculator;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Question;

@@ -7,28 +7,33 @@ namespace App\Application\Test\Command;
 use App\Domain\Entity\Test;
 use App\Domain\Model\TestSolve;
 
-final class UpdateTestWithTestSolve
+final class RegisterTestSolve
 {
     private Test $test;
+    private TestSolve $testSolve;
     private \DateTimeInterface $start;
     private \DateTimeInterface $submission;
-    private TestSolve $testSolve;
-
+    
     public function __construct(
         Test $test,
+        TestSolve $testSolve,
         \DateTimeInterface $start,
         \DateTimeInterface $submission,
-        TestSolve $testSolve
     ) {
         $this->test = $test;
+        $this->testSolve = $testSolve;
         $this->start = $start;
         $this->submission = $submission;
-        $this->testSolve = $testSolve;
     }
 
     public function getTest(): Test
     {
         return $this->test;
+    }
+
+    public function getTestSolve(): TestSolve
+    {
+        return $this->testSolve;
     }
 
     public function getStart(): \DateTimeInterface
@@ -39,10 +44,5 @@ final class UpdateTestWithTestSolve
     public function getSubmission(): \DateTimeInterface
     {
         return $this->submission;
-    }
-
-    public function getTestSolve(): TestSolve
-    {
-        return $this->testSolve;
     }
 }

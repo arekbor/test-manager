@@ -5,11 +5,10 @@ framework:
     buses:
       command.bus:
         middleware:
-          - validation
+          - dispatch_after_current_bus
           - doctrine_transaction
-      query.bus:
-        middleware:
-          - validation
+      query.bus: ~
+      event.bus: ~
     transports:
       async:
         dsn: "doctrine://default?auto_setup=0"
@@ -21,4 +20,4 @@ framework:
       sync: "sync://"
       failed: "doctrine://default?queue_name=failed"
     routing:
-      'App\Application\TestSolve\Command\ProcessTestResult': async
+      'App\Domain\Event\*': async

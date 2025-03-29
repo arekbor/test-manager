@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\TestSolve\Service;
+namespace App\Application\Test\Service;
 
 use App\Application\Shared\CsvGeneratorInterface;
 use App\Application\Util\DateHelper;
 use App\Domain\Entity\Test;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class TestResultDocumentGenerator
+final class TestResultCsvGenerator
 {
     public function __construct(
         private readonly CsvGeneratorInterface $csvGenerator,

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Application\TestSolve\Service;
+namespace App\Application\Test\Service;
 
 use App\Domain\Entity\Test;
 use App\Domain\Model\TestSolve;
