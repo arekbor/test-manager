@@ -57,47 +57,36 @@ final class ProcessTestSolveHandler
             throw new NotFoundException(Test::class, ['id' => $testId]);
         }
 
-        try {
-            $score = $this->testScoreCalculator->calculate($testSolve, $test);
+        $score = $this->testScoreCalculator->calculate($testSolve, $test);
 
-            $this->logger->info(sprintf("[%s] Score successfully calculated for Test ID: %s.",
-                __CLASS__,
-                $testIdString
-            ));
+        $this->logger->info(sprintf("[%s] Score successfully calculated for Test ID: %s.",
+            __CLASS__,
+            $testIdString
+        ));
 
-            $test->setScore($score);
-            $test->setFirstname($testSolve->getFirstname());
-            $test->setLastname($testSolve->getLastname());
-            $test->setEmail($testSolve->getEmail());
-            $test->setWorkplace($testSolve->getWorkplace());
-            $test->setDateOfBirth($testSolve->getDateOfBirth());
+        $test->setScore($score);
+        $test->setFirstname($testSolve->getFirstname());
+        $test->setLastname($testSolve->getLastname());
+        $test->setEmail($testSolve->getEmail());
+        $test->setWorkplace($testSolve->getWorkplace());
+        $test->setDateOfBirth($testSolve->getDateOfBirth());
 
-            $csv = $this->testResultCsvGenerator->create($test);
+        $csv = $this->testResultCsvGenerator->create($test);
 
-            $this->logger->info(sprintf("[%s] Successfully generated CSV file for Test ID: %s", 
-                __CLASS__,
-                $test->getId()->toString()
-            ));
+        $this->logger->info(sprintf("[%s] Successfully generated CSV file for Test ID: %s", 
+            __CLASS__,
+            $test->getId()->toString()
+        ));
 
-            $testResult = new TestResult();
-            $testResult->setTest($test);
-            $testResult->setFile($csv);
+        $testResult = new TestResult();
+        $testResult->setTest($test);
+        $testResult->setFile($csv);
 
-            $this->repository->persist($testResult);
-            $this->repository->persist($test);
+        $this->repository->persist($testResult);
+        $this->repository->persist($test);
 
-            $this->unitOfWork->commit();
+        $this->unitOfWork->commit();
 
-            $this->eventBus->dispatch(new TestSolveProcessed(
-                testId: $test->getId()
-            ));
-
-            $this->logger->info(sprintf("[%s] Test ID: %s successfully updated with test solve data.",
-                __CLASS__,
-                $testIdString
-            ));
-        } catch(\Exception $ex) {
-            throw $ex;
-        }
+        $this->eventBus->dispatch(new TestSolveProcessed($test->getId()));
     }
 }

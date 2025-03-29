@@ -29,34 +29,21 @@ final class RegisterTestSolveHandler
             throw new \InvalidArgumentException('Start date cannot be later than submission date.');
         }
 
-        try {
-            $test = $command->getTest();
+        $test = $command->getTest();
 
-            $testIdString = $test->getId()->toString();
+        $testIdString = $test->getId()->toString();
 
-            $this->logger->info(sprintf("[%s] Registering test solve for Test ID: %s", 
-                __CLASS__,
-                $testIdString
-            ));
+        $this->logger->info(sprintf("[%s] Registering test solve for Test ID: %s", 
+            __CLASS__,
+            $testIdString
+        ));
 
-            $test->setStart($command->getStart());
-            $test->setSubmission($command->getSubmission());
+        $test->setStart($command->getStart());
+        $test->setSubmission($command->getSubmission());
 
-            $this->repository->persist($test);
-            $this->unitOfWork->commit();
+        $this->repository->persist($test);
+        $this->unitOfWork->commit();
 
-            $this->eventBus->dispatch(new TestSolveRegistered(
-                testId: $test->getId(),
-                testSolve: $command->getTestSolve()
-            ));
-
-            $this->logger->info(sprintf("[%s] Successfully registered test solve for Test ID: %s", 
-                __CLASS__,
-                $testIdString
-            ));
-
-        } catch(\Exception $ex) {
-            throw $ex;
-        }
+        $this->eventBus->dispatch(new TestSolveRegistered($test->getId(), $command->getTestSolve()));
     }
 }

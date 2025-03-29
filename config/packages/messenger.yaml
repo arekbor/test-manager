@@ -5,14 +5,10 @@ framework:
     buses:
       command.bus:
         middleware:
-          - validation
+          - dispatch_after_current_bus
           - doctrine_transaction
-      query.bus:
-        middleware:
-          - validation
-      event.bus:
-        middleware:
-          - validation
+      query.bus: ~
+      event.bus: ~
     transports:
       async:
         dsn: "doctrine://default?auto_setup=0"

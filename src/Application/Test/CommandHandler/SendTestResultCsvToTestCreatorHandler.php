@@ -27,41 +27,45 @@ final class SendTestResultCsvToTestCreatorHandler
 
     public function __invoke(SendTestResultCsvToTestCreator $command): void
     {
-        /**
-         * @var TestAppSetting $testAppSetting
-         */
-        $testAppSetting = $this->appSettingManager->get(TestAppSetting::APP_SETTING_KEY, TestAppSetting::class);
+        try {
+            /**
+             * @var TestAppSetting $testAppSetting
+             */
+            $testAppSetting = $this->appSettingManager->get(TestAppSetting::APP_SETTING_KEY, TestAppSetting::class);
 
-        if (!$testAppSetting->getNotificationsEnabled()) {
-            $this->logger->warning(sprintf("[%s] Notifications for the test creator are disabled. Skipping notification sending.",
-                __CLASS__
-            ));
+            if (!$testAppSetting->getNotificationsEnabled()) {
+                $this->logger->warning(sprintf("[%s] Notifications for the test creator are disabled. Skipping notification sending.",
+                    __CLASS__
+                ));
+    
+                return;
+            }
 
-            return;
-        }
+            $testId = $command->getTestId();
 
-        $testId = $command->getTestId();
+            /**
+             * @var Test $test
+             */
+            $test = $this->repository->get(Test::class, $testId);
+            if (!$test) {
+                throw new NotFoundException(Test::class, ['id' => $testId]);
+            }
 
-        /**
-         * @var Test $test
-         */
-        $test = $this->repository->get(Test::class, $testId);
-        if (!$test) {
-            throw new NotFoundException(Test::class, ['id' => $testId]);
-        }
+            $attachment = $test->getTestResult()->getFile();
 
-        $attachment = $test->getTestResult()->getFile();
+            $recipient = $test->getCreator()->getEmail();
 
-        $recipient = $test->getCreator()->getEmail();
+            $subject = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
 
-        $subject = sprintf("Test result - %s %s", $test->getFirstname(), $test->getLastname());
+            $error = $this->emailer->send($recipient, $subject, "Test result", $attachment);
 
-        $error = $this->emailer->send($recipient, $subject, "Test result", $attachment);
-
-        if (!empty($error)) {
-            $this->logger->warning(sprintf("[%s] Failed to send test result email to %s. Error: %s", 
-                __CLASS__, $recipient, $error
-            ));
+            if (!empty($error)) {
+                $this->logger->warning(sprintf("[%s] Failed to send test result email to %s. Error: %s", 
+                    __CLASS__, $recipient, $error
+                ));
+            }
+        } catch (\Exception $ex) {
+            $this->logger->error($ex->getMessage());
         }
     }
 }
