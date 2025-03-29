@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Domain\Model\TestAnswerSolve;
+use App\Application\Test\Model\TestAnswerSolve;
 use App\Repository\AnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

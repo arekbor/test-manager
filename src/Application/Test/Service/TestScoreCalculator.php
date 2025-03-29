@@ -6,7 +6,7 @@ namespace App\Application\Test\Service;
 
 use App\Domain\Entity\Test;
 use App\Domain\Model\TestSolve;
-use App\Domain\Model\TestQuestionSolve;
+use App\Application\Test\Model\TestQuestionSolve;
 
 final class TestScoreCalculator
 {

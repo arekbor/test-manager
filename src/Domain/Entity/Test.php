@@ -6,7 +6,6 @@ namespace App\Domain\Entity;
 
 use App\Domain\Model\TestSolve;
 use App\Repository\TestRepository;
-use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -114,7 +113,7 @@ class Test extends BaseEntity
 
     public function isValid(): bool
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         return $now < $this->expiration && $this->submission === null;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Domain\Model\TestQuestionSolve;
+use App\Application\Test\Model\TestQuestionSolve;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

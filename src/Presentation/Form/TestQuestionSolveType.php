@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Form;
 
-use App\Domain\Model\TestQuestionSolve;
+use App\Application\Test\Model\TestQuestionSolve;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
