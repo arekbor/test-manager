@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace App\Application\Test\CommandHandler;
 
 use App\Application\Shared\RepositoryInterface;
-use App\Application\Shared\UnitOfWorkInterface;
 use App\Application\Test\Command\RegisterTestSolve;
 use App\Domain\Event\TestSolveRegistered;
 use Psr\Log\LoggerInterface;
@@ -17,7 +16,6 @@ final class RegisterTestSolveHandler
 {
     public function __construct(
         private readonly RepositoryInterface $repository,
-        private readonly UnitOfWorkInterface $unitOfWork,
         private readonly MessageBusInterface $eventBus,
         private readonly LoggerInterface $logger
     ) {
@@ -42,7 +40,6 @@ final class RegisterTestSolveHandler
         $test->setSubmission($command->getSubmission());
 
         $this->repository->persist($test);
-        $this->unitOfWork->commit();
 
         $this->eventBus->dispatch(new TestSolveRegistered($test->getId(), $command->getTestSolve()));
     }
