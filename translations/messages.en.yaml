@@ -251,8 +251,8 @@ flash:
     error: An issue occurred while creating the module.
   testForm:
     successfullyCreated: The test has been successfully created.
-  mailSmtpAppSettingForm:
-    successfullyUpdated: SMTP settings have been successfully updated.
+  updateMailSmtpAppSettingForm:
+    success: SMTP settings have been successfully updated.
     error: An issue occurred while updating SMTP settings.
   testAppSettingForm:
     successfullyUpdated: Test settings have been successfully updated.

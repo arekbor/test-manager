@@ -19,7 +19,7 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
 #[AsLiveComponent]
-final class MailSmtpAppSettingForm extends AbstractController
+final class UpdateMailSmtpAppSettingForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
@@ -38,17 +38,20 @@ final class MailSmtpAppSettingForm extends AbstractController
     {
         $this->submitForm();
 
+        /**
+         * @var MailSmtpAppSetting $mailSmtpAppSetting
+         */
         $mailSmtpAppSetting = $this->getForm()->getData();
 
         try {
             $this->commandBus->dispatch(new UpdateMailSmtpAppSetting($mailSmtpAppSetting));
         } catch (\Exception) {
-            $this->addFlash('danger', $this->trans->trans('flash.mailSmtpAppSettingForm.error'));
+            $this->addFlash('danger', $this->trans->trans('flash.updateMailSmtpAppSettingForm.error'));
 
             return $this->redirectToRoute('app_settings_smtp');
         }
         
-        $this->addFlash('success', $this->trans->trans('flash.mailSmtpAppSettingForm.successfullyUpdated'));
+        $this->addFlash('success', $this->trans->trans('flash.updateMailSmtpAppSettingForm.success'));
         
         return $this->redirectToRoute('app_settings_smtp');
     }
