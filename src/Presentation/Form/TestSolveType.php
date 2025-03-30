@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Form;
 
-use App\Domain\Model\TestSolve;
+use App\Application\Test\Model\TestSolve;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

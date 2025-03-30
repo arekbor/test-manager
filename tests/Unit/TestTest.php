@@ -9,7 +9,7 @@ use App\Domain\Entity\Module;
 use App\Domain\Entity\Question;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\Video;
-use App\Domain\Model\TestSolve;
+use App\Application\Test\Model\TestSolve;
 use App\Tests\EntityHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;

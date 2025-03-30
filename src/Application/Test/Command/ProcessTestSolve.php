@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Command;
 
-use App\Domain\Model\TestSolve;
+use App\Application\Test\Model\TestSolve;
 use Symfony\Component\Uid\Uuid;
 
 final class ProcessTestSolve

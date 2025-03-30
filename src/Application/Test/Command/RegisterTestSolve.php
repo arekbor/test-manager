@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Application\Test\Command;
 
 use App\Domain\Entity\Test;
-use App\Domain\Model\TestSolve;
+use App\Application\Test\Model\TestSolve;
 
 final class RegisterTestSolve
 {

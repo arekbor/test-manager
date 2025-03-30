@@ -18,7 +18,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
-use App\Domain\Model\TestSolve;
+use App\Application\Test\Model\TestSolve;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
