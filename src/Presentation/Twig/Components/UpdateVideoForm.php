@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
+use App\Application\Video\Model\UpdateVideo;
 use App\Domain\Entity\Video;
 use App\Presentation\Form\UpdateVideoType;
-use App\Domain\Model\UpdateVideo;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
