@@ -42,7 +42,12 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 
         $appSettingRepository = new AppSettingRepository($this->entityManager);
 
-        $this->handler = new UpdateMailSmtpAppSettingHandler($crypto, $this->appSettingManager, $appSettingRepository);
+        $this->handler = new UpdateMailSmtpAppSettingHandler(
+            $crypto, 
+            $this->appSettingManager, 
+            $appSettingRepository,
+            $this->entityManager
+        );
     }
 
     #[Test]

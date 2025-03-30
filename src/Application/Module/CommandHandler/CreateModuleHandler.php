@@ -5,14 +5,14 @@ declare(strict_types = 1);
 namespace App\Application\Module\CommandHandler;
 
 use App\Application\Module\Command\CreateModule;
-use App\Application\Shared\RepositoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final class CreateModuleHandler
 {
     public function __construct(
-        private readonly RepositoryInterface $repository
+        private readonly EntityManagerInterface $entityManager
     ) {
     }
 
@@ -20,6 +20,6 @@ final class CreateModuleHandler
     {
         $module = $command->getModule();
 
-        $this->repository->persist($module);
+        $this->entityManager->persist($module);
     }
 }

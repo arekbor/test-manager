@@ -7,7 +7,6 @@ namespace App\Application\Test\CommandHandler;
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\EmailerInterface;
-use App\Application\Shared\RepositoryInterface;
 use App\Application\Shared\VichFileHandlerInterface;
 use App\Application\Test\Command\SendTestResultCsvToTestCreator;
 use App\Domain\Entity\Test;
@@ -15,6 +14,7 @@ use App\Domain\Entity\TestResult;
 use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Exception\NotFoundException;
 use App\Application\AppSetting\Model\TestAppSetting;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -26,7 +26,7 @@ final class SendTestResultCsvToTestCreatorHandler
         private readonly AppSettingManagerInterface $appSettingManager,
         private readonly LoggerInterface $logger,
         private readonly EmailerInterface $emailer,
-        private readonly RepositoryInterface $repository,
+        private readonly EntityManagerInterface $entityManager,
         private readonly VichFileHandlerInterface $vichFileHandler,
     ) {
     }
@@ -57,7 +57,7 @@ final class SendTestResultCsvToTestCreatorHandler
             /**
              * @var Test $test
              */
-            $test = $this->repository->get(Test::class, $testId);
+            $test = $this->entityManager->find(Test::class, $testId);
             if (!$test) {
                 throw new NotFoundException(Test::class, ['id' => $testId]);
             }

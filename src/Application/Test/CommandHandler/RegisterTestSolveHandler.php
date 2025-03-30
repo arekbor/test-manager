@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\CommandHandler;
 
-use App\Application\Shared\RepositoryInterface;
 use App\Application\Test\Command\RegisterTestSolve;
 use App\Domain\Event\TestSolveRegistered;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class RegisterTestSolveHandler
 {
     public function __construct(
-        private readonly RepositoryInterface $repository,
+        private readonly EntityManagerInterface $entityManager,
         private readonly MessageBusInterface $eventBus,
         private readonly LoggerInterface $logger
     ) {
@@ -39,7 +39,7 @@ final class RegisterTestSolveHandler
         $test->setStart($command->getStart());
         $test->setSubmission($command->getSubmission());
 
-        $this->repository->persist($test);
+        $this->entityManager->persist($test);
 
         $this->eventBus->dispatch(new TestSolveRegistered($test->getId(), $command->getTestSolve()));
     }

@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace App\Application\SecurityUser\CommandHandler;
 
 use App\Application\SecurityUser\Command\CreateAdminUser;
-use App\Application\Shared\RepositoryInterface;
 use App\Domain\Entity\SecurityUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 final class CreateAdminUserHandler
 {
     public function __construct(
-        private readonly RepositoryInterface $repository,
+        private readonly EntityManagerInterface $entityManager,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly ParameterBagInterface $parameterBag
     ) {
@@ -34,6 +34,6 @@ final class CreateAdminUserHandler
         $securityUser->setPassword($hashedPassowrd);
         $securityUser->setRoles(['ROLE_ADMIN']);
 
-        $this->repository->persist($securityUser);
+        $this->entityManager->persist($securityUser);
     }
 }

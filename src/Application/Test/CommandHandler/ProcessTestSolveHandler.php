@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\CommandHandler;
 
-use App\Application\Shared\RepositoryInterface;
 use App\Application\Test\Command\ProcessTestSolve;
 use App\Application\Test\Service\TestResultCsvGenerator;
 use App\Application\Test\Service\TestScoreCalculator;
@@ -12,6 +11,7 @@ use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
 use App\Domain\Event\TestSolveProcessed;
 use App\Domain\Exception\NotFoundException;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class ProcessTestSolveHandler
 {
     public function __construct(
-        private readonly RepositoryInterface $repository,
+        private readonly EntityManagerInterface $entityManager,
         private readonly TestScoreCalculator $testScoreCalculator,
         private readonly TestResultCsvGenerator $testResultCsvGenerator,
         private readonly MessageBusInterface $eventBus,
@@ -50,7 +50,8 @@ final class ProcessTestSolveHandler
         /**
          * @var Test $test
          */
-        $test = $this->repository->get(Test::class, $testId);
+        $test = $this->entityManager->find(Test::class, $testId);
+
         if (!$test) {
             throw new NotFoundException(Test::class, ['id' => $testId]);
         }
@@ -80,8 +81,8 @@ final class ProcessTestSolveHandler
         $testResult->setTest($test);
         $testResult->setFile($csv);
 
-        $this->repository->persist($testResult);
-        $this->repository->persist($test);
+        $this->entityManager->persist($testResult);
+        $this->entityManager->persist($test);
 
         $this->eventBus->dispatch(new TestSolveProcessed($test->getId()));
     }

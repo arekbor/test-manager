@@ -10,6 +10,7 @@ use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\CryptoInterface;
 use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
@@ -18,7 +19,8 @@ final class UpdateMailSmtpAppSettingHandler
     public function __construct(
         private readonly CryptoInterface $crypto,
         private readonly AppSettingManagerInterface $appSettingManager,
-        private readonly AppSettingRepositoryInterface $appSettingRepository
+        private readonly AppSettingRepositoryInterface $appSettingRepository,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -37,6 +39,6 @@ final class UpdateMailSmtpAppSettingHandler
 
         $updatedAppSetting = $this->appSettingManager->update($appSetting, $mailSmtpAppSettingToUpdate);
 
-        $this->appSettingRepository->persist($updatedAppSetting);
+        $this->entityManager->persist($updatedAppSetting);
     }
 }

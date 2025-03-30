@@ -6,13 +6,18 @@ namespace App\Infrastructure\AppSetting\Repository;
 
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Domain\Entity\AppSetting;
-use App\Infrastructure\Shared\AbstractRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-final class AppSettingRepository extends AbstractRepository implements AppSettingRepositoryInterface
+final class AppSettingRepository implements AppSettingRepositoryInterface
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager
+    ) {
+    }
+
     public function getByKey(string $appSettingKey): ?AppSetting
     {
-        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
 
         $queryBuilder->select('a')
             ->from(AppSetting::class, 'a')
