@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Application\Test\Model\TestAnswerSolve;
 use App\Repository\AnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -72,14 +71,5 @@ class Answer extends BaseEntity
         $this->position = $position;
 
         return $this;
-    }
-
-    public function toTestAnswerSolve(): TestAnswerSolve
-    {
-        $testAnswerSolve = new TestAnswerSolve();
-        $testAnswerSolve->setAnswerId($this->getId());
-        $testAnswerSolve->setContent($this->getContent());
-
-        return $testAnswerSolve;
     }
 }

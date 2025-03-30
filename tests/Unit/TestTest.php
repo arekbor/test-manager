@@ -10,6 +10,7 @@ use App\Domain\Entity\Question;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\Video;
 use App\Application\Test\Model\TestSolve;
+use App\Application\Test\Service\TestSolveFactory;
 use App\Tests\EntityHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -43,7 +44,7 @@ final class TestTest extends TestCase
         $test->setModule($module);
 
         //Act
-        $testSolve = $test->toTestSolve();
+        $testSolve = TestSolveFactory::createFromModule($test->getModule());
 
         $testSolveQuestions = $testSolve->getTestQuestions();
         $testSolveAnswers = $testSolveQuestions[0]->getTestAnswers();

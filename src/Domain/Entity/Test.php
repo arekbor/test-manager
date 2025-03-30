@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Application\Test\Model\TestSolve;
 use App\Repository\TestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -212,30 +211,5 @@ class Test extends BaseEntity
         $this->score = $score;
 
         return $this;
-    }
-
-    public function toTestSolve(): TestSolve
-    {
-        $testSolve = new TestSolve();
-
-        $testQuestions = [];
-
-        foreach($this->getModule()->getQuestions() as $question) {
-            $testQuestionSolve = $question->toTestQuestionSolve();
-
-            $testAnswers = [];
-
-            foreach($question->getAnswers() as $answer) {
-                $testAnswerSolve = $answer->toTestAnswerSolve();
-                $testAnswers[] = $testAnswerSolve;
-            }
-
-            $testQuestionSolve->setTestAnswers($testAnswers);
-            $testQuestions[] = $testQuestionSolve;
-        }
-
-        $testSolve->setTestQuestions($testQuestions);
-        
-        return $testSolve;
     }
 }

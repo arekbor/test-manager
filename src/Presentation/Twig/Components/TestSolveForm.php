@@ -19,6 +19,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 use App\Application\Test\Model\TestSolve;
+use App\Application\Test\Service\TestSolveFactory;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -76,7 +77,7 @@ final class TestSolveForm extends AbstractController
         $testCategory = $this->testProp->getModule()->getCategory() 
             ?? throw new NotFoundException(string::class, ['testCategory']);
 
-        $testSolve = $this->testProp->toTestSolve();
+        $testSolve = TestSolveFactory::createFromModule($this->testProp->getModule());
         
         return $this->createForm(TestSolveType::class, $testSolve, [
             'test_category' => $testCategory
