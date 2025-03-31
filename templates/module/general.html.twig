@@ -3,7 +3,7 @@
 {% block wrapper %}
     <div class="d-flex justify-content-end">
         <a 
-            href="{{ path('app_test_create', { id: module.id }) }}" 
+            href="{{ path('app_test_create', { id: moduleId }) }}" 
             class="btn btn-primary" 
             role="button"
         >
@@ -12,8 +12,9 @@
     </div>
 
     <div class="mt-2">
-        {{ component('ModuleForm', { 
-            moduleProp: module
+        {{ component('UpdateModuleModelForm', { 
+            updateModuleModel: updateModuleModel,
+            moduleId: moduleId
         }) }}
     </div>
 {% endblock %}

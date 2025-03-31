@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Module\Model\UpdateModuleModel;
+use App\Application\Module\Query\GetUpdateModuleModel;
+use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\Module;
 use App\Presentation\DataTable\Type\ModuleDataTableType;
 use App\Presentation\DataTable\Type\QuestionDataTableType;
@@ -16,11 +19,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/module')]
 class ModuleController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
+
+    public function __construct(
+        private readonly QueryBusInterface $queryBus
+    ) {
+    }
 
     #[Route('/create', name: 'app_module_create')]
     public function create(): Response
@@ -29,10 +38,16 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/general/{id}', name: 'app_module_general')]
-    public function general(Module $module): Response
+    public function general(Uuid $id): Response
     {
+        /**
+         * @var UpdateModuleModel $updateModuleModel
+         */
+        $updateModuleModel = $this->queryBus->query(new GetUpdateModuleModel($id));
+
         return $this->render('module/general.html.twig', [
-            'module' => $module, 
+            'moduleId' => $id,
+            'updateModuleModel' => $updateModuleModel, 
         ]);
     }
 
@@ -53,7 +68,7 @@ class ModuleController extends AbstractController
         $questionDataTable->handleRequest($request);
 
         return $this->render('module/questions.html.twig', [
-            'module' => $module, 
+            'moduleId' => $module->getId(),
             'question_data_table' => $questionDataTable->createView()
         ]);
     }
@@ -75,7 +90,7 @@ class ModuleController extends AbstractController
         $videoDataTable->handleRequest($request);
 
         return $this->render('module/videos.html.twig', [
-            'module' => $module, 
+            'moduleId' => $module->getId(),
             'video_data_table' => $videoDataTable->createView()
         ]);
     }

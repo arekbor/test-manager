@@ -19,3 +19,7 @@ services:
 
   App\:
     resource: "../src/"
+
+  App\Application\Shared\QueryBusInterface:
+    alias: App\Infrastructure\Shared\QueryBus
+    public: true

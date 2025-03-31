@@ -8,21 +8,21 @@
     <nav class="nav nav-tabs">
         {{ component('NavLink', { 
             path: path('app_module_general', {
-                id: module.id
+                id: moduleId
             }),
             label: 'templates.module.base.nav.general'
         }) }}
 
         {{ component('NavLink', { 
             path: path('app_module_questions', {
-                id: module.id
+                id: moduleId
             }),
             label: 'templates.module.base.nav.questions'
         }) }}
 
         {{ component('NavLink', { 
             path: path('app_module_videos', {
-                id: module.id
+                id: moduleId
             }),
             label: 'templates.module.base.nav.videos'
         }) }}

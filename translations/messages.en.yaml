@@ -3,10 +3,16 @@ form:
     login:
       email: Email
       submit: Log in
-    module:
+    createModuleModel:
       name: Name
       language: Language
       category: Test category
+      submit: Create module
+    updateModuleModel:
+      name: Name
+      language: Language
+      category: Category
+      submit: Update module
     question:
       content_placeholder: Question content
       button:
@@ -246,9 +252,12 @@ templates:
   goToModule: Module
 
 flash:
-  moduleForm:
-    successfullyCreated: Module "%moduleName%" has been successfully created.
+  createModuleModelForm:
+    success: Module has been successfully created.
     error: An issue occurred while creating the module.
+  updateModuleModelForm:
+    success: Module has been successfully updated.
+    error: An issue occurred while updating the module.
   testForm:
     successfullyCreated: The test has been successfully created.
   updateMailSmtpAppSettingForm:

@@ -7,7 +7,7 @@ framework:
         middleware:
           - dispatch_after_current_bus
           - doctrine_transaction
-      query.bus: ~
+      message.bus: ~
       event.bus: ~
     transports:
       async:
