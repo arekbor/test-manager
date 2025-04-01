@@ -38,7 +38,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testUpdateMailSmtpAppSettingUpdatesAppSettingCorreclty(): void
+    public function testUpdateMailSmtpAppSettingSuccessfullyPersistsChanges(): void
     {
         //Arrange
         $mailSmtpAppSettingBeforeUpdate = new MailSmtpAppSetting();

@@ -25,7 +25,7 @@ final class CreateModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testCreateModulePersistsModuleCorreclty(): void
+    public function testCreateModuleCommandSuccessfullyPersistsModule(): void
     {
         //Arrange
         $createModule = new CreateModuleModel();

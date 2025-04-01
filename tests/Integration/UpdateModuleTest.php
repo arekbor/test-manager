@@ -26,7 +26,7 @@ final class UpdateModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testUpdateModuleUpdatesCorreclty(): void
+    public function testUpdateModuleCommandSuccessfullyUpdatesModule(): void
     {
         //Arrange
         $module = new Module();
@@ -63,7 +63,7 @@ final class UpdateModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testUpdatThrowsExceptionWhenModuleNotFound(): void
+    public function testUpdateModuleCommandThrowsExceptionForNonExistentModule(): void
     {
         $updateModuleModel = new UpdateModuleModel();
         $updateModuleModel->setName('Updated Test Module');

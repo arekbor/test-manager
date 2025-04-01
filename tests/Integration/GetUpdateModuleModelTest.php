@@ -26,7 +26,7 @@ final class GetUpdateModuleModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testQueryFindsGetUpdateModuleModelCorreclty(): void
+    public function testGetUpdateModuleModelQueryFindsModuleSuccessfully(): void
     {
         //Arrange
         $module = new Module();
@@ -54,7 +54,7 @@ final class GetUpdateModuleModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testQueryThrowsExceptionWhenModuleNotFound(): void
+    public function testGetUpdateModuleModelQueryThrowsExceptionForNonExistentModule(): void
     {
         $notExistingModuleId = Uuid::v4();
 
