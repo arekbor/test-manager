@@ -6,7 +6,7 @@ namespace App\Application\Module\Query;
 
 use Symfony\Component\Uid\Uuid;
 
-final class GetUpdateModuleModel
+final class GetModuleModel
 {
     private Uuid $moduleId;
 

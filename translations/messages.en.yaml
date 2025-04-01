@@ -3,12 +3,12 @@ form:
     login:
       email: Email
       submit: Log in
-    createModuleModel:
+    createModule:
       name: Name
       language: Language
       category: Test category
       submit: Create module
-    updateModuleModel:
+    updateModule:
       name: Name
       language: Language
       category: Category
@@ -252,10 +252,10 @@ templates:
   goToModule: Module
 
 flash:
-  createModuleModelForm:
+  createModuleForm:
     success: Module has been successfully created.
     error: An issue occurred while creating the module.
-  updateModuleModelForm:
+  updateModuleForm:
     success: Module has been successfully updated.
     error: An issue occurred while updating the module.
   testForm:

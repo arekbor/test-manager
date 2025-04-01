@@ -4,16 +4,16 @@ declare(strict_types = 1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Module\Query\GetUpdateModuleModel;
 use App\Application\Shared\QueryBusInterface;
-use App\Application\Module\Model\UpdateModuleModel;
+use App\Application\Module\Model\ModuleModel;
+use App\Application\Module\Query\GetModuleModel;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Uid\Uuid;
 
-final class GetUpdateModuleModelTest extends DatabaseTestCase
+final class GetModuleModelTest extends DatabaseTestCase
 {
     private readonly QueryBusInterface $queryBus;
 
@@ -26,7 +26,7 @@ final class GetUpdateModuleModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group("Integration")]
-    public function testGetUpdateModuleModelQueryFindsModuleSuccessfully(): void
+    public function testGetModuleModelQueryFindsModuleSuccessfully(): void
     {
         //Arrange
         $module = new Module();
@@ -37,28 +37,28 @@ final class GetUpdateModuleModelTest extends DatabaseTestCase
         $this->entityManager->persist($module);
         $this->entityManager->flush();
 
-        $query = new GetUpdateModuleModel($module->getId());
+        $query = new GetModuleModel($module->getId());
 
         //Act
 
         /**
-         * @var UpdateModuleModel $updateModuleModel
+         * @var ModuleModel $moduleModel
          */
-        $updateModuleModel = $this->queryBus->query($query);
+        $moduleModel = $this->queryBus->query($query);
 
         //Assert
-        $this->assertEquals('Test to find by query', $updateModuleModel->getName());
-        $this->assertEquals('en', $updateModuleModel->getLanguage());
-        $this->assertEquals('introduction', $updateModuleModel->getCategory());
+        $this->assertEquals('Test to find by query', $moduleModel->getName());
+        $this->assertEquals('en', $moduleModel->getLanguage());
+        $this->assertEquals('introduction', $moduleModel->getCategory());
     }
 
     #[Test]
     #[Group("Integration")]
-    public function testGetUpdateModuleModelQueryThrowsExceptionForNonExistentModule(): void
+    public function testGetModuleModelQueryThrowsExceptionForNonExistentModule(): void
     {
         $notExistingModuleId = Uuid::v4();
 
-        $query = new GetUpdateModuleModel($notExistingModuleId);
+        $query = new GetModuleModel($notExistingModuleId);
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 

@@ -4,17 +4,17 @@ declare(strict_types = 1);
 
 namespace App\Application\Module\Command;
 
-use App\Application\Module\Model\UpdateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 use Symfony\Component\Uid\Uuid;
 
 final class UpdateModule
 {
     private Uuid $moduleId;
-    private UpdateModuleModel $updateModuleModel;
+    private ModuleModel $moduleModel;
 
-    public function __construct(Uuid $moduleId, UpdateModuleModel $updateModuleModel) {
+    public function __construct(Uuid $moduleId, ModuleModel $moduleModel) {
         $this->moduleId = $moduleId;
-        $this->updateModuleModel = $updateModuleModel;
+        $this->moduleModel = $moduleModel;
     }
 
     public function getModuleId(): Uuid
@@ -22,8 +22,8 @@ final class UpdateModule
         return $this->moduleId;
     }
 
-    public function getUpdateModuleModel(): UpdateModuleModel
+    public function getModuleModel(): ModuleModel
     {
-        return $this->updateModuleModel;
+        return $this->moduleModel;
     }
 }

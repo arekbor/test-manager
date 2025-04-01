@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Tests\Integration;
 
 use App\Application\Module\Command\UpdateModule;
-use App\Application\Module\Model\UpdateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
@@ -37,12 +37,12 @@ final class UpdateModuleTest extends DatabaseTestCase
         $this->entityManager->persist($module);
         $this->entityManager->flush();
 
-        $updateModuleModel = new UpdateModuleModel();
-        $updateModuleModel->setName('Updated Test Module');
-        $updateModuleModel->setLanguage('en');
-        $updateModuleModel->setCategory('periodic');
+        $moduleModel = new ModuleModel();
+        $moduleModel->setName('Updated Test Module');
+        $moduleModel->setLanguage('en');
+        $moduleModel->setCategory('periodic');
 
-        $command = new UpdateModule($module->getId(), $updateModuleModel);
+        $command = new UpdateModule($module->getId(), $moduleModel);
 
         //Act
         $this->commandBus->dispatch($command);
@@ -65,14 +65,14 @@ final class UpdateModuleTest extends DatabaseTestCase
     #[Group("Integration")]
     public function testUpdateModuleCommandThrowsExceptionForNonExistentModule(): void
     {
-        $updateModuleModel = new UpdateModuleModel();
-        $updateModuleModel->setName('Updated Test Module');
-        $updateModuleModel->setLanguage('en');
-        $updateModuleModel->setCategory('periodic');
+        $moduleModel = new ModuleModel();
+        $moduleModel->setName('Updated Test Module');
+        $moduleModel->setLanguage('en');
+        $moduleModel->setCategory('periodic');
 
         $notExistingModuleId = Uuid::v4();
 
-        $command = new UpdateModule($notExistingModuleId, $updateModuleModel);
+        $command = new UpdateModule($notExistingModuleId, $moduleModel);
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
