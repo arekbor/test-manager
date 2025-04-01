@@ -47,6 +47,8 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
         $testAppSettingRaw = $repo->findOneBy(['key' => TestAppSetting::APP_SETTING_KEY]);
 
         //Assert
+        $this->assertNotEmpty($mailSmtpAppSettingRaw->getId());
+
         $this->assertEquals('mail.smtp', $mailSmtpAppSettingRaw->getKey());
         $this->assertIsArray($mailSmtpAppSettingRaw->getValue());
         $this->assertEquals([
@@ -59,6 +61,8 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
             'smtpSecure' => '',
             'timeout' => 0
         ], $mailSmtpAppSettingRaw->getValue());
+
+        $this->assertNotEmpty($testAppSettingRaw->getId());
 
         $this->assertEquals('test', $testAppSettingRaw->getKey());
         $this->assertIsArray($testAppSettingRaw->getValue());
