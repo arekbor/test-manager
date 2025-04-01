@@ -6,7 +6,7 @@ namespace App\Application\Module\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdateModuleModel
+final class ModuleModel
 {
     #[Assert\NotBlank()]
     #[Assert\Length(max: 255)]

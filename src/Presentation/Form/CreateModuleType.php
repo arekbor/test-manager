@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Application\Module\Model\CreateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 use App\Service\ParameterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CreateModuleModelType extends AbstractType
+final class CreateModuleType extends AbstractType
 {
     public function __construct(
         private readonly ParameterService $parameterService
@@ -24,11 +24,11 @@ final class CreateModuleModelType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'form.type.createModuleModel.name',
+                'label' => 'form.type.createModule.name',
                 'empty_data' => ''
             ])
             ->add('language', ChoiceType::class, [
-                'label' => 'form.type.createModuleModel.language',
+                'label' => 'form.type.createModule.language',
                 'choices' => $this->parameterService->getAllowedLocales(),
                 'empty_data' => $this->parameterService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
@@ -36,7 +36,7 @@ final class CreateModuleModelType extends AbstractType
                 }
             ])
             ->add('category', ChoiceType::class, [
-                'label' => 'form.type.createModuleModel.category',
+                'label' => 'form.type.createModule.category',
                 'choices' => $this->parameterService->getTestCategory(),
                 'empty_data' => $this->parameterService->getTestCategory()[0],
                 'choice_label' => function($value) {
@@ -44,7 +44,7 @@ final class CreateModuleModelType extends AbstractType
                 }
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'form.type.createModuleModel.submit',
+                'label' => 'form.type.createModule.submit',
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',
@@ -59,7 +59,7 @@ final class CreateModuleModelType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => CreateModuleModel::class,
+                'data_class' => ModuleModel::class,
                 'attr' => [
                     'autocomplete' => 'off'
                 ]

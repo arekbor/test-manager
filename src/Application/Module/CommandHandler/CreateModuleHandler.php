@@ -21,11 +21,11 @@ final class CreateModuleHandler
     {
         $module = new Module();
 
-        $createModule = $command->getCreateModule();
+        $moduleModel = $command->getModuleModel();
 
-        $module->setName($createModule->getName());
-        $module->setLanguage($createModule->getLanguage());
-        $module->setCategory($createModule->getCategory());
+        $module->setName($moduleModel->getName());
+        $module->setLanguage($moduleModel->getLanguage());
+        $module->setCategory($moduleModel->getCategory());
 
         $this->entityManager->persist($module);
     }

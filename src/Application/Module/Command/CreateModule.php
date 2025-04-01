@@ -4,18 +4,18 @@ declare(strict_types = 1);
 
 namespace App\Application\Module\Command;
 
-use App\Application\Module\Model\CreateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 
 final class CreateModule
 {
-    private CreateModuleModel $createModule;
+    private ModuleModel $moduleModel;
 
-    public function __construct(CreateModuleModel $createModule) {
-        $this->createModule = $createModule;
+    public function __construct(ModuleModel $moduleModel) {
+        $this->moduleModel = $moduleModel;
     }
 
-    public function getCreateModule(): CreateModuleModel
+    public function getModuleModel(): ModuleModel
     {
-        return $this->createModule;
+        return $this->moduleModel;
     }
 }

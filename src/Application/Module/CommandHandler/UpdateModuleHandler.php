@@ -9,7 +9,7 @@ use App\Domain\Entity\Module;
 use App\Domain\Exception\NotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use App\Application\Module\Model\UpdateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final class UpdateModuleHandler
@@ -32,13 +32,13 @@ final class UpdateModuleHandler
         }
 
         /**
-         * @var UpdateModuleModel $updateModuleModel
+         * @var ModuleModel $moduleModel
          */
-        $updateModuleModel = $command->getUpdateModuleModel();
+        $moduleModel = $command->getModuleModel();
 
-        $module->setName($updateModuleModel->getName());
-        $module->setLanguage($updateModuleModel->getLanguage());
-        $module->setCategory($updateModuleModel->getCategory());
+        $module->setName($moduleModel->getName());
+        $module->setLanguage($moduleModel->getLanguage());
+        $module->setCategory($moduleModel->getCategory());
 
         $this->entityManager->persist($module);
     }

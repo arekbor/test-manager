@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Application\Module\Model\UpdateModuleModel;
-use App\Application\Module\Query\GetUpdateModuleModel;
+use App\Application\Module\Model\ModuleModel;
+use App\Application\Module\Query\GetModuleModel;
 use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\Module;
 use App\Presentation\DataTable\Type\ModuleDataTableType;
@@ -41,13 +41,13 @@ class ModuleController extends AbstractController
     public function general(Uuid $id): Response
     {
         /**
-         * @var UpdateModuleModel $updateModuleModel
+         * @var ModuleModel $moduleModel
          */
-        $updateModuleModel = $this->queryBus->query(new GetUpdateModuleModel($id));
+        $moduleModel = $this->queryBus->query(new GetModuleModel($id));
 
         return $this->render('module/general.html.twig', [
             'moduleId' => $id,
-            'updateModuleModel' => $updateModuleModel, 
+            'moduleModel' => $moduleModel, 
         ]);
     }
 

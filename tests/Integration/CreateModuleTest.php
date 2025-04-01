@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Tests\Integration;
 
 use App\Application\Module\Command\CreateModule;
-use App\Application\Module\Model\CreateModuleModel;
+use App\Application\Module\Model\ModuleModel;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
@@ -28,12 +28,12 @@ final class CreateModuleTest extends DatabaseTestCase
     public function testCreateModuleCommandSuccessfullyPersistsModule(): void
     {
         //Arrange
-        $createModule = new CreateModuleModel();
-        $createModule->setName('Create test module name');
-        $createModule->setLanguage('en');
-        $createModule->setCategory('introduction');
+        $moduleModel = new ModuleModel();
+        $moduleModel->setName('Create test module name');
+        $moduleModel->setLanguage('en');
+        $moduleModel->setCategory('introduction');
 
-        $command = new CreateModule($createModule);
+        $command = new CreateModule($moduleModel);
 
         //Act
         $this->commandBus->dispatch($command);
