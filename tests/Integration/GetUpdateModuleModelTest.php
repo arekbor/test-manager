@@ -8,7 +8,6 @@ use App\Application\Module\Query\GetUpdateModuleModel;
 use App\Application\Shared\QueryBusInterface;
 use App\Application\Module\Model\UpdateModuleModel;
 use App\Domain\Entity\Module;
-use App\Domain\Exception\NotFoundException;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
