@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CreateModuleType extends AbstractType
+final class ModuleType extends AbstractType
 {
     public function __construct(
         private readonly ParameterService $parameterService
@@ -24,11 +24,11 @@ final class CreateModuleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'form.type.createModule.name',
+                'label' => 'form.type.module.name',
                 'empty_data' => ''
             ])
             ->add('language', ChoiceType::class, [
-                'label' => 'form.type.createModule.language',
+                'label' => 'form.type.module.language',
                 'choices' => $this->parameterService->getAllowedLocales(),
                 'empty_data' => $this->parameterService->getAllowedLocales()[0],
                 'choice_label' => function($value) {
@@ -36,7 +36,7 @@ final class CreateModuleType extends AbstractType
                 }
             ])
             ->add('category', ChoiceType::class, [
-                'label' => 'form.type.createModule.category',
+                'label' => 'form.type.module.category',
                 'choices' => $this->parameterService->getTestCategory(),
                 'empty_data' => $this->parameterService->getTestCategory()[0],
                 'choice_label' => function($value) {
@@ -44,7 +44,7 @@ final class CreateModuleType extends AbstractType
                 }
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'form.type.createModule.submit',
+                'label' => 'form.submit.label',
                 'attr' => [
                     'class' => 'btn btn-success',
                     'data-action' => 'live#action:prevent',

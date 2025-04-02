@@ -6,7 +6,7 @@ namespace App\Presentation\Twig\Components;
 
 use App\Application\Module\Command\UpdateModule;
 use App\Application\Module\Model\ModuleModel;
-use App\Presentation\Form\UpdateModuleType;
+use App\Presentation\Form\ModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +62,6 @@ final class UpdateModuleForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(UpdateModuleType::class, $this->moduleModel);
+        return $this->createForm(ModuleType::class, $this->moduleModel);
     }
 }

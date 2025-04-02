@@ -6,7 +6,7 @@ namespace App\Presentation\Twig\Components;
 
 use App\Application\Module\Command\CreateModule;
 use App\Application\Module\Model\ModuleModel;
-use App\Presentation\Form\CreateModuleType;
+use App\Presentation\Form\ModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +54,6 @@ final class CreateModuleForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(CreateModuleType::class);
+        return $this->createForm(ModuleType::class);
     }
 }

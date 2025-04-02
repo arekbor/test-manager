@@ -3,16 +3,11 @@ form:
     login:
       email: Email
       submit: Log in
-    createModule:
+    module:
       name: Name
       language: Language
       category: Test category
       submit: Create module
-    updateModule:
-      name: Name
-      language: Language
-      category: Category
-      submit: Update module
     question:
       content_placeholder: Question content
       button:
