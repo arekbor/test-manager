@@ -8,8 +8,8 @@ use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Application\AppSetting\Service\AppSettingManagerInterface;
 use App\Application\Shared\CryptoInterface;
-use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
+use App\Domain\Exception\AppSettingByKeyNotFoundException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
@@ -32,7 +32,7 @@ final class UpdateMailSmtpAppSettingHandler
 
         $appSetting = $this->appSettingRepository->getByKey(MailSmtpAppSetting::APP_SETTING_KEY);
         if (!$appSetting) {
-            throw new AppSettingByKeyNotFound(MailSmtpAppSetting::APP_SETTING_KEY);
+            throw new AppSettingByKeyNotFoundException(MailSmtpAppSetting::APP_SETTING_KEY);
         }
 
         $this->appSettingManager->update($appSetting, $mailSmtpAppSettingToUpdate);
