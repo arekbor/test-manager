@@ -55,12 +55,10 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
         // Act
         $this->commandBus->dispatch($command);
 
-        $repo = $this->entityManager->getRepository(Module::class);
-
         /**
          * @var Module $module
          */
-        $module = $repo->find($testModule->getId());
+        $module = $this->entityManager->getRepository(Module::class)->find($testModule->getId());
 
         // Assert
         $this->assertInstanceOf(Question::class, $module->getQuestions()[0]);

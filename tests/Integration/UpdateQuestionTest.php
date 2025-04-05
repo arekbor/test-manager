@@ -85,7 +85,6 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-
         $this->commandBus->dispatch($command);
 
         /**
@@ -176,7 +175,6 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-
         $this->commandBus->dispatch($command);
 
         /**

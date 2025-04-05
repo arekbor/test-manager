@@ -49,12 +49,10 @@ final class UpdateModuleTest extends DatabaseTestCase
         //Act
         $this->commandBus->dispatch($command);
 
-        $repo = $this->entityManager->getRepository(Module::class);
-
         /**
          * @var Module $updatedModule
          */
-        $updatedModule = $repo->find($module->getId());
+        $updatedModule = $this->entityManager->getRepository(Module::class)->find($module->getId());
 
         //Assert
         $this->assertInstanceOf(Module::class, $updatedModule);

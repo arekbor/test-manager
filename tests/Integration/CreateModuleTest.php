@@ -40,12 +40,10 @@ final class CreateModuleTest extends DatabaseTestCase
         //Act
         $this->commandBus->dispatch($command);
 
-        $repo = $this->entityManager->getRepository(Module::class);
-
         /**
          * @var Module $module
          */
-        $module = $repo->findOneBy(['name' => 'Create test module name']);
+        $module = $this->entityManager->getRepository(Module::class)->findOneBy(['name' => 'Create test module name']);
 
         //Assert
         $this->assertInstanceOf(Module::class, $module);

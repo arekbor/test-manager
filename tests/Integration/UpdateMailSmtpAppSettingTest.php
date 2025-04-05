@@ -71,12 +71,11 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 
         $this->commandBus->dispatch($command);
 
-        $repo = $this->entityManager->getRepository(AppSetting::class);
-
         /**
          * @var AppSetting $appSetting
          */
-        $appSetting = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
+        $appSetting = $this->entityManager->getRepository(AppSetting::class)
+            ->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
 
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
