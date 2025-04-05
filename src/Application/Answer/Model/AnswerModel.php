@@ -12,6 +12,7 @@ final class AnswerModel
     private ?Uuid $answerId = null;
 
     #[Assert\NotBlank()]
+    #[Assert\Length(min: 1, max: 255)]
     private string $content;
 
     private bool $correct;

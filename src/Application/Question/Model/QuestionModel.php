@@ -16,7 +16,7 @@ final class QuestionModel
     /**
      * @var AnswerModel[] $answerModels
      */
-    #[Assert\Count(min: 1)]
+    #[Assert\Count(min: 1, max: 10)]
     #[Assert\Valid()]
     private array $answerModels;
 
