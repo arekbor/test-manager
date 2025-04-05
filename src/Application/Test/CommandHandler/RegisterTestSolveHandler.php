@@ -6,7 +6,6 @@ namespace App\Application\Test\CommandHandler;
 
 use App\Application\Test\Command\RegisterTestSolve;
 use App\Domain\Event\TestSolveRegistered;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,7 +14,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class RegisterTestSolveHandler
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
         private readonly MessageBusInterface $eventBus,
         private readonly LoggerInterface $logger
     ) {
@@ -38,8 +36,6 @@ final class RegisterTestSolveHandler
 
         $test->setStart($command->getStart());
         $test->setSubmission($command->getSubmission());
-
-        $this->entityManager->persist($test);
 
         $this->eventBus->dispatch(new TestSolveRegistered($test->getId(), $command->getTestSolve()));
     }

@@ -78,11 +78,9 @@ final class ProcessTestSolveHandler
         ));
 
         $testResult = new TestResult();
-        $testResult->setTest($test);
         $testResult->setFile($csv);
 
-        $this->entityManager->persist($testResult);
-        $this->entityManager->persist($test);
+        $test->setTestResult($testResult);
 
         $this->eventBus->dispatch(new TestSolveProcessed($test->getId()));
     }
