@@ -15,6 +15,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class GetModuleModelTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly QueryBusInterface $queryBus;
 
     protected function setUp(): void
@@ -25,7 +27,7 @@ final class GetModuleModelTest extends DatabaseTestCase
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testGetModuleModelQueryFindsModuleSuccessfully(): void
     {
         //Arrange
@@ -47,13 +49,14 @@ final class GetModuleModelTest extends DatabaseTestCase
         $moduleModel = $this->queryBus->query($query);
 
         //Assert
+        $this->assertInstanceOf(ModuleModel::class, $moduleModel);
         $this->assertEquals('Test to find by query', $moduleModel->getName());
         $this->assertEquals('en', $moduleModel->getLanguage());
         $this->assertEquals('introduction', $moduleModel->getCategory());
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testGetModuleModelQueryThrowsExceptionForNonExistentModule(): void
     {
         $notExistingModuleId = Uuid::v4();

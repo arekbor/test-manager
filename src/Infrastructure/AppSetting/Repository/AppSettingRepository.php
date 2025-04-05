@@ -6,6 +6,7 @@ namespace App\Infrastructure\AppSetting\Repository;
 
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;
 use App\Domain\Entity\AppSetting;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class AppSettingRepository implements AppSettingRepositoryInterface
@@ -22,7 +23,7 @@ final class AppSettingRepository implements AppSettingRepositoryInterface
         $queryBuilder->select('a')
             ->from(AppSetting::class, 'a')
             ->where('a.key = :key')
-            ->setParameter('key', $appSettingKey);
+            ->setParameter('key', $appSettingKey, Types::STRING);
         
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }

@@ -14,6 +14,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateModuleTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly MessageBusInterface $commandBus;
 
     protected function setUp(): void
@@ -24,7 +26,7 @@ final class CreateModuleTest extends DatabaseTestCase
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testCreateModuleCommandSuccessfullyPersistsModule(): void
     {
         //Arrange
@@ -38,19 +40,19 @@ final class CreateModuleTest extends DatabaseTestCase
         //Act
         $this->commandBus->dispatch($command);
 
-        $repo = $this->entityManager->getRepository(Module::class);
-
         /**
          * @var Module $module
          */
-        $module = $repo->findOneBy(['name' => 'Create test module name']);
+        $module = $this->entityManager->getRepository(Module::class)->findOneBy(['name' => 'Create test module name']);
 
         //Assert
-        $this->assertNotEmpty($module->getId());
+        $this->assertInstanceOf(Module::class, $module);
+        $this->assertNotNull($module->getId());
         $this->assertEquals('Create test module name', $module->getName());
         $this->assertEquals('en', $module->getLanguage());
         $this->assertEquals('introduction', $module->getCategory());
-        $this->assertEquals(0, $module->getQuestions()->count());
-        $this->assertEquals(0, $module->getVideos()->count());
+
+        $this->assertCount(0, $module->getQuestions());
+        $this->assertCount(0, $module->getVideos());
     }
 }

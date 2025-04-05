@@ -15,13 +15,15 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 final class CreateAppSettingsCommandTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     protected function setUp(): void
     {
         parent::setUp();
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testCreateAppSettingsCommandPersistsAppSettingsCorrectly(): void
     {
         //Arrange
@@ -37,20 +39,20 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
         $repo = $this->entityManager->getRepository(AppSetting::class);
 
         /**
-         * @var AppSetting $mailSmtpAppSettingRaw
+         * @var AppSetting $mailSmtpAppSetting
          */
-        $mailSmtpAppSettingRaw = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
+        $mailSmtpAppSetting = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
 
         /**
-         * @var AppSetting $testAppSettingRaw
+         * @var AppSetting $testAppSetting
          */
-        $testAppSettingRaw = $repo->findOneBy(['key' => TestAppSetting::APP_SETTING_KEY]);
+        $testAppSetting = $repo->findOneBy(['key' => TestAppSetting::APP_SETTING_KEY]);
 
         //Assert
-        $this->assertNotEmpty($mailSmtpAppSettingRaw->getId());
-
-        $this->assertEquals('mail.smtp', $mailSmtpAppSettingRaw->getKey());
-        $this->assertIsArray($mailSmtpAppSettingRaw->getValue());
+        $this->assertInstanceOf(AppSetting::class, $mailSmtpAppSetting);
+        $this->assertNotNull($mailSmtpAppSetting->getId());
+        $this->assertEquals('mail.smtp', $mailSmtpAppSetting->getKey());
+        $this->assertIsArray($mailSmtpAppSetting->getValue());
         $this->assertEquals([
             'host' => '',
             'port' => '',
@@ -60,17 +62,17 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
             'smtpAuth' => false,
             'smtpSecure' => '',
             'timeout' => 0
-        ], $mailSmtpAppSettingRaw->getValue());
+        ], $mailSmtpAppSetting->getValue());
 
-        $this->assertNotEmpty($testAppSettingRaw->getId());
-
-        $this->assertEquals('test', $testAppSettingRaw->getKey());
-        $this->assertIsArray($testAppSettingRaw->getValue());
+        $this->assertInstanceOf(AppSetting::class, $testAppSetting);
+        $this->assertNotNull($testAppSetting->getId());
+        $this->assertEquals('test', $testAppSetting->getKey());
+        $this->assertIsArray($testAppSetting->getValue());
         $this->assertEquals([
             'expirationDaysOffset' => 7,
             'testMessages' => [],
             'notificationsEnabled' => true,
             'testClauses' => []
-        ], $testAppSettingRaw->getValue());
+        ], $testAppSetting->getValue());
     }
 }

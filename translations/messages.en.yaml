@@ -253,6 +253,12 @@ flash:
   updateModuleForm:
     success: Module has been successfully updated.
     error: An issue occurred while updating the module.
+  addQuestionToModuleForm:
+    success: Question successfully added to the module.
+    error: There was an error while adding the question to the module.
+  updateQuestionForm:
+    success: Question has been successfully updated.
+    error: An issue occurred while updating the question.
   testForm:
     successfullyCreated: The test has been successfully created.
   updateMailSmtpAppSettingForm:

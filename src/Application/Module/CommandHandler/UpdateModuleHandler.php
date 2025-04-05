@@ -39,7 +39,5 @@ final class UpdateModuleHandler
         $module->setName($moduleModel->getName());
         $module->setLanguage($moduleModel->getLanguage());
         $module->setCategory($moduleModel->getCategory());
-
-        $this->entityManager->persist($module);
     }
 }

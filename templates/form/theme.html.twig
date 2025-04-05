@@ -1,0 +1,29 @@
+{% block question_widget %}
+    {{ form_start(form) }}
+        {{ form_row(form.content) }}
+        {{ form_widget(form.answerModels.vars.button_add) }}
+
+        {% if form.answerModels is iterable and form.answerModels|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'table.question.content'|trans }}</th>
+                            <th scope="col">{{ 'table.question.correct'|trans }}</th>
+                            <th scope="col">{{ 'table.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for answerModel in form.answerModels %}
+                            <tr>
+                                <td>{{ form_row(answerModel.content) }}</td>
+                                <td>{{ form_row(answerModel.correct) }}</td>
+                                <td>{{ form_widget(answerModel.vars.button_delete) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {{ form_end(form) }}
+{% endblock %}
