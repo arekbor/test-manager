@@ -9,15 +9,13 @@ use App\Application\Question\Repository\QuestionRepositoryInterface;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Question;
 use App\Domain\Exception\NotFoundException;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final class UpdateQuestionHandler
 {
     public function __construct(
-        private readonly QuestionRepositoryInterface $questionRepository,
-        private readonly EntityManagerInterface $entityManager
+        private readonly QuestionRepositoryInterface $questionRepository
     ) {
     }
 
