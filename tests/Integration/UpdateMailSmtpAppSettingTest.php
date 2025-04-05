@@ -19,6 +19,8 @@ use Symfony\Component\Serializer\Serializer;
 
 final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly MessageBusInterface $commandBus;
     private readonly AppSettingDecoder $appSettingDecoder;
     private readonly AppSettingManager $appSettingManager;

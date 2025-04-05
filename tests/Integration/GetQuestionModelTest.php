@@ -17,6 +17,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class GetQuestionModelTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly QueryBusInterface $queryBus;
 
     protected function setUp(): void

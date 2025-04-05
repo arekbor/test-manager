@@ -15,6 +15,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 final class CreateAppSettingsCommandTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     protected function setUp(): void
     {
         parent::setUp();

@@ -18,6 +18,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class UpdateQuestionTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly MessageBusInterface $commandBus;
 
     protected function setUp(): void
@@ -270,9 +272,9 @@ final class UpdateQuestionTest extends DatabaseTestCase
 
         $this->entityManager->clear();
 
-        // /**
-        //  * @var Question $question
-        //  */
+        /**
+         * @var Question $question
+         */
         $question = $this->entityManager->getRepository(Question::class)->findOneBy(['id' => $testQuestion->getId()]);
 
         //Assert

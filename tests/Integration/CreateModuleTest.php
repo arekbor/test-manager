@@ -14,6 +14,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateModuleTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly MessageBusInterface $commandBus;
 
     protected function setUp(): void

@@ -15,6 +15,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class UpdateModuleTest extends DatabaseTestCase
 {
+    use IntegrationTestTrait;
+
     private readonly MessageBusInterface $commandBus;
 
     protected function setUp(): void
