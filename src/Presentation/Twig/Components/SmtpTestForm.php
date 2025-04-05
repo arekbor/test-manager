@@ -1,11 +1,11 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Twig\Components;
 
+use App\Application\AppSetting\Command\SendSmtpTestEmail;
 use App\Presentation\Form\SmtpTestType;
-use App\Service\EmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +14,10 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\Application\AppSetting\Model\SmtpTest;
+use App\Domain\Exception\SendSmtpTestEmailException;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsLiveComponent]
 final class SmtpTestForm extends AbstractController
@@ -21,26 +25,37 @@ final class SmtpTestForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
+    public function __construct(
+        private readonly MessageBusInterface $commandBus,
+        private readonly TranslatorInterface $trans
+    ) {
+    }
+
     #[LiveAction]
-    public function send(
-        EmailService $emailService, 
-        TranslatorInterface $trans
-    ): Response
+    public function send(): Response
     {
         $this->submitForm();
 
+        /**
+         * @var SmtpTest $smtpTest
+         */
         $smtpTest = $this->getForm()->getData();
 
-        $recipient = $smtpTest->getRecipient();
-        $error = $emailService->send($recipient, "Test Manager", "Test message");
-        
-        if (!empty($error)) {
-            $this->addFlash('danger', $error);
-            
+        try {
+            $this->commandBus->dispatch(new SendSmtpTestEmail($smtpTest));
+        } catch(\Throwable $ex) {
+            $errorMessage = $this->trans->trans('flash.testEmailForm.error');
+
+            if ($ex instanceof HandlerFailedException && $ex->getPrevious() instanceof SendSmtpTestEmailException) {
+                $errorMessage = $ex->getPrevious()->getMessage();
+            }
+
+            $this->addFlash('danger', $errorMessage);
+
             return $this->redirectToRoute('app_settings_smtp');
         }
 
-        $this->addFlash('success', $trans->trans('flash.testEmailForm.successEmailMessage'));
+        $this->addFlash('success', $this->trans->trans('flash.testEmailForm.success'));
 
         return $this->redirectToRoute('app_settings_smtp');
     } 

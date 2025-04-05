@@ -269,7 +269,8 @@ flash:
   updateVideoForm:
     successfullyUpdated: The video has been successfully updated.
   testEmailForm:
-    successEmailMessage: The email has been successfully sent.
+    success: The email has been successfully sent.
+    error: An issue occurred while sending the test email.
   updateEmailForm:
     emailAlreadyExists: The provided email address already exists.
   updatePasswordForm:
