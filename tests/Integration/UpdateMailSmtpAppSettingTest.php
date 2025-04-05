@@ -37,19 +37,19 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testUpdateMailSmtpAppSettingSuccessfullyPersistsChanges(): void
     {
         //Arrange
         $mailSmtpAppSettingBeforeUpdate = new MailSmtpAppSetting();
 
-        $appSetting = new AppSetting();
-        $appSetting->setKey(MailSmtpAppSetting::APP_SETTING_KEY);
+        $testAppSetting = new AppSetting();
+        $testAppSetting->setKey(MailSmtpAppSetting::APP_SETTING_KEY);
 
         $encodedValue = $this->appSettingDecoder->decode($mailSmtpAppSettingBeforeUpdate);
-        $appSetting->setValue($encodedValue);
+        $testAppSetting->setValue($encodedValue);
 
-        $this->entityManager->persist($appSetting);
+        $this->entityManager->persist($testAppSetting);
         $this->entityManager->flush();
 
         $mailSmtpAppSettingAfterUpdate = new MailSmtpAppSetting(
@@ -72,28 +72,29 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $repo = $this->entityManager->getRepository(AppSetting::class);
 
         /**
-         * @var AppSetting $mailSmtpAppSettingRaw
+         * @var AppSetting $appSetting
          */
-        $mailSmtpAppSettingRaw = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
+        $appSetting = $repo->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
 
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
          */
-        $mailSmtpAppSetting = $this->appSettingManager->get($mailSmtpAppSettingRaw, MailSmtpAppSetting::class);
+        $mailSmtpAppSetting = $this->appSettingManager->get($appSetting, MailSmtpAppSetting::class);
 
         //Assert
-        $this->assertNotEmpty($mailSmtpAppSettingRaw->getId());
+        $this->assertInstanceOf(AppSetting::class, $appSetting);
+        $this->assertNotNull($appSetting->getId());
 
+        $this->assertInstanceOf(MailSmtpAppSetting::class, $mailSmtpAppSetting);
         $this->assertEquals('test.host.com', $mailSmtpAppSetting->getHost());
         $this->assertEquals('546', $mailSmtpAppSetting->getPort());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getFromAddress());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getUsername());
-        
-        $this->assertNotEquals('secret', $mailSmtpAppSetting->getPassword());
-        $this->assertNotEmpty($mailSmtpAppSetting->getPassword());
-
         $this->assertTrue($mailSmtpAppSetting->getSmtpAuth());
         $this->assertEquals('ssl', $mailSmtpAppSetting->getSmtpSecure());
         $this->assertEquals(10, $mailSmtpAppSetting->getTimeout());
+        
+        $this->assertNotEmpty($mailSmtpAppSetting->getPassword());
+        $this->assertNotEquals('secret', $mailSmtpAppSetting->getPassword());
     }
 }

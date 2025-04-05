@@ -1,10 +1,10 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Domain\Entity\Question;
+use App\Application\Question\Model\QuestionModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
-class QuestionType extends AbstractType
+final class QuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,9 +25,9 @@ class QuestionType extends AbstractType
                     'rows' => 5,
                 ]
             ])
-            ->add('answers', LiveCollectionType::class, [
-                'label' => false,
+            ->add('answerModels', LiveCollectionType::class, [
                 'entry_type' => AnswerType::class,
+                'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
@@ -63,12 +63,10 @@ class QuestionType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => Question::class,
-            'submit_label' => 'Submit',
-            'attr' => [
-                'autocomplete' => 'off'
-            ]
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => QuestionModel::class
+            ])
+        ;
     }
 }

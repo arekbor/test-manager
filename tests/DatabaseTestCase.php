@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 abstract class DatabaseTestCase extends KernelTestCase
 {
+    public const GROUP_NAME = "Integration";
+
     protected ?EntityManager $entityManager;
 
     protected function setUp(): void

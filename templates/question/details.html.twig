@@ -7,7 +7,7 @@
 {% block container %}
     <div class="mt-2">
         <a 
-            href="{{ path('app_module_questions', { id: module.id }) }}" 
+            href="{{ path('app_module_questions', { id: moduleId }) }}" 
             class="btn btn-primary" 
             role="button"
         >
@@ -21,9 +21,10 @@
         }) }}
 
         <div class="mt-2">
-            {{ component('QuestionForm', { 
-                moduleProp: module, 
-                questionProp: question, 
+            {{ component('UpdateQuestionForm', { 
+                questionModel: questionModel,
+                questionId: questionId,
+                moduleId: moduleId,
             }) }}
         </div>
     </div>
@@ -33,8 +34,8 @@
         actionButtonText: 'modal.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_question_delete', {
-            moduleId: module.id,
-            questionId: question.id
+            moduleId: moduleId,
+            questionId: questionId
         })
     }) }}
 {% endblock %}

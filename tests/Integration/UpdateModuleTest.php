@@ -25,7 +25,7 @@ final class UpdateModuleTest extends DatabaseTestCase
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testUpdateModuleCommandSuccessfullyUpdatesModule(): void
     {
         //Arrange
@@ -55,6 +55,7 @@ final class UpdateModuleTest extends DatabaseTestCase
         $updatedModule = $repo->find($module->getId());
 
         //Assert
+        $this->assertInstanceOf(Module::class, $updatedModule);
         $this->assertEquals($module->getId(), $updatedModule->getId());
         $this->assertEquals('Updated Test Module', $updatedModule->getName());
         $this->assertEquals('en', $updatedModule->getLanguage());
@@ -62,17 +63,12 @@ final class UpdateModuleTest extends DatabaseTestCase
     }
 
     #[Test]
-    #[Group("Integration")]
+    #[Group(self::GROUP_NAME)]
     public function testUpdateModuleCommandThrowsExceptionForNonExistentModule(): void
     {
-        $moduleModel = new ModuleModel();
-        $moduleModel->setName('Updated Test Module');
-        $moduleModel->setLanguage('en');
-        $moduleModel->setCategory('periodic');
-
         $notExistingModuleId = Uuid::v4();
 
-        $command = new UpdateModule($notExistingModuleId, $moduleModel);
+        $command = new UpdateModule($notExistingModuleId, new ModuleModel());
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
