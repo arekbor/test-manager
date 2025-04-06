@@ -23,7 +23,7 @@ final class UpdateTestAppSettingHandler
     public function __invoke(UpdateTestAppSetting $command): void
     {
         $appSetting = $this->appSettingRepository->getByKey(TestAppSetting::APP_SETTING_KEY);
-        if (!$appSetting) {
+        if ($appSetting === null) {
             throw new AppSettingByKeyNotFoundException(TestAppSetting::APP_SETTING_KEY);
         }
 

@@ -25,7 +25,7 @@ final class GetModuleModelHandler
          * @var Module $module
          */
         $module = $this->entityManager->find(Module::class, $query->getModuleId());
-        if (!$module) {
+        if ($module === null) {
             throw new NotFoundException(Module::class, ['id' => $query->getModuleId()]);
         }
 

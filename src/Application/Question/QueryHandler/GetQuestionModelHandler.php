@@ -25,7 +25,7 @@ final class GetQuestionModelHandler
         $questionid = $query->getQuestionId();
 
         $question = $this->entityManager->find(Question::class, $questionid);
-        if (!$question) {
+        if ($question === null) {
             throw new NotFoundException(Question::class, ['id' => $questionid]);
         }
 

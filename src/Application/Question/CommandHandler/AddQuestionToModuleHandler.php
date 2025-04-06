@@ -25,7 +25,7 @@ final class AddQuestionToModuleHandler
         $moduleId = $command->getModuleId();
 
         $module = $this->entityManager->find(Module::class, $moduleId);
-        if (!$module) {
+        if ($module === null) {
             throw new NotFoundException(Module::class, ['id' => $moduleId]);
         }
 

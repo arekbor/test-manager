@@ -31,7 +31,7 @@ final class UpdateMailSmtpAppSettingHandler
         $mailSmtpAppSettingToUpdate->setPassword($encryptedPassword);
 
         $appSetting = $this->appSettingRepository->getByKey(MailSmtpAppSetting::APP_SETTING_KEY);
-        if (!$appSetting) {
+        if ($appSetting === null) {
             throw new AppSettingByKeyNotFoundException(MailSmtpAppSetting::APP_SETTING_KEY);
         }
 

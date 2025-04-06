@@ -25,7 +25,7 @@ final class UpdateQuestionHandler
         $questionId = $command->getQuestionId();
 
         $questionToUpdate = $this->questionRepository->getQuestionByQuestionAndModuleId($questionId, $moduleId);
-        if (!$questionToUpdate) {
+        if ($questionToUpdate === null) {
             throw new NotFoundException(Question::class, [
                 'questionId' => $questionId,
                 'moduleId' => $moduleId,
@@ -36,14 +36,14 @@ final class UpdateQuestionHandler
         $questionToUpdate->setContent($questionModel->getContent());
 
         foreach($questionToUpdate->getAnswers() as $answerToDelete) {
-            if (!$questionModel->getAnswerModelByAnswerId($answerToDelete->getId())) {
+            if ($questionModel->getAnswerModelByAnswerId($answerToDelete->getId()) === null) {
                 $questionToUpdate->removeAnswer($answerToDelete);
             }
         }
 
         foreach($questionModel->getAnswerModels() as $answerModel) {
             $answerToUpdate = $questionToUpdate->getAnswerById($answerModel->getAnswerId());
-            if ($answerToUpdate) {
+            if ($answerToUpdate !== null) {
                 $answerToUpdate->setContent($answerModel->getContent());
                 $answerToUpdate->setCorrect($answerModel->isCorrect());
             } else {

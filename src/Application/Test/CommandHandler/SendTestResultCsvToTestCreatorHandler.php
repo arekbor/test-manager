@@ -35,7 +35,7 @@ final class SendTestResultCsvToTestCreatorHandler
     {
         try {
             $appSetting = $this->appSettingRepository->getByKey(TestAppSetting::APP_SETTING_KEY);
-            if (!$appSetting) {
+            if ($appSetting === null) {
                 throw new AppSettingByKeyNotFoundException(TestAppSetting::APP_SETTING_KEY);
             }
 
@@ -58,7 +58,7 @@ final class SendTestResultCsvToTestCreatorHandler
              * @var Test $test
              */
             $test = $this->entityManager->find(Test::class, $testId);
-            if (!$test) {
+            if ($test === null) {
                 throw new NotFoundException(Test::class, ['id' => $testId]);
             }
 
