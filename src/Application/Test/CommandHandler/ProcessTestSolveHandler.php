@@ -51,8 +51,7 @@ final class ProcessTestSolveHandler
          * @var Test $test
          */
         $test = $this->entityManager->find(Test::class, $testId);
-
-        if (!$test) {
+        if ($test === null) {
             throw new NotFoundException(Test::class, ['id' => $testId]);
         }
 
