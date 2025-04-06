@@ -11,9 +11,9 @@ use App\Application\Shared\VichFileHandlerInterface;
 use App\Application\Test\Command\SendTestResultCsvToTestCreator;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\TestResult;
-use App\Domain\Exception\AppSettingByKeyNotFound;
 use App\Domain\Exception\NotFoundException;
 use App\Application\AppSetting\Model\TestAppSetting;
+use App\Domain\Exception\AppSettingByKeyNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -36,7 +36,7 @@ final class SendTestResultCsvToTestCreatorHandler
         try {
             $appSetting = $this->appSettingRepository->getByKey(TestAppSetting::APP_SETTING_KEY);
             if (!$appSetting) {
-                throw new AppSettingByKeyNotFound(TestAppSetting::APP_SETTING_KEY);
+                throw new AppSettingByKeyNotFoundException(TestAppSetting::APP_SETTING_KEY);
             }
 
             /**

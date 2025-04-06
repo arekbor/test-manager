@@ -13,9 +13,6 @@ use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 {
@@ -29,13 +26,13 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $container = self::getContainer();
 
-        $this->appSettingDecoder = new AppSettingDecoder($serializer);
+        $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
 
-        $this->appSettingManager = new AppSettingManager($this->appSettingDecoder);
+        $this->appSettingManager = $container->get(AppSettingManager::class);
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = $container->get('command.bus');
     }
 
     #[Test]
@@ -68,14 +65,14 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $command = new UpdateMailSmtpAppSetting($mailSmtpAppSettingAfterUpdate);
 
         //Act
-
         $this->commandBus->dispatch($command);
 
         /**
          * @var AppSetting $appSetting
          */
         $appSetting = $this->entityManager->getRepository(AppSetting::class)
-            ->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
+            ->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY])
+        ;
 
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
@@ -87,6 +84,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $this->assertNotNull($appSetting->getId());
 
         $this->assertInstanceOf(MailSmtpAppSetting::class, $mailSmtpAppSetting);
+        
         $this->assertEquals('test.host.com', $mailSmtpAppSetting->getHost());
         $this->assertEquals('546', $mailSmtpAppSetting->getPort());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getFromAddress());

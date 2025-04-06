@@ -264,8 +264,9 @@ flash:
   updateMailSmtpAppSettingForm:
     success: SMTP settings have been successfully updated.
     error: An issue occurred while updating SMTP settings.
-  testAppSettingForm:
-    successfullyUpdated: Test settings have been successfully updated.
+  updateTestAppSettingForm:
+    success: Test settings have been successfully updated.
+    error: An issue occurred while updating Test settings.
   updateVideoForm:
     successfullyUpdated: The video has been successfully updated.
   testEmailForm:

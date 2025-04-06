@@ -6,7 +6,7 @@ namespace App\Domain\Exception;
 
 use App\Domain\Entity\AppSetting;
 
-final class AppSettingByKeyNotFound extends \Exception
+final class AppSettingByKeyNotFoundException extends \Exception
 {
     public function __construct(string $key) {
         
