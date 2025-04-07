@@ -41,7 +41,8 @@ class TestDataTableType extends AbstractDataTableType
                                     'label' => 'data_table.details',
                                     'href' => function(Test $test): string {
                                         return $this->urlGenerator->generate('app_test_details', [
-                                            'id' => $test->getId()
+                                            'id' => $test->getId(),
+                                            'moduleId' => $test->getModule()->getId()
                                         ]);
                                     }
                                 ],

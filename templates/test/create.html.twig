@@ -6,10 +6,13 @@
 
 {% block container %}
     <p class="h-6 text-muted">
-        {{ 'templates.test.create.info'|trans({ '%moduleId%': module.id }) }}
+        {{ 'templates.test.create.info'|trans({ '%moduleId%': moduleId }) }}
     </p>
 
     <div class="mt-2">
-        {{ component('TestForm', { moduleProp: module }) }}
+        {{ component('CreateTestForm', { 
+            moduleId: moduleId,
+            testModel: testModel
+        }) }}
     </div>
 {% endblock %}
