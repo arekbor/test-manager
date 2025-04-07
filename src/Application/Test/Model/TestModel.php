@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Model;
 
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class TestModel
