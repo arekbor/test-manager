@@ -259,8 +259,12 @@ flash:
   updateQuestionForm:
     success: Question has been successfully updated.
     error: An issue occurred while updating the question.
-  testForm:
-    successfullyCreated: The test has been successfully created.
+  createTestForm:
+    success: Test has been successfully created.
+    error: An issue occurred while creating the test.
+  updateTestForm:
+    success: Test has been successfully updated.
+    error: An issue occurred while updating the test.
   updateMailSmtpAppSettingForm:
     success: SMTP settings have been successfully updated.
     error: An issue occurred while updating SMTP settings.

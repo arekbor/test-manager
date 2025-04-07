@@ -6,12 +6,12 @@
 
 {% block container %}
     <p class="h-6 text-muted">
-        {{ 'templates.test.details.info'|trans({ '%moduleId%': test.module.id }) }}
+        {{ 'templates.test.details.info'|trans({ '%moduleId%': moduleId }) }}
     </p>
 
     <div class="mt-2">
         <a 
-            href="{{ path('app_module_general', { id: test.module.id }) }}" 
+            href="{{ path('app_module_general', { id: moduleId }) }}" 
             class="btn btn-primary" 
             role="button"
         >
@@ -25,9 +25,9 @@
         }) }}
 
         <div class="mt-2">
-            {{ component('TestForm', { 
-                moduleProp: test.module,
-                testProp: test
+            {{ component('UpdateTestForm', { 
+                testModel: testModel,
+                testId: testId
             }) }}
         </div>
     </div>
@@ -37,7 +37,7 @@
         actionButtonText: 'modal.delete'|trans,
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_test_delete', {
-            id: test.id,
+            id: testId
         })
     }) }}
 {% endblock %}

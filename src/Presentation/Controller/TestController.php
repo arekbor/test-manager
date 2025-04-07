@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Domain\Entity\Module;
+use App\Application\Shared\QueryBusInterface;
+use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate;
 use App\Domain\Entity\Test;
 use App\Presentation\DataTable\Type\TestDataTableType;
 use App\Repository\TestRepository;
@@ -14,11 +15,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
+use App\Application\Test\Model\TestModel;
+use App\Application\Test\Query\GetTestModel;
 
 #[Route('/test')]
 class TestController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
+
+    public function __construct(
+        private readonly QueryBusInterface $queryBus
+    ) {
+    }
 
     #[Route('/index', name: 'app_test_index')]
     public function index(
@@ -36,18 +45,28 @@ class TestController extends AbstractController
     }
 
     #[Route('/create/{id}', name: 'app_test_create')]
-    public function create(Module $module): Response
+    public function create(Uuid $id): Response
     {
+        /**
+         * @var TestModel $testModel
+         */
+        $testModel = $this->queryBus->query(new GetTestModelWithDefaultExpirationDate());
+
         return $this->render('test/create.html.twig', [
-            'module' => $module
+            'moduleId' => $id,
+            'testModel' => $testModel
         ]);
     }
 
-    #[Route('/details/{id}', name: 'app_test_details')]
-    public function details(Test $test): Response
+    #[Route('/details/{id}/{moduleId}', name: 'app_test_details')]
+    public function details(Uuid $id, Uuid $moduleId): Response
     {
+        $testModel = $this->queryBus->query(new GetTestModel($id));
+
         return $this->render('test/details.html.twig', [
-            'test' => $test
+            'testModel' => $testModel,
+            'testId' => $id,
+            'moduleId' => $moduleId
         ]);
     }
 
