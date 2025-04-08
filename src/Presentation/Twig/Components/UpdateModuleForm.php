@@ -40,9 +40,9 @@ final class UpdateModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        try {
-            $this->submitForm();
+        $this->submitForm();
 
+        try {
             /**
              * @var ModuleModel $moduleModel
              */

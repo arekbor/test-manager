@@ -37,9 +37,9 @@ final class AddQuestionToModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        try {
-            $this->submitForm();
+        $this->submitForm();
 
+        try {
             /**
              * @var QuestionModel $questionModel
              */

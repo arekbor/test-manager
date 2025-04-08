@@ -32,9 +32,9 @@ final class CreateModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
+        $this->submitForm();
+
         try {
-            $this->submitForm();
-        
             /**
              * @var ModuleModel $moduleModel
              */

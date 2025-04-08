@@ -36,9 +36,9 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        try {
-            $this->submitForm();
+        $this->submitForm();
 
+        try {
             /**
              * @var MailSmtpAppSetting $mailSmtpAppSetting
              */

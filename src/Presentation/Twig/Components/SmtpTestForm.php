@@ -34,9 +34,9 @@ final class SmtpTestForm extends AbstractController
     #[LiveAction]
     public function send(): Response
     {
-        try {
-            $this->submitForm();
+        $this->submitForm();
 
+        try {
             /**
              * @var SmtpTest $smtpTest
              */
