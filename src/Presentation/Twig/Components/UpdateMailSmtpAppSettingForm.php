@@ -36,14 +36,14 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var MailSmtpAppSetting $mailSmtpAppSetting
-         */
-        $mailSmtpAppSetting = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var MailSmtpAppSetting $mailSmtpAppSetting
+             */
+            $mailSmtpAppSetting = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new UpdateMailSmtpAppSetting($mailSmtpAppSetting));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateMailSmtpAppSettingForm.error'));

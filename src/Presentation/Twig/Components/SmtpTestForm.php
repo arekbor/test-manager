@@ -34,14 +34,14 @@ final class SmtpTestForm extends AbstractController
     #[LiveAction]
     public function send(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var SmtpTest $smtpTest
-         */
-        $smtpTest = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var SmtpTest $smtpTest
+             */
+            $smtpTest = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new SendSmtpTestEmail($smtpTest));
         } catch(\Throwable $ex) {
             $errorMessage = $this->trans->trans('flash.testEmailForm.error');

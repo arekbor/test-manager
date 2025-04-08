@@ -37,14 +37,14 @@ final class AddQuestionToModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var QuestionModel $questionModel
-         */
-        $questionModel = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var QuestionModel $questionModel
+             */
+            $questionModel = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new AddQuestionToModule($this->moduleId, $questionModel));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.addQuestionToModuleForm.error'));

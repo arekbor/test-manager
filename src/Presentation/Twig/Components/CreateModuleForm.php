@@ -32,14 +32,14 @@ final class CreateModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-        
-        /**
-         * @var ModuleModel $moduleModel
-         */
-        $moduleModel = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+        
+            /**
+             * @var ModuleModel $moduleModel
+             */
+            $moduleModel = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new CreateModule($moduleModel));
         } catch(\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.createModuleForm.error'));

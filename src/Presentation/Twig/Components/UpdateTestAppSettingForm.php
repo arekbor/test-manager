@@ -36,14 +36,14 @@ final class UpdateTestAppSettingForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var TestAppSetting $testAppSetting
-         */
-        $testAppSetting = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var TestAppSetting $testAppSetting
+             */
+            $testAppSetting = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new UpdateTestAppSetting($testAppSetting));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateTestAppSettingForm.error'));

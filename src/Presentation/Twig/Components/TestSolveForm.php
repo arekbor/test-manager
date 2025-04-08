@@ -47,18 +47,18 @@ final class TestSolveForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        if (!$this->testProp->isValid()) {
-            return $this->redirectToRoute('app_testsolve_notvalid');
-        }
-
-        $this->submitForm();
-        
-        /**
-         * @var TestSolve $testSolve
-         */
-        $testSolve = $this->getForm()->getData();
-
         try {
+            if (!$this->testProp->isValid()) {
+                return $this->redirectToRoute('app_testsolve_notvalid');
+            }
+    
+            $this->submitForm();
+            
+            /**
+             * @var TestSolve $testSolve
+             */
+            $testSolve = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new RegisterTestSolve(
                 test: $this->testProp,
                 testSolve: $testSolve,

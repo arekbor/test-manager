@@ -40,14 +40,14 @@ final class UpdateModuleForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var ModuleModel $moduleModel
-         */
-        $moduleModel = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var ModuleModel $moduleModel
+             */
+            $moduleModel = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new UpdateModule($this->moduleId, $moduleModel));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateModuleForm.error'));

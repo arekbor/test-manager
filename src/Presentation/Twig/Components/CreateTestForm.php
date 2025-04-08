@@ -40,14 +40,14 @@ final class CreateTestForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var TestModel $testModel
-         */
-        $testModel = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var TestModel $testModel
+             */
+            $testModel = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new CreateTest($testModel, $this->getUser()->getUserIdentifier(), $this->moduleId));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.createTestForm.error'));

@@ -43,14 +43,14 @@ final class UpdateQuestionForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        $this->submitForm();
-
-        /**
-         * @var QuestionModel $questionModel
-         */
-        $questionModel = $this->getForm()->getData();
-
         try {
+            $this->submitForm();
+
+            /**
+             * @var QuestionModel $questionModel
+             */
+            $questionModel = $this->getForm()->getData();
+
             $this->commandBus->dispatch(new UpdateQuestion($this->questionId, $this->moduleId, $questionModel));
         } catch(\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateQuestionForm.error'));
