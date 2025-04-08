@@ -21,6 +21,7 @@ class TestAppSettingType extends AbstractType
             ->add('expirationDaysOffset', NumberType::class, [
                 'label' => 'form.type.testAppSetting.expirationDaysOffset.label',
                 'help' => 'form.type.testAppSetting.expirationDaysOffset.help',
+                'empty_data' => ' '
             ])
             ->add('notificationsEnabled', ChoiceType::class, [
                 'label' => 'form.type.testAppSetting.notificationsEnabled.label',

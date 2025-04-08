@@ -12,7 +12,7 @@ class TestAppSetting
 {
     public const APP_SETTING_KEY = "test";
 
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(1)]
     private int $expirationDaysOffset;
 
     #[Assert\Valid]
