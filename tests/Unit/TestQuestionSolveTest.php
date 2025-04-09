@@ -38,7 +38,10 @@ final class TestQuestionSolveTest extends TestCase
 
         $testQuestionSolve = new TestQuestionSolve();
 
-        $testQuestionSolve->setTestAnswers([$testAnswerSolve1, $testAnswerSolve2, $testAnswerSolve3, $testAnswerSolve4]);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve1);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve2);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve3);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve4);
 
         //Act
         $extractedAnswerIds = $testQuestionSolve->extractChosenAnswerIds();
@@ -63,7 +66,8 @@ final class TestQuestionSolveTest extends TestCase
 
         $testQuestionSolve = new TestQuestionSolve();
 
-        $testQuestionSolve->setTestAnswers([$testAnswerSolve1, $testAnswerSolve2]);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve1);
+        $testQuestionSolve->addTestAnswerSolve($testAnswerSolve2);
         
         //Act
         $extractedAnswerIds = $testQuestionSolve->extractChosenAnswerIds();

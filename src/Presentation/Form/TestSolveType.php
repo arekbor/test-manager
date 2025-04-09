@@ -61,9 +61,9 @@ class TestSolveType extends AbstractType
                         'required' => false,
                     ]
             ))
-            ->add('testQuestions', LiveCollectionType::class, [
-                'label' => false,
+            ->add('testQuestionSolves', LiveCollectionType::class, [
                 'entry_type' => TestQuestionSolveType::class,
+                'label' => false,
                 'allow_add' => false,
                 'allow_delete' => false
             ])

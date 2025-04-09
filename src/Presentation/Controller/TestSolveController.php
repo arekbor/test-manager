@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Shared\QueryBusInterface;
 use App\Application\Shared\VichFileHandlerInterface;
+use App\Application\Test\Query\GetDataForTestSolve;
 use App\Domain\Entity\Test;
 use App\Domain\Entity\Video;
 use App\Presentation\Attribute\TestVerify;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Application\Test\Model\DataForTestSolve;
 
 /**
  * All routes from this controller are open to public access!
@@ -20,12 +23,22 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/testSolve')]
 class TestSolveController extends AbstractController
 {
+    public function __construct(
+        private QueryBusInterface $queryBus
+    ) {
+    }
+
     #[Route('/solve/{id}', name: 'app_testsolve_solve')]
     #[TestVerify]
     public function solve(?Test $test): Response
     {
+        /**
+         * @var DataForTestSolve $dataForTestSolve
+         */
+        $dataForTestSolve = $this->queryBus->query(new GetDataForTestSolve($test->getId()));
+
         return $this->render('/testSolve/solve.html.twig', [
-            'test' => $test
+            'dataForTestSolve' => $dataForTestSolve
         ]);
     }
 

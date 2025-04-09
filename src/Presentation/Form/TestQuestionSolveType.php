@@ -15,9 +15,9 @@ class TestQuestionSolveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('testAnswers', LiveCollectionType::class, [
+            ->add('testAnswerSolves', LiveCollectionType::class, [
+                'entry_type' => TestAnswerSolveType::class,
                 'label' => false,
-                'entry_type' => TestAnswerSolveType::class
             ])
         ;
     }

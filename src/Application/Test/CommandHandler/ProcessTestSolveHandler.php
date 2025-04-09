@@ -43,7 +43,7 @@ final class ProcessTestSolveHandler
 
         $this->logger->info(sprintf("[%s] Found %d test questions to process for Test ID: %s.",
             __CLASS__,
-            count($testSolve->getTestQuestions()),
+            $testSolve->getTestQuestionSolves()->count(),
             $testIdString
         ));
 

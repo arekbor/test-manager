@@ -14,6 +14,11 @@ class TestAnswerSolve
 
     private bool $chosen;
 
+    public function __construct() 
+    {
+        $this->chosen = false;
+    }
+
     public function getAnswerId(): Uuid
     {
         return $this->answerId;

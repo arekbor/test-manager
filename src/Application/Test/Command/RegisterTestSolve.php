@@ -4,31 +4,31 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Command;
 
-use App\Domain\Entity\Test;
 use App\Application\Test\Model\TestSolve;
+use Symfony\Component\Uid\Uuid;
 
 final class RegisterTestSolve
 {
-    private Test $test;
+    private Uuid $testId;
     private TestSolve $testSolve;
     private \DateTimeInterface $start;
     private \DateTimeInterface $submission;
     
     public function __construct(
-        Test $test,
+        Uuid $testId,
         TestSolve $testSolve,
         \DateTimeInterface $start,
         \DateTimeInterface $submission,
     ) {
-        $this->test = $test;
+        $this->testId = $testId;
         $this->testSolve = $testSolve;
         $this->start = $start;
         $this->submission = $submission;
     }
 
-    public function getTest(): Test
+    public function getTestId(): Uuid
     {
-        return $this->test;
+        return $this->testId;
     }
 
     public function getTestSolve(): TestSolve
