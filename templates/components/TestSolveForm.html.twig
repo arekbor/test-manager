@@ -2,7 +2,7 @@
     {{ form_start(form) }}
 
     <div class="my-4">
-        {% for question in form.testQuestions %}
+        {% for question in form.testQuestionSolves %}
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h3 class="card-title text-primary">
@@ -10,7 +10,7 @@
                     </h3>
                     
                     <div class="list-group mt-3">
-                        {% for answer in question.testAnswers %}
+                        {% for answer in question.testAnswerSolves %}
                             <div class="list-group-item d-flex align-items-center">
                                 {{ form_widget(answer.chosen) }}
                                 <span class="ms-2">{{ answer.vars.data.content }}</span>

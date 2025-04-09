@@ -17,7 +17,7 @@ final class TestScoreCalculator
         /**
          * @var TestQuestionSolve $testQuestionSolve
          */
-        foreach($testSolve->getTestQuestions() as $testQuestionSolve) {
+        foreach($testSolve->getTestQuestionSolves() as $testQuestionSolve) {
             $questionId = $testQuestionSolve->getQuestionId();
 
             $question = $test->getModule()->findQuestionById($questionId);

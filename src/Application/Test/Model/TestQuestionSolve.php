@@ -4,15 +4,25 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Uid\Uuid;
 
-class TestQuestionSolve
+final class TestQuestionSolve
 {
     private Uuid $questionId;
 
     private string $content;
 
-    private array $testAnswers;
+    /**
+     * @var Collection<int, TestAnswerSolve>
+     */
+    private Collection $testAnswerSolves;
+
+    public function __construct() 
+    {
+        $this->testAnswerSolves = new ArrayCollection();
+    }
 
     public function getQuestionId(): Uuid
     {
@@ -38,29 +48,35 @@ class TestQuestionSolve
         return $this;
     }
 
-    public function getTestAnswers(): array
+    /**
+     * @var Collection<int, TestAnswerSolve>
+     */
+    public function getTestAnswerSolves(): Collection
     {
-        return $this->testAnswers;
+        return $this->testAnswerSolves;
     }
 
-    public function setTestAnswers(array $testAnswers): static
+    public function addTestAnswerSolve(TestAnswerSolve $testAnswerSolve): static
     {
-        $this->testAnswers = $testAnswers;
+        if (!$this->testAnswerSolves->contains($testAnswerSolve)) {
+            $this->testAnswerSolves->add($testAnswerSolve);
+        }
+
+        return $this;
+    }
+
+    public function removeTestAnswerSolve(TestAnswerSolve $testAnswerSolve): static
+    {
+        $this->testAnswerSolves->removeElement($testAnswerSolve);
 
         return $this;
     }
 
     public function extractChosenAnswerIds(): array
     {
-        $chosenAnswers = array_filter(
-            $this->testAnswers ?? [],
-            fn(TestAnswerSolve $t) => $t->isChosen()
-        );
+        $chosenAnswers = array_filter($this->testAnswerSolves->toArray() ?? [], fn(TestAnswerSolve $t) => $t->isChosen());
 
-        $chosenAnswerIds = array_map(
-            fn(TestAnswerSolve $t) => $t->getAnswerId()->toRfc4122(),
-            $chosenAnswers
-        );
+        $chosenAnswerIds = array_map(fn(TestAnswerSolve $t) => $t->getAnswerId()->toRfc4122(), $chosenAnswers);
 
         return array_values($chosenAnswerIds);
     }

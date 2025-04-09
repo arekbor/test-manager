@@ -256,7 +256,13 @@ final class TestScoreCalculatorTest extends TestCase
     {
         $testQuestionSolve = new TestQuestionSolve();
         $testQuestionSolve->setQuestionId($questionId);
-        $testQuestionSolve->setTestAnswers($testAnswerSolves);
+
+        /**
+         * @var TestAnswerSolve $testAnswerSolve
+         */
+        foreach($testAnswerSolves as $testAnswerSolve) {
+            $testQuestionSolve->addTestAnswerSolve($testAnswerSolve);
+        }
 
         return $testQuestionSolve;
     }
@@ -264,7 +270,13 @@ final class TestScoreCalculatorTest extends TestCase
     private function createTestSolve(array $testQuestionSolves): TestSolve
     {
         $testSolve = new TestSolve();
-        $testSolve->setTestQuestions($testQuestionSolves);
+
+        /**
+         * @var TestQuestionSolve $testQuestionSolve
+         */
+        foreach($testQuestionSolves as $testQuestionSolve) {
+            $testSolve->addTestQuestionSolve($testQuestionSolve);
+        }
 
         return $testSolve;
     }

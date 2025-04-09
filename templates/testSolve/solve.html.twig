@@ -2,18 +2,18 @@
 
 {% block wrapper %}
     <div class="row justify-content-center mb-3">
-        {% for video in test.module.videos %}
+        {% for testVideo in dataForTestSolve.testVideos %}
             <div class="col-12">
                 <video 
                     class="w-100 border rounded shadow-sm"
                     controls
-                    src="{{ path('app_testsolve_video', { testId: test.id, videoId: video.id }) }}">
+                    src="{{ path('app_testsolve_video', { testId: dataForTestSolve.testId, videoId: testVideo.videoId }) }}">
                 </video>
             </div>
         {% endfor %}
     </div>
 
     {{ component('TestSolveForm', {
-        'testProp': test
+        'dataForTestSolve': dataForTestSolve
     }) }}
 {% endblock %}

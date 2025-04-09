@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class TestSolve
+final class TestSolve
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 100)]
@@ -27,11 +29,20 @@ class TestSolve
     #[Assert\LessThan('today')]
     private ?\DateTimeInterface $dateOfBirth = null;
 
+    /**
+     * @var Collection<int, TestQuestionSolve>
+     */
     #[Assert\Valid]
-    private array $testQuestions;
+    private Collection $testQuestionSolves;
 
     #[Assert\IsTrue]
     private bool $consent;
+
+    public function __construct() 
+    {
+        $this->testQuestionSolves = new ArrayCollection();
+        $this->consent = false;
+    }
 
     public function getFirstname(): ?string
     {
@@ -93,14 +104,26 @@ class TestSolve
         return $this;
     }
 
-    public function getTestQuestions(): array
+    /**
+     * @var Collection<int, TestQuestionSolve>
+     */
+    public function getTestQuestionSolves(): Collection
     {
-        return $this->testQuestions;
+        return $this->testQuestionSolves;
     }
 
-    public function setTestQuestions(array $testQuestions): static
+    public function addTestQuestionSolve(TestQuestionSolve $testQuestionSolve): static
     {
-        $this->testQuestions = $testQuestions;
+        if (!$this->testQuestionSolves->contains($testQuestionSolve)) {
+            $this->testQuestionSolves->add($testQuestionSolve);
+        }
+
+        return $this;
+    }
+
+    public function removeTestQuestionSolve(TestQuestionSolve $testQuestionSolve): static
+    {
+        $this->testQuestionSolves->removeElement($testQuestionSolve);
 
         return $this;
     }

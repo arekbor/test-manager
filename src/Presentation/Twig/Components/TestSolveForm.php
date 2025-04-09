@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Presentation\Twig\Components;
 
 use App\Application\Test\Command\RegisterTestSolve;
-use App\Domain\Entity\Test;
-use App\Domain\Exception\NotFoundException;
+use App\Application\Test\Model\DataForTestSolve;
 use App\Presentation\Form\TestSolveType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -19,7 +18,6 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 use App\Application\Test\Model\TestSolve;
-use App\Application\Test\Service\TestSolveFactory;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -27,16 +25,16 @@ final class TestSolveForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
-    #[LiveProp]
-    public ?\DateTimeInterface $start = null;
-
-    #[LiveProp]
-    public Test $testProp;
-
     public function __construct(
         private readonly MessageBusInterface $commandBus
     ) {
     }
+
+    #[LiveProp]
+    public ?\DateTimeInterface $start = null;
+
+    #[LiveProp(useSerializerForHydration: true)]
+    public DataForTestSolve $dataForTestSolve;
 
     #[PreMount]
     public function preMount(): void
@@ -47,10 +45,6 @@ final class TestSolveForm extends AbstractController
     #[LiveAction]
     public function submit(): Response
     {
-        if (!$this->testProp->isValid()) {
-            return $this->redirectToRoute('app_testsolve_notvalid');
-        }
-
         $this->submitForm();
 
         try {
@@ -60,7 +54,7 @@ final class TestSolveForm extends AbstractController
             $testSolve = $this->getForm()->getData();
 
             $this->commandBus->dispatch(new RegisterTestSolve(
-                test: $this->testProp,
+                testId: $this->dataForTestSolve->getTestId(),
                 testSolve: $testSolve,
                 start: $this->start,
                 submission: new \DateTimeImmutable()
@@ -74,13 +68,8 @@ final class TestSolveForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        $testCategory = $this->testProp->getModule()->getCategory() 
-            ?? throw new NotFoundException(string::class, ['testCategory']);
-
-        $testSolve = TestSolveFactory::createFromModule($this->testProp->getModule());
-        
-        return $this->createForm(TestSolveType::class, $testSolve, [
-            'test_category' => $testCategory
+        return $this->createForm(TestSolveType::class, $this->dataForTestSolve->getTestSolve(), [
+            'test_category' => $this->dataForTestSolve->getTestCategory()
         ]);
     }
 }
