@@ -56,7 +56,7 @@ class SecurityUser extends BaseEntity implements
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->getId()->toString();
     }
 
     /**

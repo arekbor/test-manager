@@ -48,7 +48,9 @@ final class CreateTestForm extends AbstractController
              */
             $testModel = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new CreateTest($testModel, $this->getUser()->getUserIdentifier(), $this->moduleId));
+            $creatorId = Uuid::fromString($this->getUser()->getUserIdentifier());
+
+            $this->commandBus->dispatch(new CreateTest($testModel, $creatorId, $this->moduleId));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.createTestForm.error'));
 
