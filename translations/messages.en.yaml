@@ -277,7 +277,9 @@ flash:
     success: The email has been successfully sent.
     error: An issue occurred while sending the test email.
   updateEmailForm:
+    error: An issue occurred while updating the email address.
     emailAlreadyExists: The provided email address already exists.
+    emailEnchanged: The provided email address is the same as the current one.
   updatePasswordForm:
     invalidPassword: Invalid password.
   uploadFile:

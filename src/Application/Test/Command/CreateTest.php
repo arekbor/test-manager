@@ -10,16 +10,16 @@ use Symfony\Component\Uid\Uuid;
 final class CreateTest
 {
     private TestModel $testModel;
-    private string $creatorEmail;
+    private Uuid $creatorId;
     private Uuid $moduleId;
 
     public function __construct(
         TestModel $testModel,
-        string $creatorEmail,
+        Uuid $creatorId,
         Uuid $moduleId
     ) {
         $this->testModel = $testModel;
-        $this->creatorEmail = $creatorEmail;
+        $this->creatorId = $creatorId;
         $this->moduleId = $moduleId;
     }
 
@@ -28,9 +28,9 @@ final class CreateTest
         return $this->testModel;
     }
     
-    public function getCreatorEmail(): string
+    public function getCreatorId(): Uuid
     {
-        return $this->creatorEmail;
+        return $this->creatorId;
     }
 
     public function getModuleId(): Uuid

@@ -52,7 +52,7 @@ final class CreateTestTest extends DatabaseTestCase
         $expirationDate = date_modify(new \DateTime(), sprintf('+%d days', 12));
         $testModel->setExpiration($expirationDate);
 
-        $command = new CreateTest($testModel, 'test_user@gmail.com', $testModule->getId());
+        $command = new CreateTest($testModel, $testSecurityUser->getId(), $testModule->getId());
 
         //Act
         $this->commandBus->dispatch($command);
@@ -85,7 +85,7 @@ final class CreateTestTest extends DatabaseTestCase
     {
         $notExistingModuleId = Uuid::v4();
 
-        $command = new CreateTest(new TestModel(), 'test@gmail.com', $notExistingModuleId);
+        $command = new CreateTest(new TestModel(), Uuid::v4(), $notExistingModuleId);
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
@@ -105,9 +105,11 @@ final class CreateTestTest extends DatabaseTestCase
 
         $this->entityManager->flush();
 
-        $command = new CreateTest(new TestModel(), 'test@gmail.com', $testModule->getId());
+        $notExistingCreatorId = Uuid::v4();
 
-        $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"email":"%s"}', 'test@gmail.com'));
+        $command = new CreateTest(new TestModel(), $notExistingCreatorId, $testModule->getId());
+
+        $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"id":"%s"}', $notExistingCreatorId));
 
         $this->commandBus->dispatch($command);
     }

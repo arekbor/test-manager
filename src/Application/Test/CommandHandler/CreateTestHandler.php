@@ -32,14 +32,14 @@ final class CreateTestHandler
             throw new NotFoundException(Module::class, ['id' => $moduleId]);
         }
 
-        $creatorEmail = $command->getCreatorEmail();
+        $creatorId = $command->getCreatorId();
 
         /**
          * @var SecurityUser $securityUser
          */
-        $securityUser = $this->entityManager->getRepository(SecurityUser::class)->findOneBy(['email' => $creatorEmail]);
+        $securityUser = $this->entityManager->find(SecurityUser::class, $creatorId);
         if ($securityUser === null) {
-            throw new NotFoundException(SecurityUser::class, ['email' => $creatorEmail]);
+            throw new NotFoundException(SecurityUser::class, ['id' => $creatorId]);
         }
 
         $test = new Test();

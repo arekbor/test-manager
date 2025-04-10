@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Twig\Components;
 
+use App\Application\SecurityUser\Command\UpdateSecurityUserEmail;
 use App\Presentation\Form\UpdateEmailType;
-use App\Repository\SecurityUserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -16,7 +14,12 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use App\Domain\Entity\SecurityUser;
+use App\Application\SecurityUser\Model\UpdateEmail;
+use App\Domain\Exception\SecurityUserEmailUnchangedException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[AsLiveComponent]
 final class UpdateEmailForm extends AbstractController
@@ -24,38 +27,43 @@ final class UpdateEmailForm extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
 
+    public function __construct(
+        private readonly MessageBusInterface $commandBus,
+        private readonly TranslatorInterface $trans
+    ) {
+    }
+
     #[LiveAction]
-    public function update(
-        Security $security,
-        EntityManagerInterface $em,
-        SecurityUserRepository $securityUserRepository,
-        TranslatorInterface $trans,
-    ): Response
+    public function update(): Response
     {
         $this->submitForm();
-        
-        $updateEmail = $this->getForm()->getData();
 
-        $updatedEmail = $updateEmail->getEmail();
+        try {
+            /**
+             * @var UpdateEmail $updateEmail
+             */
+            $updateEmail = $this->getForm()->getData();
 
-        $usersWithTheSameEmail = $securityUserRepository->findByEmail($updatedEmail);
-        if (count($usersWithTheSameEmail) > 0) {
-            $this->addFlash('danger', $trans->trans('flash.updateEmailForm.emailAlreadyExists'));
+            $userId = Uuid::fromString($this->getUser()->getUserIdentifier());
+
+            $this->commandBus->dispatch(new UpdateSecurityUserEmail($userId, $updateEmail));
+        } catch (\Throwable $ex) {
+            $errorMessage = $this->trans->trans('flash.updateEmailForm.error');
+
+            if ($ex instanceof UniqueConstraintViolationException) {
+                $errorMessage = $this->trans->trans('flash.updateEmailForm.emailAlreadyExists');
+            }
+
+            if ($ex instanceof HandlerFailedException && $ex->getPrevious() instanceof SecurityUserEmailUnchangedException) {
+                $errorMessage = $this->trans->trans('flash.updateEmailForm.emailEnchanged');
+            }
+
+            $this->addFlash('danger', $errorMessage);
 
             return $this->redirectToRoute('app_settings_general');
         }
 
-        /**
-         * @var SecurityUser
-         */
-        $user = $this->getUser();
-        
-        $user->setEmail($updatedEmail);
-
-        $em->persist($user);
-        $em->flush();
-
-        return $security->logout(false);
+        return $this->redirectToRoute('app_auth_logout');
     }
 
     protected function instantiateForm(): FormInterface
