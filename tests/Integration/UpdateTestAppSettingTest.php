@@ -39,7 +39,7 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateTestAppSettingSuccessfullyPersistsChanges(): void
+    public function testUpdateTestAppSettingSuccessfullyPersistsAppSetting(): void
     {
         //Arrange
         $testAppSettingBeforeUpdate = new TestAppSetting();

@@ -34,7 +34,7 @@ final class UpdatePasswordTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdatePasswordCommandUpdatesSuccessfullyUpdatesPassword(): void
+    public function testUpdatePasswordCommandUpdatesPasswordSuccessfully(): void
     {
         //Arrange
         $password = '%NQw1lNJ[09-6(]=2R3mKLT$I';

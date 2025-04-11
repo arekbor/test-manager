@@ -37,7 +37,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateMailSmtpAppSettingSuccessfullyPersistsChanges(): void
+    public function testUpdateMailSmtpAppSettingSuccessfullyPersistsAppSetting(): void
     {
         //Arrange
         $mailSmtpAppSettingBeforeUpdate = new MailSmtpAppSetting();

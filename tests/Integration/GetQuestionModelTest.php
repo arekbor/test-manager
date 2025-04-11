@@ -30,7 +30,7 @@ final class GetQuestionModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testGetQuestionModelQueryFindsQuestionSuccessfully(): void
+    public function testGetQuestionModelQueryReturnsQuestionSuccessfully(): void
     {
         // Arrange
         $question = new Question();

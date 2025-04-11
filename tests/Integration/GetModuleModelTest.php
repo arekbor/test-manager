@@ -28,7 +28,7 @@ final class GetModuleModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testGetModuleModelQueryFindsModuleSuccessfully(): void
+    public function testGetModuleModelQueryReturnsModuleSuccessfully(): void
     {
         //Arrange
         $module = new Module();
@@ -57,7 +57,7 @@ final class GetModuleModelTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testGetModuleModelQueryThrowsExceptionForNonExistentModule(): void
+    public function testGetModuleModelQueryThrowsExceptionWhenModuleNotFound(): void
     {
         $notExistingModuleId = Uuid::v4();
 

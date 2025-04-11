@@ -31,7 +31,7 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testAddQuestionToModulePersistsQuestionCorrectly(): void
+    public function testAddQuestionToModuleCommandPersistsQuestionCorrectly(): void
     {
         // Arrange
         $testModule = new Module();
@@ -95,7 +95,7 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testAddQuestionToModuleThrowsExceptionForNonExistentModule(): void
+    public function testAddQuestionToModuleCommandThrowsExceptionWhenModuleNotExists(): void
     {
         $notExistingModuleId = Uuid::v4();
 

@@ -420,7 +420,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateQuestionCommandThrowsExceptionForNonExistentQuestionAndModule(): void
+    public function testUpdateQuestionCommandThrowsExceptionWhenModuleAndQuestionNotExists(): void
     {
         $notExistingModuleId = Uuid::v4();
         $notExistingQuestionId = Uuid::v4();

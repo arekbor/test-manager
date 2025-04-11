@@ -59,7 +59,7 @@ final class UpdateEmailTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateSecurityUserEmailCommandThrowsWhenUpdateEmailIsTheSameeAsTheCurrentEmail(): void
+    public function testUpdateSecurityUserEmailCommandThrowsExceptionWhenUpdateEmailIsTheSameeAsTheCurrentEmail(): void
     {
         $testSecurityUser = new SecurityUser();
         $testSecurityUser->setEmail('test_user@gmail.com');
@@ -80,7 +80,7 @@ final class UpdateEmailTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateSecurityUserEmailCommandThrowsWhenUpdateEmailAlreadyExists(): void
+    public function testUpdateSecurityUserEmailCommandThrowsExceptionWhenUpdateEmailAlreadyExists(): void
     {
         $testSecurityUser = new SecurityUser();
         $testSecurityUser->setEmail('test_user@gmail.com');
@@ -106,7 +106,7 @@ final class UpdateEmailTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateSecurityUserEmailCommandThrowsWhenSecurityUserNotFound(): void
+    public function testUpdateSecurityUserEmailCommandThrowsExceptionWhenSecurityUserNotFound(): void
     {
         $notExistingSecurityUserId = Uuid::v4();
 

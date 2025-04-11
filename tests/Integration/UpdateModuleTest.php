@@ -64,7 +64,7 @@ final class UpdateModuleTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testUpdateModuleCommandThrowsExceptionForNonExistentModule(): void
+    public function testUpdateModuleCommandThrowsExceptionWhenModuleNotFound(): void
     {
         $notExistingModuleId = Uuid::v4();
 
