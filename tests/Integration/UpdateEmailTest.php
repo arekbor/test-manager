@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Tests\Integration;
 
-use App\Application\SecurityUser\Command\UpdateSecurityUserEmail;
-use App\Application\SecurityUser\Model\UpdateEmail;
+use App\Application\SecurityUser\Command\UpdateEmail;
+use App\Application\SecurityUser\Model\UpdateEmailModel;
 use App\Domain\Entity\SecurityUser;
 use App\Tests\DatabaseTestCase;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
-final class UpdateSecurityUserEmailTest extends DatabaseTestCase
+final class UpdateEmailTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
@@ -39,10 +39,10 @@ final class UpdateSecurityUserEmailTest extends DatabaseTestCase
         $this->entityManager->persist($testSecurityUser);
         $this->entityManager->flush();
 
-        $updateEmail = new UpdateEmail();
-        $updateEmail->setEmail('new_email@gmail.com');
+        $updateEmailModel = new UpdateEmailModel();
+        $updateEmailModel->setEmail('new_email@gmail.com');
 
-        $command = new UpdateSecurityUserEmail($testSecurityUser->getId(), $updateEmail);
+        $command = new UpdateEmail($testSecurityUser->getId(), $updateEmailModel);
 
         //Act
         $this->commandBus->dispatch($command);
@@ -54,7 +54,7 @@ final class UpdateSecurityUserEmailTest extends DatabaseTestCase
 
         //Assert
         $this->assertEquals($testSecurityUser->getId(), $securityUser->getId());
-        $this->assertEquals($updateEmail->getEmail(), $securityUser->getEmail());
+        $this->assertEquals($updateEmailModel->getEmail(), $securityUser->getEmail());
     }
 
     #[Test]
@@ -68,10 +68,10 @@ final class UpdateSecurityUserEmailTest extends DatabaseTestCase
         $this->entityManager->persist($testSecurityUser);
         $this->entityManager->flush();
 
-        $updateEmail = new UpdateEmail();
-        $updateEmail->setEmail('test_user@gmail.com');
+        $updateEmailModel = new UpdateEmailModel();
+        $updateEmailModel->setEmail('test_user@gmail.com');
 
-        $command = new UpdateSecurityUserEmail($testSecurityUser->getId(), $updateEmail);
+        $command = new UpdateEmail($testSecurityUser->getId(), $updateEmailModel);
 
         $this->expectExceptionMessage("Cannot update email: the provided email address is the same as the current one.");
 
@@ -94,10 +94,10 @@ final class UpdateSecurityUserEmailTest extends DatabaseTestCase
         $this->entityManager->persist($existingSecurityUser);
         $this->entityManager->flush();
 
-        $updateEmail = new UpdateEmail();
-        $updateEmail->setEmail('admin@gmail.com');
+        $updateEmailModel = new UpdateEmailModel();
+        $updateEmailModel->setEmail('admin@gmail.com');
 
-        $command = new UpdateSecurityUserEmail($testSecurityUser->getId(), $updateEmail);
+        $command = new UpdateEmail($testSecurityUser->getId(), $updateEmailModel);
 
         $this->expectException(UniqueConstraintViolationException::class);
 
@@ -110,7 +110,7 @@ final class UpdateSecurityUserEmailTest extends DatabaseTestCase
     {
         $notExistingSecurityUserId = Uuid::v4();
 
-        $command = new UpdateSecurityUserEmail($notExistingSecurityUserId, new UpdateEmail());
+        $command = new UpdateEmail($notExistingSecurityUserId, new UpdateEmailModel());
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"id":"%s"}', $notExistingSecurityUserId));
 

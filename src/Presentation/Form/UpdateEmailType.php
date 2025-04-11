@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Application\SecurityUser\Model\UpdateEmail;
+use App\Application\SecurityUser\Model\UpdateEmailModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UpdateEmailType extends AbstractType
+final class UpdateEmailType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,8 +37,10 @@ class UpdateEmailType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => UpdateEmail::class
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => UpdateEmailModel::class
+            ])
+        ;
     }
 }

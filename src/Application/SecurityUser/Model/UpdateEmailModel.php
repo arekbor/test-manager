@@ -6,7 +6,7 @@ namespace App\Application\SecurityUser\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class UpdateEmail
+final class UpdateEmailModel
 {
     #[Assert\Email]
     #[Assert\NotBlank]

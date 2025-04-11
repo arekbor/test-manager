@@ -37,7 +37,7 @@ final class TestType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => TestModel::class,
+                'data_class' => TestModel::class
             ])
         ;
     } 

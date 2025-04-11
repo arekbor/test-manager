@@ -4,20 +4,20 @@ declare(strict_types = 1);
 
 namespace App\Application\SecurityUser\Command;
 
-use App\Application\SecurityUser\Model\UpdateEmail;
+use App\Application\SecurityUser\Model\UpdateEmailModel;
 use Symfony\Component\Uid\Uuid;
 
-final class UpdateSecurityUserEmail
+final class UpdateEmail
 {
     private Uuid $userId;
-    private UpdateEmail $updateEmail;
+    private UpdateEmailModel $updateEmailModel;
 
     public function __construct(
         Uuid $userId,
-        UpdateEmail $updateEmail
+        UpdateEmailModel $updateEmailModel
     ) {
         $this->userId = $userId;
-        $this->updateEmail = $updateEmail;
+        $this->updateEmailModel = $updateEmailModel;
     }
 
     public function getUserId(): Uuid
@@ -25,8 +25,8 @@ final class UpdateSecurityUserEmail
         return $this->userId;
     }
 
-    public function getUpdateEmail(): UpdateEmail
+    public function getUpdateEmailModel(): UpdateEmailModel
     {
-        return $this->updateEmail;
+        return $this->updateEmailModel;
     }
 }

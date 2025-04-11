@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Application\SecurityUser\CommandHandler;
 
-use App\Application\SecurityUser\Command\UpdateSecurityUserEmail;
+use App\Application\SecurityUser\Command\UpdateEmail;
 use App\Domain\Entity\SecurityUser;
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Exception\SecurityUserEmailUnchangedException;
@@ -12,14 +12,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'command.bus')]
-final class UpdateSecurityUserEmailHandler
+final class UpdateEmailHandler
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
     ) {
     }
 
-    public function __invoke(UpdateSecurityUserEmail $command): void
+    public function __invoke(UpdateEmail $command): void
     {
         $userId = $command->getUserId();
 
@@ -31,12 +31,12 @@ final class UpdateSecurityUserEmailHandler
             throw new NotFoundException(SecurityUser::class, ['id' => $userId]);
         }
 
-        $updateEmail = $command->getUpdateEmail();
+        $updateEmailModel = $command->getUpdateEmailModel();
 
-        if ($securityUser->getEmail() === $updateEmail->getEmail()) {
+        if ($securityUser->getEmail() === $updateEmailModel->getEmail()) {
             throw new SecurityUserEmailUnchangedException();
         }
 
-        $securityUser->setEmail($updateEmail->getEmail());
+        $securityUser->setEmail($updateEmailModel->getEmail());
     }
 }
