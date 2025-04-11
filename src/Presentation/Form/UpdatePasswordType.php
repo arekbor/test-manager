@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Application\SecurityUser\Model\UpdatePassword;
+use App\Application\SecurityUser\Model\UpdatePasswordModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UpdatePasswordType extends AbstractType
+final class UpdatePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -53,8 +53,10 @@ class UpdatePasswordType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => UpdatePassword::class
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => UpdatePasswordModel::class
+            ])
+        ;
     }
 }

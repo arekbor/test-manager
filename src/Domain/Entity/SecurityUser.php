@@ -34,7 +34,7 @@ class SecurityUser extends BaseEntity implements
 
     public function getDataTablePersistenceIdentifier(): string
     {
-        return (string) $this->getId();
+        return $this->getId()->toString();
     }
     
     public function getEmail(): ?string

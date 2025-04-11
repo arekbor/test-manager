@@ -281,7 +281,8 @@ flash:
     emailAlreadyExists: The provided email address already exists.
     emailEnchanged: The provided email address is the same as the current one.
   updatePasswordForm:
-    invalidPassword: Invalid password.
+    error: An issue occurred while updating the password.
+    invalidPassword: Invalid current password.
   uploadFile:
     success: The file has been successfully uploaded.
   exceptionResponseSubscriber:
