@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99b208033b6e20459526791517a3c5df",
+    "content-hash": "7d5a9871ba1b383fd8d7be7552c3db0e",
     "packages": [
         {
             "name": "composer/semver",
@@ -1367,16 +1367,16 @@
         },
         {
             "name": "kreyu/data-table-bundle",
-            "version": "v0.26.2",
+            "version": "v0.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kreyu/data-table-bundle.git",
-                "reference": "b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc"
+                "reference": "b6664dd46ba9904604b20ac08d56da84075585c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc",
-                "reference": "b89e9cd50bfdbcc5ee2e9e5ebf1731081e3a24cc",
+                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/b6664dd46ba9904604b20ac08d56da84075585c9",
+                "reference": "b6664dd46ba9904604b20ac08d56da84075585c9",
                 "shasum": ""
             },
             "require": {
@@ -1427,9 +1427,15 @@
             ],
             "support": {
                 "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.26.2"
+                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.29.2"
             },
-            "time": "2025-01-22T17:11:47+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Kreyu",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-04-02T19:44:58+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -7137,20 +7143,20 @@
         },
         {
             "name": "twig/intl-extra",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/intl-extra.git",
-                "reference": "79a1bea7254783b540d51de10dc5e9f310110794"
+                "reference": "05bc5d46b9df9e62399eae53e7c0b0633298b146"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/79a1bea7254783b540d51de10dc5e9f310110794",
-                "reference": "79a1bea7254783b540d51de10dc5e9f310110794",
+                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/05bc5d46b9df9e62399eae53e7c0b0633298b146",
+                "reference": "05bc5d46b9df9e62399eae53e7c0b0633298b146",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1.0",
                 "symfony/intl": "^5.4|^6.4|^7.0",
                 "twig/twig": "^3.13|^4.0"
             },
@@ -7185,7 +7191,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/intl-extra/tree/v3.19.0"
+                "source": "https://github.com/twigphp/intl-extra/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -7197,7 +7203,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-24T20:20:33+00:00"
+            "time": "2025-01-31T20:45:36+00:00"
         },
         {
             "name": "twig/twig",

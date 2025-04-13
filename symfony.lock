@@ -39,7 +39,7 @@
         ]
     },
     "kreyu/data-table-bundle": {
-        "version": "v0.25.7"
+        "version": "v0.29.2"
     },
     "phpstan/phpstan": {
         "version": "2.1",

@@ -15,6 +15,6 @@ return [
     Symfony\UX\TogglePassword\TogglePasswordBundle::class => ['all' => true],
     Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
-    Kreyu\Bundle\DataTableBundle\KreyuDataTableBundle::class => ['all' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
+    Kreyu\Bundle\DataTableBundle\KreyuDataTableBundle::class => ['all' => true],
 ];
