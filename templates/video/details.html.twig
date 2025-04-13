@@ -16,7 +16,7 @@
             </a>
 
             <a 
-                href="{{ path('app_video_download', { id: video.id }) }}"
+                href="{{ path('app_video_download', { id: videoId }) }}"
                 data-turbo="false"
                 class="btn btn-warning mx-1"
                 role="button"
@@ -32,8 +32,9 @@
 
             <div class="mt-2">
                 {{ component('UpdateVideoForm', {
-                    'videoProp': video,
-                    'moduleIdProp': moduleId
+                    'updateVideoModel': updateVideoModel,
+                    'videoId': videoId,
+                    'moduleId': moduleId
                 }) }}
             </div>
         </div>
@@ -45,7 +46,7 @@
                 class="p-1 border rounded"
             >
                 <source 
-                    src="{{ path('app_video_download', { id: video.id }) }}" 
+                    src="{{ path('app_video_download', { id: videoId }) }}" 
                 />
             </video> 
         </div>
@@ -57,7 +58,7 @@
         actionButtonClass: 'btn btn-danger',
         actionButtonHref: path('app_video_delete', {
             moduleId: moduleId,
-            videoId: video.id
+            videoId: videoId
         })
     }) }}
 {% endblock %}

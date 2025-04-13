@@ -6,7 +6,7 @@ namespace App\Application\Video\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class UpdateVideo 
+final class UpdateVideoModel 
 {
     #[Assert\NotBlank]
     private ?string $originalName;

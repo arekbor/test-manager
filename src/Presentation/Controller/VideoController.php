@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Shared\QueryBusInterface;
 use App\Application\Shared\VichFileHandlerInterface;
+use App\Application\Video\Query\GetUpdateVideoModel;
+use App\Application\Video\Model\UpdateVideoModel;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,6 +27,7 @@ class VideoController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $em,
+        private readonly QueryBusInterface $queryBus
     ) {
     }
 
@@ -82,14 +87,17 @@ class VideoController extends AbstractController
     }
 
     #[Route('/details/{moduleId}/{videoId}', name: 'app_video_details')]
-    public function details(
-        #[MapEntity(id: 'moduleId')] Module $module,
-        #[MapEntity(id: 'videoId')] Video $video
-    ): Response
+    public function details(Uuid $moduleId, Uuid $videoId): Response
     {
+        /**
+         * @var UpdateVideoModel $updateVideoModel
+         */
+        $updateVideoModel = $this->queryBus->query(new GetUpdateVideoModel($videoId));
+
         return $this->render('video/details.html.twig', [
-            'moduleId' => $module->getId(),
-            'video' => $video
+            'updateVideoModel' => $updateVideoModel,
+            'videoId' => $videoId,
+            'moduleId' => $moduleId
         ]);
     }
 }
