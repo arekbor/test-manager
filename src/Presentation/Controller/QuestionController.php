@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\Question\Command\DeleteQuestion;
 use App\Application\Question\Query\GetQuestionModel;
 use App\Application\Shared\QueryBusInterface;
-use App\Domain\Entity\Module;
-use App\Domain\Entity\Question;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 use App\Application\Question\Model\QuestionModel;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/question')]
 class QuestionController extends AbstractController
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus
+        private readonly QueryBusInterface $queryBus,
+        private readonly MessageBusInterface $commandBus,
+        private readonly TranslatorInterface $trans
     ) {
     }
 
@@ -48,17 +49,22 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/delete/{moduleId}/{questionId}', name: 'app_question_delete')]
-    public function delete(
-        #[MapEntity(id: 'moduleId')] Module $module,
-        #[MapEntity(id: 'questionId')] Question $question,
-        EntityManagerInterface $em,
-    ): Response
+    public function delete(Uuid $moduleId, Uuid $questionId): Response
     {
-        $em->remove($question);
-        $em->flush();
-
-        return $this->redirectToRoute('app_module_questions', [
-            'id' => $module->getId()
+        $response = $this->redirectToRoute('app_module_questions', [
+            'id' => $moduleId
         ]);
+
+        try {
+            $this->commandBus->dispatch(new DeleteQuestion($questionId));
+        } catch (\Exception) {
+            $this->addFlash('danger', $this->trans->trans('flash.questionController.delete.error'));
+
+            return $response;
+        }
+
+        $this->addFlash('success', $this->trans->trans('flash.questionController.delete.success'));
+
+        return $response;
     }
 }

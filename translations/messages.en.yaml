@@ -288,6 +288,10 @@ flash:
     success: The file has been successfully uploaded.
   exceptionResponseSubscriber:
     message: An error occurred. Please try again later.
+  questionController:
+    delete:
+      error: Failed to delete the question.
+      success: The question has been successfully deleted.
 
 validator:
   uniqueValuesInArray:
