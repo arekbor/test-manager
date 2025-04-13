@@ -1,37 +1,37 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
-use App\Domain\Entity\SecurityUser;
+use App\Application\SecurityUser\Query\GetLoginErrorMessage;
+use App\Application\Shared\QueryBusInterface;
 use App\Presentation\Attribute\NotLogged;
 use App\Presentation\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/auth')]
 class AuthController extends AbstractController
-{
+{   
+    public function __construct(
+        private readonly QueryBusInterface $queryBus,
+        private readonly Security $security
+    ) {
+    }
+
     #[Route('/login', name: 'app_auth_login')]
     #[NotLogged]
-    public function login(
-        AuthenticationUtils $utils,
-        TranslatorInterface $trans,
-    ): Response
+    public function login(): Response
     {
-        $lastAuthenticationErrorMessage = null;
+        /**
+         * @var string|null $lastAuthenticationErrorMessage
+         */
+        $lastAuthenticationErrorMessage = $this->queryBus->query(new GetLoginErrorMessage ());
 
-        $error = $utils->getLastAuthenticationError();
-        if ($error !== null) {
-            $lastAuthenticationErrorMessage = $trans->trans($error->getMessageKey(), $error->getMessageData(), 'security');
-        }
-
-        $form = $this->createForm(LoginType::class, new SecurityUser());
+        $form = $this->createForm(LoginType::class);
 
         return $this->render('auth/login.html.twig', [
             'form' => $form,
@@ -40,8 +40,8 @@ class AuthController extends AbstractController
     }
 
     #[Route('/logout', name: 'app_auth_logout')]
-    public function logout(Security $security): Response
+    public function logout(): Response
     {
-        return $security->logout();
+        return $this->security->logout();
     }
 }
