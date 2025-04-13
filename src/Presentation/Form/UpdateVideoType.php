@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Application\Video\Model\UpdateVideo;
+use App\Application\Video\Model\UpdateVideoModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UpdateVideoType extends AbstractType
+final class UpdateVideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -34,8 +34,10 @@ class UpdateVideoType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => UpdateVideo::class
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => UpdateVideoModel::class
+            ])
+        ;
     }
 }

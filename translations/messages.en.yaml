@@ -272,7 +272,8 @@ flash:
     success: Test settings have been successfully updated.
     error: An issue occurred while updating Test settings.
   updateVideoForm:
-    successfullyUpdated: The video has been successfully updated.
+    error: An issue occurred while updating Video.
+    success: The video has been successfully updated.
   testEmailForm:
     success: The email has been successfully sent.
     error: An issue occurred while sending the test email.
