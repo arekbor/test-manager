@@ -6,19 +6,19 @@ namespace App\Presentation\Controller;
 
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use App\Application\AppSetting\Model\TestAppSetting;
-use App\Repository\AppSettingRepository;
-use App\Service\AppSettingService;
+use App\Application\AppSetting\Query\GetMailSmtpAppSetting;
+use App\Application\AppSetting\Query\GetTestAppSetting;
+use App\Application\Shared\QueryBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
 class SettingsController extends AbstractController
 {
     public function __construct(
-        private AppSettingService $appSettingService,
-        private AppSettingRepository $appSettingRepository) {
+        private readonly QueryBusInterface $queryBus
+    ) {
     }
 
     #[Route('/general', name: 'app_settings_general')]
@@ -28,16 +28,12 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/smtp', name: 'app_settings_smtp')]
-    public function smtp(
-        
-    ): Response
+    public function smtp(): Response
     {
-        $appSetting = $this->appSettingRepository->findOneByKey(MailSmtpAppSetting::APP_SETTING_KEY);
-        if ($appSetting === null) {
-            throw new NotFoundHttpException(MailSmtpAppSetting::class);
-        }
-
-        $mailSmtpAppSetting = $this->appSettingService->getValue($appSetting, MailSmtpAppSetting::class);
+        /**
+         * @var MailSmtpAppSetting $mailSmtpAppSetting
+         */
+        $mailSmtpAppSetting = $this->queryBus->query(new GetMailSmtpAppSetting());
 
         return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting
@@ -47,12 +43,10 @@ class SettingsController extends AbstractController
     #[Route('/test', name: 'app_settings_test')]
     public function test(): Response 
     {
-        $appSetting = $this->appSettingRepository->findOneByKey(TestAppSetting::APP_SETTING_KEY);
-        if ($appSetting === null) {
-            throw new NotFoundHttpException(MailSmtpAppSetting::class);
-        }
-
-        $testAppSetting = $this->appSettingService->getValue($appSetting, TestAppSetting::class);
+        /**
+         * @var TestAppSetting $testAppSetting
+         */
+        $testAppSetting = $this->queryBus->query(new GetTestAppSetting());
 
         return $this->render('settings/test.html.twig', [
             'testAppSetting' => $testAppSetting
