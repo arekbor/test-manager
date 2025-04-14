@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace App\Presentation\Controller;
 
 use App\Application\Shared\QueryBusInterface;
-use App\Application\Shared\VichFileHandlerInterface;
+use App\Application\Video\Command\DeleteVideo;
 use App\Application\Video\Query\GetUpdateVideoModel;
 use App\Application\Video\Model\UpdateVideoModel;
+use App\Application\Video\Query\GetVideoFile;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -27,7 +28,9 @@ class VideoController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private readonly QueryBusInterface $queryBus
+        private readonly QueryBusInterface $queryBus,
+        private readonly MessageBusInterface $commandBus,
+        private readonly TranslatorInterface $trans
     ) {
     }
 
@@ -62,28 +65,34 @@ class VideoController extends AbstractController
     }
 
     #[Route('/download/{id}', name: 'app_video_download')]
-    public function download(
-        Video $video,
-        VichFileHandlerInterface $vichFileHandler,
-    ): BinaryFileResponse
+    public function download(Uuid $id): BinaryFileResponse
     {
-        $file = $vichFileHandler->handle($video, Video::FILE_FIELD_NAME);
+        /**
+         * @var \SplFileInfo $file
+         */
+        $file = $this->queryBus->query(new GetVideoFile($id));
 
         return $this->file($file);
     }
 
     #[Route('/delete/{moduleId}/{videoId}', name: 'app_video_delete')]
-    public function delete(
-        #[MapEntity(id: 'moduleId')] Module $module,
-        #[MapEntity(id: 'videoId')] Video $video,
-    ): Response
+    public function delete(Uuid $moduleId, Uuid $videoId): Response
     {
-        $this->em->remove($video);
-        $this->em->flush();
-
-        return $this->redirectToRoute('app_module_videos', [
-            'id' => $module->getId()
+        $response = $this->redirectToRoute('app_module_videos', [
+            'id' => $moduleId
         ]);
+
+        try {
+            $this->commandBus->dispatch(new DeleteVideo($videoId));
+        } catch (\Exception) {
+            $this->addFlash('danger', $this->trans->trans('flash.videoController.delete.error'));
+
+            return $response;
+        }
+
+        $this->addFlash('success', $this->trans->trans('flash.videoController.delete.success'));
+
+        return $response;
     }
 
     #[Route('/details/{moduleId}/{videoId}', name: 'app_video_details')]

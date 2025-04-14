@@ -22,6 +22,9 @@ final class TestResultController extends AbstractController
     #[Route('/download/{id}', name: 'app_testresult_download')]
     public function download(Uuid $id): BinaryFileResponse
     {
+        /**
+         * @var \SplFileInfo $file
+         */
         $file = $this->queryBus->query(new GetTestResultFile($id));
 
         return $this->file($file);

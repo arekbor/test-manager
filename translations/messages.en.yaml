@@ -296,6 +296,10 @@ flash:
     delete:
       error: Failed to delete the test.
       success: The test has been successfully deleted.
+  videoController:
+    delete:
+      error: Failed to delete the video.
+      success: The video has been successfully deleted.
 
 validator:
   uniqueValuesInArray:
