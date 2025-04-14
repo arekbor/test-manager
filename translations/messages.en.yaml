@@ -292,6 +292,10 @@ flash:
     delete:
       error: Failed to delete the question.
       success: The question has been successfully deleted.
+  testController:
+    delete:
+      error: Failed to delete the test.
+      success: The test has been successfully deleted.
 
 validator:
   uniqueValuesInArray:
