@@ -284,8 +284,6 @@ flash:
   updatePasswordForm:
     error: An issue occurred while updating the password.
     invalidPassword: Invalid current password.
-  uploadFile:
-    success: The file has been successfully uploaded.
   exceptionResponseSubscriber:
     message: An error occurred. Please try again later.
   questionController:
@@ -300,6 +298,9 @@ flash:
     delete:
       error: Failed to delete the video.
       success: The video has been successfully deleted.
+    upload:
+      success: The file has been successfully uploaded.
+      error: An issue occurred while uploading the video.
 
 validator:
   uniqueValuesInArray:
