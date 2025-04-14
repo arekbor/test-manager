@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/auth')]
-class AuthController extends AbstractController
+final class AuthController extends AbstractController
 {   
     public function __construct(
         private readonly QueryBusInterface $queryBus,

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
-class SettingsController extends AbstractController
+final class SettingsController extends AbstractController
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus

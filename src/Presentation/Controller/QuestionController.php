@@ -1,6 +1,6 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/question')]
-class QuestionController extends AbstractController
+final class QuestionController extends AbstractController
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,
