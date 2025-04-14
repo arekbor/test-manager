@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace App\Presentation\Controller;
 
 use App\Application\Shared\QueryBusInterface;
-use App\Application\Shared\VichFileHandlerInterface;
 use App\Application\Test\Query\GetDataForTestSolve;
 use App\Domain\Entity\Test;
-use App\Domain\Entity\Video;
 use App\Presentation\Attribute\TestVerify;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Test\Model\DataForTestSolve;
+use App\Application\Video\Query\GetVideoFile;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * All routes from this controller are open to public access!
  */
 #[Route('/testSolve')]
-class TestSolveController extends AbstractController
+final class TestSolveController extends AbstractController
 {
     public function __construct(
-        private QueryBusInterface $queryBus
+        private readonly QueryBusInterface $queryBus
     ) {
     }
 
@@ -63,20 +62,14 @@ class TestSolveController extends AbstractController
         return $this->render('/testSolve/clause.html.twig');
     }
 
-    #[Route('/video/{testId}/{videoId}', name: 'app_testsolve_video')]
-    #[TestVerify]
-    public function video(
-        #[MapEntity(id: 'testId')] Test $test,
-        #[MapEntity(id: 'videoId')] Video $video,
-        VichFileHandlerInterface $vichFileHandler,
-    ): Response
+    #[Route('/video/{id}', name: 'app_testsolve_video')]
+    public function video(Uuid $id): BinaryFileResponse
     {
-        if (!$test->videoBelongsToTest($video)) {
-            throw new AccessDeniedHttpException();
-        }   
+        /**
+         * @var \SplFileInfo $file
+         */
+        $file = $this->queryBus->query(new GetVideoFile($id));
 
-        $file = $vichFileHandler->handle($video, Video::FILE_FIELD_NAME);
-        
         return $this->file($file);
     }
 

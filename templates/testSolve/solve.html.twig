@@ -7,7 +7,7 @@
                 <video 
                     class="w-100 border rounded shadow-sm"
                     controls
-                    src="{{ path('app_testsolve_video', { testId: dataForTestSolve.testId, videoId: testVideo.videoId }) }}">
+                    src="{{ path('app_testsolve_video', { id: testVideo.videoId }) }}">
                 </video>
             </div>
         {% endfor %}

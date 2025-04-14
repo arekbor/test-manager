@@ -75,54 +75,6 @@ final class TestTest extends TestCase
         $this->assertFalse($isValid, 'Should return false when expiration is null.');
     }
 
-    #[Test]
-    public function testReturnsTrueWhenVideoIdMatchesBetweenTestAndModule(): void
-    {
-        //Arrange
-        $uuid = Uuid::v7();
-
-        $videoMock = $this->createVideoMock($uuid);
-        $videoInModuleMock = $this->createVideoMock($uuid);
-
-        $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
-        
-        //Act
-        $belongs = $test->videoBelongsToTest($videoMock);
-
-        //Assert
-        $this->assertTrue($belongs, 'Should return true when the video ID match any video in the test\'s module.');
-    }
-
-    #[Test]
-    public function testReturnsFalseWhenVideoIdDoesNotMatchInTestModule(): void
-    {
-        //Arrange
-        $videoMock = $this->createVideoMock(Uuid::v7());
-        $videoInModuleMock = $this->createVideoMock(Uuid::v7());
-
-        $test = $this->createTestWithModuleAndVideos([$videoInModuleMock]);
-
-        //Act
-        $belongs = $test->videoBelongsToTest($videoMock);
-
-        //Assert
-        $this->assertFalse($belongs, 'Should return false when the video ID does not match any video in the test\'s module.');
-    }
-
-    #[Test]
-    public function testReturnsFalseWhenNoVideosInTestModule(): void
-    {
-        //Arrange
-        $videoMock = $this->createVideoMock(Uuid::v7());
-        $test = $this->createTestWithModuleAndVideos([]);
-
-        //Act
-        $belongs = $test->videoBelongsToTest($videoMock);
-
-        //Assert
-        $this->assertFalse($belongs, 'Should return false when there are no videos in the test\'s module.');
-    }
-
     public static function featureModifierProvider(): array
     {
         return [
