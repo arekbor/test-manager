@@ -1,10 +1,10 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\DataTable\Type;
 
-use App\Domain\Entity\Video;
+use App\Application\Video\Model\VideoViewModel;
 use App\Presentation\DataTable\Action\Type\UploadFileActionType;
 use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
 use App\Presentation\Util\ByteConversion;
@@ -16,10 +16,10 @@ use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class VideoDataTableType extends AbstractDataTableType
+final class VideoDataTableType extends AbstractDataTableType
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator
     ) {
     }
 
@@ -47,10 +47,10 @@ class VideoDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
-                            'href' => function(Video $video) use($options): string {
+                            'href' => function(VideoViewModel $videoViewModel): string {
                                 return $this->urlGenerator->generate('app_video_details', [
-                                    'moduleId' => $options['module_id'],
-                                    'videoId' => $video->getId()
+                                    'moduleId' => $videoViewModel->getModuleId(),
+                                    'videoId' => $videoViewModel->getId()
                                 ]);
                             }
                         ]
@@ -65,7 +65,7 @@ class VideoDataTableType extends AbstractDataTableType
             ])
             ->addColumn('size', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.size',
-                'getter' => fn(Video $video) => ByteConversion::formatBytes($video->getSize())
+                'getter' => fn(VideoViewModel $videoViewModel) => ByteConversion::formatBytes($videoViewModel->getSize())
             ])
             ->addFilter('originalName', StringFilterType::class, [
                 'label' => 'data_table.video.originalName',

@@ -1,6 +1,6 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
@@ -9,11 +9,10 @@ use App\Application\Module\Query\GetModuleModel;
 use App\Application\Module\Query\GetModuleViewModels;
 use App\Application\Question\Query\GetQuestionViewModels;
 use App\Application\Shared\QueryBusInterface;
-use App\Domain\Entity\Module;
+use App\Application\Video\Query\GetVideoViewModels;
 use App\Presentation\DataTable\Type\ModuleDataTableType;
 use App\Presentation\DataTable\Type\QuestionDataTableType;
 use App\Presentation\DataTable\Type\VideoDataTableType;
-use App\Repository\VideoRepository;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 
 #[Route('/module')]
-class ModuleController extends AbstractController
+final class ModuleController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
 
@@ -71,24 +70,21 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/videos/{id}', name: 'app_module_videos')]
-    public function videos(
-        Module $module,
-        Request $request,
-        VideoRepository $videoRepository
-    ): Response
+    public function videos(Uuid $id, Request $request): Response
     {
-        $moduleId = $module->getId();
+        $queryBuilder = $this->queryBus->query(new GetVideoViewModels($id));
 
-        $videosQuery = $videoRepository->findByModuleId($moduleId);
-        $videoDataTable = $this->createDataTable(VideoDataTableType::class, $videosQuery, [
-            'module_id' => $moduleId
+        $dataTable = $this->createDataTable(VideoDataTableType::class, $queryBuilder, [
+            'module_id' => $id
         ]);
 
-        $videoDataTable->handleRequest($request);
+        $dataTable->handleRequest($request);
+
+        $dataTableView = $dataTable->createView();
 
         return $this->render('module/videos.html.twig', [
-            'moduleId' => $module->getId(),
-            'video_data_table' => $videoDataTable->createView()
+            'moduleId' => $id,
+            'video_data_table' => $dataTableView
         ]);
     }
 
