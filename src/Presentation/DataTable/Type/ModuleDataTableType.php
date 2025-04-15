@@ -68,8 +68,7 @@ final class ModuleDataTableType extends AbstractDataTableType
                 ]
             ])
             ->addColumn('name', TruncatedTextColumnType::class, [
-                'label' => 'data_table.module.name',
-                'getter' => fn(ModuleViewModel $moduleViewModel) => $moduleViewModel->getName()
+                'label' => 'data_table.module.name'
             ])
             ->addColumn('language', TextColumnType::class, [ 
                 'label' => 'data_table.module.language',
@@ -84,12 +83,10 @@ final class ModuleDataTableType extends AbstractDataTableType
                 }
             ])
             ->addColumn('questionsCount', TextColumnType::class, [
-                'label' => 'data_table.module.questionsCount',
-                'getter' => fn (ModuleViewModel $moduleViewModel) => $moduleViewModel->getQuestionsCount()
+                'label' => 'data_table.module.questionsCount'
             ])
             ->addColumn('videosCount', TextColumnType::class, [
-                'label' => 'data_table.module.videosCount',
-                'getter' => fn (ModuleViewModel $moduleViewModel) => $moduleViewModel->getVideosCount()
+                'label' => 'data_table.module.videosCount'
             ])
             ->addFilter('name', StringFilterType::class, [
                 'label' => 'data_table.module.name',

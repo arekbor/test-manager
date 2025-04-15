@@ -1,11 +1,10 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\DataTable\Type;
 
-use App\Domain\Entity\Question;
-use App\Presentation\DataTable\Action\Type\ButtonGroupActionType;
+use App\Application\Question\Model\QuestionViewModel;
 use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
@@ -16,25 +15,21 @@ use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class QuestionDataTableType extends AbstractDataTableType
+final class QuestionDataTableType extends AbstractDataTableType
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator
     ) {
     }
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addAction('actions', ButtonGroupActionType::class, [
-                'buttons' => [
-                    [
-                        'label' => 'data_table.question.createQuestion',
-                        'href' => $this->urlGenerator->generate('app_question_create', [ 
-                            'moduleId' => $options['module_id'] 
-                        ])
-                    ]
-                ]
+            ->addAction('create', ButtonActionType::class, [
+                'label' => 'data_table.question.createQuestion',
+                'href' => $this->urlGenerator->generate('app_question_create', [
+                    'moduleId' => $options['module_id'] 
+                ])
             ])
             ->addColumn('actions', ActionsColumnType::class, [
                 'label' => 'data_table.actions',
@@ -43,10 +38,10 @@ class QuestionDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
-                            'href' => function(Question $question) use($options): string {
+                            'href' => function(QuestionViewModel $questionViewModel): string {
                                 return $this->urlGenerator->generate('app_question_details', [
-                                    'moduleId' => $options['module_id'],
-                                    'questionId' => $question->getId()
+                                    'moduleId' => $questionViewModel->getModuleId(),
+                                    'questionId' => $questionViewModel->getId()
                                 ]);
                             }
                         ]
@@ -54,12 +49,10 @@ class QuestionDataTableType extends AbstractDataTableType
                 ]
             ])
             ->addColumn('content', TruncatedTextColumnType::class, [
-                'label' => 'data_table.question.content',
-                'getter' => fn(Question $question) => $question->getContent()
+                'label' => 'data_table.question.content'
             ])
             ->addColumn('answersCount', TextColumnType::class, [
-                'label' => 'data_table.question.answersCount',
-                'getter' => fn (Question $question) => count($question->getAnswers())
+                'label' => 'data_table.question.answersCount'
             ])
             ->addFilter('content', StringFilterType::class, [
                 'label' => 'data_table.question.content',

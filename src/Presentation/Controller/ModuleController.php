@@ -7,12 +7,12 @@ namespace App\Presentation\Controller;
 use App\Application\Module\Model\ModuleModel;
 use App\Application\Module\Query\GetModuleModel;
 use App\Application\Module\Query\GetModuleViewModels;
+use App\Application\Question\Query\GetQuestionViewModels;
 use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\Module;
 use App\Presentation\DataTable\Type\ModuleDataTableType;
 use App\Presentation\DataTable\Type\QuestionDataTableType;
 use App\Presentation\DataTable\Type\VideoDataTableType;
-use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,24 +52,21 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/details/questions/{id}', name: 'app_module_questions')]
-    public function questions(
-        Module $module, 
-        Request $request,
-        QuestionRepository $questionRepository
-    ): Response
+    public function questions(Uuid $id, Request $request): Response
     {
-        $moduleId = $module->getId();
+        $queryBuilder = $this->queryBus->query(new GetQuestionViewModels($id));
 
-        $questionsQuery = $questionRepository->findByModuleId($moduleId);
-        $questionDataTable = $this->createDataTable(QuestionDataTableType::class, $questionsQuery, [
-            'module_id' => $moduleId
+        $dataTable = $this->createDataTable(QuestionDataTableType::class, $queryBuilder, [
+            'module_id' => $id
         ]);
-        
-        $questionDataTable->handleRequest($request);
+
+        $dataTable->handleRequest($request);
+
+        $dataTableView = $dataTable->createView();
 
         return $this->render('module/questions.html.twig', [
-            'moduleId' => $module->getId(),
-            'question_data_table' => $questionDataTable->createView()
+            'moduleId' => $id,
+            'question_data_table' => $dataTableView
         ]);
     }
 
