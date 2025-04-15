@@ -6,12 +6,12 @@ namespace App\Presentation\Controller;
 
 use App\Application\Module\Model\ModuleModel;
 use App\Application\Module\Query\GetModuleModel;
+use App\Application\Module\Query\GetModuleViewModels;
 use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\Module;
 use App\Presentation\DataTable\Type\ModuleDataTableType;
 use App\Presentation\DataTable\Type\QuestionDataTableType;
 use App\Presentation\DataTable\Type\VideoDataTableType;
-use App\Repository\ModuleRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\VideoRepository;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
@@ -96,17 +96,18 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/index', name: 'app_module_index')]
-    public function index(
-        Request $request,
-        ModuleRepository $moduleRepository
-    ): Response
+    public function index(Request $request): Response
     {
-        $query = $moduleRepository->createQueryBuilder('m');
-        $moduleDataTable = $this->createDataTable(ModuleDataTableType::class, $query); 
-        $moduleDataTable->handleRequest($request);
+        $queryBuilder = $this->queryBus->query(new GetModuleViewModels());
+
+        $dataTable = $this->createDataTable(ModuleDataTableType::class, $queryBuilder);
+
+        $dataTable->handleRequest($request);
+
+        $dataTableView = $dataTable->createView();
 
         return $this->render('module/index.html.twig', [
-            'module_data_table' => $moduleDataTable->createView()
+            'module_data_table' => $dataTableView
         ]);
     }
 }
