@@ -1,19 +1,22 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
+use App\Application\AppSetting\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestClauseAppSetting;
 use App\Application\Shared\QueryBusInterface;
 use App\Application\Test\Query\GetDataForTestSolve;
-use App\Domain\Entity\Test;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Test\Model\DataForTestSolve;
+use App\Application\Test\Query\GetTestClauseAppSetting;
+use App\Application\Test\Query\GetTestMessageAppSetting;
 use App\Application\Video\Query\GetVideoFile;
-use App\Presentation\Attribute\TestVerify;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -44,25 +47,40 @@ final class TestSolveController extends AbstractController
         ]);
     }
 
-    #[Route('/introduction/{id}', name: 'app_testsolve_introduction')]
-    #[TestVerify]
-    public function introduction(?Test $test): Response
+    #[Route('/message/{type}/{id}', name: 'app_testsolve_message')]
+    public function introduction(Uuid $id, string $type, Request $request): Response
     {
+        try {
+            /**
+             * @var TestMessageAppSetting|null $testMessageAppSetting
+             */
+            $testMessageAppSetting = $this->queryBus->query(new GetTestMessageAppSetting($request->getLocale()));
+        } catch (\Exception) {
+            return $this->redirectToRoute('app_testsolve_notvalid');
+        }
+
         return $this->render('/testSolve/introduction.html.twig', [
-            'test' => $test
+            'testMessageAppSetting' => $testMessageAppSetting,
+            'type' => $type,
+            'testId' => $id
         ]);
     }
 
-    #[Route('/conclusion', name: 'app_testsolve_conclusion')]
-    public function conclusion(): Response
-    {
-        return $this->render('/testSolve/conclusion.html.twig');
-    }
-
     #[Route('/clause', name: 'app_testsolve_clause')]
-    public function clause(): Response
+    public function clause(Request $request): Response
     {
-        return $this->render('/testSolve/clause.html.twig');
+        try {
+            /**
+             * @var TestClauseAppSetting|null $testClauseAppSetting
+             */
+            $testClauseAppSetting = $this->queryBus->query(new GetTestClauseAppSetting($request->getLocale()));
+        } catch (\Exception) {
+            return $this->redirectToRoute('app_testsolve_notvalid');
+        }
+
+        return $this->render('/testSolve/clause.html.twig', [
+            'testClauseAppSetting' => $testClauseAppSetting
+        ]);
     }
 
     #[Route('/video/{id}', name: 'app_testsolve_video')]

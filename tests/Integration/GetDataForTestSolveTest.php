@@ -63,6 +63,7 @@ final class GetDataForTestSolveTest extends DatabaseTestCase
         $testSecurityUser->setPassword('secret');
 
         $entityTest = new EntityTest();
+        $entityTest->setExpiration((new \DateTime())->modify('+1 week'));
         $entityTest->setModule($testModule);
         $entityTest->setCreator($testSecurityUser);
 
