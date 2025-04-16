@@ -12,6 +12,7 @@ use App\Application\Test\Query\GetDataForTestSolve;
 use App\Application\Video\Model\TestVideo;
 use App\Domain\Entity\Test;
 use App\Domain\Exception\NotFoundException;
+use App\Domain\Exception\TestNotValidException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -33,6 +34,10 @@ final class GetDataForTestSolveHandler
         $test = $this->entityManager->find(Test::class, $testId);
         if ($test === null) {
             throw new NotFoundException(Test::class, ['id' => $testId]);
+        }
+
+        if (!$test->isValid()) {
+            throw new TestNotValidException($testId);
         }
 
         $dataForTestSolve = new DataForTestSolve();

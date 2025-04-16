@@ -7,12 +7,12 @@ namespace App\Presentation\Controller;
 use App\Application\Shared\QueryBusInterface;
 use App\Application\Test\Query\GetDataForTestSolve;
 use App\Domain\Entity\Test;
-use App\Presentation\Attribute\TestVerify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Test\Model\DataForTestSolve;
 use App\Application\Video\Query\GetVideoFile;
+use App\Presentation\Attribute\TestVerify;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Uid\Uuid;
 
@@ -28,13 +28,16 @@ final class TestSolveController extends AbstractController
     }
 
     #[Route('/solve/{id}', name: 'app_testsolve_solve')]
-    #[TestVerify]
-    public function solve(?Test $test): Response
+    public function solve(Uuid $id): Response
     {
-        /**
-         * @var DataForTestSolve $dataForTestSolve
-         */
-        $dataForTestSolve = $this->queryBus->query(new GetDataForTestSolve($test->getId()));
+        try {
+            /**
+             * @var DataForTestSolve $dataForTestSolve
+             */
+            $dataForTestSolve = $this->queryBus->query(new GetDataForTestSolve($id));
+        } catch (\Exception) {
+            return $this->redirectToRoute('app_testsolve_notvalid');
+        }
 
         return $this->render('/testSolve/solve.html.twig', [
             'dataForTestSolve' => $dataForTestSolve
