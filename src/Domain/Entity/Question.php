@@ -1,6 +1,6 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\Entity;
 
@@ -9,14 +9,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Type;
 
 #[ORM\Entity()]
 class Question extends BaseEntity
 {
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
     private ?string $content = null;
 
     /**
@@ -24,11 +21,6 @@ class Question extends BaseEntity
      */
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
-    #[Assert\Count(min: 1)]
-    #[Assert\All([
-        new Type(Answer::class)
-    ])]   
-    #[Assert\Valid()]
     private Collection $answers;
 
     /**

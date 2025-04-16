@@ -1,18 +1,16 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity()]
 class Test extends BaseEntity
 {
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]
-    #[Assert\GreaterThanOrEqual('now')]
     private ?\DateTimeInterface $expiration = null;
 
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]

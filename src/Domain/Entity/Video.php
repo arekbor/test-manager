@@ -1,6 +1,6 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\Entity;
 
@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity()]
 #[Vich\Uploadable]
@@ -23,10 +22,6 @@ class Video extends BaseEntity
         size: 'size',
         mimeType: 'mimeType',
         originalName: 'originalName'
-    )]
-    #[Assert\File(
-        extensions: ['mp4', 'mov'],
-        mimeTypes: ['video/mp4', 'video/quicktime']
     )]
     private ?File $file = null;
 
