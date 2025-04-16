@@ -1,6 +1,6 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Controller;
 
@@ -8,7 +8,6 @@ use App\Application\Shared\QueryBusInterface;
 use App\Application\Test\Command\DeleteTest;
 use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate;
 use App\Presentation\DataTable\Type\TestDataTableType;
-use App\Repository\TestRepository;
 use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 use App\Application\Test\Model\TestModel;
 use App\Application\Test\Query\GetTestModel;
+use App\Application\Test\Query\GetTestViewModels;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/test')]
-class TestController extends AbstractController
+final class TestController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
 
@@ -33,17 +33,18 @@ class TestController extends AbstractController
     }
 
     #[Route('/index', name: 'app_test_index')]
-    public function index(
-        Request $request, 
-        TestRepository $testRepository
-    ): Response
+    public function index(Request $request): Response
     {
-        $query = $testRepository->findAllWithModules();
-        $testDataTable = $this->createDataTable(TestDataTableType::class, $query);
-        $testDataTable->handleRequest($request);
+        $queryBuilder = $this->queryBus->query(new GetTestViewModels());
+
+        $dataTable = $this->createDataTable(TestDataTableType::class, $queryBuilder);
+
+        $dataTable->handleRequest($request);
+
+        $dataTableView = $dataTable->createView();
 
         return $this->render('test/index.html.twig', [
-            'test_data_table' => $testDataTable->createView()
+            'test_data_table' => $dataTableView
         ]);
     }
 

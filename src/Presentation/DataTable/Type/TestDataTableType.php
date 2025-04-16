@@ -1,10 +1,10 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\DataTable\Type;
 
-use App\Domain\Entity\Test;
+use App\Application\Test\Model\TestViewModel;
 use App\Presentation\DataTable\Action\Type\ButtonGroupActionType;
 use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
@@ -19,11 +19,11 @@ use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class TestDataTableType extends AbstractDataTableType
+final class TestDataTableType extends AbstractDataTableType
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private TranslatorInterface $trans,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly TranslatorInterface $trans,
     ) {
     }
 
@@ -39,43 +39,44 @@ class TestDataTableType extends AbstractDataTableType
                             'buttons' => [
                                 [
                                     'label' => 'data_table.details',
-                                    'href' => function(Test $test): string {
+                                    'href' => function(TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_test_details', [
-                                            'id' => $test->getId(),
-                                            'moduleId' => $test->getModule()->getId()
+                                            'id' => $testViewModel->getId(),
+                                            'moduleId' => $testViewModel->getModuleId()
                                         ]);
                                     }
                                 ],
                                 [
                                     'label' => 'data_table.test.module',
-                                    'href' => function(Test $test): string {
+                                    'href' => function(TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_module_general', [
-                                            'id' => $test->getModule()->getId()
+                                            'id' => $testViewModel->getModuleId()
                                         ]);
                                     }
                                 ],
                                 [
                                     'label' => 'data_table.test.test',
-                                    'visible' => function (Test $test): bool {
-                                        return $test->isValid();
+                                    'visible' => function (TestViewModel $testViewModel): bool {
+                                        $now = new \DateTime();
+                                        return $now < $testViewModel->getExpiration() && $testViewModel->getSubmission() === null;
                                     },
-                                    'href' => function(Test $test): string {
+                                    'href' => function(TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_testsolve_introduction', [
-                                            '_locale' => $test->getModule()->getLanguage(),
-                                            'id' => $test->getId()
+                                            '_locale' => $testViewModel->getModuleLanguage(),
+                                            'id' => $testViewModel->getId()
                                         ]);
                                     }
                                 ],
                                 [
                                     'label' => 'data_table.test.testResult',
-                                    'visible' => function (Test $test): bool {
-                                        return $test->getTestResult() !== null;
+                                    'visible' => function (TestViewModel $testViewModel): bool {
+                                        return $testViewModel->getTestResultId() !== null;
                                     },
-                                    'href' => function(Test $test): ?string {
-                                        $testResult = $test->getTestResult();
-                                        if ($testResult) {
+                                    'href' => function(TestViewModel $testViewModel): ?string {
+                                        $testResultId = $testViewModel->getTestResultId();
+                                        if ($testResultId) {
                                             return $this->urlGenerator->generate('app_testresult_download', [
-                                                'id' => $testResult->getId()
+                                                'id' => $testResultId
                                             ]);
                                         }
 
@@ -91,21 +92,18 @@ class TestDataTableType extends AbstractDataTableType
                 ]
             ])
             ->addColumn('moduleName', TruncatedTextColumnType::class, [
-                'label' => 'data_table.test.moduleName',
-                'getter' => function (Test $test): string {
-                    return $test->getModule()->getName();
-                }
+                'label' => 'data_table.test.moduleName'
             ])
             ->addColumn('moduleLanguage', TextColumnType::class, [
                 'label' => 'data_table.test.moduleLanguage',
-                'getter' => function (Test $test): string {
-                    return $this->trans->trans($test->getModule()->getLanguage());
+                'getter' => function (TestViewModel $testViewModel): string {
+                    return $this->trans->trans($testViewModel->getModuleLanguage());
                 }
             ])
             ->addColumn('moduleTestCategory', TextColumnType::class, [
                 'label' => 'data_table.test.moduleTestCategory',
-                'getter' => function (Test $test): string {
-                    return $this->trans->trans($test->getModule()->getCategory());
+                'getter' => function (TestViewModel $testViewModel): string {
+                    return $this->trans->trans($testViewModel->getModuleCategory());
                 }
             ])
             ->addColumn('email', TextColumnType::class, [
@@ -149,11 +147,6 @@ class TestDataTableType extends AbstractDataTableType
             ])
             ->addFilter('workplace', StringFilterType::class, [
                 'label' => 'data_table.test.workplace',
-                'lower' => true
-            ])
-            ->addFilter('moduleName', StringFilterType::class, [
-                'label' => 'data_table.test.moduleName',
-                'query_path' => 'module.name',
                 'lower' => true
             ])
             ->addFilter('score', NumericFilterType::class, [
