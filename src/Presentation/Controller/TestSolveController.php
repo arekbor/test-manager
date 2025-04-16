@@ -59,7 +59,7 @@ final class TestSolveController extends AbstractController
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
 
-        return $this->render('/testSolve/introduction.html.twig', [
+        return $this->render('/testSolve/message.html.twig', [
             'testMessageAppSetting' => $testMessageAppSetting,
             'type' => $type,
             'testId' => $id
