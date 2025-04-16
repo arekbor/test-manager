@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\SecurityUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Kreyu\Bundle\DataTableBundle\Persistence\PersistenceSubjectInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: SecurityUserRepository::class)]
+#[ORM\Entity()]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class SecurityUser extends BaseEntity implements 
     UserInterface, 

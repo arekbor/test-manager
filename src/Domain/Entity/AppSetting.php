@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\AppSettingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AppSettingRepository::class)]
+#[ORM\Entity()]
 class AppSetting extends BaseEntity
 {
     #[ORM\Column(length: 255, unique: true)]

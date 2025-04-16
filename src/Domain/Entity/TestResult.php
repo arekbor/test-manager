@@ -4,12 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\TestResultRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[ORM\Entity(repositoryClass: TestResultRepository::class)]
+#[ORM\Entity()]
 #[Vich\Uploadable]
 class TestResult extends BaseEntity
 {

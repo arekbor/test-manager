@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\TestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: TestRepository::class)]
+#[ORM\Entity()]
 class Test extends BaseEntity
 {
     #[ORM\Column(type: 'default_datetime_tz', nullable: true)]

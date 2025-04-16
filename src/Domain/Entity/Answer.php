@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\AnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: AnswerRepository::class)]
+#[ORM\Entity()]
 class Answer extends BaseEntity
 {
     #[ORM\Column(type: Types::TEXT)]

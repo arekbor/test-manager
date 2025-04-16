@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ModuleRepository::class)]
+#[ORM\Entity()]
 class Module extends BaseEntity
 {
     #[ORM\Column(length: 255)]
