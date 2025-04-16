@@ -61,8 +61,9 @@ final class TestDataTableType extends AbstractDataTableType
                                         return $now < $testViewModel->getExpiration() && $testViewModel->getSubmission() === null;
                                     },
                                     'href' => function(TestViewModel $testViewModel): string {
-                                        return $this->urlGenerator->generate('app_testsolve_introduction', [
+                                        return $this->urlGenerator->generate('app_testsolve_message', [
                                             '_locale' => $testViewModel->getModuleLanguage(),
+                                            'type' => 'introduction',
                                             'id' => $testViewModel->getId()
                                         ]);
                                     }

@@ -63,7 +63,10 @@ final class TestSolveForm extends AbstractController
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
 
-        return $this->redirectToRoute('app_testsolve_conclusion');
+        return $this->redirectToRoute('app_testsolve_message', [
+            'type' => 'conclusion',
+            'id' => $this->dataForTestSolve->getTestId()
+        ]);
     }
 
     protected function instantiateForm(): FormInterface

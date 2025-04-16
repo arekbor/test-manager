@@ -2,7 +2,7 @@
 
 {% block wrapper %}
     {{ component('TestSolveMessage', {
-        'message': clause(),
+        'message': htmlFormat(testClauseAppSetting.content|default(null)),
         'notFoundMessage': 'templates.testSolve.clause.notFoundMessage'
     }) }}
 {% endblock %}
