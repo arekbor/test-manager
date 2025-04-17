@@ -3,7 +3,7 @@
 {% block wrapper %}
     {% if type == 'introduction' %}
         {{ component('TestSolveMessage', {
-            'message': htmlFormat(testMessageAppSetting.introduction),
+            'message': htmlFormat(testMessageAppSetting.introduction|default(null)),
             'notFoundMessage': 'templates.testSolve.introduction.notFoundMessage'
         }) }}
 
@@ -16,7 +16,7 @@
         </a>
     {% elseif type == 'conclusion' %}
         {{ component('TestSolveMessage', {
-            'message': htmlFormat(testMessageAppSetting.conclusion),
+            'message': htmlFormat(testMessageAppSetting.conclusion|default(null)),
             'notFoundMessage': 'templates.testSolve.introduction.notFoundMessage'
         }) }}
     {% endif %}

@@ -1,11 +1,12 @@
 <?php 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Twig\Runtime;
 
+use App\Application\Util\ParameterHelper;
 use App\Domain\Exception\NotFoundException;
-use App\Service\ParameterService;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,9 +15,9 @@ use Twig\Extension\RuntimeExtensionInterface;
 class LocaleRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
-        private RequestStack $requestStack,
-        private ParameterService $parameterService,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly RequestStack $requestStack,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
@@ -44,7 +45,12 @@ class LocaleRuntime implements RuntimeExtensionInterface
         $params = array_merge($routeParams, $request->query->all());
         $currentLocale = $request->getLocale();
 
-        foreach($this->parameterService->getAllowedLocales() as $locale) {
+        /**
+         * @var array<string> $allowedLocales
+         */
+        $allowedLocales = ParameterHelper::explodeStringToArray($this->parameterBag->get('app.allowed_locales'));
+
+        foreach($allowedLocales as $locale) {
             if ($locale !== $currentLocale) {
                 $parameters = array_merge($params, ['_locale' => $locale]);
                 $localeLinks[$locale] = $this->urlGenerator->generate($route, $parameters);

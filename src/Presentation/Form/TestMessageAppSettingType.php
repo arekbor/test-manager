@@ -1,26 +1,32 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
 use App\Application\AppSetting\Model\TestMessageAppSetting;
-use App\Service\ParameterService;
+use App\Application\Util\ParameterHelper;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TestMessageAppSettingType extends AbstractType
+final class TestMessageAppSettingType extends AbstractType
 {
     public function __construct(
-        private ParameterService $parameterService
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /**
+         * @var array<string> $allowedLocales
+         */
+        $allowedLocales = ParameterHelper::explodeStringToArray($this->parameterBag->get('app.allowed_locales'));
+
         $builder
             ->add('introduction', TextareaType::class, [
                 'label' => 'form.type.testMessageAppSetting.introduction.label',
@@ -38,8 +44,8 @@ class TestMessageAppSettingType extends AbstractType
             ])
             ->add('language', ChoiceType::class, [
                 'label' => false,
-                'choices' => $this->parameterService->getAllowedLocales(),
-                'empty_data' => $this->parameterService->getAllowedLocales()[0],
+                'choices' => $allowedLocales,
+                'empty_data' => $allowedLocales[0],
                 'choice_label' => function($value) {
                     return $value;
                 },
