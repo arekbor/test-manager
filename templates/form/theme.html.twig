@@ -23,6 +23,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="mb-2">
+                    {{ form_errors(form.answerModels) }}
+                </div>
             </div>
         {% endif %}
     {{ form_end(form) }}

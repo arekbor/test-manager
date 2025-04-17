@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Application\Question\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Application\Validator as ApplicationAssert;
 use App\Application\Answer\Model\AnswerModel;
 use Symfony\Component\Uid\Uuid;
 
@@ -18,6 +19,7 @@ final class QuestionModel
      */
     #[Assert\Count(min: 1, max: 10)]
     #[Assert\Valid()]
+    #[ApplicationAssert\RequiresCorrectAnswer()]
     private array $answerModels;
 
     public function __construct() {

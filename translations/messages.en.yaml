@@ -305,6 +305,8 @@ flash:
 validator:
   uniqueValuesInArray:
     message: Key %key% appears more than once.
+  requiresCorrectAnswer:
+    message: At least one correct answer must be selected.
 
 en: English
 pl: Polish
