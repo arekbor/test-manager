@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Presentation\Form;
 
-use App\Application\AppSetting\Model\TestClauseAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use App\Application\Util\ParameterHelper;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class TestClauseAppSettingType extends AbstractType
+final class TestPrivacyPolicyAppSettingType extends AbstractType
 {
     public function __construct(
         private readonly ParameterBagInterface $parameterBag
@@ -29,7 +29,7 @@ final class TestClauseAppSettingType extends AbstractType
 
         $builder
             ->add('content', TextareaType::class, [
-                'label' => 'form.type.testClauseAppSetting.content.label',
+                'label' => 'form.type.testPrivacyPolicyAppSetting.content.label',
                 'empty_data' => '',
                 'attr' => [
                     'rows' => 10
@@ -41,7 +41,7 @@ final class TestClauseAppSettingType extends AbstractType
                 'empty_data' => $allowedLocales[0],
                 'choice_label' => function($value) {
                     return $value;
-                },
+                }
             ])
         ;
     }
@@ -49,7 +49,7 @@ final class TestClauseAppSettingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => TestClauseAppSetting::class,
+            'data_class' => TestPrivacyPolicyAppSetting::class,
         ]);
     }
 }

@@ -70,9 +70,9 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
         $this->assertIsArray($testAppSetting->getValue());
         $this->assertEquals([
             'expirationDaysOffset' => 7,
-            'testMessages' => [],
+            'testMessageAppSettings' => [],
             'notificationsEnabled' => true,
-            'testClauses' => []
+            'testPrivacyPolicyAppSettings' => []
         ], $testAppSetting->getValue());
     }
 }

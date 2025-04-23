@@ -6,28 +6,28 @@
     {{ form_row(form.notificationsEnabled) }}
 
     <div>
-        {{ form_widget(form.testMessages.vars.button_add) }}
+        {{ form_widget(form.testMessageAppSettings.vars.button_add) }}
 
-        {% if form.testMessages|length > 0 %}
+        {% if form.testMessageAppSettings|length > 0 %}
             <div class="table-responsive">
                 <table class="table table-hover align-middle text-nowrap">
                     <thead>
                         <tr>
-                            <th scope="col">{{ 'table.testAppSetting.messages'|trans }}</th>
+                            <th scope="col">{{ 'table.testAppSetting.testMessageAppSettings'|trans }}</th>
                             <th scope="col">{{ 'table.actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for testMessage in form.testMessages %}
+                        {% for testMessageAppSetting in form.testMessageAppSettings %}
                             <tr>
                                 <td>
-                                    {{ form_row(testMessage.introduction) }}
-                                    {{ form_row(testMessage.conclusion) }}
+                                    {{ form_row(testMessageAppSetting.introduction) }}
+                                    {{ form_row(testMessageAppSetting.conclusion) }}
                                 </td>
                                 <td>
-                                    {{ form_row(testMessage.language) }}
+                                    {{ form_row(testMessageAppSetting.language) }}
                                     <div class="d-flex justify-content-end">
-                                        {{ form_widget(testMessage.vars.button_delete) }}
+                                        {{ form_widget(testMessageAppSetting.vars.button_delete) }}
                                     </div>
                                 </td>
                             </tr>
@@ -37,29 +37,29 @@
             </div>
         {% endif %}
 
-        {{ form_errors(form.testMessages) }}
+        {{ form_errors(form.testMessageAppSettings) }}
     </div>
 
     <div class="mt-3">
-        {{ form_widget(form.testClauses.vars.button_add) }}
+        {{ form_widget(form.testPrivacyPolicyAppSettings.vars.button_add) }}
 
-        {% if form.testClauses|length > 0 %}
+        {% if form.testPrivacyPolicyAppSettings|length > 0 %}
             <div class="table-responsive">
                 <table class="table table-hover align-middle text-nowrap">
                     <thead>
                         <tr>
-                            <th scope="col">{{ 'table.testAppSetting.clauses'|trans }}</th>
+                            <th scope="col">{{ 'table.testAppSetting.testPrivacyPolicyAppSettings'|trans }}</th>
                             <th scope="col">{{ 'table.actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for testClause in form.testClauses %}
+                        {% for testPrivacyPolicyAppSetting in form.testPrivacyPolicyAppSettings %}
                             <tr>
-                                <td>{{ form_row(testClause.content) }}</td>
+                                <td>{{ form_row(testPrivacyPolicyAppSetting.content) }}</td>
                                 <td>
-                                    {{ form_row(testClause.language) }}
+                                    {{ form_row(testPrivacyPolicyAppSetting.language) }}
                                     <div class="d-flex justify-content-end">
-                                        {{ form_widget(testClause.vars.button_delete) }}
+                                        {{ form_widget(testPrivacyPolicyAppSetting.vars.button_delete) }}
                                     </div>
                                 </td>
                             </tr>
@@ -69,7 +69,7 @@
             </div>
         {% endif %}
 
-        {{ form_errors(form.testClauses) }}
+        {{ form_errors(form.testPrivacyPolicyAppSettings) }}
     </div>
 
     <div class="my-2">

@@ -72,7 +72,7 @@ class TestSolveType extends AbstractType
                 'label_html' => true,
                 'label_translation_parameters' => [
                     '%terms_link%' => '<a href="' 
-                    . $this->urlGenerator->generate('app_testsolve_clause') 
+                    . $this->urlGenerator->generate('app_testsolve_privacy') 
                     . '" target="_blank">' . $this->trans->trans('form.type.testSolve.consent.terms') 
                     . '</a>',
                 ],

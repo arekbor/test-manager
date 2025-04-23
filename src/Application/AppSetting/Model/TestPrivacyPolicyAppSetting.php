@@ -6,7 +6,7 @@ namespace App\Application\AppSetting\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class TestClauseAppSetting
+class TestPrivacyPolicyAppSetting
 {
     #[Assert\NotBlank]
     private ?string $content;

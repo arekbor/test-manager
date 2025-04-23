@@ -6,8 +6,8 @@ namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Command\UpdateTestAppSetting;
 use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\AppSetting\Model\TestClauseAppSetting;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
@@ -57,28 +57,28 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
         $testAppSettingAfterUpdate->setExpirationDaysOffset(32);
         $testAppSettingAfterUpdate->setNotificationsEnabled(true);
 
-        $testAppSettingAfterUpdate->addTestMessage(
+        $testAppSettingAfterUpdate->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Test introduction message')
                 ->setConclusion('Test conclusion message')
                 ->setLanguage('en')
         );
 
-        $testAppSettingAfterUpdate->addTestMessage(
+        $testAppSettingAfterUpdate->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Testowa wiadomość powitalna')
                 ->setConclusion('Testowa wiadomość pożegnalna')
                 ->setLanguage('pl')
         );
 
-        $testAppSettingAfterUpdate->addTestClause(
-            (new TestClauseAppSetting())
-                ->setContent('Test clause message')
+        $testAppSettingAfterUpdate->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
+                ->setContent('Test privacy policy message')
                 ->setLanguage('en')
         );
 
-        $testAppSettingAfterUpdate->addTestClause(
-            (new TestClauseAppSetting())
+        $testAppSettingAfterUpdate->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
                 ->setContent('Testowa klauzula')
                 ->setLanguage('pl')
         );
@@ -109,22 +109,26 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
         $this->assertEquals(32, $testAppSetting->getExpirationDaysOffset());
         $this->assertTrue($testAppSetting->getNotificationsEnabled());
 
-        $this->assertCount(2, $testAppSetting->getTestMessages());
+        $testMessageAppSettings = $testAppSetting->getTestMessageAppSettings();
 
-        $this->assertEquals('Test introduction message', $testAppSetting->getTestMessages()[0]->getIntroduction());
-        $this->assertEquals('Test conclusion message', $testAppSetting->getTestMessages()[0]->getConclusion());
-        $this->assertEquals('en', $testAppSetting->getTestMessages()[0]->getLanguage());
+        $this->assertCount(2, $testMessageAppSettings);
 
-        $this->assertEquals('Testowa wiadomość powitalna', $testAppSetting->getTestMessages()[1]->getIntroduction());
-        $this->assertEquals('Testowa wiadomość pożegnalna', $testAppSetting->getTestMessages()[1]->getConclusion());
-        $this->assertEquals('pl', $testAppSetting->getTestMessages()[1]->getLanguage());
+        $this->assertEquals('Test introduction message', $testMessageAppSettings[0]->getIntroduction());
+        $this->assertEquals('Test conclusion message', $testMessageAppSettings[0]->getConclusion());
+        $this->assertEquals('en', $testMessageAppSettings[0]->getLanguage());
 
-        $this->assertCount(2, $testAppSetting->getTestClauses());
+        $this->assertEquals('Testowa wiadomość powitalna', $testMessageAppSettings[1]->getIntroduction());
+        $this->assertEquals('Testowa wiadomość pożegnalna', $testMessageAppSettings[1]->getConclusion());
+        $this->assertEquals('pl', $testMessageAppSettings[1]->getLanguage());
 
-        $this->assertEquals('Test clause message', $testAppSetting->getTestClauses()[0]->getContent());
-        $this->assertEquals('en', $testAppSetting->getTestClauses()[0]->getLanguage());
+        $testPrivacyPolicyAppSettings = $testAppSetting->getTestPrivacyPolicyAppSettings();
 
-        $this->assertEquals('Testowa klauzula', $testAppSetting->getTestClauses()[1]->getContent());
-        $this->assertEquals('pl', $testAppSetting->getTestClauses()[1]->getLanguage());
+        $this->assertCount(2, $testPrivacyPolicyAppSettings);
+
+        $this->assertEquals('Test privacy policy message', $testPrivacyPolicyAppSettings[0]->getContent());
+        $this->assertEquals('en', $testPrivacyPolicyAppSettings[0]->getLanguage());
+
+        $this->assertEquals('Testowa klauzula', $testPrivacyPolicyAppSettings[1]->getContent());
+        $this->assertEquals('pl', $testPrivacyPolicyAppSettings[1]->getLanguage());
     }
 }

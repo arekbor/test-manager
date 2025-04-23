@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\AppSetting\Model\TestClauseAppSetting;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use App\Application\AppSetting\Query\GetTestAppSetting;
 use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\AppSetting;
@@ -48,28 +48,28 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         $testTestAppSetting = new TestAppSetting();
         $testTestAppSetting->setExpirationDaysOffset(15);
         $testTestAppSetting->setNotificationsEnabled(true);
-        $testTestAppSetting->addTestMessage(
+        $testTestAppSetting->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Introduction message')
                 ->setConclusion('Conclusion message')
                 ->setLanguage('en')
         );
 
-        $testTestAppSetting->addTestMessage(
+        $testTestAppSetting->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Powitalna wiadomość')
                 ->setConclusion('Pożegnalna wiadomość')
                 ->setLanguage('pl')
         );
 
-        $testTestAppSetting->addTestClause(
-            (new TestClauseAppSetting())
-                ->setContent('Clause message')
+        $testTestAppSetting->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
+                ->setContent('Privacy policy message')
                 ->setLanguage('en')
         );
 
-        $testTestAppSetting->addTestClause(
-            (new TestClauseAppSetting())
+        $testTestAppSetting->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
                 ->setContent('Klauzula rodo')
                 ->setLanguage('pl')
         );
@@ -93,10 +93,7 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         $this->assertEquals(15, $testAppSetting->getExpirationDaysOffset());
         $this->assertTrue($testAppSetting->getNotificationsEnabled());
 
-        /**
-         * @var TestMessageAppSetting[] $testMessageAppSettings
-         */
-        $testMessageAppSettings = $testAppSetting->getTestMessages();
+        $testMessageAppSettings = $testAppSetting->getTestMessageAppSettings();
 
         $this->assertCount(2, $testMessageAppSettings);
 
@@ -108,17 +105,14 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         $this->assertEquals('Pożegnalna wiadomość', $testMessageAppSettings[1]->getConclusion());
         $this->assertEquals('pl', $testMessageAppSettings[1]->getLanguage());
 
-        /**
-         * @var TestClauseAppSetting[] $testClauseAppSettings
-         */
-        $testClauseAppSettings = $testAppSetting->getTestClauses();
+        $testPrivacyPolicyAppSettings = $testAppSetting->getTestPrivacyPolicyAppSettings();
 
-        $this->assertCount(2, $testClauseAppSettings);
+        $this->assertCount(2, $testPrivacyPolicyAppSettings);
 
-        $this->assertEquals('Clause message', $testClauseAppSettings[0]->getContent());
-        $this->assertEquals('en', $testClauseAppSettings[0]->getLanguage());
+        $this->assertEquals('Privacy policy message', $testPrivacyPolicyAppSettings[0]->getContent());
+        $this->assertEquals('en', $testPrivacyPolicyAppSettings[0]->getLanguage());
 
-        $this->assertEquals('Klauzula rodo', $testClauseAppSettings[1]->getContent());
-        $this->assertEquals('pl', $testClauseAppSettings[1]->getLanguage());
+        $this->assertEquals('Klauzula rodo', $testPrivacyPolicyAppSettings[1]->getContent());
+        $this->assertEquals('pl', $testPrivacyPolicyAppSettings[1]->getLanguage());
     }
 }

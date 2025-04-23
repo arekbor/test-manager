@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\AppSetting\Model\TestClauseAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Query\GetTestClauseAppSetting;
+use App\Application\Test\Query\GetTestPrivacyPolicyAppSetting;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
@@ -15,7 +15,7 @@ use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 
-final class GetTestClauseAppSettingTest extends DatabaseTestCase
+final class GetTestPrivacyPolicyAppSettingTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
@@ -38,16 +38,16 @@ final class GetTestClauseAppSettingTest extends DatabaseTestCase
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testGetTestClauseAppSettingReturnsTestClauseAppSettingByProvidedLanguageCorrectly(): void
+    public function testGetTestPrivacyPolicyAppSettingQueryReturnsTestPrivacyPolicyAppSettingByProvidedLanguageCorrectly(): void
     {
         //Arrange
         $appSetting = new AppSetting();
         $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
 
         $testTestAppSetting = new TestAppSetting();
-        $testTestAppSetting->addTestClause(
-            (new TestClauseAppSetting())
-                ->setContent('Clause message')
+        $testTestAppSetting->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
+                ->setContent('Privacy policy message')
                 ->setLanguage('pl')
         );
 
@@ -57,32 +57,33 @@ final class GetTestClauseAppSettingTest extends DatabaseTestCase
         $this->entityManager->persist($appSetting);
         $this->entityManager->flush();
 
-        $query = new GetTestClauseAppSetting('pl');
+        $query = new GetTestPrivacyPolicyAppSetting('pl');
 
         //Act
         /**
-         * @var TestClauseAppSetting $testClauseAppSetting
+         * @var TestPrivacyPolicyAppSetting $testPrivacyPolicyAppSetting
          */
-        $testClauseAppSetting = $this->queryBus->query($query);
+        $testPrivacyPolicyAppSetting = $this->queryBus->query($query);
 
         //Assert
-        $this->assertInstanceOf(TestClauseAppSetting::class, $testClauseAppSetting);
-        $this->assertEquals('Clause message', $testClauseAppSetting->getContent());
-        $this->assertEquals('pl', $testClauseAppSetting->getLanguage());
+        $this->assertInstanceOf(TestPrivacyPolicyAppSetting::class, $testPrivacyPolicyAppSetting);
+
+        $this->assertEquals('Privacy policy message', $testPrivacyPolicyAppSetting->getContent());
+        $this->assertEquals('pl', $testPrivacyPolicyAppSetting->getLanguage());
     }
 
     #[Test]
     #[Group(self::GROUP_NAME)]
-    public function testGetTestClauseAppSettingReturnsNullWhenTestClauseAppSettingByProvidedLanguageNotFound(): void
+    public function testGetTestPrivacyPolicyAppSettingReturnsNullWhenTestPrivacyPolicyAppSettingByProvidedLanguageNotFound(): void
     {
         //Arrange
         $appSetting = new AppSetting();
         $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
 
         $testTestAppSetting = new TestAppSetting();
-        $testTestAppSetting->addTestClause(
-            (new TestClauseAppSetting())
-                ->setContent('Clause message')
+        $testTestAppSetting->addTestPrivacyPolicyAppSetting(
+            (new TestPrivacyPolicyAppSetting())
+                ->setContent('Privacy policy message')
                 ->setLanguage('fr')
         );
 
@@ -92,15 +93,15 @@ final class GetTestClauseAppSettingTest extends DatabaseTestCase
         $this->entityManager->persist($appSetting);
         $this->entityManager->flush();
 
-        $query = new GetTestClauseAppSetting('pl');
+        $query = new GetTestPrivacyPolicyAppSetting('pl');
 
         //Act
         /**
-         * @var TestClauseAppSetting|null $testClauseAppSetting
+         * @var TestPrivacyPolicyAppSetting|null $testPrivacyPolicyAppSetting
          */
-        $testClauseAppSetting = $this->queryBus->query($query);
+        $testPrivacyPolicyAppSetting = $this->queryBus->query($query);
 
         //Assert
-        $this->assertNull($testClauseAppSetting);
+        $this->assertNull($testPrivacyPolicyAppSetting);
     }
 }

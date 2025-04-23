@@ -31,7 +31,7 @@ class TestAppSettingType extends AbstractType
                     'form.type.testAppSetting.notificationsEnabled.enable' => true
                 ]
             ])
-            ->add('testMessages', LiveCollectionType::class, [
+            ->add('testMessageAppSettings', LiveCollectionType::class, [
                 'label' => false,
                 'entry_type' => TestMessageAppSettingType::class,
                 'allow_add' => true,
@@ -55,15 +55,15 @@ class TestAppSettingType extends AbstractType
                     ]
                 ]
             ])
-            ->add('testClauses', LiveCollectionType::class, [
+            ->add('testPrivacyPolicyAppSettings', LiveCollectionType::class, [
                 'label' => false,
-                'entry_type' => TestClauseAppSettingType::class,
+                'entry_type' => TestPrivacyPolicyAppSettingType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'button_add_options' => [
-                    'label' => 'form.type.testAppSetting.button.add_clause',
+                    'label' => 'form.type.testAppSetting.button.add_privacy',
                     'attr' => [
                         'class' => 'btn btn-primary',
                         'data-live-action-param' => 'addCollectionItem',
@@ -71,7 +71,7 @@ class TestAppSettingType extends AbstractType
                     ]
                 ],
                 'button_delete_options' => [
-                    'label' => 'form.type.testAppSetting.button.delete_clause',
+                    'label' => 'form.type.testAppSetting.button.delete_privacy',
                     'attr' => [
                         'class' => 'btn btn-danger',
                         'data-live-action-param' => 'removeCollectionItem',

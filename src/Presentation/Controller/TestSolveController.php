@@ -5,15 +5,15 @@ declare(strict_types = 1);
 namespace App\Presentation\Controller;
 
 use App\Application\AppSetting\Model\TestMessageAppSetting;
-use App\Application\AppSetting\Model\TestClauseAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use App\Application\Shared\QueryBusInterface;
 use App\Application\Test\Query\GetDataForTestSolve;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Test\Model\DataForTestSolve;
-use App\Application\Test\Query\GetTestClauseAppSetting;
 use App\Application\Test\Query\GetTestMessageAppSetting;
+use App\Application\Test\Query\GetTestPrivacyPolicyAppSetting;
 use App\Application\Video\Query\GetVideoFile;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,20 +66,20 @@ final class TestSolveController extends AbstractController
         ]);
     }
 
-    #[Route('/clause', name: 'app_testsolve_clause')]
-    public function clause(Request $request): Response
+    #[Route('/privacy', name: 'app_testsolve_privacy')]
+    public function privacy(Request $request): Response
     {
         try {
             /**
-             * @var TestClauseAppSetting|null $testClauseAppSetting
+             * @var TestPrivacyPolicyAppSetting|null $testPrivacyPolicyAppSetting
              */
-            $testClauseAppSetting = $this->queryBus->query(new GetTestClauseAppSetting($request->getLocale()));
+            $testPrivacyPolicyAppSetting = $this->queryBus->query(new GetTestPrivacyPolicyAppSetting($request->getLocale()));
         } catch (\Exception) {
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
 
-        return $this->render('/testSolve/clause.html.twig', [
-            'testClauseAppSetting' => $testClauseAppSetting
+        return $this->render('/testSolve/privacy.html.twig', [
+            'testPrivacyPolicyAppSetting' => $testPrivacyPolicyAppSetting
         ]);
     }
 

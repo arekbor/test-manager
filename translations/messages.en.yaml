@@ -46,14 +46,14 @@ form:
       button:
         add_message: Add test message
         delete_message: Delete test message
-        add_clause: Add test clause
-        delete_clause: Delete test clause
+        add_privacy: Add test privacy policy
+        delete_privacy: Delete test privacy policy
     testMessageAppSetting:
       introduction:
         label: Introduction message
       conclusion:
         label: Conclusion message
-    testClauseAppSetting:
+    testPrivacyPolicyAppSetting:
       content:
         label: Content
     mailSmtpAppSetting:
@@ -123,8 +123,8 @@ table:
     content: Content
     correct: Is correct
   testAppSetting:
-    messages: Messages
-    clauses: Clauses
+    testMessageAppSettings: Test messages
+    testPrivacyPolicyAppSettings: Test privacy policies
   actions: Actions
 
 data_table:
@@ -234,8 +234,8 @@ templates:
       goToTest: Next
     conclusion:
       notFoundMessage: Administrator has not configured conclusion message for the %language% language.
-    clause:
-      notFoundMessage: Administrator has not configured clause message for the %language% language.
+    privacy:
+      notFoundMessage: Administrator has not configured privacy policy for the %language% language.
     notFound:
       title: Test not found
       header: Test Not Found
