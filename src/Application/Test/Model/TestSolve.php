@@ -36,12 +36,12 @@ final class TestSolve
     private Collection $testQuestionSolves;
 
     #[Assert\IsTrue]
-    private bool $consent;
+    private bool $privacyPolicyConsent;
 
     public function __construct() 
     {
         $this->testQuestionSolves = new ArrayCollection();
-        $this->consent = false;
+        $this->privacyPolicyConsent = false;
     }
 
     public function getFirstname(): ?string
@@ -128,14 +128,14 @@ final class TestSolve
         return $this;
     }
 
-    public function isConsent(): bool
+    public function isPrivacyPolicyConsent(): bool
     {
-        return $this->consent;
+        return $this->privacyPolicyConsent;
     }
 
-    public function setConsent(bool $consent): static
+    public function setPrivacyPolicyConsent(bool $privacyPolicyConsent): static
     {
-        $this->consent = $consent;
+        $this->privacyPolicyConsent = $privacyPolicyConsent;
 
         return $this;
     }

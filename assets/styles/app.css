@@ -65,3 +65,8 @@ select.form-select,
     transform: translateY(-50%) rotate(360deg);
   }
 }
+
+.text-footer {
+  font-size: 0.7rem;
+  user-select: none;
+}
