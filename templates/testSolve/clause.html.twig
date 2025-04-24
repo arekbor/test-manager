@@ -1,8 +1,0 @@
-{% extends 'testSolve/base.html.twig' %}
-
-{% block wrapper %}
-    {{ component('TestSolveMessage', {
-        'message': htmlFormat(testClauseAppSetting.content|default(null)),
-        'notFoundMessage': 'templates.testSolve.clause.notFoundMessage'
-    }) }}
-{% endblock %}

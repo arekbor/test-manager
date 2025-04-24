@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Application\Test\Query;
 
-final class GetTestClauseAppSetting
+final class GetTestPrivacyPolicyAppSetting
 {
     private string $language;
 

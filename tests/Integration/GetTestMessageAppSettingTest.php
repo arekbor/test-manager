@@ -45,7 +45,7 @@ final class GetTestMessageAppSettingTest extends DatabaseTestCase
         $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
 
         $testTestAppSetting = new TestAppSetting();
-        $testTestAppSetting->addTestMessage(
+        $testTestAppSetting->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Introduction message')
                 ->setConclusion('Conclusion message')
@@ -82,7 +82,7 @@ final class GetTestMessageAppSettingTest extends DatabaseTestCase
         $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
 
         $testTestAppSetting = new TestAppSetting();
-        $testTestAppSetting->addTestMessage(
+        $testTestAppSetting->addTestMessageAppSetting(
             (new TestMessageAppSetting())
                 ->setIntroduction('Introduction message')
                 ->setConclusion('Conclusion message')

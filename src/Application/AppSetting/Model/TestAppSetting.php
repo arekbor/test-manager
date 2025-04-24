@@ -15,20 +15,26 @@ class TestAppSetting
     #[Assert\GreaterThanOrEqual(1)]
     private int $expirationDaysOffset;
 
+    /**
+     * @var array<TestMessageAppSetting> $testMessageAppSettings
+     */
     #[Assert\Valid]
     #[ApplicationAssert\UniqueValuesInArray(key: 'getLanguage')]
-    private array $testMessages;
+    private array $testMessageAppSettings;
 
+    /**
+     * @var array<TestPrivacyPolicyAppSetting> $testPrivacyPolicyAppSettings
+     */
     #[Assert\Valid]
     #[ApplicationAssert\UniqueValuesInArray(key: 'getLanguage')]
-    private array $testClauses;
+    private array $testPrivacyPolicyAppSettings;
 
     private bool $notificationsEnabled;
 
     public function __construct() {
         $this->expirationDaysOffset = 7;
-        $this->testMessages = [];
-        $this->testClauses = [];
+        $this->testMessageAppSettings = [];
+        $this->testPrivacyPolicyAppSettings = [];
         $this->notificationsEnabled = true;
     }
 
@@ -44,9 +50,12 @@ class TestAppSetting
         return $this;
     }
 
-    public function getTestMessages(): array
+    /**
+     * @return array<TestMessageAppSetting>
+     */
+    public function getTestMessageAppSettings(): array
     {
-        return $this->testMessages;
+        return $this->testMessageAppSettings;
     }
 
     public function setNotificationsEnabled(bool $notificationsEnabled): static
@@ -63,43 +72,43 @@ class TestAppSetting
 
     public function getTestMessageAppSettingByLanguage(string $language): ?TestMessageAppSetting
     {
-        return ArrayHelper::findFirstByProperty($this->testMessages, 'getLanguage', $language);
+        return ArrayHelper::findFirstByProperty($this->testMessageAppSettings, 'getLanguage', $language);
     }
 
-    public function addTestMessage(TestMessageAppSetting $testMessageAppSetting): static
+    public function addTestMessageAppSetting(TestMessageAppSetting $testMessageAppSetting): static
     {
-        ArrayHelper::addItem($this->testMessages, $testMessageAppSetting);
+        ArrayHelper::addItem($this->testMessageAppSettings, $testMessageAppSetting);
 
         return $this;
     }
 
-    public function removeTestMessage(TestMessageAppSetting $testMessageAppSetting): static
+    public function removeTestMessageAppSetting(TestMessageAppSetting $testMessageAppSetting): static
     {
-        ArrayHelper::removeItem($this->testMessages, $testMessageAppSetting);
+        ArrayHelper::removeItem($this->testMessageAppSettings, $testMessageAppSetting);
 
         return $this;
     }
 
-    public function getTestClauses(): array
+    public function getTestPrivacyPolicyAppSettings(): array
     {
-        return $this->testClauses;
+        return $this->testPrivacyPolicyAppSettings;
     }
 
-    public function getTestClauseAppSettingByLanguage(string $language): ?TestClauseAppSetting
+    public function getTestPrivacyPolicyAppSettingByLanguage(string $language): ?TestPrivacyPolicyAppSetting
     {
-        return ArrayHelper::findFirstByProperty($this->testClauses, 'getLanguage', $language);
+        return ArrayHelper::findFirstByProperty($this->testPrivacyPolicyAppSettings, 'getLanguage', $language);
     }
 
-    public function addTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    public function addTestPrivacyPolicyAppSetting(TestPrivacyPolicyAppSetting $testPrivacyPolicyAppSetting): static
     {
-        ArrayHelper::addItem($this->testClauses, $testClauseAppSetting);
+        ArrayHelper::addItem($this->testPrivacyPolicyAppSettings, $testPrivacyPolicyAppSetting);
 
         return $this;
     }
 
-    public function removeTestClause(TestClauseAppSetting $testClauseAppSetting): static
+    public function removeTestPrivacyPolicyAppSetting(TestPrivacyPolicyAppSetting $testPrivacyPolicyAppSetting): static
     {
-        ArrayHelper::removeItem($this->testClauses, $testClauseAppSetting);
+        ArrayHelper::removeItem($this->testPrivacyPolicyAppSettings, $testPrivacyPolicyAppSetting);
 
         return $this;
     }
