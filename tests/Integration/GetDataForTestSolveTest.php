@@ -91,7 +91,7 @@ final class GetDataForTestSolveTest extends DatabaseTestCase
         
         $this->assertInstanceOf(TestSolve::class, $dataForTestSolve->getTestSolve());
 
-        $this->assertFalse($dataForTestSolve->getTestSolve()->isConsent());
+        $this->assertFalse($dataForTestSolve->getTestSolve()->isPrivacyPolicyConsent());
 
         $testQuestionSolves = $dataForTestSolve->getTestSolve()->getTestQuestionSolves();
 

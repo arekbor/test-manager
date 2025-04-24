@@ -67,13 +67,13 @@ class TestSolveType extends AbstractType
                 'allow_add' => false,
                 'allow_delete' => false
             ])
-            ->add('consent', CheckboxType::class, [
-                'label' => 'form.type.testSolve.consent.label',
+            ->add('privacyPolicyConsent', CheckboxType::class, [
+                'label' => 'form.type.testSolve.privacyPolicyConsent.label',
                 'label_html' => true,
                 'label_translation_parameters' => [
                     '%terms_link%' => '<a href="' 
                     . $this->urlGenerator->generate('app_testsolve_privacy') 
-                    . '" target="_blank">' . $this->trans->trans('form.type.testSolve.consent.terms') 
+                    . '" target="_blank">' . $this->trans->trans('form.type.testSolve.privacyPolicyConsent.terms') 
                     . '</a>',
                 ],
             ])
