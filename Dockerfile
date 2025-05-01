@@ -3,11 +3,13 @@ FROM php:8.3.12-apache
 RUN a2enmod rewrite
 
 RUN apt-get update \
-  && apt-get install -y libzip-dev git wget libpq-dev acl --no-install-recommends \
+  && apt-get install -y libzip-dev git wget libpq-dev acl libjpeg-dev libpng-dev libfreetype6-dev \
   && apt-get install -y supervisor \
-  && apt-get install php8.3-gd \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install pdo pdo_pgsql zip gd
 
 RUN docker-php-ext-install pdo pdo_pgsql zip
 
