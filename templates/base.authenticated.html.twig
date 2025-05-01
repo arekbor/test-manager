@@ -6,25 +6,6 @@
         {{ stimulus_controller('turbo-navigation') }}
     >
         <header>
-            <div class="z-3 position-absolute top-0 start-50 translate-middle-x">
-                {% for type, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div 
-                            class="alert alert-{{ type }} alert-dismissible fade show" 
-                            role="alert"
-                        >
-                            <small>{{ message }}</small>
-                            <button 
-                                class="btn-close" 
-                                data-bs-dismiss="alert" 
-                                aria-label="Close"
-                            >
-                            </button>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-
             <nav 
                 class="navbar navbar-expand-lg navbar"
             >
@@ -100,6 +81,26 @@
         </header>
 
         <main class="flex-grow-1">
+            <div class="z-3 position-absolute top-0 start-50 translate-middle-x">
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div 
+                            class="alert alert-{{ type }} alert-dismissible fade show" 
+                            role="alert"
+                            {{ stimulus_controller('flash-message') }}
+                        >
+                            <small>{{ message }}</small>
+                            <button 
+                                class="btn-close" 
+                                data-bs-dismiss="alert" 
+                                aria-label="Close"
+                            >
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
             <div class="container-fluid">
                 {% block container %}{% endblock %}
             </div>
