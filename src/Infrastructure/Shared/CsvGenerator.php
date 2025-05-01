@@ -1,29 +1,26 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Infrastructure\Shared;
 
 use App\Application\Shared\CsvGeneratorInterface;
-use SplFileInfo;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 final class CsvGenerator implements CsvGeneratorInterface
 {
-    public function generate(string $fileName, array $data): SplFileInfo
+    public function generate(string $fileName, array $data): \SplFileInfo
     {
         $tempFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 
-        $fp = fopen($tempFilePath, 'w');
-        if ($fp === false) {
-            throw new \RuntimeException("Unable to open file for writing: $tempFilePath");
-        }
+        $spreadsheet = new Spreadsheet();
 
-        foreach ($data as $row) {
-            fputcsv($fp, $row, ',', '"', '\\');
-        }
+        $spreadsheet->getActiveSheet()->fromArray($data);
 
-        fclose($fp);
+        $writer = new Csv($spreadsheet);
+        $writer->save($tempFilePath);
 
-        return new SplFileInfo($tempFilePath);
+        return new \SplFileInfo($tempFilePath);
     }
 }
