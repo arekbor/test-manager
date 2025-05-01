@@ -4,7 +4,7 @@ RUN a2enmod rewrite
 
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget libpq-dev acl --no-install-recommends \
-  && apt-get install php-gd -y \
+  && apt-get install -y php8.2-gd \
   && apt-get install -y supervisor \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
