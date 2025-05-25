@@ -19,6 +19,7 @@ services:
 
   web:
     build: .
+    restart: always
     ports:
       - 8084:80
     depends_on:
