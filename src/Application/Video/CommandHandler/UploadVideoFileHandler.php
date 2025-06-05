@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Video\CommandHandler;
 
@@ -10,6 +10,7 @@ use App\Domain\Entity\Video;
 use App\Domain\Exception\NotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -19,8 +20,7 @@ final class UploadVideoFileHandler
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator
-    ) {
-    }
+    ) {}
 
     public function __invoke(UploadVideoFile $command): void
     {
@@ -36,14 +36,16 @@ final class UploadVideoFileHandler
 
         $uploadedFile = $command->getUploadedFile();
 
-        $video = new Video();
-        $video->setFile($uploadedFile);
+        $errors = $this->validator->validate($uploadedFile, [
+            new File(extensions: 'mp4')
+        ]);
 
-        $errors = $this->validator->validate($video);
         if ($errors->count() > 0) {
             throw new ValidatorException($errors->get(0)->getMessage());
         }
 
+        $video = new Video();
+        $video->setFile($uploadedFile);
         $video->addModule($module);
 
         $this->entityManager->persist($video);
