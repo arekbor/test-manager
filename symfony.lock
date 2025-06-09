@@ -231,7 +231,7 @@
         }
     },
     "symfony/ux-icons": {
-        "version": "2.26",
+        "version": "2.17",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -243,22 +243,28 @@
         ]
     },
     "symfony/ux-live-component": {
-        "version": "2.19",
+        "version": "2.25",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.6",
-            "ref": "73e69baf18f47740d6f58688c5464b10cdacae06"
+            "ref": "fc360ae8c0acce49a3cce007b6e70f1c228cc348"
         },
         "files": [
             "config/routes/ux_live_component.yaml"
         ]
     },
     "symfony/ux-toggle-password": {
-        "version": "v2.20.0"
+        "version": "v2.25.2"
     },
     "symfony/ux-turbo": {
-        "version": "v2.21.0"
+        "version": "2.25",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.19",
+            "ref": "9dd2778a116b6e5e01e5e1582d03d5a9e82630de"
+        }
     },
     "symfony/ux-twig-component": {
         "version": "2.19",
