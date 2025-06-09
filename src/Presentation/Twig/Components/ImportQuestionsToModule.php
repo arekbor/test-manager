@@ -70,6 +70,10 @@ final class ImportQuestionsToModule extends AbstractController
     #[LiveAction]
     public function import(): Response
     {
-        return $this->redirectToRoute('app_module_index');
+        throw new \Exception('Not implemented!');
+
+        return $this->redirectToRoute('app_module_questions', [
+            'id' => $this->moduleId
+        ]);
     }
 }
