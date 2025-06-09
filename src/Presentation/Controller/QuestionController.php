@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
@@ -22,8 +22,7 @@ final class QuestionController extends AbstractController
         private readonly QueryBusInterface $queryBus,
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[Route('/create/{moduleId}', name: 'app_question_create')]
     public function create(Uuid $moduleId): Response
@@ -32,7 +31,7 @@ final class QuestionController extends AbstractController
             'moduleId' => $moduleId
         ]);
     }
-    
+
     #[Route('/details/{moduleId}/{questionId}', name: 'app_question_details')]
     public function details(Uuid $moduleId, Uuid $questionId): Response
     {
@@ -66,5 +65,13 @@ final class QuestionController extends AbstractController
         $this->addFlash('success', $this->trans->trans('flash.questionController.delete.success'));
 
         return $response;
+    }
+
+    #[Route('/import/{id}', name: 'app_question_import')]
+    public function import(Uuid $id): Response
+    {
+        return $this->render('question/import.html.twig', [
+            'moduleId' => $id
+        ]);
     }
 }

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\DataTable\Type;
 
@@ -19,8 +19,7 @@ final class QuestionDataTableType extends AbstractDataTableType
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator
-    ) {
-    }
+    ) {}
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
@@ -28,7 +27,17 @@ final class QuestionDataTableType extends AbstractDataTableType
             ->addAction('create', ButtonActionType::class, [
                 'label' => 'data_table.question.createQuestion',
                 'href' => $this->urlGenerator->generate('app_question_create', [
-                    'moduleId' => $options['module_id'] 
+                    'moduleId' => $options['module_id']
+                ])
+            ])
+            ->addAction('import', ButtonActionType::class, [
+                'label' => 'data_table.question.import',
+                'icon' => 'filetype-csv',
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ],
+                'href' => $this->urlGenerator->generate('app_question_import', [
+                    'id' => $options['module_id']
                 ])
             ])
             ->addColumn('actions', ActionsColumnType::class, [
@@ -38,7 +47,7 @@ final class QuestionDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
-                            'href' => function(QuestionViewModel $questionViewModel): string {
+                            'href' => function (QuestionViewModel $questionViewModel): string {
                                 return $this->urlGenerator->generate('app_question_details', [
                                     'moduleId' => $questionViewModel->getModuleId(),
                                     'questionId' => $questionViewModel->getId()
@@ -64,7 +73,6 @@ final class QuestionDataTableType extends AbstractDataTableType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('module_id')
-        ;
+            ->setRequired('module_id');
     }
 }

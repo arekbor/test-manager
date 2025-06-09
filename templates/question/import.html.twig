@@ -1,0 +1,38 @@
+{% extends 'base.authenticated.html.twig' %}
+
+{% block title %} 
+    {{ 'templates.question.import.title'|trans }} 
+{% endblock %}
+
+{% block container %}
+    <div class="d-flex flex-column mt-2">
+        <h6>
+            {{ 'templates.question.import.label.general'|trans }}
+        </h6>
+
+        <label class="text-muted mt-3" for="csv-example-section">
+            {{ 'templates.question.import.label.exampleFile'|trans }}
+        </label>
+
+        <div class="bg-light p-3 rounded border w-100 csv-example" id="csv-example-section">
+            <code>
+                <div class="text-muted small mb-4">
+                    <strong>
+                        {{ 'templates.question.import.csvFormat'|trans }}
+                    </strong>
+                </div>
+                Kto napisał 'Pan Tadeusz'?,Adam Mickiewicz,1,Juliusz Słowacki,0,Henryk Sienkiewicz,0,Zygmunt Krasiński,0 </br>
+                Który kontynent jest największy?,Azja,1,Afryka,0,Europa,0,Australia,0 </br>
+                Który pierwiastek chemiczny ma symbol O?,Tlen,1,Złoto,0,Węgiel,0,Hel,0 </br>
+                Który kraj leży na półwyspie Iberyjskim?,Hiszpania,1,Włochy,0,Niemcy,0,Polska,0 </br>
+            </code>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        {{ component('ImportQuestionsToModule', { 
+            moduleId: moduleId 
+        }) }}
+    </div>
+{% endblock %}
+
