@@ -70,3 +70,9 @@ select.form-select,
   font-size: 0.7rem;
   user-select: none;
 }
+
+.csv-example {
+  font-family: monospace;
+  overflow-x: auto;
+  white-space: nowrap;
+}

@@ -1,0 +1,57 @@
+<div {{ attributes }}>
+    <input 
+        class="form-control" 
+        type="file" 
+        name="file" 
+        id="file" 
+        data-action="change->live#action"
+        data-live-action-param="files|uploadCsvFile"
+        data-loading='action(uploadCsvFile)|addAttribute(disabled)'
+    />
+    <div class="spinner-border my-2" role="status" data-loading="show">
+        <span class="sr-only"></span>
+    </div>
+
+    {% if error %}
+        <div class="text-danger">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if importQuestionsModel %}
+        <div class="my-2">
+            <h6 class="mt-4 mb-2">
+                {{ 'templates.components.importQuestionsToModule.header.preview'|trans }}
+            </h6>
+            {% for questionModel in importQuestionsModel.questionModels %}
+                <div class="card mb-2 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-secondary">
+                            {{ questionModel.content }}
+                        </h3>
+
+                        <div class="list-group mt-3">
+                             {% for answerModel in questionModel.answerModels %}
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" {{ answerModel.correct ? 'checked' : '' }} disabled />
+                                    </div>
+                                    <span class="ms-2">{{ answerModel.content }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button 
+            data-action="live#action" 
+            data-live-action-param="import" 
+            class="btn btn-success my-2"
+            data-loading='action(import)|addClass(loading)'
+        >
+            {{ 'templates.components.importQuestionsToModule.button'|trans }}
+        </button>
+    {% endif %}
+</div>

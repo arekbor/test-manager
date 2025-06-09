@@ -141,6 +141,7 @@ data_table:
     content: Content
     answersCount: Answers
     createQuestion: Create question
+    import: Import
   video:
     originalName: Video title
     mimeType: Mime type
@@ -221,6 +222,12 @@ templates:
       title: Question details
     create:
       title: Create question
+    import:
+      title: Import questions
+      label:
+        general: Select a csv file with questions in the appropriate format to import questions into the module.
+        exampleFile: "Below is an example CSV file:"
+      csvFormat: "Format: Question, Answer A, Is correct (1/0), Answer B, Is correct (1/0), Answer C, Is correct (1/0), ..."
   test:
     create:
       title: Create test
@@ -245,6 +252,12 @@ templates:
       header: Test is not valid
       content: We’re sorry, but this test is not valid. Please contact the administrator to receive a new link to the test.
   goToModule: Module
+
+  components:
+    importQuestionsToModule:
+      button: Import
+      header:
+        preview: "A preview of the imported questions from the CSV file:"
 
 flash:
   createModuleForm:
@@ -301,6 +314,9 @@ flash:
     upload:
       success: The file has been successfully uploaded.
       error: An issue occurred while uploading the video.
+  importQuestionsToModule:
+    uploadCsvFile:
+      error: An issue occurred while importing CSV file.
 
 validator:
   uniqueValuesInArray:
