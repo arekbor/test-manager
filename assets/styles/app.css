@@ -76,3 +76,9 @@ select.form-select,
   overflow-x: auto;
   white-space: nowrap;
 }
+
+@media only screen and (max-width: 576px) {
+  .w-sm-100 {
+    width: 100% !important;
+  }
+}
