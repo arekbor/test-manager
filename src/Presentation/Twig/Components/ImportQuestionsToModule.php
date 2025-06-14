@@ -41,7 +41,7 @@ final class ImportQuestionsToModule extends AbstractController
     #[LiveProp(useSerializerForHydration: true)]
     public Uuid $moduleId;
 
-    private static $importQuestionsModelSessionKey = 'import_questions_model';
+    private const IMPORT_QUESTIONS_MODEL_SESSION_KEY = 'import_questions_model';
 
     #[LiveAction]
     public function uploadCsvFile(Request $request): void
@@ -62,7 +62,7 @@ final class ImportQuestionsToModule extends AbstractController
             $this->importQuestionsModel = $importQuestionsModel;
 
             $session = $request->getSession();
-            $session->set(self::$importQuestionsModelSessionKey, serialize($this->importQuestionsModel));
+            $session->set(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY, serialize($this->importQuestionsModel));
         } catch (\Exception $ex) {
             $errorMessage = $this->trans->trans('flash.importQuestionsToModule.uploadCsvFile.error');
 
@@ -83,7 +83,7 @@ final class ImportQuestionsToModule extends AbstractController
 
         try {
             $session = $request->getSession();
-            $importQuestionsModelSerialized = $session->get(self::$importQuestionsModelSessionKey);
+            $importQuestionsModelSerialized = $session->get(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY);
 
             /**
              * @var ImportQuestionsModel $importQuestionsModel
@@ -98,7 +98,7 @@ final class ImportQuestionsToModule extends AbstractController
 
             return $redirect;
         } finally {
-            $session->remove(self::$importQuestionsModelSessionKey);
+            $session->remove(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY);
         }
 
         return $redirect;
