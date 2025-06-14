@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
@@ -28,8 +28,7 @@ final class UpdateModuleForm extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     #[LiveProp]
     public ModuleModel $moduleModel;
@@ -42,6 +41,8 @@ final class UpdateModuleForm extends AbstractController
     {
         $this->submitForm();
 
+        $redirect = $this->redirectToRoute('app_module_index');
+
         try {
             /**
              * @var ModuleModel $moduleModel
@@ -52,12 +53,12 @@ final class UpdateModuleForm extends AbstractController
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateModuleForm.error'));
 
-            return $this->redirectToRoute('app_module_index');
+            return $redirect;
         }
 
         $this->addFlash('success', $this->trans->trans('flash.updateModuleForm.success'));
 
-        return $this->redirectToRoute('app_module_index');
+        return $redirect;
     }
 
     protected function instantiateForm(): FormInterface

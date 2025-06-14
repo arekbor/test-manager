@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
@@ -27,8 +27,7 @@ final class UpdateTestAppSettingForm extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     #[LiveProp(useSerializerForHydration: true)]
     public TestAppSetting $testAppSetting;
@@ -37,6 +36,8 @@ final class UpdateTestAppSettingForm extends AbstractController
     public function submit(): Response
     {
         $this->submitForm();
+
+        $redirect = $this->redirectToRoute('app_settings_test');
 
         try {
             /**
@@ -48,12 +49,12 @@ final class UpdateTestAppSettingForm extends AbstractController
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateTestAppSettingForm.error'));
 
-            return $this->redirectToRoute('app_settings_test');
+            return $redirect;
         }
 
         $this->addFlash('success', $this->trans->trans('flash.updateTestAppSettingForm.success'));
 
-        return $this->redirectToRoute('app_settings_test');
+        return $redirect;
     }
 
     protected function instantiateForm(): FormInterface

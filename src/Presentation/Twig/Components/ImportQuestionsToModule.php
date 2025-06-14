@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
+use App\Application\Question\Command\ImportQuestionsFromImportQuestionsModel;
 use App\Application\Question\Model\ImportQuestionsModel;
 use App\Application\Question\Query\GetImportQuestionsModel;
 use App\Application\Shared\QueryBusInterface;
@@ -11,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,6 +28,7 @@ final class ImportQuestionsToModule extends AbstractController
 
     public function __construct(
         private readonly QueryBusInterface $queryBus,
+        private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans
     ) {}
 
@@ -37,6 +40,8 @@ final class ImportQuestionsToModule extends AbstractController
 
     #[LiveProp(useSerializerForHydration: true)]
     public Uuid $moduleId;
+
+    private const IMPORT_QUESTIONS_MODEL_SESSION_KEY = 'import_questions_model';
 
     #[LiveAction]
     public function uploadCsvFile(Request $request): void
@@ -54,6 +59,10 @@ final class ImportQuestionsToModule extends AbstractController
              * @var ImportQuestionsModel $importQuestionsModel
              */
             $importQuestionsModel = $this->queryBus->query(new GetImportQuestionsModel($csvFile));
+            $this->importQuestionsModel = $importQuestionsModel;
+
+            $session = $request->getSession();
+            $session->set(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY, serialize($this->importQuestionsModel));
         } catch (\Exception $ex) {
             $errorMessage = $this->trans->trans('flash.importQuestionsToModule.uploadCsvFile.error');
 
@@ -63,17 +72,35 @@ final class ImportQuestionsToModule extends AbstractController
 
             $this->error = $errorMessage;
         }
-
-        $this->importQuestionsModel = $importQuestionsModel;
     }
 
     #[LiveAction]
-    public function import(): Response
+    public function import(Request $request): Response
     {
-        throw new \Exception('Not implemented!');
-
-        return $this->redirectToRoute('app_module_questions', [
+        $redirect = $this->redirectToRoute('app_module_questions', [
             'id' => $this->moduleId
         ]);
+
+        try {
+            $session = $request->getSession();
+            $importQuestionsModelSerialized = $session->get(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY);
+
+            /**
+             * @var ImportQuestionsModel $importQuestionsModel
+             */
+            $importQuestionsModel = unserialize($importQuestionsModelSerialized);
+
+            $command = new ImportQuestionsFromImportQuestionsModel($this->moduleId, $importQuestionsModel);
+
+            $this->commandBus->dispatch($command);
+        } catch (\Exception) {
+            $this->addFlash('danger', $this->trans->trans('flash.importQuestionsToModule.import.error'));
+
+            return $redirect;
+        } finally {
+            $session->remove(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY);
+        }
+
+        return $redirect;
     }
 }

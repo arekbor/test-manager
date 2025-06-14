@@ -316,7 +316,9 @@ flash:
       error: An issue occurred while uploading the video.
   importQuestionsToModule:
     uploadCsvFile:
-      error: An issue occurred while importing CSV file.
+      error: An issue occurred while uploading CSV file.
+    import:
+      error: An issue occurred while importing questions.
 
 validator:
   uniqueValuesInArray:
