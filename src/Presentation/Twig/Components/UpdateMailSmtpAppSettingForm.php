@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
@@ -27,8 +27,7 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     #[LiveProp]
     public MailSmtpAppSetting $mailSmtpAppSetting;
@@ -37,6 +36,8 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
     public function submit(): Response
     {
         $this->submitForm();
+
+        $redirect = $this->redirectToRoute('app_settings_smtp');
 
         try {
             /**
@@ -48,12 +49,12 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateMailSmtpAppSettingForm.error'));
 
-            return $this->redirectToRoute('app_settings_smtp');
+            return $redirect;
         }
-        
+
         $this->addFlash('success', $this->trans->trans('flash.updateMailSmtpAppSettingForm.success'));
-        
-        return $this->redirectToRoute('app_settings_smtp');
+
+        return $redirect;
     }
 
     protected function instantiateForm(): FormInterface

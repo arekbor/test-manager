@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
@@ -28,13 +28,14 @@ final class SmtpTestForm extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[LiveAction]
     public function send(): Response
     {
         $this->submitForm();
+
+        $redirect = $this->redirectToRoute('app_settings_smtp');
 
         try {
             /**
@@ -43,7 +44,7 @@ final class SmtpTestForm extends AbstractController
             $smtpTest = $this->getForm()->getData();
 
             $this->commandBus->dispatch(new SendSmtpTestEmail($smtpTest));
-        } catch(\Throwable $ex) {
+        } catch (\Throwable $ex) {
             $errorMessage = $this->trans->trans('flash.testEmailForm.error');
 
             if ($ex instanceof HandlerFailedException && $ex->getPrevious() instanceof SendSmtpTestEmailException) {
@@ -52,13 +53,13 @@ final class SmtpTestForm extends AbstractController
 
             $this->addFlash('danger', $errorMessage);
 
-            return $this->redirectToRoute('app_settings_smtp');
+            return $redirect;
         }
 
         $this->addFlash('success', $this->trans->trans('flash.testEmailForm.success'));
 
-        return $this->redirectToRoute('app_settings_smtp');
-    } 
+        return $redirect;
+    }
 
     protected function instantiateForm(): FormInterface
     {

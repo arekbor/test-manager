@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
@@ -26,13 +26,14 @@ final class CreateModuleForm extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     #[LiveAction]
     public function submit(): Response
     {
         $this->submitForm();
+
+        $redirect = $this->redirectToRoute('app_module_index');
 
         try {
             /**
@@ -41,15 +42,15 @@ final class CreateModuleForm extends AbstractController
             $moduleModel = $this->getForm()->getData();
 
             $this->commandBus->dispatch(new CreateModule($moduleModel));
-        } catch(\Exception) {
+        } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.createModuleForm.error'));
-    
-            return $this->redirectToRoute('app_module_index');
+
+            return $redirect;
         }
 
         $this->addFlash('success', $this->trans->trans('flash.createModuleForm.success'));
 
-        return $this->redirectToRoute('app_module_index');
+        return $redirect;
     }
 
     protected function instantiateForm(): FormInterface
