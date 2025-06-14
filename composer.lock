@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cdcf9b275f4ce70d76b7740bcc47775",
+    "content-hash": "ded382e1c8911c10375981c09936e5a3",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1446,16 +1446,16 @@
         },
         {
             "name": "kreyu/data-table-bundle",
-            "version": "v0.29.2",
+            "version": "v0.30.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kreyu/data-table-bundle.git",
-                "reference": "b6664dd46ba9904604b20ac08d56da84075585c9"
+                "reference": "cef7d92655fbc18df8dd300fe8d63c0689942c50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/b6664dd46ba9904604b20ac08d56da84075585c9",
-                "reference": "b6664dd46ba9904604b20ac08d56da84075585c9",
+                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/cef7d92655fbc18df8dd300fe8d63c0689942c50",
+                "reference": "cef7d92655fbc18df8dd300fe8d63c0689942c50",
                 "shasum": ""
             },
             "require": {
@@ -1506,7 +1506,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.29.2"
+                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.30.2"
             },
             "funding": [
                 {
@@ -1514,7 +1514,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-02T19:44:58+00:00"
+            "time": "2025-04-24T17:19:44+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -7805,7 +7805,7 @@
         },
         {
             "name": "twig/intl-extra",
-            "version": "v3.20.0",
+            "version": "v3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/intl-extra.git",
@@ -7853,7 +7853,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/intl-extra/tree/v3.20.0"
+                "source": "https://github.com/twigphp/intl-extra/tree/v3.21.0"
             },
             "funding": [
                 {
