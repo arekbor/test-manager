@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\DataTable\Type;
 
@@ -24,8 +24,7 @@ final class TestDataTableType extends AbstractDataTableType
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
@@ -39,7 +38,7 @@ final class TestDataTableType extends AbstractDataTableType
                             'buttons' => [
                                 [
                                     'label' => 'data_table.details',
-                                    'href' => function(TestViewModel $testViewModel): string {
+                                    'href' => function (TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_test_details', [
                                             'id' => $testViewModel->getId(),
                                             'moduleId' => $testViewModel->getModuleId()
@@ -48,7 +47,7 @@ final class TestDataTableType extends AbstractDataTableType
                                 ],
                                 [
                                     'label' => 'data_table.test.module',
-                                    'href' => function(TestViewModel $testViewModel): string {
+                                    'href' => function (TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_module_general', [
                                             'id' => $testViewModel->getModuleId()
                                         ]);
@@ -60,20 +59,20 @@ final class TestDataTableType extends AbstractDataTableType
                                         $now = new \DateTime();
                                         return $now < $testViewModel->getExpiration() && $testViewModel->getSubmission() === null;
                                     },
-                                    'href' => function(TestViewModel $testViewModel): string {
+                                    'href' => function (TestViewModel $testViewModel): string {
                                         return $this->urlGenerator->generate('app_testsolve_message', [
                                             '_locale' => $testViewModel->getModuleLanguage(),
                                             'type' => 'introduction',
                                             'id' => $testViewModel->getId()
                                         ]);
-                                    }
+                                    },
                                 ],
                                 [
                                     'label' => 'data_table.test.testResult',
                                     'visible' => function (TestViewModel $testViewModel): bool {
                                         return $testViewModel->getTestResultId() !== null;
                                     },
-                                    'href' => function(TestViewModel $testViewModel): ?string {
+                                    'href' => function (TestViewModel $testViewModel): ?string {
                                         $testResultId = $testViewModel->getTestResultId();
                                         if ($testResultId) {
                                             return $this->urlGenerator->generate('app_testresult_download', [
@@ -123,7 +122,19 @@ final class TestDataTableType extends AbstractDataTableType
                 'label' => 'data_table.test.dateOfBirth'
             ])
             ->addColumn('expiration', DateTimeColumnType::class, [
-                'label' => 'data_table.test.expiration'
+                'label' => 'data_table.test.expiration',
+                'getter' => function (TestViewModel $testViewModel) {
+                    return $testViewModel->getExpiration();
+                },
+                'value_attr' => function (\DateTime $expiration): array {
+                    $now = new \DateTimeImmutable();
+
+                    if ($expiration < $now) {
+                        return ['class' => 'text-danger'];
+                    }
+
+                    return ['class' => 'text-success'];
+                }
             ])
             ->addColumn('start', DateTimeColumnType::class, [
                 'label' => 'data_table.test.start'

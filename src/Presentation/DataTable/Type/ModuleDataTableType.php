@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\DataTable\Type;
 
@@ -21,14 +21,17 @@ final class ModuleDataTableType extends AbstractDataTableType
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
         $builder
             ->addAction('create', ButtonActionType::class, [
-                'label' => 'data_table.module.create',
+                'label' => false,
+                'icon' => 'plus',
+                'attr' => [
+                    'class' => 'btn btn-warning'
+                ],
                 'href' => $this->urlGenerator->generate('app_module_create'),
             ])
             ->addColumn('actions', ActionsColumnType::class, [
@@ -40,7 +43,7 @@ final class ModuleDataTableType extends AbstractDataTableType
                             'buttons' => [
                                 [
                                     'label' => 'data_table.details',
-                                    'href' => function(ModuleViewModel $moduleViewModel): string {
+                                    'href' => function (ModuleViewModel $moduleViewModel): string {
                                         return $this->urlGenerator->generate('app_module_general', [
                                             'id' => $moduleViewModel->getId()
                                         ]);
@@ -48,7 +51,7 @@ final class ModuleDataTableType extends AbstractDataTableType
                                 ],
                                 [
                                     'label' => 'data_table.module.addQuestion',
-                                    'href' => function(ModuleViewModel $moduleViewModel): string {
+                                    'href' => function (ModuleViewModel $moduleViewModel): string {
                                         return $this->urlGenerator->generate('app_question_create', [
                                             'moduleId' => $moduleViewModel->getId()
                                         ]);
@@ -56,7 +59,7 @@ final class ModuleDataTableType extends AbstractDataTableType
                                 ],
                                 [
                                     'label' => 'data_table.module.createTest',
-                                    'href' => function(ModuleViewModel $moduleViewModel): string {
+                                    'href' => function (ModuleViewModel $moduleViewModel): string {
                                         return $this->urlGenerator->generate('app_test_create', [
                                             'id' => $moduleViewModel->getId()
                                         ]);
@@ -70,15 +73,15 @@ final class ModuleDataTableType extends AbstractDataTableType
             ->addColumn('name', TruncatedTextColumnType::class, [
                 'label' => 'data_table.module.name'
             ])
-            ->addColumn('language', TextColumnType::class, [ 
+            ->addColumn('language', TextColumnType::class, [
                 'label' => 'data_table.module.language',
-                'getter' => function(ModuleViewModel $moduleViewModel): string {
+                'getter' => function (ModuleViewModel $moduleViewModel): string {
                     return $this->trans->trans($moduleViewModel->getLanguage());
                 }
             ])
-            ->addColumn('category', TextColumnType::class, [ 
+            ->addColumn('category', TextColumnType::class, [
                 'label' => 'data_table.module.category',
-                'getter' => function(ModuleViewModel $moduleViewModel): string {
+                'getter' => function (ModuleViewModel $moduleViewModel): string {
                     return $this->trans->trans($moduleViewModel->getCategory());
                 }
             ])

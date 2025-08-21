@@ -129,7 +129,6 @@ table:
 
 data_table:
   module:
-    create: Create new module
     name: Name
     language: Language
     category: Category

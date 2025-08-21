@@ -5,7 +5,7 @@
 
     {{ form_row(form.notificationsEnabled) }}
 
-    <div>
+    <div class="d-none d-md-block">
         {{ form_widget(form.testMessageAppSettings.vars.button_add) }}
 
         {% if form.testMessageAppSettings|length > 0 %}
@@ -40,7 +40,7 @@
         {{ form_errors(form.testMessageAppSettings) }}
     </div>
 
-    <div class="mt-3">
+    <div class="mt-3 d-none d-md-block">
         {{ form_widget(form.testPrivacyPolicyAppSettings.vars.button_add) }}
 
         {% if form.testPrivacyPolicyAppSettings|length > 0 %}

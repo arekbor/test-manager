@@ -1,0 +1,331 @@
+form:
+  type:
+    login:
+      email: E-mail
+      submit: Zaloguj się
+    module:
+      name: Nazwa
+      language: Język
+      category: Kategoria testu
+      submit: Utwórz moduł
+    question:
+      content_placeholder: Treść pytania
+      button:
+        add: Dodaj odpowiedź
+        delete: Usuń odpowiedź
+    answer:
+      content_placeholder: Treść odpowiedzi
+    testSolve:
+      firstname:
+        label: Imię
+        help: Wprowadź swoje imię.
+      lastname:
+        label: Nazwisko
+        help: Wprowadź swoje nazwisko.
+      email:
+        label: E-mail
+        help: Wprowadź swój adres e-mail. Upewnij się, że ma on prawidłowy format (np. nazwa@example.com).
+      workplace:
+        label: Miejsce pracy
+        help: Wprowadź nazwę swojego miejsca pracy lub organizacji.
+      dateOfBirth:
+        label: Data urodzenia
+        help: Wprowadź swoją datę urodzenia.
+      privacyPolicyConsent:
+        label: Przeczytałem(-am) i akceptuję %terms_link%
+        terms: regulamin
+    testAppSetting:
+      notificationsEnabled:
+        label: Powiadomienia o wynikach testu
+        help: Określa, czy wyniki testu powinny być wysyłane do autora testu.
+        enable: Włącz
+        disable: Wyłącz
+      expirationDaysOffset:
+        label: Dni do dodania do daty wygaśnięcia
+        help: Określa, ile dni zostanie dodanych do daty „Wygaśnięcia” podczas tworzenia każdego testu.
+      button:
+        add_message: Dodaj wiadomość testu
+        delete_message: Usuń wiadomość testu
+        add_privacy: Dodaj politykę prywatności testu
+        delete_privacy: Usuń politykę prywatności testu
+    testMessageAppSetting:
+      introduction:
+        label: Wiadomość wprowadzająca
+      conclusion:
+        label: Wiadomość końcowa
+    testPrivacyPolicyAppSetting:
+      content:
+        label: Treść
+    mailSmtpAppSetting:
+      host:
+        label: Host
+        help: Podaj host SMTP (np. smtp.example.com).
+      port:
+        label: Port
+        help: Podaj port SMTP
+      fromAddress:
+        label: Adres nadawcy
+        help: Adres e-mail nadawcy dla każdej wiadomości.
+      username:
+        label: Nazwa użytkownika
+        help: Nazwa użytkownika SMTP.
+      password:
+        help: Hasło SMTP.
+      smtpAuth:
+        label: Uwierzytelnianie
+        help: Określa, czy używać uwierzytelniania SMTP.
+        enable: Włącz
+        disable: Wyłącz
+      smtpSecure:
+        label: Szyfrowanie
+        help: Rodzaj szyfrowania używanego w połączeniu SMTP.
+        ssl: ssl
+        tls: tls
+      timeout:
+        label: Limit czasu
+        help: Limit czasu serwera SMTP w sekundach.
+    smtpTest:
+      recipient:
+        label: Odbiorca testowy
+        help: Adres e-mail odbiorcy testowego.
+      send: Wyślij wiadomość testową
+    updateEmail:
+      email:
+        label: Nowy e-mail
+        help: Po zmianie adresu e-mail nastąpi wylogowanie.
+      update: Zaktualizuj e-mail
+    updateVideo:
+      originalName:
+        label: Tytuł wideo
+        help: Zaktualizuj tytuł wideo
+      update: Zaktualizuj wideo
+    updatePassword:
+      currentPassword:
+        label: Aktualne hasło
+      password_first_options:
+        label: Nowe hasło
+        help: Po zmianie hasła nastąpi wylogowanie.
+      password_second_options: Powtórz nowe hasło
+      update: Zaktualizuj hasło
+    test:
+      expiration:
+        label: Data wygaśnięcia
+        help: Czas, po którym dostęp do testu wygaśnie i zostanie zablokowany.
+  password:
+    label: Hasło
+    hidden: Ukryj
+    visible: Pokaż
+  submit:
+    label: Zatwierdź
+
+table:
+  question:
+    content: Treść
+    correct: Czy poprawna
+  testAppSetting:
+    testMessageAppSettings: Wiadomości testu
+    testPrivacyPolicyAppSettings: Polityki prywatności testu
+  actions: Działania
+
+data_table:
+  module:
+    name: Nazwa
+    language: Język
+    category: Kategoria
+    questionsCount: Pytania
+    videosCount: Pliki wideo
+    addQuestion: Dodaj pytanie
+    createTest: Utwórz test
+  question:
+    content: Treść
+    answersCount: Odpowiedzi
+    createQuestion: Utwórz pytanie
+    import: Importuj
+  video:
+    originalName: Tytuł wideo
+    mimeType: Typ MIME
+    size: Rozmiar
+    uploadVideo: Prześlij wideo
+  test:
+    email: E-mail
+    firstname: Imię
+    lastname: Nazwisko
+    workplace: Miejsce pracy
+    dateOfBirth: Data urodzenia
+    expiration: Data wygaśnięcia
+    start: Data rozpoczęcia
+    submission: Data przesłania
+    score: Wynik
+    test: Test
+    module: Moduł
+    moduleLanguage: Język modułu
+    moduleName: Nazwa modułu
+    moduleTestCategory: Kategoria testu modułu
+    testResult: Wynik testu
+  actions: Działania
+  details: Szczegóły
+
+modal:
+  title: Potwierdzenie
+  body: Czy na pewno?
+  close: Zamknij
+  uploadFile:
+    cancel: Anuluj
+  delete: Usuń
+
+templates:
+  base:
+    title: Menedżer testów
+    nav:
+      navbar_brand: Menedżer testów
+      modules: Moduły
+      tests: Testy
+      logout: Wyloguj się
+      settings: Ustawienia
+  settings:
+    base:
+      info:
+        email: E-mail
+        timezone: Strefa czasowa systemu
+      nav:
+        general: Ogólne
+        smtp: SMTP
+        smtpTest: Test SMTP
+        test: Test
+    general:
+      header:
+        language: Język
+        email: E-mail
+        password: Hasło
+  auth:
+    login:
+      title: Logowanie
+      header: Zaloguj się do Menedżera Testów
+  module:
+    create:
+      title: Utwórz moduł
+    base:
+      title: Szczegóły modułu
+      nav:
+        general: Ogólne
+        questions: Pytania
+        videos: Pliki wideo
+    general:
+      createTest: Utwórz test
+  video:
+    details:
+      title: Szczegóły wideo
+      download: Pobierz
+  question:
+    details:
+      title: Szczegóły pytania
+    create:
+      title: Utwórz pytanie
+    import:
+      title: Import pytań
+      label:
+        general: Wybierz plik CSV z pytaniami w odpowiednim formacie, aby zaimportować pytania do modułu.
+        exampleFile: "Poniżej znajduje się przykładowy plik CSV:"
+      csvFormat: "Format: Pytanie, Odpowiedź A, Czy poprawna (1/0), Odpowiedź B, Czy poprawna (1/0), Odpowiedź C, Czy poprawna (1/0), ..."
+  test:
+    create:
+      title: Utwórz test
+      info: Utwórz test na podstawie modułu o ID %moduleId%. Po utworzeniu testu będziesz mógł wysłać link do jego rozwiązania.
+    details:
+      title: Szczegóły testu
+      info: Edytuj test przypisany do modułu o ID %moduleId%.
+  testSolve:
+    introduction:
+      notFoundMessage: Administrator nie skonfigurował wiadomości wprowadzającej dla języka %language%.
+      goToTest: Dalej
+    conclusion:
+      notFoundMessage: Administrator nie skonfigurował wiadomości końcowej dla języka %language%.
+    privacy:
+      notFoundMessage: Administrator nie skonfigurował polityki prywatności dla języka %language%.
+    notFound:
+      title: Nie znaleziono testu
+      header: Test nie znaleziony
+      content: Przepraszamy, ale nie udało się znaleźć tego testu. Skontaktuj się z administratorem, aby otrzymać nowy link do testu.
+    notValid:
+      title: Test nieważny
+      header: Test jest nieważny
+      content: Przepraszamy, ale ten test jest nieważny. Skontaktuj się z administratorem, aby otrzymać nowy link do testu.
+  goToModule: Moduł
+
+  components:
+    importQuestionsToModule:
+      button: Importuj
+      header:
+        preview: "Podgląd zaimportowanych pytań z pliku CSV:"
+
+flash:
+  createModuleForm:
+    success: Moduł został pomyślnie utworzony.
+    error: Wystąpił problem podczas tworzenia modułu.
+  updateModuleForm:
+    success: Moduł został pomyślnie zaktualizowany.
+    error: Wystąpił problem podczas aktualizacji modułu.
+  addQuestionToModuleForm:
+    success: Pytanie zostało pomyślnie dodane do modułu.
+    error: Wystąpił błąd podczas dodawania pytania do modułu.
+  updateQuestionForm:
+    success: Pytanie zostało pomyślnie zaktualizowane.
+    error: Wystąpił problem podczas aktualizacji pytania.
+  createTestForm:
+    success: Test został pomyślnie utworzony.
+    error: Wystąpił problem podczas tworzenia testu.
+  updateTestForm:
+    success: Test został pomyślnie zaktualizowany.
+    error: Wystąpił problem podczas aktualizacji testu.
+  updateMailSmtpAppSettingForm:
+    success: Ustawienia SMTP zostały pomyślnie zaktualizowane.
+    error: Wystąpił problem podczas aktualizacji ustawień SMTP.
+  updateTestAppSettingForm:
+    success: Ustawienia testu zostały pomyślnie zaktualizowane.
+    error: Wystąpił problem podczas aktualizacji ustawień testu.
+  updateVideoForm:
+    error: Wystąpił problem podczas aktualizacji wideo.
+    success: Wideo zostało pomyślnie zaktualizowane.
+  testEmailForm:
+    success: Wiadomość e-mail została pomyślnie wysłana.
+    error: Wystąpił problem podczas wysyłania wiadomości testowej.
+  updateEmailForm:
+    error: Wystąpił problem podczas aktualizacji adresu e-mail.
+    emailAlreadyExists: Podany adres e-mail już istnieje.
+    emailEnchanged: Podany adres e-mail jest taki sam jak obecny.
+  updatePasswordForm:
+    error: Wystąpił problem podczas aktualizacji hasła.
+    invalidPassword: Nieprawidłowe aktualne hasło.
+  exceptionResponseSubscriber:
+    message: Wystąpił błąd. Spróbuj ponownie później.
+  questionController:
+    delete:
+      error: Nie udało się usunąć pytania.
+      success: Pytanie zostało pomyślnie usunięte.
+  testController:
+    delete:
+      error: Nie udało się usunąć testu.
+      success: Test został pomyślnie usunięty.
+  videoController:
+    delete:
+      error: Nie udało się usunąć wideo.
+      success: Wideo zostało pomyślnie usunięte.
+    upload:
+      success: Plik został pomyślnie przesłany.
+      error: Wystąpił problem podczas przesyłania wideo.
+  importQuestionsToModule:
+    uploadCsvFile:
+      error: Wystąpił problem podczas przesyłania pliku CSV.
+    import:
+      error: Wystąpił problem podczas importowania pytań.
+
+validator:
+  uniqueValuesInArray:
+    message: Klucz %key% pojawia się więcej niż raz.
+  requiresCorrectAnswer:
+    message: Należy zaznaczyć co najmniej jedną poprawną odpowiedź.
+
+en: Angielski
+pl: Polski
+introductory: Wstępny
+periodic: Okresowy
