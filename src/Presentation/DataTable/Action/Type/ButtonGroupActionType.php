@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -45,13 +45,15 @@ final class ButtonGroupActionType extends AbstractActionType
                         'label' => '',
                         'visible' => true,
                         'href' => null,
-                        'attr' => []
+                        'attr' => [],
+                        'copyToClipboard' => false,
                     ])
                     ->setAllowedTypes('label', 'string')
                     ->setAllowedTypes('visible', ['bool', 'callable'])
                     ->setAllowedTypes('href', ['null', 'string', 'callable'])
-                    ->setAllowedTypes('attr', 'array');
-            
+                    ->setAllowedTypes('attr', 'array')
+                    ->setAllowedTypes('copyToClipboard', 'bool');
+
                 return array_map(fn($button) => $buttonResolver->resolve($button), $buttons);
             })
         ;

@@ -6,16 +6,35 @@
     role="group" 
   >
     {% for button in buttons %}
-      <a 
-        href="{{ button.href|default('#') }}" 
-        class="btn btn-primary mx-1 text-nowrap {% if not button.visible %}d-none{% endif %}" 
-        role="button" 
-        {% for attr, value in button.attr %}
-          {{ attr }}="{{ value }}"
-        {% endfor %}
-      >
-        {{ button.label|default('')|trans }}
-      </a>
+      {% set btnClassSuffix = "mx-1 text-nowrap " ~ ((not button.visible) ? 'd-none' : 'd-block') %}
+      {% set url = button.href|default('#') %}
+
+      {% if button.copyToClipboard %}
+        <button
+          class="btn btn-secondary {{ btnClassSuffix }} d-flex align-items-center"
+          {{ stimulus_controller('copy_to_clipboard', { 
+            url: app.request.schemeAndHttpHost ~ url,
+          }) }}
+          {{ stimulus_target('copy_to_clipboard', 'buttonCopyToClipboard') }}
+          {{ stimulus_action('copy_to_clipboard', 'handleCopyToClipboard') }}
+          {% for attr, value in button.attr %}
+            {{ attr }}="{{ value }}" 
+          {% endfor %}
+        >
+          {{ ux_icon('bi:copy', { width: '16', height: '16' }) }}
+        </button>
+      {% else %}
+        <a 
+          href="{{ url }}" 
+          class="btn btn-primary {{ btnClassSuffix }}"
+          role="button"
+          {% for attr, value in button.attr %}
+            {{ attr }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ button.label|default('')|trans  }}
+        </a>
+      {% endif %}
     {% endfor %}
   </div>
 {% endblock %}

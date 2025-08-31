@@ -66,6 +66,7 @@ final class TestDataTableType extends AbstractDataTableType
                                             'id' => $testViewModel->getId()
                                         ]);
                                     },
+                                    'copyToClipboard' => true
                                 ],
                                 [
                                     'label' => 'data_table.test.testResult',
