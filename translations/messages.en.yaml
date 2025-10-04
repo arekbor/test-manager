@@ -230,7 +230,6 @@ templates:
   test:
     create:
       title: Create test
-      info: Create a test based on the module with ID %moduleId%. Once the test is created, you will be able to send a link to take the test.
     details:
       title: Test details
       info: Edit the test assigned to the module ID %moduleId%.

@@ -230,7 +230,6 @@ templates:
   test:
     create:
       title: Utwórz test
-      info: Utwórz test na podstawie modułu o ID %moduleId%. Po utworzeniu testu będziesz mógł wysłać link do jego rozwiązania.
     details:
       title: Szczegóły testu
       info: Edytuj test przypisany do modułu o ID %moduleId%.
