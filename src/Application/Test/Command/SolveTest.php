@@ -1,19 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Test\Command;
 
 use App\Application\Test\Model\TestSolve;
 use Symfony\Component\Uid\Uuid;
 
-final class RegisterTestSolve
+final class SolveTest
 {
     private Uuid $testId;
     private TestSolve $testSolve;
     private \DateTimeInterface $start;
     private \DateTimeInterface $submission;
-    
+
     public function __construct(
         Uuid $testId,
         TestSolve $testSolve,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Test\Command\RegisterTestSolve;
+use App\Application\Test\Command\SolveTest;
 use App\Application\Test\Model\DataForTestSolve;
 use App\Presentation\Form\TestSolveType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +18,8 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 use App\Application\Test\Model\TestSolve;
+use App\Domain\Event\TestSolved;
+use Psr\Log\LoggerInterface;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -26,9 +28,10 @@ final class TestSolveForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus
-    ) {
-    }
+        private readonly MessageBusInterface $commandBus,
+        private readonly MessageBusInterface $eventBus,
+        private readonly LoggerInterface $logger,
+    ) {}
 
     #[LiveProp]
     public ?\DateTimeInterface $start = null;
@@ -53,15 +56,18 @@ final class TestSolveForm extends AbstractController
              */
             $testSolve = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new RegisterTestSolve(
+            $this->commandBus->dispatch(new SolveTest(
                 testId: $this->dataForTestSolve->getTestId(),
                 testSolve: $testSolve,
                 start: $this->start,
                 submission: new \DateTimeImmutable()
             ));
-        } catch (\Exception) {
+        } catch (\Exception $ex) {
+            $this->logger->error($ex->getMessage());
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
+
+        $this->eventBus->dispatch(new TestSolved($this->dataForTestSolve->getTestId()));
 
         return $this->redirectToRoute('app_testsolve_message', [
             'type' => 'conclusion',

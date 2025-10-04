@@ -127,11 +127,14 @@ final class TestDataTableType extends AbstractDataTableType
                 'getter' => function (TestViewModel $testViewModel) {
                     return $testViewModel->getExpiration();
                 },
-                'value_attr' => function (\DateTime $expiration): array {
+                'value_attr' => function (\DateTime $expiration, TestViewModel $testViewModel): array {
                     $now = new \DateTimeImmutable();
-
                     if ($expiration < $now) {
                         return ['class' => 'text-danger'];
+                    }
+
+                    if ($expiration < $now || $testViewModel->getSubmission()) {
+                        return ['class' => 'text-warning'];
                     }
 
                     return ['class' => 'text-success'];

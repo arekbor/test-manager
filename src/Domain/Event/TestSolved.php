@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace App\Application\Test\Command;
+namespace App\Domain\Event;
 
 use Symfony\Component\Uid\Uuid;
 
-final class SendTestResultCsvToTestCreator
+final class TestSolved
 {
     private Uuid $testId;
 
