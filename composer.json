@@ -39,7 +39,7 @@
     "symfony/yaml": "7.1.*",
     "twig/extra-bundle": "^2.12|^3.0",
     "twig/twig": "^2.12|^3.0",
-    "vich/uploader-bundle": "^2.4"
+    "vich/uploader-bundle": "v2.8.1"
   },
   "config": {
     "allow-plugins": {
