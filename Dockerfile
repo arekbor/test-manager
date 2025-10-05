@@ -1,4 +1,4 @@
-FROM php:8.3.12-apache
+FROM php:8.4.13-apache
 
 RUN a2enmod rewrite
 
@@ -22,13 +22,16 @@ COPY docker/entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-RUN wget https://getcomposer.org/download/2.7.7/composer.phar \ 
+RUN wget https://getcomposer.org/download/2.8.12/composer.phar \ 
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf 
+
 COPY . /var/www
 
 RUN mkdir /home/uploads/ && chmod a+w /home/uploads/
+
+RUN rm -r /var/www/docker
 
 WORKDIR /var/www
 

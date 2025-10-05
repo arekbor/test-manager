@@ -14,3 +14,4 @@ composer.lock
 assets/vendor
 phpunit.xml.dist
 tests/
+phpstan.neon
