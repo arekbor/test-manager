@@ -1,19 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Answer\Model\AnswerModel;
-use App\Application\Question\Query\GetQuestionModel;
-use App\Application\Shared\QueryBusInterface;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Question;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use App\Application\Question\Model\QuestionModel;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Answer\Model\AnswerModel;
+use App\Application\Question\Model\QuestionModel;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\Question\Query\GetQuestionModel\GetQuestionModel;
 
 final class GetQuestionModelTest extends DatabaseTestCase
 {
@@ -51,7 +51,7 @@ final class GetQuestionModelTest extends DatabaseTestCase
         /**
          * @var QuestionModel $questioModel
          */
-        $questioModel = $this->queryBus->query($query);
+        $questioModel = $this->queryBus->ask($query);
 
         // Assert
         $this->assertInstanceOf(QuestionModel::class, $questioModel);
@@ -89,6 +89,6 @@ final class GetQuestionModelTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Question {"id":"%s"}', $notExistingModuleId->toString()));
 
-        $this->queryBus->query($query);
+        $this->queryBus->ask($query);
     }
 }

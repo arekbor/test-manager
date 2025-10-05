@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
 use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\AppSetting\Query\GetMailSmtpAppSetting;
-use App\Application\AppSetting\Query\GetTestAppSetting;
-use App\Application\Shared\QueryBusInterface;
+use App\Application\AppSetting\Query\GetMailSmtpAppSetting\GetMailSmtpAppSetting;
+use App\Application\AppSetting\Query\GetTestAppSetting\GetTestAppSetting;
+use App\Application\Shared\Bus\QueryBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,8 +18,7 @@ final class SettingsController extends AbstractController
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus
-    ) {
-    }
+    ) {}
 
     #[Route('/general', name: 'app_settings_general')]
     public function general(): Response
@@ -33,7 +32,7 @@ final class SettingsController extends AbstractController
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
          */
-        $mailSmtpAppSetting = $this->queryBus->query(new GetMailSmtpAppSetting());
+        $mailSmtpAppSetting = $this->queryBus->ask(new GetMailSmtpAppSetting());
 
         return $this->render('settings/smtp.html.twig', [
             'mailSmtpAppSetting' => $mailSmtpAppSetting
@@ -41,12 +40,12 @@ final class SettingsController extends AbstractController
     }
 
     #[Route('/test', name: 'app_settings_test')]
-    public function test(): Response 
+    public function test(): Response
     {
         /**
          * @var TestAppSetting $testAppSetting
          */
-        $testAppSetting = $this->queryBus->query(new GetTestAppSetting());
+        $testAppSetting = $this->queryBus->ask(new GetTestAppSetting());
 
         return $this->render('settings/test.html.twig', [
             'testAppSetting' => $testAppSetting

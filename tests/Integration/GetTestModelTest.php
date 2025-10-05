@@ -1,19 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Query\GetTestModel;
-use App\Domain\Entity\Test as EntityTest;
-use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use App\Application\Test\Model\TestModel;
 use App\Domain\Entity\Module;
-use App\Domain\Entity\SecurityUser;
+use App\Tests\DatabaseTestCase;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Domain\Entity\Test as EntityTest;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\Test\Model\TestModel;
+use App\Application\Test\Query\GetTestModel\GetTestModel;
 
 final class GetTestModelTest extends DatabaseTestCase
 {
@@ -44,7 +44,7 @@ final class GetTestModelTest extends DatabaseTestCase
 
         $entityTest = new EntityTest();
         $expirationDate = (new \DateTime())->modify('+4 days');
-        
+
         $entityTest->setModule($testModule);
 
         $entityTest->setExpiration($expirationDate);
@@ -62,7 +62,7 @@ final class GetTestModelTest extends DatabaseTestCase
         /**
          * @var TestModel $testModel
          */
-        $testModel = $this->queryBus->query($query);
+        $testModel = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(TestModel::class, $testModel);
@@ -79,6 +79,6 @@ final class GetTestModelTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Test {"id":"%s"}', $notExistingTestId->toString()));
 
-        $this->queryBus->query($query);
+        $this->queryBus->ask($query);
     }
 }

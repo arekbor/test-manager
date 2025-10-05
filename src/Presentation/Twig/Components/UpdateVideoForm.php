@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Video\Command\UpdateVideo;
-use App\Application\Video\Model\UpdateVideoModel;
-use App\Presentation\Form\UpdateVideoType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Form\FormInterface;
+use App\Presentation\Form\UpdateVideoType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\Application\Video\Model\UpdateVideoModel;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Shared\Bus\CommandBusInterface;
+use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use App\Application\Video\Command\UpdateVideo\UpdateVideo;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsLiveComponent]
 final class UpdateVideoForm extends AbstractController
@@ -26,10 +26,9 @@ final class UpdateVideoForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
-    ) {
-    }
+    ) {}
 
     #[LiveProp]
     public UpdateVideoModel $updateVideoModel;
@@ -51,7 +50,7 @@ final class UpdateVideoForm extends AbstractController
              */
             $updateVideoModel = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new UpdateVideo($this->videoId, $updateVideoModel));
+            $this->commandBus->handle(new UpdateVideo($this->videoId, $updateVideoModel));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateVideoForm.error'));
 
@@ -66,7 +65,7 @@ final class UpdateVideoForm extends AbstractController
         ]);
     }
 
-    protected function instantiateForm(): FormInterface 
+    protected function instantiateForm(): FormInterface
     {
         return $this->createForm(UpdateVideoType::class, $this->updateVideoModel);
     }

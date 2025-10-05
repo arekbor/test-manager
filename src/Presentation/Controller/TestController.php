@@ -1,24 +1,24 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Command\DeleteTest;
-use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate;
-use App\Presentation\DataTable\Type\TestDataTableType;
-use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Shared\Bus\CommandBusInterface;
+use Symfony\Component\Uid\Uuid;
+use App\Application\Test\Model\TestModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Uid\Uuid;
-use App\Application\Test\Model\TestModel;
-use App\Application\Test\Query\GetTestModel;
-use App\Application\Test\Query\GetTestViewModels;
-use Symfony\Component\Messenger\MessageBusInterface;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Presentation\DataTable\Type\TestDataTableType;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Application\Test\Command\DeleteTest\DeleteTest;
+use App\Application\Test\Query\GetTestModel\GetTestModel;
+use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Test\Query\GetTestViewModels\GetTestViewModels;
+use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate\GetTestModelWithDefaultExpirationDate;
 
 #[Route('/test')]
 final class TestController extends AbstractController
@@ -27,15 +27,14 @@ final class TestController extends AbstractController
 
     public function __construct(
         private readonly QueryBusInterface $queryBus,
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[Route('/index', name: 'app_test_index')]
     public function index(Request $request): Response
     {
-        $queryBuilder = $this->queryBus->query(new GetTestViewModels());
+        $queryBuilder = $this->queryBus->ask(new GetTestViewModels());
 
         $dataTable = $this->createDataTable(TestDataTableType::class, $queryBuilder);
 
@@ -54,7 +53,7 @@ final class TestController extends AbstractController
         /**
          * @var TestModel $testModel
          */
-        $testModel = $this->queryBus->query(new GetTestModelWithDefaultExpirationDate());
+        $testModel = $this->queryBus->ask(new GetTestModelWithDefaultExpirationDate());
 
         return $this->render('test/create.html.twig', [
             'moduleId' => $id,
@@ -65,7 +64,7 @@ final class TestController extends AbstractController
     #[Route('/details/{id}/{moduleId}', name: 'app_test_details')]
     public function details(Uuid $id, Uuid $moduleId): Response
     {
-        $testModel = $this->queryBus->query(new GetTestModel($id));
+        $testModel = $this->queryBus->ask(new GetTestModel($id));
 
         return $this->render('test/details.html.twig', [
             'testModel' => $testModel,
@@ -80,7 +79,7 @@ final class TestController extends AbstractController
         $response = $this->redirectToRoute('app_test_index');
 
         try {
-            $this->commandBus->dispatch(new DeleteTest($id));
+            $this->commandBus->handle(new DeleteTest($id));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.testController.delete.error'));
 

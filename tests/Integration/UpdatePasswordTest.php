@@ -1,24 +1,24 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\SecurityUser\Command\UpdatePassword;
-use App\Application\SecurityUser\Model\UpdatePasswordModel;
-use App\Domain\Entity\SecurityUser;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\SecurityUser\Model\UpdatePasswordModel;
+use App\Application\SecurityUser\Command\UpdatePassword\UpdatePassword;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UpdatePasswordTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
     private readonly UserPasswordHasherInterface $userPasswordHasher;
 
     protected function setUp(): void
@@ -27,8 +27,7 @@ final class UpdatePasswordTest extends DatabaseTestCase
 
         $container = $this->getContainer();
 
-        $this->commandBus = $container->get('command.bus');
-
+        $this->commandBus = $container->get(CommandBusInterface::class);
         $this->userPasswordHasher = $container->get(UserPasswordHasherInterface::class);
     }
 
@@ -59,7 +58,7 @@ final class UpdatePasswordTest extends DatabaseTestCase
         $command = new UpdatePassword($testSecurityUser->getId(), $updatePasswordModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var SecurityUser $securityUser
@@ -98,7 +97,7 @@ final class UpdatePasswordTest extends DatabaseTestCase
 
         $this->expectExceptionMessage('Invalid current password.');
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 
     #[Test]
@@ -111,6 +110,6 @@ final class UpdatePasswordTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"id":"%s"}', $notExistingUserId));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

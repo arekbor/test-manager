@@ -1,32 +1,32 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Answer\Model\AnswerModel;
-use App\Application\Question\Command\AddQuestionToModule;
-use App\Application\Question\Model\QuestionModel;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Question;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Answer\Model\AnswerModel;
+use App\Application\Question\Model\QuestionModel;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Question\Command\AddQuestionToModule\AddQuestionToModule;
 
 final class AddQuestionToModuleTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -49,11 +49,11 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
         $questionModel->addAnswerModel((new AnswerModel())->setContent('Answer 2')->setCorrect(true));
         $questionModel->addAnswerModel((new AnswerModel())->setContent('Answer 3')->setCorrect(false));
         $questionModel->addAnswerModel((new AnswerModel())->setContent('Answer 4')->setCorrect(true));
-        
+
         $command = new AddQuestionToModule($testModule->getId(), $questionModel);
 
         // Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Module $module
@@ -65,7 +65,7 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
         $this->assertCount(1, $module->getQuestions());
         $this->assertNotNull($module->getQuestions()[0]->getId());
         $this->assertEquals('Test question', $module->getQuestions()[0]->getContent());
-        
+
         $this->assertCount(4, $module->getQuestions()[0]->getAnswers());
 
         $this->assertInstanceOf(Answer::class, $module->getQuestions()[0]->getAnswers()[0]);
@@ -105,6 +105,6 @@ final class AddQuestionToModuleTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

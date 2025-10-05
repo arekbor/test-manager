@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Test\Command\CreateTest;
+use Symfony\Component\Uid\Uuid;
 use App\Presentation\Form\TestType;
 use App\Application\Test\Model\TestModel;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use App\Application\Shared\Bus\CommandBusInterface;
+use Symfony\UX\LiveComponent\ComponentWithFormTrait;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Application\Test\Command\CreateTest\CreateTest;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsLiveComponent]
 final class CreateTestForm extends AbstractController
@@ -26,7 +26,7 @@ final class CreateTestForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
     ) {}
 
@@ -51,7 +51,7 @@ final class CreateTestForm extends AbstractController
 
             $creatorId = Uuid::fromString($this->getUser()->getUserIdentifier());
 
-            $this->commandBus->dispatch(new CreateTest($testModel, $creatorId, $this->moduleId));
+            $this->commandBus->handle(new CreateTest($testModel, $creatorId, $this->moduleId));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.createTestForm.error'));
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
+use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting\UpdateMailSmtpAppSetting;
 use App\Presentation\Form\MailSmtpAppSettingType;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
+use App\Application\Shared\Bus\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -25,8 +25,8 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
+        private readonly CommandBusInterface $commandBus
     ) {}
 
     #[LiveProp]
@@ -45,7 +45,7 @@ final class UpdateMailSmtpAppSettingForm extends AbstractController
              */
             $mailSmtpAppSetting = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new UpdateMailSmtpAppSetting($mailSmtpAppSetting));
+            $this->commandBus->handle(new UpdateMailSmtpAppSetting($mailSmtpAppSetting));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateMailSmtpAppSettingForm.error'));
 

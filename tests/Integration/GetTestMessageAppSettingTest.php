@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Model\TestAppSetting;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Query\GetTestMessageAppSetting;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\Test\Query\GetTestMessageAppSetting\GetTestMessageAppSetting;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
@@ -30,9 +30,7 @@ final class GetTestMessageAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->queryBus = $container->get(QueryBusInterface::class);
-
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
     }
 
@@ -64,7 +62,7 @@ final class GetTestMessageAppSettingTest extends DatabaseTestCase
         /**
          * @var TestMessageAppSetting $testMessageAppSetting
          */
-        $testMessageAppSetting = $this->queryBus->query($query);
+        $testMessageAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(TestMessageAppSetting::class, $testMessageAppSetting);
@@ -96,12 +94,12 @@ final class GetTestMessageAppSettingTest extends DatabaseTestCase
         $this->entityManager->flush();
 
         $query = new GetTestMessageAppSetting('en');
-        
+
         //Act
         /**
          * @var TestMessageAppSetting|null $testMessageAppSetting
          */
-        $testMessageAppSetting = $this->queryBus->query($query);
+        $testMessageAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertNull($testMessageAppSetting);

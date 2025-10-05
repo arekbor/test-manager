@@ -1,23 +1,23 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Test\Command\UpdateTest;
-use App\Application\Test\Model\TestModel;
+use Symfony\Component\Uid\Uuid;
 use App\Presentation\Form\TestType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Test\Model\TestModel;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Shared\Bus\CommandBusInterface;
+use Symfony\UX\LiveComponent\ComponentWithFormTrait;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Application\Test\Command\UpdateTest\UpdateTest;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsLiveComponent]
 final class UpdateTestForm extends AbstractController
@@ -26,10 +26,9 @@ final class UpdateTestForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[LiveProp(useSerializerForHydration: true)]
     public Uuid $testId;
@@ -48,7 +47,7 @@ final class UpdateTestForm extends AbstractController
              */
             $testModel = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new UpdateTest($this->testId, $testModel));
+            $this->commandBus->handle(new UpdateTest($this->testId, $testModel));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateTestForm.error'));
 

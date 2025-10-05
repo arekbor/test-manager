@@ -1,24 +1,24 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
+use Symfony\Component\Uid\Uuid;
 use App\Application\Module\Model\ModuleModel;
-use App\Application\Module\Query\GetModuleModel;
-use App\Application\Module\Query\GetModuleViewModels;
-use App\Application\Question\Query\GetQuestionViewModels;
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Video\Query\GetVideoViewModels;
-use App\Presentation\DataTable\Type\ModuleDataTableType;
-use App\Presentation\DataTable\Type\QuestionDataTableType;
-use App\Presentation\DataTable\Type\VideoDataTableType;
-use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Uid\Uuid;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Presentation\DataTable\Type\VideoDataTableType;
+use App\Presentation\DataTable\Type\ModuleDataTableType;
+use App\Presentation\DataTable\Type\QuestionDataTableType;
+use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
+use App\Application\Module\Query\GetModuleModel\GetModuleModel;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Video\Query\GetVideoViewModels\GetVideoViewModels;
+use App\Application\Module\Query\GetModuleViewModels\GetModuleViewModels;
+use App\Application\Question\Query\GetQuestionViewModels\GetQuestionViewModels;
 
 #[Route('/module')]
 final class ModuleController extends AbstractController
@@ -27,8 +27,7 @@ final class ModuleController extends AbstractController
 
     public function __construct(
         private readonly QueryBusInterface $queryBus
-    ) {
-    }
+    ) {}
 
     #[Route('/create', name: 'app_module_create')]
     public function create(): Response
@@ -42,18 +41,18 @@ final class ModuleController extends AbstractController
         /**
          * @var ModuleModel $moduleModel
          */
-        $moduleModel = $this->queryBus->query(new GetModuleModel($id));
+        $moduleModel = $this->queryBus->ask(new GetModuleModel($id));
 
         return $this->render('module/general.html.twig', [
             'moduleId' => $id,
-            'moduleModel' => $moduleModel, 
+            'moduleModel' => $moduleModel,
         ]);
     }
 
     #[Route('/details/questions/{id}', name: 'app_module_questions')]
     public function questions(Uuid $id, Request $request): Response
     {
-        $queryBuilder = $this->queryBus->query(new GetQuestionViewModels($id));
+        $queryBuilder = $this->queryBus->ask(new GetQuestionViewModels($id));
 
         $dataTable = $this->createDataTable(QuestionDataTableType::class, $queryBuilder, [
             'module_id' => $id
@@ -72,7 +71,7 @@ final class ModuleController extends AbstractController
     #[Route('/details/videos/{id}', name: 'app_module_videos')]
     public function videos(Uuid $id, Request $request): Response
     {
-        $queryBuilder = $this->queryBus->query(new GetVideoViewModels($id));
+        $queryBuilder = $this->queryBus->ask(new GetVideoViewModels($id));
 
         $dataTable = $this->createDataTable(VideoDataTableType::class, $queryBuilder, [
             'module_id' => $id
@@ -91,7 +90,7 @@ final class ModuleController extends AbstractController
     #[Route('/index', name: 'app_module_index')]
     public function index(Request $request): Response
     {
-        $queryBuilder = $this->queryBus->query(new GetModuleViewModels());
+        $queryBuilder = $this->queryBus->ask(new GetModuleViewModels());
 
         $dataTable = $this->createDataTable(ModuleDataTableType::class, $queryBuilder);
 

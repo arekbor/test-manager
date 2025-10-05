@@ -17,5 +17,33 @@ services:
     autowire: true # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+  _instanceof:
+    App\Application\Shared\Bus\CommandBusHandlerInterface:
+      public: true
+      tags:
+        - { name: messenger.message_handler, bus: command.bus }
+
+    App\Application\Shared\Bus\QueryBusHandlerInterface:
+      public: true
+      tags:
+        - { name: messenger.message_handler, bus: query.bus }
+
+    App\Application\Shared\Bus\AsyncMessageBusHandlerInterface:
+      public: true
+      tags:
+        - { name: messenger.message_handler, bus: async.message.bus }
+
   App\:
     resource: "../src/"
+
+  App\Infrastructure\Bus\CommandBus:
+    arguments:
+      - "@command.bus"
+
+  App\Infrastructure\Bus\QueryBus:
+    arguments:
+      - "@query.bus"
+
+  App\Infrastructure\Bus\AsyncMessageBus:
+    arguments:
+      - "@async.message.bus"

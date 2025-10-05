@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Shared\QueryBusInterface;
+use App\Application\Shared\Bus\QueryBusInterface;
 use App\Application\Test\Model\DataForTestSolve;
 use App\Application\Test\Model\TestAnswerSolve;
 use App\Application\Test\Model\TestQuestionSolve;
 use App\Application\Test\Model\TestSolve;
-use App\Application\Test\Query\GetDataForTestSolve;
+use App\Application\Test\Query\GetDataForTestSolve\GetDataForTestSolve;
 use App\Application\Video\Model\TestVideo;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Module;
@@ -74,21 +74,21 @@ final class GetDataForTestSolveTest extends DatabaseTestCase
         $this->entityManager->persist($entityTest);
 
         $this->entityManager->flush();
-    
+
         $query = new GetDataForTestSolve($entityTest->getId());
 
         //Act
         /**
          * @var DataForTestSolve $dataForTestSolve
          */
-        $dataForTestSolve = $this->queryBus->query($query);
-        
+        $dataForTestSolve = $this->queryBus->ask($query);
+
         //Assert
         $this->assertInstanceOf(DataForTestSolve::class, $dataForTestSolve);
 
         $this->assertEquals('introduction', $dataForTestSolve->getTestCategory());
         $this->assertEquals($entityTest->getId(), $dataForTestSolve->getTestId());
-        
+
         $this->assertInstanceOf(TestSolve::class, $dataForTestSolve->getTestSolve());
 
         $this->assertFalse($dataForTestSolve->getTestSolve()->isPrivacyPolicyConsent());
@@ -105,7 +105,7 @@ final class GetDataForTestSolveTest extends DatabaseTestCase
          * @var Collection<int, TestAnswerSolve>
          */
         $testAnswerSolves = $dataForTestSolve->getTestSolve()->getTestQuestionSolves()->first()->getTestAnswerSolves();
-    
+
         $this->assertCount(4, $testAnswerSolves);
 
         $this->assertInstanceOf(TestAnswerSolve::class, $testAnswerSolves->first());
@@ -144,6 +144,6 @@ final class GetDataForTestSolveTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Test {"id":"%s"}', $notExistingTestId->toString()));
 
-        $this->queryBus->query($query);
+        $this->queryBus->ask($query);
     }
 }

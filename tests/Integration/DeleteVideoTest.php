@@ -1,28 +1,28 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Video\Command\DeleteVideo;
 use App\Domain\Entity\Video;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Video\Command\DeleteVideo\DeleteVideo;
 
 final class DeleteVideoTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private MessageBusInterface $commandBus;
+    private CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -31,7 +31,7 @@ final class DeleteVideoTest extends DatabaseTestCase
     {
         //Arrange
         $testVideo = new Video();
-        
+
         $this->entityManager->persist($testVideo);
         $this->entityManager->flush();
 
@@ -40,7 +40,7 @@ final class DeleteVideoTest extends DatabaseTestCase
         $command = new DeleteVideo($testVideoId);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         //Assert
         /**
@@ -61,6 +61,6 @@ final class DeleteVideoTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Video {"id":"%s"}', $notExistingVideoId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

@@ -1,11 +1,11 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Application\SecurityUser\Query\GetLoginErrorMessage;
-use App\Application\Shared\QueryBusInterface;
+use App\Application\SecurityUser\Query\GetLoginErrorMessage\GetLoginErrorMessage;
+use App\Application\Shared\Bus\QueryBusInterface;
 use App\Presentation\Attribute\NotLogged;
 use App\Presentation\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,12 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/auth')]
 final class AuthController extends AbstractController
-{   
+{
     public function __construct(
         private readonly QueryBusInterface $queryBus,
         private readonly Security $security
-    ) {
-    }
+    ) {}
 
     #[Route('/login', name: 'app_auth_login')]
     #[NotLogged]
@@ -29,7 +28,7 @@ final class AuthController extends AbstractController
         /**
          * @var string|null $lastAuthenticationErrorMessage
          */
-        $lastAuthenticationErrorMessage = $this->queryBus->query(new GetLoginErrorMessage ());
+        $lastAuthenticationErrorMessage = $this->queryBus->ask(new GetLoginErrorMessage());
 
         $form = $this->createForm(LoginType::class);
 

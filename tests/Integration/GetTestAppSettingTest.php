@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Model\TestAppSetting;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
 use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
-use App\Application\AppSetting\Query\GetTestAppSetting;
-use App\Application\Shared\QueryBusInterface;
+use App\Application\AppSetting\Query\GetTestAppSetting\GetTestAppSetting;
+use App\Application\Shared\Bus\QueryBusInterface;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
@@ -31,9 +31,7 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->queryBus = $container->get(QueryBusInterface::class);
-
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
     }
 
@@ -44,7 +42,7 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         //Arrange
         $appSetting = new AppSetting();
         $appSetting->setKey(TestAppSetting::APP_SETTING_KEY);
-        
+
         $testTestAppSetting = new TestAppSetting();
         $testTestAppSetting->setExpirationDaysOffset(15);
         $testTestAppSetting->setNotificationsEnabled(true);
@@ -86,7 +84,7 @@ final class GetTestAppSettingTest extends DatabaseTestCase
         /**
          * @var TestAppSetting $testAppSetting
          */
-        $testAppSetting = $this->queryBus->query($query);
+        $testAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(TestAppSetting::class, $testAppSetting);

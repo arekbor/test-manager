@@ -1,28 +1,28 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Question\Command\DeleteQuestion;
 use App\Domain\Entity\Question;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Question\Command\DeleteQuestion\DeleteQuestion;
+use App\Application\Shared\Bus\CommandBusInterface;
 
 final class DeleteQuestionTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private MessageBusInterface $commandBus;
+    private CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -41,7 +41,7 @@ final class DeleteQuestionTest extends DatabaseTestCase
         $command = new DeleteQuestion($questionId);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Question|null $question
@@ -62,6 +62,6 @@ final class DeleteQuestionTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Question {"id":"%s"}', $notExistingQuestionId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

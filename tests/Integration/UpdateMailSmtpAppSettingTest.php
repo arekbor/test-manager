@@ -1,24 +1,24 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting;
+use App\Application\AppSetting\Command\UpdateMailSmtpAppSetting\UpdateMailSmtpAppSetting;
 use App\Domain\Entity\AppSetting;
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
+use App\Application\Shared\Bus\CommandBusInterface;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
     private readonly AppSettingDecoder $appSettingDecoder;
     private readonly AppSettingManager $appSettingManager;
 
@@ -29,10 +29,8 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
-
-        $this->commandBus = $container->get('command.bus');
+        $this->commandBus = $container->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -65,14 +63,13 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $command = new UpdateMailSmtpAppSetting($mailSmtpAppSettingAfterUpdate);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var AppSetting $appSetting
          */
         $appSetting = $this->entityManager->getRepository(AppSetting::class)
-            ->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY])
-        ;
+            ->findOneBy(['key' => MailSmtpAppSetting::APP_SETTING_KEY]);
 
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
@@ -84,7 +81,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $this->assertNotNull($appSetting->getId());
 
         $this->assertInstanceOf(MailSmtpAppSetting::class, $mailSmtpAppSetting);
-        
+
         $this->assertEquals('test.host.com', $mailSmtpAppSetting->getHost());
         $this->assertEquals('546', $mailSmtpAppSetting->getPort());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getFromAddress());
@@ -92,7 +89,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $this->assertTrue($mailSmtpAppSetting->getSmtpAuth());
         $this->assertEquals('ssl', $mailSmtpAppSetting->getSmtpSecure());
         $this->assertEquals(10, $mailSmtpAppSetting->getTimeout());
-        
+
         $this->assertNotEmpty($mailSmtpAppSetting->getPassword());
         $this->assertNotEquals('secret', $mailSmtpAppSetting->getPassword());
     }

@@ -1,37 +1,35 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Controller;
 
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Video\Command\DeleteVideo;
-use App\Application\Video\Command\UploadVideoFile;
-use App\Application\Video\Query\GetUpdateVideoModel;
-use App\Application\Video\Model\UpdateVideoModel;
-use App\Application\Video\Query\GetVideoFile;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Uid\Uuid;
+use App\Application\Shared\Bus\QueryBusInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Application\Shared\Bus\CommandBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use App\Application\Video\Command\DeleteVideo\DeleteVideo;
+use App\Application\Video\Query\GetVideoFile\GetVideoFile;
 use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use App\Application\Video\Command\UploadVideoFile\UploadVideoFile;
+use App\Application\Video\Query\GetUpdateVideoModel\GetUpdateVideoModel;
 
 #[Route('/video')]
 final class VideoController extends AbstractController
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[Route('/upload/{id}', name: 'app_video_upload')]
     public function upload(Uuid $id, Request $request): JsonResponse
@@ -42,7 +40,7 @@ final class VideoController extends AbstractController
              */
             $uploadedFile = $request->files->get('file');
 
-            $this->commandBus->dispatch(new UploadVideoFile($uploadedFile, $id));
+            $this->commandBus->handle(new UploadVideoFile($uploadedFile, $id));
         } catch (\Throwable $ex) {
             $errorMessage = $this->trans->trans('flash.videoController.upload.error');
 
@@ -66,7 +64,7 @@ final class VideoController extends AbstractController
         /**
          * @var \SplFileInfo $file
          */
-        $file = $this->queryBus->query(new GetVideoFile($id));
+        $file = $this->queryBus->ask(new GetVideoFile($id));
 
         return $this->file($file);
     }
@@ -79,7 +77,7 @@ final class VideoController extends AbstractController
         ]);
 
         try {
-            $this->commandBus->dispatch(new DeleteVideo($videoId));
+            $this->commandBus->handle(new DeleteVideo($videoId));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.videoController.delete.error'));
 
@@ -97,7 +95,7 @@ final class VideoController extends AbstractController
         /**
          * @var UpdateVideoModel $updateVideoModel
          */
-        $updateVideoModel = $this->queryBus->query(new GetUpdateVideoModel($videoId));
+        $updateVideoModel = $this->queryBus->ask(new GetUpdateVideoModel($videoId));
 
         return $this->render('video/details.html.twig', [
             'updateVideoModel' => $updateVideoModel,

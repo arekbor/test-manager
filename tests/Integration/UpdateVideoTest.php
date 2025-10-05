@@ -1,29 +1,29 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Video\Command\UpdateVideo;
-use App\Application\Video\Model\UpdateVideoModel;
 use App\Domain\Entity\Video;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Video\Model\UpdateVideoModel;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Video\Command\UpdateVideo\UpdateVideo;
 
 final class UpdateVideoTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -43,7 +43,7 @@ final class UpdateVideoTest extends DatabaseTestCase
         $command = new UpdateVideo($testVideo->getId(), $updateVideoModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Video $video
@@ -66,6 +66,6 @@ final class UpdateVideoTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Video {"id":"%s"}', $notExistingVideoId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

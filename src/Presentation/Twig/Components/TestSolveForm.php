@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Test\Command\SolveTest;
-use App\Application\Test\Model\DataForTestSolve;
+use App\Application\Shared\Bus\AsyncMessageBusInterface;
+use Psr\Log\LoggerInterface;
 use App\Presentation\Form\TestSolveType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Test\Model\TestSolve;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Test\Model\DataForTestSolve;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
-use App\Application\Test\Model\TestSolve;
-use App\Domain\Event\TestSolved;
-use Psr\Log\LoggerInterface;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Test\AsyncMessage\SendTestResultCsvToCreator;
+use Symfony\UX\LiveComponent\ComponentWithFormTrait;
+use App\Application\Test\Command\SolveTest\SolveTest;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsLiveComponent]
 final class TestSolveForm extends AbstractController
@@ -28,8 +29,8 @@ final class TestSolveForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
-        private readonly MessageBusInterface $eventBus,
+        private readonly CommandBusInterface $commandBus,
+        private readonly AsyncMessageBusInterface $asyncMessage,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -50,14 +51,16 @@ final class TestSolveForm extends AbstractController
     {
         $this->submitForm();
 
+        $testId = $this->dataForTestSolve->getTestId();
+
         try {
             /**
              * @var TestSolve $testSolve
              */
             $testSolve = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new SolveTest(
-                testId: $this->dataForTestSolve->getTestId(),
+            $this->commandBus->handle(new SolveTest(
+                testId: $testId,
                 testSolve: $testSolve,
                 start: $this->start,
                 submission: new \DateTimeImmutable()
@@ -67,11 +70,11 @@ final class TestSolveForm extends AbstractController
             return $this->redirectToRoute('app_testsolve_notvalid');
         }
 
-        $this->eventBus->dispatch(new TestSolved($this->dataForTestSolve->getTestId()));
+        $this->asyncMessage->send(new SendTestResultCsvToCreator($testId));
 
         return $this->redirectToRoute('app_testsolve_message', [
             'type' => 'conclusion',
-            'id' => $this->dataForTestSolve->getTestId()
+            'id' => $testId
         ]);
     }
 

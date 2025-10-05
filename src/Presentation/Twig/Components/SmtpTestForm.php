@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\AppSetting\Command\SendSmtpTestEmail;
+use App\Application\AppSetting\Command\SendSmtpTestEmail\SendSmtpTestEmail;
 use App\Presentation\Form\SmtpTestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -15,9 +15,9 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use App\Application\AppSetting\Model\SmtpTest;
+use App\Application\Shared\Bus\CommandBusInterface;
 use App\Domain\Exception\SendSmtpTestEmailException;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsLiveComponent]
 final class SmtpTestForm extends AbstractController
@@ -26,7 +26,7 @@ final class SmtpTestForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
     ) {}
 
@@ -43,7 +43,7 @@ final class SmtpTestForm extends AbstractController
              */
             $smtpTest = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new SendSmtpTestEmail($smtpTest));
+            $this->commandBus->handle(new SendSmtpTestEmail($smtpTest));
         } catch (\Throwable $ex) {
             $errorMessage = $this->trans->trans('flash.testEmailForm.error');
 

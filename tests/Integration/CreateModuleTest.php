@@ -1,28 +1,28 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Module\Command\CreateModule;
-use App\Application\Module\Model\ModuleModel;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Module\Model\ModuleModel;
+use App\Application\Module\Command\CreateModule\CreateModule;
+use App\Application\Shared\Bus\CommandBusInterface;
 
 final class CreateModuleTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -38,7 +38,7 @@ final class CreateModuleTest extends DatabaseTestCase
         $command = new CreateModule($moduleModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Module $module

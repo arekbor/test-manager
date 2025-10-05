@@ -1,32 +1,32 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Answer\Model\AnswerModel;
-use App\Application\Question\Command\UpdateQuestion;
-use App\Application\Question\Model\QuestionModel;
 use App\Domain\Entity\Answer;
 use App\Domain\Entity\Module;
 use App\Domain\Entity\Question;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Answer\Model\AnswerModel;
+use App\Application\Question\Model\QuestionModel;
+use App\Application\Question\Command\UpdateQuestion\UpdateQuestion;
+use App\Application\Shared\Bus\CommandBusInterface;
 
 final class UpdateQuestionTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get('command.bus');
+        $this->commandBus = $this->getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -85,7 +85,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Question $question
@@ -175,7 +175,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var Question $question
@@ -266,7 +266,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         $this->entityManager->clear();
 
@@ -357,7 +357,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
                 ->setContent('Osiem')
                 ->setCorrect(false)
         );
-        
+
         $questionModel->addAnswerModel(
             (new AnswerModel())
                 ->setContent('Dziesięć')
@@ -373,7 +373,7 @@ final class UpdateQuestionTest extends DatabaseTestCase
         $command = new UpdateQuestion($testQuestion->getId(), $testModule->getId(), $questionModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         $this->entityManager->clear();
 
@@ -427,10 +427,12 @@ final class UpdateQuestionTest extends DatabaseTestCase
 
         $command = new UpdateQuestion($notExistingQuestionId, $notExistingModuleId, new QuestionModel());
 
-        $this->expectExceptionMessage(sprintf('App\Domain\Entity\Question {"questionId":"%s","moduleId":"%s"}', 
-            $notExistingQuestionId->toString(), $notExistingModuleId->toString()
+        $this->expectExceptionMessage(sprintf(
+            'App\Domain\Entity\Question {"questionId":"%s","moduleId":"%s"}',
+            $notExistingQuestionId->toString(),
+            $notExistingModuleId->toString()
         ));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

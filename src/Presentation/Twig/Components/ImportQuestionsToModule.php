@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\Question\Command\ImportQuestionsFromImportQuestionsModel;
-use App\Application\Question\Model\ImportQuestionsModel;
-use App\Application\Question\Query\GetImportQuestionsModel;
-use App\Application\Shared\QueryBusInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\Application\Shared\Bus\QueryBusInterface;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Shared\Bus\CommandBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use App\Application\Question\Model\ImportQuestionsModel;
+use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use App\Application\Question\Query\GetImportQuestionsModel\GetImportQuestionsModel;
+use App\Application\Question\Command\ImportQuestionsFromImportQuestionsModel\ImportQuestionsFromImportQuestionsModel;
 
 #[AsLiveComponent]
 final class ImportQuestionsToModule extends AbstractController
@@ -28,7 +28,7 @@ final class ImportQuestionsToModule extends AbstractController
 
     public function __construct(
         private readonly QueryBusInterface $queryBus,
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
     ) {}
 
@@ -58,7 +58,7 @@ final class ImportQuestionsToModule extends AbstractController
             /**
              * @var ImportQuestionsModel $importQuestionsModel
              */
-            $importQuestionsModel = $this->queryBus->query(new GetImportQuestionsModel($csvFile));
+            $importQuestionsModel = $this->queryBus->ask(new GetImportQuestionsModel($csvFile));
             $this->importQuestionsModel = $importQuestionsModel;
 
             $session = $request->getSession();
@@ -92,7 +92,7 @@ final class ImportQuestionsToModule extends AbstractController
 
             $command = new ImportQuestionsFromImportQuestionsModel($this->moduleId, $importQuestionsModel);
 
-            $this->commandBus->dispatch($command);
+            $this->commandBus->handle($command);
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.importQuestionsToModule.import.error'));
 

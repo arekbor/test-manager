@@ -1,30 +1,30 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\SecurityUser\Command\UpdateEmail;
-use App\Application\SecurityUser\Model\UpdateEmailModel;
-use App\Domain\Entity\SecurityUser;
 use App\Tests\DatabaseTestCase;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\SecurityUser\Model\UpdateEmailModel;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use App\Application\SecurityUser\Command\UpdateEmail\UpdateEmail;
 
 final class UpdateEmailTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get('command.bus');
+        $this->commandBus = $this->getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -45,7 +45,7 @@ final class UpdateEmailTest extends DatabaseTestCase
         $command = new UpdateEmail($testSecurityUser->getId(), $updateEmailModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var SecurityUser $securityUser
@@ -75,7 +75,7 @@ final class UpdateEmailTest extends DatabaseTestCase
 
         $this->expectExceptionMessage("Cannot update email: the provided email address is the same as the current one.");
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 
     #[Test]
@@ -101,7 +101,7 @@ final class UpdateEmailTest extends DatabaseTestCase
 
         $this->expectException(UniqueConstraintViolationException::class);
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 
     #[Test]
@@ -114,6 +114,6 @@ final class UpdateEmailTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"id":"%s"}', $notExistingSecurityUserId));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

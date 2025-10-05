@@ -1,31 +1,31 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Test\Command\CreateTest;
-use App\Application\Test\Model\TestModel;
 use App\Domain\Entity\Module;
-use App\Domain\Entity\SecurityUser;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
-use App\Domain\Entity\Test as TestEntity;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Test\Model\TestModel;
+use App\Domain\Entity\Test as TestEntity;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Test\Command\CreateTest\CreateTest;
 
 final class CreateTestTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private MessageBusInterface $commandBus;
+    private CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -55,7 +55,7 @@ final class CreateTestTest extends DatabaseTestCase
         $command = new CreateTest($testModel, $testSecurityUser->getId(), $testModule->getId());
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var TestEntity $test
@@ -89,7 +89,7 @@ final class CreateTestTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 
     #[Test]
@@ -111,6 +111,6 @@ final class CreateTestTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\SecurityUser {"id":"%s"}', $notExistingCreatorId));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

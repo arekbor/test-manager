@@ -1,31 +1,30 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Test\Command\UpdateTest;
-use App\Application\Test\Model\TestModel;
 use App\Domain\Entity\Module;
-use App\Domain\Entity\SecurityUser;
-use App\Domain\Entity\Test as EntityTest;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Test\Model\TestModel;
+use App\Domain\Entity\Test as EntityTest;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Test\Command\UpdateTest\UpdateTest;
 
 final class UpdateTestTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
-
+    private readonly CommandBusInterface $commandBus;
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -37,7 +36,7 @@ final class UpdateTestTest extends DatabaseTestCase
         $testModule->setName('Test Module');
         $testModule->setLanguage('pl');
         $testModule->setCategory('introduction');
-        
+
         $securityUser = new SecurityUser();
         $securityUser->setEmail('test@gmail.com');
         $securityUser->setPassword('secret');
@@ -63,7 +62,7 @@ final class UpdateTestTest extends DatabaseTestCase
         $command = new UpdateTest($entityTest->getId(), $testModel);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var EntityTest $test
@@ -72,7 +71,7 @@ final class UpdateTestTest extends DatabaseTestCase
 
         //Assert
         $this->assertInstanceOf(EntityTest::class, $test);
-        
+
         $this->assertEquals($test->getId(), $entityTest->getId());
         $this->assertEquals($test->getExpiration(), $expirationDateAfterUpdate);
         $this->assertEquals($test->getCreator(), $securityUser);
@@ -89,6 +88,6 @@ final class UpdateTestTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Test {"id":"%s"}', $notExistingTestId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

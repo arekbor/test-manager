@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate;
-use App\Domain\Entity\AppSetting;
-use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
+use App\Domain\Entity\AppSetting;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
 use App\Application\Test\Model\TestModel;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\AppSetting\Model\TestAppSetting;
+use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
+use App\Application\Test\Query\GetTestModelWithDefaultExpirationDate\GetTestModelWithDefaultExpirationDate;
 
 final class GetTestModelWithDefaultExpirationDateTest extends DatabaseTestCase
 {
@@ -28,7 +28,6 @@ final class GetTestModelWithDefaultExpirationDateTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->queryBus = $container->get(QueryBusInterface::class);
-
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
     }
 
@@ -50,19 +49,20 @@ final class GetTestModelWithDefaultExpirationDateTest extends DatabaseTestCase
         $this->entityManager->flush();
 
         $query = new GetTestModelWithDefaultExpirationDate();
-        
+
         //Act
         /**
          * @var TestModel $testModel
          */
-        $testModel = $this->queryBus->query($query);
+        $testModel = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(TestModel::class, $testModel);
 
         $this->assertEqualsWithDelta(
-            (new \DateTime())->modify('+12 days')->getTimestamp(), 
-            $testModel->getExpiration()->getTimestamp(), 1
+            (new \DateTime())->modify('+12 days')->getTimestamp(),
+            $testModel->getExpiration()->getTimestamp(),
+            1
         );
     }
 }

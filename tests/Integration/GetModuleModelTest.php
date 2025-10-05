@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Shared\QueryBusInterface;
 use App\Application\Module\Model\ModuleModel;
-use App\Application\Module\Query\GetModuleModel;
+use App\Application\Module\Query\GetModuleModel\GetModuleModel;
+use App\Application\Shared\Bus\QueryBusInterface;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
@@ -46,7 +46,7 @@ final class GetModuleModelTest extends DatabaseTestCase
         /**
          * @var ModuleModel $moduleModel
          */
-        $moduleModel = $this->queryBus->query($query);
+        $moduleModel = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(ModuleModel::class, $moduleModel);
@@ -65,6 +65,6 @@ final class GetModuleModelTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Module {"id":"%s"}', $notExistingModuleId->toString()));
 
-        $this->queryBus->query($query);
+        $this->queryBus->ask($query);
     }
 }

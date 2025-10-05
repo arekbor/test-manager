@@ -1,28 +1,28 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\AppSetting\Command\UpdateTestAppSetting;
+use App\Application\AppSetting\Command\UpdateTestAppSetting\UpdateTestAppSetting;
 use App\Application\AppSetting\Model\TestAppSetting;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
 use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
+use App\Application\Shared\Bus\CommandBusInterface;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class UpdateTestAppSettingTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
     private readonly AppSettingDecoder $appSettingDecoder;
     private readonly AppSettingManager $appSettingManager;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
@@ -31,10 +31,8 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
-
-        $this->commandBus = $container->get('command.bus');
+        $this->commandBus = $container->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -46,7 +44,7 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
 
         $testAppSetting = new AppSetting();
         $testAppSetting->setKey(TestAppSetting::APP_SETTING_KEY);
-        
+
         $encodedValue = $this->appSettingDecoder->decode($testAppSettingBeforeUpdate);
         $testAppSetting->setValue($encodedValue);
 
@@ -86,14 +84,13 @@ final class UpdateTestAppSettingTest extends DatabaseTestCase
         $command = new UpdateTestAppSetting($testAppSettingAfterUpdate);
 
         //Act
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
 
         /**
          * @var AppSetting $appSetting
          */
         $appSetting = $this->entityManager->getRepository(AppSetting::class)
-            ->findOneBy(['key' => TestAppSetting::APP_SETTING_KEY])
-        ;
+            ->findOneBy(['key' => TestAppSetting::APP_SETTING_KEY]);
 
         /**
          * @var TestAppSetting $testAppSetting

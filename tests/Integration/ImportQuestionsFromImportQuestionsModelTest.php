@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-use App\Application\Answer\Model\AnswerModel;
-use App\Application\Question\Command\ImportQuestionsFromImportQuestionsModel;
-use App\Application\Question\Model\ImportQuestionsModel;
-use App\Application\Question\Model\QuestionModel;
 use App\Domain\Entity\Module;
 use App\Tests\DatabaseTestCase;
-use App\Tests\Integration\IntegrationTestTrait;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Answer\Model\AnswerModel;
+use App\Tests\Integration\IntegrationTestTrait;
+use App\Application\Question\Model\QuestionModel;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Question\Model\ImportQuestionsModel;
+use App\Application\Question\Command\ImportQuestionsFromImportQuestionsModel\ImportQuestionsFromImportQuestionsModel;
 
 final class ImportQuestionsFromImportQuestionsModelTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private readonly MessageBusInterface $commandBus;
+    private readonly CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -61,7 +61,7 @@ final class ImportQuestionsFromImportQuestionsModelTest extends DatabaseTestCase
 
         $moduleId = $testModule->getId();
         //Act
-        $this->commandBus->dispatch(new ImportQuestionsFromImportQuestionsModel($moduleId, $importQuestionsModel));
+        $this->commandBus->handle(new ImportQuestionsFromImportQuestionsModel($moduleId, $importQuestionsModel));
 
         /**
          * @var Module $module

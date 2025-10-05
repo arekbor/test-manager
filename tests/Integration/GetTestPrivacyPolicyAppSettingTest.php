@@ -1,19 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\AppSetting\Model\TestAppSetting;
-use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
-use App\Application\Shared\QueryBusInterface;
-use App\Application\Test\Query\GetTestPrivacyPolicyAppSetting;
+use App\Tests\DatabaseTestCase;
 use App\Domain\Entity\AppSetting;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\AppSetting\Model\TestAppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
-use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
+use App\Application\Test\Query\GetTestPrivacyPolicyAppSetting\GetTestPrivacyPolicyAppSetting;
 
 final class GetTestPrivacyPolicyAppSettingTest extends DatabaseTestCase
 {
@@ -30,9 +30,7 @@ final class GetTestPrivacyPolicyAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->queryBus = $container->get(QueryBusInterface::class);
-
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
     }
 
@@ -63,7 +61,7 @@ final class GetTestPrivacyPolicyAppSettingTest extends DatabaseTestCase
         /**
          * @var TestPrivacyPolicyAppSetting $testPrivacyPolicyAppSetting
          */
-        $testPrivacyPolicyAppSetting = $this->queryBus->query($query);
+        $testPrivacyPolicyAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(TestPrivacyPolicyAppSetting::class, $testPrivacyPolicyAppSetting);
@@ -99,7 +97,7 @@ final class GetTestPrivacyPolicyAppSettingTest extends DatabaseTestCase
         /**
          * @var TestPrivacyPolicyAppSetting|null $testPrivacyPolicyAppSetting
          */
-        $testPrivacyPolicyAppSetting = $this->queryBus->query($query);
+        $testPrivacyPolicyAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertNull($testPrivacyPolicyAppSetting);

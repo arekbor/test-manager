@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\SecurityUser\Command\UpdatePassword;
-use App\Presentation\Form\UpdatePasswordType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Form\FormInterface;
+use App\Presentation\Form\UpdatePasswordType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use App\Application\Shared\Bus\CommandBusInterface;
+use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use App\Application\SecurityUser\Model\UpdatePasswordModel;
 use App\Domain\Exception\SecurityUserInvalidCurrentPassword;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Symfony\Component\Uid\Uuid;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\Application\SecurityUser\Command\UpdatePassword\UpdatePassword;
 
 #[AsLiveComponent]
 final class UpdatePasswordForm extends AbstractController
@@ -27,10 +27,9 @@ final class UpdatePasswordForm extends AbstractController
     use ComponentWithFormTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     #[LiveAction]
     public function update(): Response
@@ -45,7 +44,7 @@ final class UpdatePasswordForm extends AbstractController
 
             $userId = Uuid::fromString($this->getUser()->getUserIdentifier());
 
-            $this->commandBus->dispatch(new UpdatePassword($userId, $updatePasswordModel));
+            $this->commandBus->handle(new UpdatePassword($userId, $updatePasswordModel));
         } catch (\Throwable $ex) {
             $errorMessage = $this->trans->trans('flash.updatePasswordForm.error');
 
@@ -61,7 +60,7 @@ final class UpdatePasswordForm extends AbstractController
         return $this->redirectToRoute('app_auth_logout');
     }
 
-    protected function instantiateForm(): FormInterface 
+    protected function instantiateForm(): FormInterface
     {
         return $this->createForm(UpdatePasswordType::class);
     }

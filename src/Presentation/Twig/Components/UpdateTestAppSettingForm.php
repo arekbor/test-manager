@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Components;
 
-use App\Application\AppSetting\Command\UpdateTestAppSetting;
+use App\Application\AppSetting\Command\UpdateTestAppSetting\UpdateTestAppSetting;
 use App\Presentation\Form\TestAppSettingType;
 use App\Application\AppSetting\Model\TestAppSetting;
+use App\Application\Shared\Bus\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -25,7 +25,7 @@ final class UpdateTestAppSettingForm extends AbstractController
     use LiveCollectionTrait;
 
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $trans,
     ) {}
 
@@ -45,7 +45,7 @@ final class UpdateTestAppSettingForm extends AbstractController
              */
             $testAppSetting = $this->getForm()->getData();
 
-            $this->commandBus->dispatch(new UpdateTestAppSetting($testAppSetting));
+            $this->commandBus->handle(new UpdateTestAppSetting($testAppSetting));
         } catch (\Exception) {
             $this->addFlash('danger', $this->trans->trans('flash.updateTestAppSettingForm.error'));
 

@@ -1,29 +1,29 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
-use App\Application\Test\Command\DeleteTest;
-use App\Domain\Entity\SecurityUser;
-use App\Domain\Entity\Test as EntityTest;
 use App\Tests\DatabaseTestCase;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
+use App\Domain\Entity\SecurityUser;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use App\Domain\Entity\Test as EntityTest;
+use App\Application\Shared\Bus\CommandBusInterface;
+use App\Application\Test\Command\DeleteTest\DeleteTest;
 
 final class DeleteTestTest extends DatabaseTestCase
 {
     use IntegrationTestTrait;
 
-    private MessageBusInterface $commandBus;
+    private CommandBusInterface $commandBus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->commandBus = self::getContainer()->get('command.bus');
+        $this->commandBus = self::getContainer()->get(CommandBusInterface::class);
     }
 
     #[Test]
@@ -37,7 +37,7 @@ final class DeleteTestTest extends DatabaseTestCase
 
         $entityTest = new EntityTest();
         $entityTest->setCreator($testCreator);
-        
+
         $this->entityManager->persist($testCreator);
         $this->entityManager->persist($entityTest);
         $this->entityManager->flush();
@@ -47,7 +47,7 @@ final class DeleteTestTest extends DatabaseTestCase
         $comamnd = new DeleteTest($entityTestId);
 
         //Act
-        $this->commandBus->dispatch($comamnd);
+        $this->commandBus->handle($comamnd);
 
         /**
          * @var EntityTest|null $test
@@ -68,6 +68,6 @@ final class DeleteTestTest extends DatabaseTestCase
 
         $this->expectExceptionMessage(sprintf('App\Domain\Entity\Test {"id":"%s"}', $notExistingTestId->toString()));
 
-        $this->commandBus->dispatch($command);
+        $this->commandBus->handle($command);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
 use App\Application\AppSetting\Model\MailSmtpAppSetting;
-use App\Application\AppSetting\Query\GetMailSmtpAppSetting;
-use App\Application\Shared\QueryBusInterface;
+use App\Application\AppSetting\Query\GetMailSmtpAppSetting\GetMailSmtpAppSetting;
+use App\Application\Shared\Bus\QueryBusInterface;
 use App\Domain\Entity\AppSetting;
 use App\Infrastructure\AppSetting\Service\AppSettingDecoder;
 use App\Infrastructure\AppSetting\Service\AppSettingManager;
@@ -29,9 +29,7 @@ final class GetMailSmtpAppSettingTest extends DatabaseTestCase
         $container = self::getContainer();
 
         $this->queryBus = $container->get(QueryBusInterface::class);
-
         $this->appSettingDecoder = $container->get(AppSettingDecoder::class);
-
         $this->appSettingManager = $container->get(AppSettingManager::class);
     }
 
@@ -60,13 +58,14 @@ final class GetMailSmtpAppSettingTest extends DatabaseTestCase
         $this->entityManager->persist($appSetting);
         $this->entityManager->flush();
 
+        // $query = new GetMailSmtpAppSetting();
         $query = new GetMailSmtpAppSetting();
 
         //Act
         /**
          * @var MailSmtpAppSetting $mailSmtpAppSetting
          */
-        $mailSmtpAppSetting = $this->queryBus->query($query);
+        $mailSmtpAppSetting = $this->queryBus->ask($query);
 
         //Assert
         $this->assertInstanceOf(MailSmtpAppSetting::class, $mailSmtpAppSetting);
