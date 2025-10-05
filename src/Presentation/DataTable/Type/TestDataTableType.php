@@ -7,6 +7,8 @@ namespace App\Presentation\DataTable\Type;
 use App\Application\Test\Model\TestViewModel;
 use App\Presentation\DataTable\Action\Type\ButtonGroupActionType;
 use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
+use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\DateRangeFilterType;
+use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\DateTimeFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\NumericFilterType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
@@ -15,6 +17,7 @@ use Kreyu\Bundle\DataTableBundle\Column\Type\DateTimeColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
+use Kreyu\Bundle\DataTableBundle\Filter\Operator;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -109,18 +112,23 @@ final class TestDataTableType extends AbstractDataTableType
             ])
             ->addColumn('email', TextColumnType::class, [
                 'label' => 'data_table.test.email',
+                'sort' => true
             ])
             ->addColumn('firstname', TextColumnType::class, [
-                'label' => 'data_table.test.firstname'
+                'label' => 'data_table.test.firstname',
+                'sort' => true
             ])
             ->addColumn('lastname', TextColumnType::class, [
-                'label' => 'data_table.test.lastname'
+                'label' => 'data_table.test.lastname',
+                'sort' => true
             ])
             ->addColumn('workplace', TextColumnType::class, [
-                'label' => 'data_table.test.workplace'
+                'label' => 'data_table.test.workplace',
+                'sort' => true
             ])
             ->addColumn('dateOfBirth', DateColumnType::class, [
-                'label' => 'data_table.test.dateOfBirth'
+                'label' => 'data_table.test.dateOfBirth',
+                'sort' => true,
             ])
             ->addColumn('expiration', DateTimeColumnType::class, [
                 'label' => 'data_table.test.expiration',
@@ -138,16 +146,20 @@ final class TestDataTableType extends AbstractDataTableType
                     }
 
                     return ['class' => 'text-success'];
-                }
+                },
+                'sort' => true
             ])
             ->addColumn('start', DateTimeColumnType::class, [
-                'label' => 'data_table.test.start'
+                'label' => 'data_table.test.start',
+                'sort' => true
             ])
             ->addColumn('submission', DateTimeColumnType::class, [
-                'label' => 'data_table.test.submission'
+                'label' => 'data_table.test.submission',
+                'sort' => true
             ])
             ->addColumn('score', NumberColumnType::class, [
-                'label' => 'data_table.test.score'
+                'label' => 'data_table.test.score',
+                'sort' => true
             ])
             ->addFilter('email', StringFilterType::class, [
                 'label' => 'data_table.test.email',
@@ -167,6 +179,9 @@ final class TestDataTableType extends AbstractDataTableType
             ])
             ->addFilter('score', NumericFilterType::class, [
                 'label' => 'data_table.test.score'
+            ])
+            ->addFilter('expiration', DateRangeFilterType::class, [
+                'label' => 'data_table.test.expiration'
             ])
         ;
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfb9988c7837bd407c77eb003527ede4",
+    "content-hash": "915e2090d29b18abd5fbe43275a67750",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1446,16 +1446,16 @@
         },
         {
             "name": "kreyu/data-table-bundle",
-            "version": "v0.31.2",
+            "version": "v0.32.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kreyu/data-table-bundle.git",
-                "reference": "2df63d0557a84d8d4a91b1ce2c6c8347de9f21d0"
+                "reference": "b4aac07d4777e58625bc4f82ea8bdf6179c39718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/2df63d0557a84d8d4a91b1ce2c6c8347de9f21d0",
-                "reference": "2df63d0557a84d8d4a91b1ce2c6c8347de9f21d0",
+                "url": "https://api.github.com/repos/Kreyu/data-table-bundle/zipball/b4aac07d4777e58625bc4f82ea8bdf6179c39718",
+                "reference": "b4aac07d4777e58625bc4f82ea8bdf6179c39718",
                 "shasum": ""
             },
             "require": {
@@ -1506,7 +1506,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kreyu/data-table-bundle/issues",
-                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.31.2"
+                "source": "https://github.com/Kreyu/data-table-bundle/tree/v0.32.2"
             },
             "funding": [
                 {
@@ -1514,7 +1514,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-12T17:17:37+00:00"
+            "time": "2025-10-01T06:56:19+00:00"
         },
         {
             "name": "maennchen/zipstream-php",

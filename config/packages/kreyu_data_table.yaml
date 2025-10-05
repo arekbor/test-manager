@@ -6,3 +6,5 @@ kreyu_data_table:
     pagination:
       persistence_enabled: true
       per_page_choices: [5, 10, 20]
+    sorting:
+      persistence_enabled: true

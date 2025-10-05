@@ -9,6 +9,7 @@ use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
+use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -58,9 +59,10 @@ final class QuestionDataTableType extends AbstractDataTableType
                 ]
             ])
             ->addColumn('content', TruncatedTextColumnType::class, [
-                'label' => 'data_table.question.content'
+                'label' => 'data_table.question.content',
+                'sort' => true
             ])
-            ->addColumn('answersCount', TextColumnType::class, [
+            ->addColumn('answersCount', NumberColumnType::class, [
                 'label' => 'data_table.question.answersCount'
             ])
             ->addFilter('content', StringFilterType::class, [

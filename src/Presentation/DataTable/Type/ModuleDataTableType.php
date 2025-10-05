@@ -10,6 +10,7 @@ use App\Presentation\DataTable\Column\Type\TruncatedTextColumnType;
 use Kreyu\Bundle\DataTableBundle\Action\Type\ButtonActionType;
 use Kreyu\Bundle\DataTableBundle\Bridge\Doctrine\Orm\Filter\Type\StringFilterType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\ActionsColumnType;
+use Kreyu\Bundle\DataTableBundle\Column\Type\NumberColumnType;
 use Kreyu\Bundle\DataTableBundle\Column\Type\TextColumnType;
 use Kreyu\Bundle\DataTableBundle\DataTableBuilderInterface;
 use Kreyu\Bundle\DataTableBundle\Type\AbstractDataTableType;
@@ -71,25 +72,28 @@ final class ModuleDataTableType extends AbstractDataTableType
                 ]
             ])
             ->addColumn('name', TruncatedTextColumnType::class, [
-                'label' => 'data_table.module.name'
+                'label' => 'data_table.module.name',
+                'sort' => true
             ])
             ->addColumn('language', TextColumnType::class, [
                 'label' => 'data_table.module.language',
                 'getter' => function (ModuleViewModel $moduleViewModel): string {
                     return $this->trans->trans($moduleViewModel->getLanguage());
-                }
+                },
+                'sort' => true
             ])
             ->addColumn('category', TextColumnType::class, [
                 'label' => 'data_table.module.category',
                 'getter' => function (ModuleViewModel $moduleViewModel): string {
                     return $this->trans->trans($moduleViewModel->getCategory());
-                }
+                },
+                'sort' => true
             ])
-            ->addColumn('questionsCount', TextColumnType::class, [
-                'label' => 'data_table.module.questionsCount'
+            ->addColumn('questionsCount', NumberColumnType::class, [
+                'label' => 'data_table.module.questionsCount',
             ])
-            ->addColumn('videosCount', TextColumnType::class, [
-                'label' => 'data_table.module.videosCount'
+            ->addColumn('videosCount', NumberColumnType::class, [
+                'label' => 'data_table.module.videosCount',
             ])
             ->addFilter('name', StringFilterType::class, [
                 'label' => 'data_table.module.name',

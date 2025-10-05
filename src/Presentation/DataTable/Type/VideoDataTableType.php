@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\DataTable\Type;
 
@@ -20,8 +20,7 @@ final class VideoDataTableType extends AbstractDataTableType
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator
-    ) {
-    }
+    ) {}
 
     public function buildDataTable(DataTableBuilderInterface $builder, array $options): void
     {
@@ -31,13 +30,12 @@ final class VideoDataTableType extends AbstractDataTableType
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ],
-                'upload_url' => function() use($options): string {
+                'upload_url' => function () use ($options): string {
                     return $this->urlGenerator->generate('app_video_upload', [
                         'id' => $options['module_id']
                     ]);
                 }
-            ])
-        ;
+            ]);
 
         $builder
             ->addColumn('actions', ActionsColumnType::class, [
@@ -47,7 +45,7 @@ final class VideoDataTableType extends AbstractDataTableType
                         'type' => ButtonActionType::class,
                         'type_options' => [
                             'label' => 'data_table.details',
-                            'href' => function(VideoViewModel $videoViewModel): string {
+                            'href' => function (VideoViewModel $videoViewModel): string {
                                 return $this->urlGenerator->generate('app_video_details', [
                                     'moduleId' => $videoViewModel->getModuleId(),
                                     'videoId' => $videoViewModel->getId()
@@ -59,9 +57,11 @@ final class VideoDataTableType extends AbstractDataTableType
             ])
             ->addColumn('originalName', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.originalName',
+                'sort' => true,
             ])
             ->addColumn('mimeType', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.mimeType',
+                'sort' => true,
             ])
             ->addColumn('size', TruncatedTextColumnType::class, [
                 'label' => 'data_table.video.size',
@@ -81,7 +81,6 @@ final class VideoDataTableType extends AbstractDataTableType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('module_id')
-        ;
+            ->setRequired('module_id');
     }
 }
