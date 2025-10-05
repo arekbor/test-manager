@@ -13,6 +13,7 @@ use App\Application\Shared\Bus\QueryBusInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Application\Video\Query\GetVideoFile\GetVideoFile;
 use App\Application\AppSetting\Model\TestMessageAppSetting;
+use App\Application\AppSetting\Model\TestPrivacyPolicyAppSetting;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Application\Test\Query\GetDataForTestSolve\GetDataForTestSolve;
 use App\Application\Test\Query\GetTestMessageAppSetting\GetTestMessageAppSetting;

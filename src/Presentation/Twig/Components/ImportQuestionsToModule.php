@@ -81,8 +81,9 @@ final class ImportQuestionsToModule extends AbstractController
             'id' => $this->moduleId
         ]);
 
+        $session = $request->getSession();
+
         try {
-            $session = $request->getSession();
             $importQuestionsModelSerialized = $session->get(self::IMPORT_QUESTIONS_MODEL_SESSION_KEY);
 
             /**

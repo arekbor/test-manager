@@ -19,10 +19,10 @@ final class GetModuleModelHandler implements QueryBusHandlerInterface
     public function __invoke(GetModuleModel $query): ModuleModel
     {
         /**
-         * @var Module $module
+         * @var Module|null $module
          */
         $module = $this->entityManager->find(Module::class, $query->getModuleId());
-        if ($module === null) {
+        if (!$module) {
             throw new NotFoundException(Module::class, ['id' => $query->getModuleId()]);
         }
 

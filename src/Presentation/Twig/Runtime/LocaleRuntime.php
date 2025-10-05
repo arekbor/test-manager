@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Presentation\Twig\Runtime;
 
@@ -18,8 +18,7 @@ class LocaleRuntime implements RuntimeExtensionInterface
         private readonly RequestStack $requestStack,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly ParameterBagInterface $parameterBag
-    ) {
-    }
+    ) {}
 
     public function getLocaleLinks(): array
     {
@@ -50,7 +49,8 @@ class LocaleRuntime implements RuntimeExtensionInterface
          */
         $allowedLocales = ParameterHelper::explodeStringToArray($this->parameterBag->get('app.allowed_locales'));
 
-        foreach($allowedLocales as $locale) {
+        $localeLinks = [];
+        foreach ($allowedLocales as $locale) {
             if ($locale !== $currentLocale) {
                 $parameters = array_merge($params, ['_locale' => $locale]);
                 $localeLinks[$locale] = $this->urlGenerator->generate($route, $parameters);

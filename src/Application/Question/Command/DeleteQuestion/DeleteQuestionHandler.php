@@ -20,10 +20,10 @@ final class DeleteQuestionHandler implements CommandBusHandlerInterface
         $questionId = $command->getQuestionId();
 
         /**
-         * @var Question $question
+         * @var Question|null $question
          */
         $question = $this->entityManager->find(Question::class, $questionId);
-        if ($question === null) {
+        if (!$question) {
             throw new NotFoundException(Question::class, ['id' => $questionId]);
         }
 

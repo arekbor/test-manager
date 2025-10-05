@@ -24,10 +24,10 @@ final class ImportQuestionsFromImportQuestionsModelHandler implements CommandBus
         $moduleId = $command->getModuleId();
 
         /**
-         * @var Module $module
+         * @var Module|null $module
          */
         $module = $this->entityManager->find(Module::class, $moduleId);
-        if ($module === null) {
+        if (!$module) {
             throw new NotFoundException(Module::class, ['id' => $moduleId]);
         }
 

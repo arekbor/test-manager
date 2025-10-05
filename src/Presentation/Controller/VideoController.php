@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Shared\Bus\QueryBusInterface;
+use App\Application\Video\Model\UpdateVideoModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Application\Shared\Bus\CommandBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
