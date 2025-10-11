@@ -7,16 +7,63 @@
                 <div 
                     class="nav-link"
                 >
-                    <div class="d-flex flex-column text-muted small">
-                        <small class="mb-1">
-                            {{ 'templates.settings.base.info.email'|trans }}:
-                            <span class="text-info">{{ app.user.email }}</span>
-                        </small>
-                        <small class="mb-1">
-                            {{ 'templates.settings.base.info.timezone'|trans }}: 
-                            <span class="text-info">{{ get_timezone() }}</span>
-                        </small>
-                    </div>
+                    {% set systemInfo = get_system_info() %}
+
+                    <ul class="list-unstyled mb-0 small">
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.email'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.currentUserEmail }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.timezone'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.systemTimezone }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.logsPath'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.systemLogsPath }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.videosPath'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.videosPath }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.videosTotalSize'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.videosTotalSize }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.testResultsPath'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.testResultsPath }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.testResultsTotalSize'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.testResultsTotalSize }}</span>
+                        </li>
+
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.systemTotalSize'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.systemTotalSize }}</span>
+                        </li>
+                        
+                        <li class="mb-1">
+                            <span class="text-secondary">{{ 'templates.settings.base.info.systemFreeSpace'|trans }}:</span>
+                            <br>
+                            <span class="text-info">{{ systemInfo.systemFreeSpace }}</span>
+                        </li>
+                    </ul>
                 </div>
 
                 {{ component('NavLink', { 

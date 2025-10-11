@@ -186,7 +186,14 @@ templates:
     base:
       info:
         email: E-mail
-        timezone: Strefa czasowa systemu
+        timezone: System timezone
+        logsPath: Logs path
+        videosPath: Videos path
+        videosTotalSize: Videos total size
+        testResultsPath: Test results path
+        testResultsTotalSize: Test results total size
+        systemTotalSize: System total size
+        systemFreeSpace: System free space
       nav:
         general: Ogólne
         smtp: SMTP

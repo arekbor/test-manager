@@ -187,6 +187,13 @@ templates:
       info:
         email: E-mail
         timezone: System timezone
+        logsPath: Logs path
+        videosPath: Videos path
+        videosTotalSize: Videos total size
+        testResultsPath: Test results path
+        testResultsTotalSize: Test results total size
+        systemTotalSize: System total size
+        systemFreeSpace: System free space
       nav:
         general: General
         smtp: SMTP

@@ -31,6 +31,8 @@ COPY . /var/www
 
 RUN mkdir /home/uploads/ && chmod a+w /home/uploads/
 
+RUN chmod a+x /var/log/
+
 RUN rm -r /var/www/docker
 
 WORKDIR /var/www

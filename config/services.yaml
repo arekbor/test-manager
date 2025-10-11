@@ -6,8 +6,8 @@ parameters:
   app.admin_email: "%env(ADMIN_EMAIL)%"
   app.admin_password: "%env(ADMIN_PASSWORD)%"
   app.encryption.key: "%env(ENCRYPTION_KEY)%"
-  app.logs.location: "%env(LOGS_LOCATION)%"
 
+  app.logs.path: "/var/log/test-manager.log"
   app.base.path: "/home/uploads"
   app.videos.path: "%app.base.path%/videos"
   app.testResults.path: "%app.base.path%/testResults"
