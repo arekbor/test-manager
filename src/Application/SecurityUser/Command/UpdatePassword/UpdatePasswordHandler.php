@@ -23,7 +23,7 @@ final class UpdatePasswordHandler implements CommandBusHandlerInterface
         $userId = $command->getUserId();
 
         /**
-         * @var SecurityUser $securityUser
+         * @var SecurityUser|null $securityUser
          */
         $securityUser = $this->entityManager->find(SecurityUser::class, $userId);
         if ($securityUser === null) {

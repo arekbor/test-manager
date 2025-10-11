@@ -12,6 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ButtonGroupActionType extends AbstractActionType
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
         $buttons = $options['buttons'];

@@ -31,7 +31,7 @@ final class SendCsvTestResult
     public function send(Uuid $testId): void
     {
         /**
-         * @var Test $test
+         * @var Test|null $test
          */
         $test = $this->entityManager->find(Test::class, $testId);
         if ($test === null) {

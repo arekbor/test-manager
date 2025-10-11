@@ -22,7 +22,7 @@ final class GetVideoFileHandler implements QueryBusHandlerInterface
         $videoId = $query->getVideoId();
 
         /**
-         * @var Video $video
+         * @var Video|null $video
          */
         $video = $this->entityManager->find(Video::class, $videoId);
         if ($video === null) {

@@ -21,7 +21,7 @@ final class GetTestModelHandler implements QueryBusHandlerInterface
         $testId = $query->getTestId();
 
         /**
-         * @var Test $test
+         * @var Test|null $test
          */
         $test = $this->entityManager->find(Test::class, $testId);
         if ($test === null) {

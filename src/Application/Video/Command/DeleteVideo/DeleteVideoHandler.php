@@ -20,7 +20,7 @@ final class DeleteVideoHandler implements CommandBusHandlerInterface
         $videoId = $command->getVideoId();
 
         /**
-         * @var Video $video
+         * @var Video|null $video
          */
         $video = $this->entityManager->find(Video::class, $videoId);
         if ($video === null) {

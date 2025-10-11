@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Infrastructure\Shared;
 
@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Handler\AbstractHandler;
 
 final class VichFileHandler extends AbstractHandler implements VichFileHandlerInterface
 {
-    public function handle(object|array $object, string $field, ?string $className = null): \SplFileInfo
+    public function handle(object $object, string $field, ?string $className = null): \SplFileInfo
     {
         $path = $this->storage->resolvePath($object, $field, $className);
         if (!$path) {

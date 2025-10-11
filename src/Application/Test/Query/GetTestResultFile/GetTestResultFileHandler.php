@@ -22,7 +22,7 @@ final class GetTestResultFileHandler implements QueryBusHandlerInterface
         $testResultId = $query->getTestResultId();
 
         /**
-         * @var TestResult $testResult
+         * @var TestResult|null $testResult
          */
         $testResult = $this->entityManager->find(TestResult::class, ['id' => $testResultId]);
         if ($testResult === null) {

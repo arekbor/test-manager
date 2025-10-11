@@ -20,7 +20,7 @@ final class DeleteTestHandler implements CommandBusHandlerInterface
         $testId = $command->getTestId();
 
         /**
-         * @var Test $test
+         * @var Test|null $test
          */
         $test = $this->entityManager->find(Test::class, $testId);
         if ($test === null) {

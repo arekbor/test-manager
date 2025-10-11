@@ -1,14 +1,15 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Domain\Entity\Answer;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity()]
 class Question extends BaseEntity
@@ -34,7 +35,7 @@ class Question extends BaseEntity
         $this->answers = new ArrayCollection();
         $this->modules = new ArrayCollection();
     }
-    
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -48,7 +49,7 @@ class Question extends BaseEntity
     }
 
     /**
-     * @return Collection<int, Answer>
+     * @return ArrayCollection<int, Answer>
      */
     public function getAnswers(): Collection
     {
@@ -78,7 +79,7 @@ class Question extends BaseEntity
     }
 
     /**
-     * @return Collection<int, Module>
+     * @return ArrayCollection<int, Module>
      */
     public function getModules(): Collection
     {
@@ -108,30 +109,30 @@ class Question extends BaseEntity
     {
         $position = 1;
 
-        foreach($this->answers as $answer) {
+        foreach ($this->answers as $answer) {
             $answer->setPosition($position++);
         }
 
         return $this;
     }
 
+    /**
+     * @return array<string|int, string>
+     */
     public function extractCorrectAnswerIds(): array
     {
         $answers = $this->answers->toArray();
 
-        $correctAnswers = array_filter(
-            $answers,
-            fn(Answer $a) => $a->isCorrect()
-        );
+        $correctAnswers = array_filter($answers, fn(Answer $a) => $a->isCorrect());
 
-        $correctAnswerIds = array_map(
-            fn(Answer $a) => $a->getId()->toRfc4122(),
-            $correctAnswers
-        );
+        $correctAnswerIds = array_map(fn(Answer $a) => $a->getId()->toRfc4122(), $correctAnswers);
 
         return array_values($correctAnswerIds);
     }
 
+    /**
+     * @param array<string|int, string> $chosenAnswerIds
+     */
     public function chosenAnswersCorrect(array $chosenAnswerIds): bool
     {
         $correctAnswerIds = $this->extractCorrectAnswerIds();

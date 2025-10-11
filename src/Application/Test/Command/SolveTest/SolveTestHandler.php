@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Test\Command\SolveTest;
 
 use App\Application\Shared\Bus\CommandBusHandlerInterface;
-use App\Application\Test\Service\SendCsvTestResult;
 use App\Application\Test\Service\TestResultCsvGenerator;
 use App\Application\Test\Service\TestScoreCalculator;
 use App\Domain\Entity\Test;
@@ -21,8 +20,7 @@ final class SolveTestHandler implements CommandBusHandlerInterface
         private readonly EntityManagerInterface $entityManager,
         private readonly LoggerInterface $logger,
         private readonly TestScoreCalculator $testScoreCalculator,
-        private readonly TestResultCsvGenerator $testResultCsvGenerator,
-        private readonly SendCsvTestResult $sendCsvTestResult
+        private readonly TestResultCsvGenerator $testResultCsvGenerator
     ) {}
 
     public function __invoke(SolveTest $command): void
@@ -34,7 +32,7 @@ final class SolveTestHandler implements CommandBusHandlerInterface
         $testId = $command->getTestId();
 
         /**
-         * @var Test $test
+         * @var Test|null $test
          */
         $test = $this->entityManager->find(Test::class, $testId);
         if ($test === null) {

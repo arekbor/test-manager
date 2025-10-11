@@ -20,6 +20,9 @@ class LocaleRuntime implements RuntimeExtensionInterface
         private readonly ParameterBagInterface $parameterBag
     ) {}
 
+    /**
+     * @return array<string, string>
+     */
     public function getLocaleLinks(): array
     {
         $request = $this->requestStack->getCurrentRequest();

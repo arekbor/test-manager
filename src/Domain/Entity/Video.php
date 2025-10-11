@@ -1,29 +1,28 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity()]
 #[Vich\Uploadable]
 class Video extends BaseEntity
-{       
+{
     public const FILE_FIELD_NAME = 'file';
 
     #[Vich\UploadableField(
-        mapping: 'videos', 
+        mapping: 'videos',
         fileNameProperty: 'fileName',
         size: 'size',
         mimeType: 'mimeType',
         originalName: 'originalName'
     )]
-    private ?File $file = null;
+    private ?\SplFileInfo $file = null;
 
     /**
      * @var Collection<int, Module>
@@ -47,7 +46,7 @@ class Video extends BaseEntity
     {
         $this->modules = new ArrayCollection();
     }
-    
+
     /**
      * @return Collection<int, Module>
      */
@@ -72,12 +71,12 @@ class Video extends BaseEntity
         return $this;
     }
 
-    public function getFile(): ?File
+    public function getFile(): ?\SplFileInfo
     {
         return $this->file;
     }
 
-    public function setFile(?File $file = null): void
+    public function setFile(?\SplFileInfo $file = null): void
     {
         $this->file = $file;
     }

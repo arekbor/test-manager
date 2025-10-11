@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Infrastructure\AppSetting\Service;
 
@@ -14,8 +14,7 @@ final class AppSettingDecoder
 
     public function __construct(
         private readonly SerializerInterface $serializer
-    ) {
-    }
+    ) {}
 
     public function decode(mixed $data): mixed
     {
@@ -29,6 +28,9 @@ final class AppSettingDecoder
         return $decodedData;
     }
 
+    /**
+     * @param array<mixed, mixed> $value
+     */
     public function encode(array $value, string $className): mixed
     {
         $encodedData = json_encode($value);

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Unit;
 
@@ -29,7 +29,7 @@ final class AppSettingDecoderTest extends TestCase
         //Arrange
         $mailSmtpAppSetting = new MailSmtpAppSetting(
             host: 'gmail.smtp.com',
-            port: '546',
+            port: 546,
             fromAddress: 'test@gmail.com',
             username: 'username@gmail.com',
             password: 'secret',
@@ -43,7 +43,7 @@ final class AppSettingDecoderTest extends TestCase
 
         //Assert
         $this->assertEquals('gmail.smtp.com', $decodedData['host']);
-        $this->assertEquals('546', $decodedData['port']);
+        $this->assertEquals(546, $decodedData['port']);
         $this->assertEquals('test@gmail.com', $decodedData['fromAddress']);
         $this->assertEquals('username@gmail.com', $decodedData['username']);
         $this->assertEquals('secret', $decodedData['password']);

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Validator;
 
@@ -12,18 +12,21 @@ final class UniqueValuesInArrayValidator extends ConstraintValidator
 {
     public function __construct(
         private readonly TranslatorInterface $trans
-    ) {
-    }
+    ) {}
 
     public function validate(mixed $value, Constraint $constraint): void
     {
+        if (!$constraint instanceof UniqueValuesInArray) {
+            return;
+        }
+
         if (!is_array($value)) {
             return;
         }
 
         $seenValues = [];
 
-        foreach($value as $item) {
+        foreach ($value as $item) {
             $key = null;
 
             if (is_object($item) && method_exists($item, $constraint->key)) {
@@ -39,10 +42,7 @@ final class UniqueValuesInArrayValidator extends ConstraintValidator
                     '%key%' => $key
                 ]);
 
-                $this->context
-                    ->buildViolation($message)
-                    ->addViolation()
-                ;
+                $this->context->buildViolation($message)->addViolation();
 
                 return;
             }

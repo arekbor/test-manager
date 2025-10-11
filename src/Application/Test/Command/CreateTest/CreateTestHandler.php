@@ -22,7 +22,7 @@ final class CreateTestHandler implements CommandBusHandlerInterface
         $moduleId = $command->getModuleId();
 
         /**
-         * @var Module $module
+         * @var Module|null $module
          */
         $module = $this->entityManager->find(Module::class, $moduleId);
         if ($module === null) {
@@ -32,7 +32,7 @@ final class CreateTestHandler implements CommandBusHandlerInterface
         $creatorId = $command->getCreatorId();
 
         /**
-         * @var SecurityUser $securityUser
+         * @var SecurityUser|null $securityUser
          */
         $securityUser = $this->entityManager->find(SecurityUser::class, $creatorId);
         if ($securityUser === null) {

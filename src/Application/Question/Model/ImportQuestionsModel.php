@@ -8,6 +8,9 @@ use App\Application\Question\Model\QuestionModel;
 
 final class ImportQuestionsModel
 {
+    /**
+     * @var QuestionModel[] $questionModels
+     */
     private array $questionModels = [];
 
     public function addQuestionModel(QuestionModel $questionModel): static
@@ -19,6 +22,9 @@ final class ImportQuestionsModel
         return $this;
     }
 
+    /**
+     * @return QuestionModel[]
+     */
     public function getQuestionModels(): array
     {
         return $this->questionModels;

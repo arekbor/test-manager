@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Test\Model;
 
@@ -19,7 +19,8 @@ final class DataForTestSolve
      */
     private array $testVideos;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->testVideos = [];
     }
 
@@ -53,6 +54,9 @@ final class DataForTestSolve
         $this->testSolve = $testSolve;
     }
 
+    /**
+     * @return TestVideo[]
+     */
     public function getTestVideos(): array
     {
         return $this->testVideos;

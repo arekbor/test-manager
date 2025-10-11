@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\AppSetting\Model;
 
@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MailSmtpAppSetting
 {
     public const APP_SETTING_KEY = "mail.smtp";
+    public const DEFAULT_SMTP_PORT = 465;
+    public const DEFAULT_SMTP_TIMEOUT = 10;
 
     #[Assert\NotBlank]
     #[Assert\Hostname]
@@ -17,7 +19,7 @@ class MailSmtpAppSetting
     #[Assert\NotBlank]
     #[Assert\Length(max: 5)]
     #[Assert\Range(min: 1, max: 65535)]
-    private string $port;
+    private int $port;
 
     #[Assert\Email]
     #[Assert\NotBlank]
@@ -39,16 +41,15 @@ class MailSmtpAppSetting
     private int $timeout;
 
     public function __construct(
-        string $host = "", 
-        string $port = "", 
+        string $host = "",
+        int $port = self::DEFAULT_SMTP_PORT,
         string $fromAddress = "",
         string $username = "",
         string $password = "",
         bool $smtpAuth = false,
         string $smtpSecure = "",
-        int $timeout = 0
-    ) 
-    {
+        int $timeout = self::DEFAULT_SMTP_TIMEOUT
+    ) {
         $this->host = $host;
         $this->port = $port;
         $this->fromAddress = $fromAddress;
@@ -58,6 +59,7 @@ class MailSmtpAppSetting
         $this->smtpSecure = $smtpSecure;
         $this->timeout = $timeout;
     }
+
 
     public function getHost(): string
     {
@@ -70,12 +72,12 @@ class MailSmtpAppSetting
         return $this;
     }
 
-    public function getPort(): string
+    public function getPort(): int
     {
         return $this->port;
     }
 
-    public function setPort(string $port): static
+    public function setPort(int $port): static
     {
         $this->port = $port;
         return $this;

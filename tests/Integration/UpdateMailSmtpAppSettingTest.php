@@ -51,7 +51,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
 
         $mailSmtpAppSettingAfterUpdate = new MailSmtpAppSetting(
             host: 'test.host.com',
-            port: '546',
+            port: 546,
             fromAddress: 'test@gmail.com',
             username: 'test@gmail.com',
             password: 'secret',
@@ -83,7 +83,7 @@ final class UpdateMailSmtpAppSettingTest extends DatabaseTestCase
         $this->assertInstanceOf(MailSmtpAppSetting::class, $mailSmtpAppSetting);
 
         $this->assertEquals('test.host.com', $mailSmtpAppSetting->getHost());
-        $this->assertEquals('546', $mailSmtpAppSetting->getPort());
+        $this->assertEquals(546, $mailSmtpAppSetting->getPort());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getFromAddress());
         $this->assertEquals('test@gmail.com', $mailSmtpAppSetting->getUsername());
         $this->assertTrue($mailSmtpAppSetting->getSmtpAuth());

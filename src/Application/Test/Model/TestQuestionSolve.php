@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Test\Model;
 
@@ -15,11 +15,11 @@ final class TestQuestionSolve
     private string $content;
 
     /**
-     * @var Collection<int, TestAnswerSolve>
+     * @var Collection<int, TestAnswerSolve> $testAnswerSolves
      */
     private Collection $testAnswerSolves;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->testAnswerSolves = new ArrayCollection();
     }
@@ -49,7 +49,7 @@ final class TestQuestionSolve
     }
 
     /**
-     * @var Collection<int, TestAnswerSolve>
+     * @return Collection<int, TestAnswerSolve>
      */
     public function getTestAnswerSolves(): Collection
     {
@@ -72,9 +72,14 @@ final class TestQuestionSolve
         return $this;
     }
 
+    /**
+     * @return array<string>
+     */
     public function extractChosenAnswerIds(): array
     {
-        $chosenAnswers = array_filter($this->testAnswerSolves->toArray() ?? [], fn(TestAnswerSolve $t) => $t->isChosen());
+        $testAnswerSolves = $this->testAnswerSolves->toArray();
+
+        $chosenAnswers = array_filter($testAnswerSolves, fn(TestAnswerSolve $t) => $t->isChosen());
 
         $chosenAnswerIds = array_map(fn(TestAnswerSolve $t) => $t->getAnswerId()->toRfc4122(), $chosenAnswers);
 

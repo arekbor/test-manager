@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\AppSetting\Model;
 
@@ -23,7 +23,7 @@ class TestAppSetting
     private array $testMessageAppSettings;
 
     /**
-     * @var array<TestPrivacyPolicyAppSetting> $testPrivacyPolicyAppSettings
+     * @var TestPrivacyPolicyAppSetting[] $testPrivacyPolicyAppSettings
      */
     #[Assert\Valid]
     #[ApplicationAssert\UniqueValuesInArray(key: 'getLanguage')]
@@ -31,7 +31,8 @@ class TestAppSetting
 
     private bool $notificationsEnabled;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->expirationDaysOffset = 7;
         $this->testMessageAppSettings = [];
         $this->testPrivacyPolicyAppSettings = [];
@@ -89,6 +90,9 @@ class TestAppSetting
         return $this;
     }
 
+    /**
+     * @return TestPrivacyPolicyAppSetting[]
+     */
     public function getTestPrivacyPolicyAppSettings(): array
     {
         return $this->testPrivacyPolicyAppSettings;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Infrastructure\Shared;
 
@@ -18,8 +18,7 @@ final class Emailer implements EmailerInterface
         private readonly AppSettingRepositoryInterface $appSettingRepository,
         private readonly AppSettingManagerInterface $appSettingManager,
         private readonly CryptoInterface $crypto
-    ) {
-    }
+    ) {}
 
     public function send(string $recipient, string $subject, string $content, ?\SplFileInfo $attachment = null): string
     {

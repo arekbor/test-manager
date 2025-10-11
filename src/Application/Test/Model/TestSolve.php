@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Application\Test\Model;
 
@@ -30,7 +30,7 @@ final class TestSolve
     private ?\DateTimeInterface $dateOfBirth = null;
 
     /**
-     * @var Collection<int, TestQuestionSolve>
+     * @var Collection<int, TestQuestionSolve> $testQuestionSolves
      */
     #[Assert\Valid]
     private Collection $testQuestionSolves;
@@ -38,7 +38,7 @@ final class TestSolve
     #[Assert\IsTrue]
     private bool $privacyPolicyConsent;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->testQuestionSolves = new ArrayCollection();
         $this->privacyPolicyConsent = false;
@@ -105,7 +105,7 @@ final class TestSolve
     }
 
     /**
-     * @var Collection<int, TestQuestionSolve>
+     * @return ArrayCollection<int, TestQuestionSolve>
      */
     public function getTestQuestionSolves(): Collection
     {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class UploadFileActionType extends AbstractActionType
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     public function buildView(ActionView $view, ActionInterface $action, array $options): void
     {
         $options['upload_url'] = $options['upload_url']($view);

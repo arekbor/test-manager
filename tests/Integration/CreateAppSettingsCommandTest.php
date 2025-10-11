@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
@@ -55,13 +55,13 @@ final class CreateAppSettingsCommandTest extends DatabaseTestCase
         $this->assertIsArray($mailSmtpAppSetting->getValue());
         $this->assertEquals([
             'host' => '',
-            'port' => '',
+            'port' => MailSmtpAppSetting::DEFAULT_SMTP_PORT,
             'fromAddress' => '',
             'username' => '',
             'password' => '',
             'smtpAuth' => false,
             'smtpSecure' => '',
-            'timeout' => 0
+            'timeout' => MailSmtpAppSetting::DEFAULT_SMTP_TIMEOUT
         ], $mailSmtpAppSetting->getValue());
 
         $this->assertInstanceOf(AppSetting::class, $testAppSetting);
