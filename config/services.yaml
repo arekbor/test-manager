@@ -6,6 +6,7 @@ parameters:
   app.admin_email: "%env(ADMIN_EMAIL)%"
   app.admin_password: "%env(ADMIN_PASSWORD)%"
   app.encryption.key: "%env(ENCRYPTION_KEY)%"
+  app.logs.location: "%env(LOGS_LOCATION)%"
 
   app.base.path: "/home/uploads"
   app.videos.path: "%app.base.path%/videos"
@@ -32,6 +33,14 @@ services:
       public: true
       tags:
         - { name: messenger.message_handler, bus: async.message.bus }
+
+  App\Infrastructure\Shared\Logger:
+    public: true
+
+  app.logger:
+    alias: 'App\Infrastructure\Shared\Logger'
+
+  Psr\Log\LoggerInterface: "@app.logger"
 
   App\:
     resource: "../src/"
