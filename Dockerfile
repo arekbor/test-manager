@@ -23,7 +23,7 @@ COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod u+x /entrypoint.sh
 
 RUN wget https://getcomposer.org/download/2.8.12/composer.phar \ 
-    && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
+    && mv composer.phar /usr/bin/composer && chmod u+x /usr/bin/composer
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf 
 
@@ -36,5 +36,7 @@ RUN mkdir /home/uploads && chown -R www-data:www-data /home/uploads
 RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
 # RUN rm -r /var/www/docker
+
+WORKDIR /var/www
 
 ENTRYPOINT [ "/entrypoint.sh" ]
