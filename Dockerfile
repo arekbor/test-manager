@@ -11,7 +11,6 @@ RUN apt-get update \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install pdo pdo_pgsql zip gd
   
-
 COPY docker/php.ini /usr/local/etc/php/
 COPY docker/security.conf /etc/apache2/conf-enabled/security.conf
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
@@ -36,6 +35,6 @@ RUN mkdir /home/uploads && chown -R www-data:www-data /home/uploads
 
 RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
-RUN rm -r /var/www/docker
+# RUN rm -r /var/www/docker
 
 ENTRYPOINT [ "/entrypoint.sh" ]
