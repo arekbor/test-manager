@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+
+echo "Start entrypoint"
 
 composer install -n
 bin/console cache:clear

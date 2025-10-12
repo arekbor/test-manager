@@ -7,7 +7,7 @@ parameters:
   app.admin_password: "%env(ADMIN_PASSWORD)%"
   app.encryption.key: "%env(ENCRYPTION_KEY)%"
 
-  app.logs.path: "/var/log/test-manager.log"
+  app.logs.path: "/var/log/test-manager/system.log"
   app.base.path: "/home/uploads"
   app.videos.path: "%app.base.path%/videos"
   app.testResults.path: "%app.base.path%/testResults"
