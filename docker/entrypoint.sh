@@ -3,7 +3,7 @@ set -e
 
 echo "Start entrypoint"
 
-su -s /bin/bash www-data -c "composer install -n"
+composer install -n
 
 su -s /bin/bash www-data -c "bin/console cache:clear"
 su -s /bin/bash www-data -c "bin/console doctrine:migrations:migrate --no-interaction"
