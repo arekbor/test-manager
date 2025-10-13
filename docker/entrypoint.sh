@@ -3,7 +3,6 @@ set -e
 
 echo "Start entrypoint"
 
-composer install -n
 bin/console cache:clear
 bin/console doctrine:migrations:migrate --no-interaction
 bin/console app:create-app-settings
@@ -17,5 +16,4 @@ setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX var
 setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX var
 
 supervisord -c /etc/supervisor/supervisord.conf
-
 exec apache2-foreground

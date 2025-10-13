@@ -29,14 +29,12 @@ COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY . /var/www
 
-RUN chown -R www-data:www-data /var/www
-
-RUN mkdir /home/uploads && chown -R www-data:www-data /home/uploads
-
-RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
-
-# RUN rm -r /var/www/docker
-
 WORKDIR /var/www
+
+RUN composer install -n
+
+RUN chown -R www-data:www-data /var/www
+RUN mkdir /home/uploads && chown -R www-data:www-data /home/uploads
+RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
 ENTRYPOINT [ "/entrypoint.sh" ]
