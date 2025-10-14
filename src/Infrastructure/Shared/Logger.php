@@ -62,11 +62,12 @@ final class Logger implements LoggerInterface
     private function writeLog(string $level, string|\Stringable $message): void
     {
         $logsPath = $this->parameterBag->get("app.logs.path");
-        if (empty($logsPath)) {
+        if (empty($logsPath) || !file_exists($logsPath)) {
             return;
         }
 
         $formatted = sprintf("[%s] %s: %s\n", strtoupper($level), date('Y-m-d H:i:s'), $message);
+
         file_put_contents($logsPath, $formatted, FILE_APPEND);
     }
 }

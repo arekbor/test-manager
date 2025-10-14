@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Test\AsyncMessage;
+namespace App\Application\Test\AsyncMessage\SendTestResultCsvToCreator;
 
 use App\Application\AppSetting\Model\TestAppSetting;
 use App\Application\AppSetting\Repository\AppSettingRepositoryInterface;

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Presentation\Twig\Runtime;
 
+use App\Domain\Entity\SecurityUser;
 use App\Presentation\Util\ByteConversion;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\RuntimeExtensionInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class SystemInfoRuntime implements RuntimeExtensionInterface
 {
@@ -18,6 +19,9 @@ class SystemInfoRuntime implements RuntimeExtensionInterface
 
     private const PATH_NOT_FOUND_INFO = "Path not found";
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSystemInfo(): array
     {
         /**
@@ -63,7 +67,7 @@ class SystemInfoRuntime implements RuntimeExtensionInterface
         $bytesTotal = 0;
 
         $path = realpath($path);
-        if ($path != false && $path != "" && file_exists($path)) {
+        if ($path != false && file_exists($path)) {
             $recursiveDirectoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
             foreach (new \RecursiveIteratorIterator($recursiveDirectoryIterator) as $file) {
                 if (!$file instanceof \SplFileInfo) {

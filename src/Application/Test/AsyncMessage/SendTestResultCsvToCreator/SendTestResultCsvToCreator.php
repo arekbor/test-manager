@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Test\AsyncMessage;
+namespace App\Application\Test\AsyncMessage\SendTestResultCsvToCreator;
 
 use App\Application\Shared\Bus\AsyncMessageInterface;
 use Symfony\Component\Uid\Uuid;
