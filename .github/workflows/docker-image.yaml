@@ -8,8 +8,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: build the Docker image
-        run: docker build . --file Dockerfile --tag arekindependent/test-manager:latest
+        run: docker build . --file Dockerfile --tag arekbor/test-manager:latest
       - name: push image to docker hub
         run: |
-          docker login -u arekindependent -p ${{ secrets.DOCKER_HUB_TOKEN }}
-          docker push arekindependent/test-manager:latest
+          docker login -u arekbor -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push arekbor/test-manager:latest
