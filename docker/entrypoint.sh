@@ -16,6 +16,8 @@ setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX var
 setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX var
 
 rm -R bin
+rm -R migrations
+rm -R docker
 
 supervisord -c /etc/supervisor/supervisord.conf
 exec apache2-foreground
