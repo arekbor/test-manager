@@ -15,3 +15,4 @@ assets/vendor
 phpunit.xml.dist
 tests/
 phpstan.neon
+.phpunit.cache
