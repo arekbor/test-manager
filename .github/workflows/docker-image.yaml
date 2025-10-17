@@ -1,0 +1,14 @@
+name: Build and publish Test Manager image to Docker
+on: [workflow_dispatch]
+
+jobs:
+  publish_images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build the Docker image
+        run: docker build . --file Dockerfile --tag arekindependent/test-manager:latest
+      - name: push image to docker hub
+        run: |
+          docker push arekindependent/test-manager:latest
