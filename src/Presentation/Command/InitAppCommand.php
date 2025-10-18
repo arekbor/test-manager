@@ -15,10 +15,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
-    name: "app:init-database",
-    description: "Inits database - creates when database not exists nad makes migrations"
+    name: "app:init-app",
+    description: "Inits app - creates databae if not exists, makes migrations and execute necessary commands"
 )]
-final class InitDatabaseCommand extends Command
+final class InitAppCommand extends Command
 {
     public function __construct(
         private readonly KernelInterface $kernel,
@@ -52,6 +52,16 @@ final class InitDatabaseCommand extends Command
                 '--no-interaction' => true,
             ]);
 
+            $application->run($arrayInput, $output);
+
+            $arrayInput = new ArrayInput([
+                'command' => 'app:create-app-settings'
+            ]);
+            $application->run($arrayInput, $output);
+
+            $arrayInput = new ArrayInput([
+                'command' => 'app:create-admin-user'
+            ]);
             $application->run($arrayInput, $output);
         }
 

@@ -4,9 +4,7 @@ set -e
 echo "Start entrypoint"
 
 bin/console cache:clear
-bin/console app:init-database
-bin/console app:create-app-settings
-bin/console app:create-admin-user
+bin/console app:init-app
 bin/console importmap:install
 bin/console asset-map:compile
 

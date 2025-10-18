@@ -18,9 +18,9 @@ COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY docker/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 COPY docker/supervisor/messenger-worker.conf /etc/supervisor/conf.d/messenger-worker.conf
 
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod u+x /entrypoint.sh
+RUN chmod u+x /docker-entrypoint.sh
 
 RUN wget https://getcomposer.org/download/2.8.12/composer.phar \ 
     && mv composer.phar /usr/bin/composer && chmod u+x /usr/bin/composer
@@ -37,4 +37,4 @@ RUN chown -R www-data:www-data /var/www
 RUN mkdir /home/uploads && chown -R www-data:www-data /home/uploads
 RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
