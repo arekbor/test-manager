@@ -4,8 +4,7 @@ set -e
 echo "Start entrypoint"
 
 bin/console cache:clear
-bin/console doctrine:database:create
-bin/console doctrine:migrations:migrate --no-interaction
+bin/console app:init-database
 bin/console app:create-app-settings
 bin/console app:create-admin-user
 bin/console importmap:install
