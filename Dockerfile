@@ -35,11 +35,6 @@ RUN composer install -n
 
 RUN chown -R www-data:www-data /var/www
 
-RUN mkdir /home/uploads
-RUN mkdir /home/uploads/videos
-RUN mkdir /home/uploads/testResults
-RUN chown -R www-data:www-data /home/uploads
-
 RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
