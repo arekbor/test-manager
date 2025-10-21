@@ -8,7 +8,7 @@ parameters:
   app.encryption.key: "%env(ENCRYPTION_KEY)%"
 
   app.logs.path: "/var/log/test-manager/system.log"
-  app.base.path: "/home/uploads"
+  app.base.path: "/usr/src/test-manager"
   app.videos.path: "%app.base.path%/videos"
   app.testResults.path: "%app.base.path%/testResults"
 
