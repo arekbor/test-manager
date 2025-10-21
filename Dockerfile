@@ -23,7 +23,7 @@ COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod u+x /docker-entrypoint.sh
 
 RUN wget https://getcomposer.org/download/2.8.12/composer.phar \ 
-    && mv composer.phar /usr/bin/composer && chmod u+x /usr/bin/composer
+  && mv composer.phar /usr/bin/composer && chmod u+x /usr/bin/composer
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf 
 
@@ -34,7 +34,9 @@ WORKDIR /var/www
 RUN composer install -n
 
 RUN chown -R www-data:www-data /var/www
-
 RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
+
+RUN mkdir -p /usr/src/test-manager/videos /usr/src/test-manager/testResults
+RUN chown -R www-data:www-data /usr/src/test-manager
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

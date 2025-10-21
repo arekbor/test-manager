@@ -13,10 +13,5 @@ bin/console asset-map:compile
 setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX var
 setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX var
 
-mkdir /home/uploads
-mkdir /home/uploads/videos
-mkidr /home/uploads/testResults
-RUN chown -R www-data:www-data /home/uploads
-
 supervisord -c /etc/supervisor/supervisord.conf
 exec apache2-foreground
