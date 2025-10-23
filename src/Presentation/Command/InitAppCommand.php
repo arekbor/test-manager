@@ -65,12 +65,7 @@ final class InitAppCommand extends Command
             ]);
             $application->run($arrayInput, $output);
         }
-
-        // $arrayInput = new ArrayInput([
-        //     'command' => 'app:init-app-directories'
-        // ]);
-        // $application->run($arrayInput, $output);
-
+        
         return Command::SUCCESS;
     }
 }

@@ -4,10 +4,10 @@ set -e
 echo "Start entrypoint"
 
 mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
-mkdir -p /var/files/videos
-mkdir -p /var/files/testResults
-chown -R www-data:www-data /var/files
- 
+
+mkdir -p /var/lib/test-manager/files/videos /var/lib/test-manager/files/testResults
+chown -R www-data:www-data /var/lib/test-manager/files
+
 bin/console cache:clear
 bin/console app:init-app
 bin/console importmap:install

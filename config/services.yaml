@@ -9,7 +9,7 @@ parameters:
 
   app.logs.path: "/var/log/test-manager/system.log"
 
-  app.base.path: "/var/files"
+  app.base.path: "/var/lib/test-manager/files"
   app.videos.path: "%app.base.path%/videos"
   app.testResults.path: "%app.base.path%/testResults"
 
