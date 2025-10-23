@@ -14,4 +14,8 @@ setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX var
 setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX var
 
 supervisord -c /etc/supervisor/supervisord.conf
+
+mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
+mkdir /var/files && chown -R www-data:www-data /var/files
+
 exec apache2-foreground

@@ -27,8 +27,6 @@ RUN wget https://getcomposer.org/download/2.8.12/composer.phar \
 
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf 
 
-RUN mkdir /var/files && chown -R www-data:www-data /var/files
-
 COPY . /var/www
 
 WORKDIR /var/www
@@ -36,6 +34,5 @@ WORKDIR /var/www
 RUN composer install -n
 
 RUN chown -R www-data:www-data /var/www
-RUN mkdir /var/log/test-manager && chown -R www-data:www-data /var/log/test-manager
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
