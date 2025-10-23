@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
@@ -22,7 +23,8 @@ final class InitAppCommand extends Command
 {
     public function __construct(
         private readonly KernelInterface $kernel,
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly ParameterBagInterface $parameterBag
     ) {
         parent::__construct();
     }
@@ -41,8 +43,7 @@ final class InitAppCommand extends Command
             'command' => 'doctrine:database:create'
         ]);
 
-        $statusCode = $application->run($arrayInput, $output);
-        if ($statusCode === Command::SUCCESS) {
+        if ($application->run($arrayInput, $output) === Command::SUCCESS) {
             $io->info("Database successfully created.");
 
             $io->section("Execute migrations...");
@@ -64,6 +65,11 @@ final class InitAppCommand extends Command
             ]);
             $application->run($arrayInput, $output);
         }
+
+        $arrayInput = new ArrayInput([
+            'command' => 'app:init-app-directories'
+        ]);
+        $application->run($arrayInput, $output);
 
         return Command::SUCCESS;
     }
