@@ -27,3 +27,6 @@
 phpstan.neon
 ###< phpstan/phpstan ###
 .phpunit.cache
+
+supervisord.log
+supervisord.pid

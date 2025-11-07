@@ -1,44 +1,22 @@
-version: "3.8"
-
 services:
-  db:
-    image: postgres
-    restart: always
-    volumes:
-      - db:/var/lib/postgresql/data
-    env_file:
-      - .env.prod
-    networks:
-      - test_manager_network
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "200M"
-          pids: 50
-
-  web:
+  test-manager:
     build: .
     restart: always
+    container_name: test-manager-dev
     ports:
       - 8084:80
     depends_on:
-      - db
+      - test-manager-postgres-dev
     env_file:
-      - .env.prod
-    networks:
-      - test_manager_network
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "300M"
-          pids: 100
+      - .env.dev
+    volumes:
+      - .:/var/www
 
-volumes:
-  db:
-    driver: local
-
-networks:
-  test_manager_network:
-    driver: bridge
+  test-manager-postgres-dev:
+    image: postgres
+    ports:
+      - 8085:5432
+    container_name: test-manager-postgres-dev
+    restart: always
+    env_file:
+      - .env.dev
