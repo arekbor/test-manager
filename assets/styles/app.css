@@ -82,3 +82,11 @@ select.form-select,
     width: 100% !important;
   }
 }
+
+table tbody td {
+  text-wrap: nowrap;
+}
+
+ul li {
+  text-wrap: nowrap;
+}
